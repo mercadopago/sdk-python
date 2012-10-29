@@ -3,8 +3,6 @@
 """
 MercadoPago SDK
 Checkout button with MD5 hash
-@date 2012/03/29
-@author hcasatti
 """
 
 import hashlib
@@ -82,7 +80,7 @@ def index(req, **kwargs):
                     <button type="submit" class="lightblue-rn-m-tr-arall" name="MP-payButton">Pagar</button>
             </form>
             <!-- More info about render.form.js: https://developers.mercadopago.com -->
-            <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.beta.js"></script>
+            <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>
         </body>
     </html>
     """.format (data=data, md5=md5)

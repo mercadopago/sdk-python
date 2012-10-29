@@ -7,6 +7,7 @@
 <a name="usage"></a>
 ### Usage:
 
+* Copy mercadopago module from **/lib** to your modules location.
 * Get your credentials at [Mercadopago Developers Site](https://developers.mercadopago.com/beta/api-de-checkout#get-credentials).
 * Replace your CLIENT_ID and CLIENT_SECRET.
 

@@ -3,13 +3,10 @@
 """
 MercadoPago SDK
 Search approved credit card payments from 21/10/2011 to 25/10/2011
-@date 2012/03/29
-@author hcasatti
 """
 
 # Import Mercadopago library
 import os, sys
-sys.path.append(os.path.dirname(__file__)+"/../../lib")
 import mercadopago
 
 import json
