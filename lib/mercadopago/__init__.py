@@ -1,0 +1,1 @@
+from mercadopago import MP
