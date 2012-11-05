@@ -1,9 +1,6 @@
 import json
-import urllib
-import os, sys
 from json.encoder import JSONEncoder
-sys.path.append(os.path.dirname(__file__)+"/lib")
-from restful_lib import Connection
+import requests
 
 """
 MercadoPago Integration Library
@@ -18,62 +15,70 @@ class MP:
     def __init__(self, client_id, client_secret):
         self.__client_id = client_id
         self.__client_secret = client_secret
-        self.__restClient = self.__RestClient()
+        self.__rest_client = self.__RestClient()
         
     def __get_access_token(self):
-        appClientValues = {
+        app_client_values = {
                            "client_id": self.__client_id,
                            "client_secret": self.__client_secret,
                            "grant_type": "client_credentials"
                            }
 
-        access_data = self.__restClient.post("/oauth/token", self.__build_query(appClientValues), self.__RestClient.MIME_FORM) 
-        
-        if access_data['status'] == "200":
+        access_data = self.__rest_client.post("/oauth/token", app_client_values, self.__RestClient.MIME_FORM)
+
+        if access_data["status"] == 200:
             self.__access_data = access_data["response"]
-        else:
-            self.__access_data = None
-        
-        if self.__access_data != None and "access_token" in self.__access_data:
             return  self.__access_data["access_token"]
         else:
-            return None
+            raise Exception(json.dumps(access_data))
         
     """
     Get information for specific payment
     @param id
     @return json
+
     """    
     def get_payment_info(self, id):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
         
-        paymentInfo = self.__restClient.get("/collections/notifications/"+id+"?access_token="+accessToken)
-        return paymentInfo
+        payment_info = self.__rest_client.get("/collections/notifications/"+id+"?access_token="+access_token)
+        return payment_info
     
     """
     Refund accredited payment
     @param id
     @return json
+
     """    
     def refund_payment(self, id):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
 
         refund_status = {"status":"refunded"}
         
-        response = self.__restClient.put("/collections/"+id+"?access_token="+accessToken, refund_status)
+        response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, refund_status)
         return response
     
     """
     Cancel pending payment
     @param id
     @return json
+
     """    
     def cancel_payment(self, id):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
 
         cancel_status = {"status":"cancelled"}
         
-        response = self.__restClient.put("/collections/"+id+"?access_token="+accessToken, cancel_status)
+        response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, cancel_status)
         return response
     
     """
@@ -82,95 +87,106 @@ class MP:
     @param offset
     @param limit
     @return json
+
     """
     def search_payment(self, filters, offset=0, limit=0):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
 
+        filters["access_token"] = access_token
         filters["offset"] = offset
         filters["limit"] = limit
         
-        filters = self.__build_query(filters)
-        
-        collectionResult = self.__restClient.get("/collections/search?"+filters+"&access_token="+accessToken)
-        return collectionResult        
+        payment_result = self.__rest_client.get("/collections/search", filters)
+        return payment_result        
         
     """
     Create a checkout preference
     @param preference
     @return json
+
     """
     def create_preference(self, preference):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
 
-        preferenceResult = self.__restClient.post("/checkout/preferences?access_token="+accessToken, preference)
-        return preferenceResult
+        preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
+        return preference_result
     
     """
     Update a checkout preference
     @param id
     @param preference
     @return json
+
     """
     def update_preference(self, id, preference):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
         
-        preferenceResult = self.__restClient.put("/checkout/preferences/"+id+"?access_token="+accessToken, preference)
-        return preferenceResult
+        preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
+        return preference_result
     
     """
     Update a checkout preference
     @param id
     @param preference
     @return json
+
     """
     def get_preference(self, id):
-        accessToken = self.__get_access_token()
+        try:
+            access_token = self.__get_access_token()
+        except Exception as e:
+            return e
         
-        preferenceResult = self.__restClient.get("/checkout/preferences/"+id+"?access_token="+accessToken)
-        return preferenceResult
+        preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
+        return preference_result
     
     ##################################################################################
-    def __build_query(self, params):
-        elements = []
-        
-        for key,val in params.iteritems():
-            if val == None:
-                val = ""
-                
-            elements.append(key+"="+urllib.quote(str(val)))
-        
-        return "&".join(elements)
-    
     class __RestClient:
         __API_BASE_URL = "https://api.mercadolibre.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
         
-        def __init__(self):
-            self.__conn = Connection(self.__API_BASE_URL)
-    
-        def __exec(self, method, uri, data, contentType):
+        def get(self, uri, data=None):
+            api_result = requests.get(self.__API_BASE_URL+uri, params=data, headers={'Accept':self.MIME_JSON})
 
-            if contentType == self.MIME_JSON:
-                data = JSONEncoder().encode(data)
-            else:
-                data = str(data)
-            
-            apiResult = self.__conn.request(uri, method, body=data, headers={'Content-type':contentType, 'Accept':self.MIME_JSON})
-            apiHttpCode = apiResult[u'headers']['status']
-            
             response = {
-                        "status": apiHttpCode,
-                        "response": json.loads(apiResult[u'body'])
-                        }
+                "status": api_result.status_code,
+                "response": api_result.json
+            }
             
             return response
-        
-        def get(self, uri, contentType=MIME_JSON):
-            return self.__exec("get", uri, None, contentType)
+
+        def post(self, uri, data=None, content_type=MIME_JSON):
+            if data is not None and content_type == self.MIME_JSON:
+                data = JSONEncoder().encode(data)
+
+            api_result = requests.post(self.__API_BASE_URL+uri, data=data, headers={'Content-type':content_type, 'Accept':self.MIME_JSON})
+
+            response = {
+                "status": api_result.status_code,
+                "response": api_result.json
+            }
+
+            return response
             
-        def post(self, uri, data=None, contentType=MIME_JSON):
-            return self.__exec("post", uri, data, contentType)
+        def put(self, uri, data=None, content_type=MIME_JSON):
+            if data is not None and content_type == self.MIME_JSON:
+                data = JSONEncoder().encode(data)
+
+            api_result = requests.put(self.__API_BASE_URL+uri, data=data, headers={'Content-type':content_type, 'Accept':self.MIME_JSON})
+
+            response = {
+                "status": api_result.status_code,
+                "response": api_result.json
+            }
             
-        def put(self, uri, data=None, contentType=MIME_JSON):
-            return self.__exec("put", uri, data, contentType)
+            return response

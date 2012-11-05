@@ -77,7 +77,7 @@ def index(req, **kwargs):
                     <input type="hidden" name="back_url_pending" value="{data[back_url_pending]}"/>
                     
                     <!-- Checkout Button -->
-                    <button type="submit" class="lightblue-rn-m-tr-arall" name="MP-payButton">Pagar</button>
+                    <button type="submit" class="lightblue-rn-m-tr-arall" name="MP-Checkout">Pagar</button>
             </form>
             <!-- More info about render.form.js: https://developers.mercadopago.com -->
             <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>

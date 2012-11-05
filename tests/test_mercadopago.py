@@ -1,7 +1,4 @@
 import unittest
-import sys, os
-# Import Mercadopago library
-sys.path.append(os.path.dirname(__file__)+"../lib")
 import mercadopago
 
 class TestMercadopago(unittest.TestCase):
