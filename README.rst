@@ -16,6 +16,15 @@ Usage:
 
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
 
+Get your Access Token:
+-----------------------------
+
+::
+
+    def index(req, **kwargs):
+        accessToken = mp.get_access_token()
+
+        return accessToken
 
 Using MercadoPago Checkout
 ==========================

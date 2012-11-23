@@ -10,14 +10,15 @@ Access MercadoPago for payments integration
 
 """
 class MP:
+    version = "0.1.5"
     __access_data = None
 
     def __init__(self, client_id, client_secret):
         self.__client_id = client_id
         self.__client_secret = client_secret
-        self.__rest_client = self.__RestClient()
+        self.__rest_client = self.__RestClient(self)
         
-    def __get_access_token(self):
+    def get_access_token(self):
         app_client_values = {
                            "client_id": self.__client_id,
                            "client_secret": self.__client_secret,
@@ -40,7 +41,7 @@ class MP:
     """    
     def get_payment_info(self, id):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
         
@@ -55,7 +56,7 @@ class MP:
     """    
     def refund_payment(self, id):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
 
@@ -72,7 +73,7 @@ class MP:
     """    
     def cancel_payment(self, id):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
 
@@ -91,7 +92,7 @@ class MP:
     """
     def search_payment(self, filters, offset=0, limit=0):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
 
@@ -110,7 +111,7 @@ class MP:
     """
     def create_preference(self, preference):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
 
@@ -126,7 +127,7 @@ class MP:
     """
     def update_preference(self, id, preference):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
         
@@ -142,7 +143,7 @@ class MP:
     """
     def get_preference(self, id):
         try:
-            access_token = self.__get_access_token()
+            access_token = self.get_access_token()
         except Exception as e:
             return e
         
@@ -154,9 +155,14 @@ class MP:
         __API_BASE_URL = "https://api.mercadolibre.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
+
+        def __init__(self, outer):
+            self.__outer = outer
+            self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
+
         
         def get(self, uri, data=None):
-            api_result = requests.get(self.__API_BASE_URL+uri, params=data, headers={'Accept':self.MIME_JSON})
+            api_result = requests.get(self.__API_BASE_URL+uri, params=data, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -169,7 +175,7 @@ class MP:
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            api_result = requests.post(self.__API_BASE_URL+uri, data=data, headers={'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = requests.post(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -182,7 +188,7 @@ class MP:
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            api_result = requests.put(self.__API_BASE_URL+uri, data=data, headers={'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = requests.put(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
