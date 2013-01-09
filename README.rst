@@ -50,6 +50,10 @@ Create a Checkout preference:
 
         return json.dumps(preferenceResult, indent=4)
 
+`Others items to use
+<http://developers.mercadopago.com/documentacion/recibir-pagos#glossary>`_
+
+
 
 Get an existent Checkout preference:
 ------------------------------------
@@ -103,6 +107,8 @@ Searching:
         
         return json.dumps(searchResult, indent=4)
 
+`More search examples
+<http://developers.mercadopago.com/documentacion/busqueda-de-pagos-recibidos>`_
 
 Receiving IPN notification:
 ---------------------------
@@ -149,3 +155,5 @@ Refund (only for accredited payments):
         // Show result
         return json.dumps(result, indent=4)
 
+`About Cancel & Refund
+<http://developers.mercadopago.com/documentacion/devolucion-y-cancelacion>`_
