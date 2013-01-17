@@ -8,6 +8,8 @@ Usage:
 - Get your **CLIENT_ID** and **CLIENT_SECRET** in the following address:
     - Argentina: `<https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
     - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/aplicacoes>`_
+    - México: `<https://www.mercadopago.com/mlm/herramientas/aplicaciones>`_
+    - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
 
 ::
 
@@ -116,6 +118,8 @@ Receiving IPN notification:
 - Go to **Mercadopago IPN configuration**:
     - Argentina: `<https://www.mercadopago.com/mla/herramientas/notificaciones>`_
     - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/notificacoes>`_
+    - México: `<https://www.mercadopago.com/mlm/herramientas/notificaciones>`_
+    - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/notificaciones>`_
 
 ::
 
