@@ -1,5 +1,6 @@
 import unittest
 import mercadopago
+import json
 
 client_id = "CLIENT_ID"
 client_secret = "CLIENT_SECRET"
@@ -22,6 +23,8 @@ class TestMercadopago(unittest.TestCase):
     mp = mercadopago.MP(client_id, client_secret)
 
     create_preference_result = mp.create_preference(preference)
+
+    print(create_preference_result)
 
     self.assertEquals(create_preference_result["status"], 201)
 

@@ -10,13 +10,20 @@ Access MercadoPago for payments integration
 
 """
 class MP:
-    version = "0.1.5"
+    version = "0.1.8"
     __access_data = None
+    __sandbox = False
 
     def __init__(self, client_id, client_secret):
         self.__client_id = client_id
         self.__client_secret = client_secret
         self.__rest_client = self.__RestClient(self)
+
+    def sandbox_mode(self, enable=None):
+        if not enable is None:
+            self.__sandbox = enable == True
+
+        return self.__sandbox
         
     def get_access_token(self):
         app_client_values = {
@@ -31,7 +38,7 @@ class MP:
             self.__access_data = access_data["response"]
             return  self.__access_data["access_token"]
         else:
-            raise Exception(json.dumps(access_data))
+            raise Exception(access_data)
         
     """
     Get information for specific payment
@@ -42,10 +49,12 @@ class MP:
     def get_payment_info(self, id):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
         
-        payment_info = self.__rest_client.get("/collections/notifications/"+id+"?access_token="+access_token)
+        uri_prefix = "/sandbox" if self.__sandbox else ""
+
+        payment_info = self.__rest_client.get(uri_prefix+"/collections/notifications/"+id+"?access_token="+access_token)
         return payment_info
     
     """
@@ -57,8 +66,8 @@ class MP:
     def refund_payment(self, id):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
 
         refund_status = {"status":"refunded"}
         
@@ -74,8 +83,8 @@ class MP:
     def cancel_payment(self, id):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
 
         cancel_status = {"status":"cancelled"}
         
@@ -93,14 +102,16 @@ class MP:
     def search_payment(self, filters, offset=0, limit=0):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
 
         filters["access_token"] = access_token
         filters["offset"] = offset
         filters["limit"] = limit
         
-        payment_result = self.__rest_client.get("/collections/search", filters)
+        uri_prefix = "/sandbox" if self.__sandbox else ""
+
+        payment_result = self.__rest_client.get(uri_prefix+"/collections/search", filters)
         return payment_result        
         
     """
@@ -112,8 +123,8 @@ class MP:
     def create_preference(self, preference):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
 
         preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
         return preference_result
@@ -128,8 +139,8 @@ class MP:
     def update_preference(self, id, preference):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
         
         preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
         return preference_result
@@ -144,8 +155,8 @@ class MP:
     def get_preference(self, id):
         try:
             access_token = self.get_access_token()
-        except Exception as e:
-            return e
+        except Exception,e:
+            raise e
         
         preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
