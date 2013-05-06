@@ -10,7 +10,7 @@ Access MercadoPago for payments integration
 
 """
 class MP:
-    version = "0.1.8"
+    version = "0.2.0"
     __access_data = None
     __sandbox = False
 
@@ -46,7 +46,7 @@ class MP:
     @return json
 
     """    
-    def get_payment_info(self, id):
+    def get_payment(self, id):
         try:
             access_token = self.get_access_token()
         except Exception,e:
@@ -56,7 +56,25 @@ class MP:
 
         payment_info = self.__rest_client.get(uri_prefix+"/collections/notifications/"+id+"?access_token="+access_token)
         return payment_info
-    
+
+    def get_payment_info(self, id):
+        return self.get_payment(id)
+
+    """
+    Get information for specific authorized payment
+    @param id
+    @return json
+
+    """    
+    def get_authorized_payment(self, id):
+        try:
+            access_token = self.get_access_token()
+        except Exception,e:
+            raise e
+        
+        authorized_payment_info = self.__rest_client.get("/authorized_payments/"+id+"?access_token="+access_token)
+        return authorized_payment_info
+
     """
     Refund accredited payment
     @param id
@@ -89,6 +107,23 @@ class MP:
         cancel_status = {"status":"cancelled"}
         
         response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, cancel_status)
+        return response
+    
+    """
+    Cancel preapproval payment
+    @param id
+    @return json
+
+    """    
+    def cancel_preapproval_payment(self, id):
+        try:
+            access_token = self.get_access_token()
+        except Exception,e:
+            raise e
+
+        cancel_status = {"status":"cancelled"}
+        
+        response = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, cancel_status)
         return response
     
     """
@@ -160,6 +195,37 @@ class MP:
         
         preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
+    
+    """
+    Create a preapproval payment
+    @param preapproval_payment
+    @return json
+
+    """
+    def create_preference(self, preapproval_payment):
+        try:
+            access_token = self.get_access_token()
+        except Exception,e:
+            raise e
+
+        preapproval_payment_result = self.__rest_client.post("/preapproval?access_token="+access_token, preapproval_payment)
+        return preapproval_payment_result
+    
+    """
+    Update a preapproval payment
+    @param id
+    @param preference
+    @return json
+
+    """
+    def get_preapproval_payment(self, id):
+        try:
+            access_token = self.get_access_token()
+        except Exception,e:
+            raise e
+        
+        preapproval_payment_result = self.__rest_client.get("/preapproval/"+id+"?access_token="+access_token)
+        return preapproval_payment_result
     
     ##################################################################################
     class __RestClient:

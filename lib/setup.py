@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='mercadopago',
-    version='0.1.8',
+    version='0.2.0',
     author='Horacio Casatti <horacio.casatti@mercadolibre.com>',
     author_email='horacio.casatti@mercadolibre.com',
     keywords='api mercadopago checkout payment ipn sdk integration',
