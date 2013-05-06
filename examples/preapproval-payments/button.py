@@ -24,7 +24,7 @@ def index(req, **kwargs):
             "end_date": "2013-06-10T14:58:11.778-03:00"
         }
     }
-    
+
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
 
     preapprovalPaymentResult = mp.create_preapproval_payment(preapprovalPayment)
@@ -35,7 +35,7 @@ def index(req, **kwargs):
     <!doctype html>
     <html>
         <head>
-            <title>MercadoPago SDK - Create Preference and Show Checkout Example</title>
+            <title>MercadoPago SDK - Create Preapproval Payment and Show Subscription Example</title>
         </head>
       <body>
         <a href="{url}" name="MP-Checkout" class="blue-l-arall-rn">Pagar</a>
