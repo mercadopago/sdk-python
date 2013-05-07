@@ -202,7 +202,7 @@ class MP:
     @return json
 
     """
-    def create_preference(self, preapproval_payment):
+    def create_preapproval_payment(self, preapproval_payment):
         try:
             access_token = self.get_access_token()
         except Exception,e:
