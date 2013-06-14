@@ -1,6 +1,6 @@
 import json
 from json.encoder import JSONEncoder
-import requests
+import requests0 as requests
 
 """
 MercadoPago Integration Library
@@ -9,7 +9,7 @@ Access MercadoPago for payments integration
 @author hcasatti
 
 """
-class MP:
+class MP(object):
     version = "0.1.8"
     __access_data = None
     __sandbox = False
@@ -162,7 +162,7 @@ class MP:
         return preference_result
     
     ##################################################################################
-    class __RestClient:
+    class __RestClient(object):
         __API_BASE_URL = "https://api.mercadolibre.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
