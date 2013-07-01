@@ -1,4 +1,6 @@
 *.py[cod]
+*.pyc
+.DS_Store
 
 # C extensions
 *.so
