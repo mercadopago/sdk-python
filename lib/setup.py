@@ -11,7 +11,7 @@ setup(
     url='https://github.com/mercadopago/sdk-python.git',
     description='Mercadopago SDK module for Payments integration',
     long_description=open('README.rst').read(),
-    install_requires='requests',
+    install_requires='requests>=1.0.0',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
