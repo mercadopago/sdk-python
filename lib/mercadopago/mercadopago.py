@@ -1,4 +1,3 @@
-import json
 from json.encoder import JSONEncoder
 import requests
 
@@ -9,7 +8,7 @@ Access MercadoPago for payments integration
 @author hcasatti
 
 """
-class MP:
+class MP(object):
     version = "0.2.0"
     __access_data = None
     __sandbox = False
@@ -24,7 +23,7 @@ class MP:
             self.__sandbox = enable == True
 
         return self.__sandbox
-        
+
     def get_access_token(self):
         app_client_values = {
                            "client_id": self.__client_id,
@@ -39,7 +38,7 @@ class MP:
             return  self.__access_data["access_token"]
         else:
             raise Exception(access_data)
-        
+
     """
     Get information for specific payment
     @param id
@@ -51,7 +50,7 @@ class MP:
             access_token = self.get_access_token()
         except Exception,e:
             raise e
-        
+
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
         payment_info = self.__rest_client.get(uri_prefix+"/collections/notifications/"+id+"?access_token="+access_token)
@@ -80,7 +79,7 @@ class MP:
     @param id
     @return json
 
-    """    
+    """
     def refund_payment(self, id):
         try:
             access_token = self.get_access_token()
@@ -88,16 +87,16 @@ class MP:
             raise e
 
         refund_status = {"status":"refunded"}
-        
+
         response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, refund_status)
         return response
-    
+
     """
     Cancel pending payment
     @param id
     @return json
 
-    """    
+    """
     def cancel_payment(self, id):
         try:
             access_token = self.get_access_token()
@@ -105,10 +104,10 @@ class MP:
             raise e
 
         cancel_status = {"status":"cancelled"}
-        
+
         response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, cancel_status)
         return response
-    
+
     """
     Cancel preapproval payment
     @param id
@@ -143,12 +142,12 @@ class MP:
         filters["access_token"] = access_token
         filters["offset"] = offset
         filters["limit"] = limit
-        
+
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
         payment_result = self.__rest_client.get(uri_prefix+"/collections/search", filters)
-        return payment_result        
-        
+        return payment_result
+
     """
     Create a checkout preference
     @param preference
@@ -163,7 +162,7 @@ class MP:
 
         preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
         return preference_result
-    
+
     """
     Update a checkout preference
     @param id
@@ -176,10 +175,10 @@ class MP:
             access_token = self.get_access_token()
         except Exception,e:
             raise e
-        
+
         preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
         return preference_result
-    
+
     """
     Update a checkout preference
     @param id
@@ -192,7 +191,7 @@ class MP:
             access_token = self.get_access_token()
         except Exception,e:
             raise e
-        
+
         preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
     
@@ -228,7 +227,7 @@ class MP:
         return preapproval_payment_result
     
     ##################################################################################
-    class __RestClient:
+    class __RestClient(object):
         __API_BASE_URL = "https://api.mercadolibre.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
@@ -237,15 +236,14 @@ class MP:
             self.__outer = outer
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
 
-        
         def get(self, uri, data=None):
             api_result = requests.get(self.__API_BASE_URL+uri, params=data, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
-                "response": api_result.json
+                "response": api_result.json()
             }
-            
+
             return response
 
         def post(self, uri, data=None, content_type=MIME_JSON):
@@ -256,11 +254,11 @@ class MP:
 
             response = {
                 "status": api_result.status_code,
-                "response": api_result.json
+                "response": api_result.json()
             }
 
             return response
-            
+
         def put(self, uri, data=None, content_type=MIME_JSON):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
@@ -269,7 +267,7 @@ class MP:
 
             response = {
                 "status": api_result.status_code,
-                "response": api_result.json
+                "response": api_result.json()
             }
-            
+
             return response
