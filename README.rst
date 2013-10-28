@@ -10,6 +10,7 @@ Usage:
     - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/aplicacoes>`_
     - México: `<https://www.mercadopago.com/mlm/herramientas/aplicaciones>`_
     - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
+    - Colombia: `<https://www.mercadopago.com/mco/herramientas/aplicaciones>`_
 
 ::
 
@@ -120,6 +121,7 @@ Receiving IPN notification:
     - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/notificacoes>`_
     - México: `<https://www.mercadopago.com/mlm/herramientas/notificaciones>`_
     - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/notificaciones>`_
+    - Colombia: `<https://www.mercadopago.com/mco/herramientas/notificaciones>`_
 
 ::
 
