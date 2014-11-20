@@ -1,6 +1,10 @@
 from json.encoder import JSONEncoder
 import requests
 
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.poolmanager import PoolManager
+import ssl
+
 """
 MercadoPago Integration Library
 Access MercadoPago for payments integration
@@ -9,6 +13,12 @@ Access MercadoPago for payments integration
 
 """
 
+class MPSSLAdapter(HTTPAdapter):
+    def init_poolmanager(self, connections, maxsize, block=False):
+        self.poolmanager = PoolManager(num_pools=connections,
+                                       maxsize=maxsize,
+                                       block=block,
+                                       ssl_version=ssl.PROTOCOL_TLSv1)
 
 class MPException(Exception):
     def __init__(self, value):
@@ -22,7 +32,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.2.0"
+    version = "0.2.2"
     __access_data = None
     __sandbox = False
 
@@ -229,7 +239,9 @@ class MP(object):
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
 
         def get(self, uri, data=None):
-            api_result = requests.get(self.__API_BASE_URL+uri, params=data, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            s = requests.Session()
+            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            api_result = s.get(self.__API_BASE_URL+uri, params=data, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -242,7 +254,9 @@ class MP(object):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            api_result = requests.post(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            s = requests.Session()
+            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            api_result = s.post(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -255,7 +269,9 @@ class MP(object):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            api_result = requests.put(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            s = requests.Session()
+            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            api_result = s.put(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
