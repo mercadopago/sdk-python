@@ -2,8 +2,8 @@ import unittest
 import mercadopago
 import json
 
-client_id = "2872"
-client_secret = "MpVkF902XmJ6HnU6YsgZOkNlbCKRML99"
+client_id = "CLIENT_ID"
+client_secret = "CLIENT_SECRET"
 
 class TestMercadopago(unittest.TestCase):
 
