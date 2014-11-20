@@ -8,6 +8,19 @@ Access MercadoPago for payments integration
 @author hcasatti
 
 """
+
+
+class MPException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return self.value
+
+class MPInvalidCredentials(MPException):
+    pass
+
+
 class MP(object):
     version = "0.2.0"
     __access_data = None
@@ -37,19 +50,16 @@ class MP(object):
             self.__access_data = access_data["response"]
             return  self.__access_data["access_token"]
         else:
-            raise Exception(access_data)
+            raise MPInvalidCredentials(str(access_data))
 
     """
     Get information for specific payment
     @param id
     @return json
 
-    """    
+    """
     def get_payment(self, id):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
@@ -81,10 +91,7 @@ class MP(object):
 
     """
     def refund_payment(self, id):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         refund_status = {"status":"refunded"}
 
@@ -98,10 +105,7 @@ class MP(object):
 
     """
     def cancel_payment(self, id):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         cancel_status = {"status":"cancelled"}
 
@@ -134,10 +138,7 @@ class MP(object):
 
     """
     def search_payment(self, filters, offset=0, limit=0):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         filters["access_token"] = access_token
         filters["offset"] = offset
@@ -155,10 +156,7 @@ class MP(object):
 
     """
     def create_preference(self, preference):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
         return preference_result
@@ -171,10 +169,7 @@ class MP(object):
 
     """
     def update_preference(self, id, preference):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
         return preference_result
@@ -187,10 +182,7 @@ class MP(object):
 
     """
     def get_preference(self, id):
-        try:
-            access_token = self.get_access_token()
-        except Exception,e:
-            raise e
+        access_token = self.get_access_token()
 
         preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
