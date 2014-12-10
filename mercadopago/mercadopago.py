@@ -32,7 +32,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.3.0"
+    version = "0.3.1"
     __access_data = None
     __sandbox = False
 
