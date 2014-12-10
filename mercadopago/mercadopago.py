@@ -1,3 +1,10 @@
+"""
+MercadoPago Integration Library
+Access MercadoPago for payments integration
+
+@author hcasatti
+"""
+
 from json.encoder import JSONEncoder
 import requests
 
@@ -5,13 +12,6 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 import ssl
 
-"""
-MercadoPago Integration Library
-Access MercadoPago for payments integration
-
-@author hcasatti
-
-"""
 
 class MPSSLAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
@@ -62,13 +62,14 @@ class MP(object):
         else:
             raise MPInvalidCredentials(str(access_data))
 
-    """
-    Get information for specific payment
-    @param id
-    @return json
-
-    """
     def get_payment(self, id):
+        """
+        Get information for specific payment
+        
+        @param id
+        @return json
+        """
+
         access_token = self.get_access_token()
 
         uri_prefix = "/sandbox" if self.__sandbox else ""
@@ -79,13 +80,14 @@ class MP(object):
     def get_payment_info(self, id):
         return self.get_payment(id)
 
-    """
-    Get information for specific authorized payment
-    @param id
-    @return json
-
-    """    
     def get_authorized_payment(self, id):
+        """
+        Get information for specific authorized payment
+        
+        @param id
+        @return json
+        """    
+
         try:
             access_token = self.get_access_token()
         except Exception,e:
@@ -94,13 +96,15 @@ class MP(object):
         authorized_payment_info = self.__rest_client.get("/authorized_payments/"+id+"?access_token="+access_token)
         return authorized_payment_info
 
-    """
-    Refund accredited payment
-    @param id
-    @return json
-
-    """
+    
     def refund_payment(self, id):
+        """
+        Refund accredited payment
+        
+        @param id
+        @return json
+        """
+    
         access_token = self.get_access_token()
 
         refund_status = {"status":"refunded"}
@@ -108,13 +112,15 @@ class MP(object):
         response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, refund_status)
         return response
 
-    """
-    Cancel pending payment
-    @param id
-    @return json
-
-    """
+    
     def cancel_payment(self, id):
+        """
+        Cancel pending payment
+        
+        @param id
+        @return json
+        """
+    
         access_token = self.get_access_token()
 
         cancel_status = {"status":"cancelled"}
@@ -122,13 +128,15 @@ class MP(object):
         response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, cancel_status)
         return response
 
-    """
-    Cancel preapproval payment
-    @param id
-    @return json
 
-    """    
     def cancel_preapproval_payment(self, id):
+        """
+        Cancel preapproval payment
+        
+        @param id
+        @return json
+        """    
+
         try:
             access_token = self.get_access_token()
         except Exception,e:
@@ -139,15 +147,17 @@ class MP(object):
         response = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, cancel_status)
         return response
     
-    """
-    Search payments according to filters, with pagination
-    @param filters
-    @param offset
-    @param limit
-    @return json
 
-    """
     def search_payment(self, filters, offset=0, limit=0):
+        """
+        Search payments according to filters, with pagination
+        
+        @param filters
+        @param offset
+        @param limit
+        @return json
+        """
+
         access_token = self.get_access_token()
 
         filters["access_token"] = access_token
@@ -159,51 +169,56 @@ class MP(object):
         payment_result = self.__rest_client.get(uri_prefix+"/collections/search", filters)
         return payment_result
 
-    """
-    Create a checkout preference
-    @param preference
-    @return json
-
-    """
     def create_preference(self, preference):
+        """
+        Create a checkout preference
+        
+        @param preference
+        @return json
+        """
+
         access_token = self.get_access_token()
 
         preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
         return preference_result
 
-    """
-    Update a checkout preference
-    @param id
-    @param preference
-    @return json
 
-    """
     def update_preference(self, id, preference):
+        """
+        Update a checkout preference
+        
+        @param id
+        @param preference
+        @return json
+        """
+
         access_token = self.get_access_token()
 
         preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
         return preference_result
 
-    """
-    Update a checkout preference
-    @param id
-    @param preference
-    @return json
 
-    """
     def get_preference(self, id):
+        """
+        Update a checkout preference
+        
+        @param id
+        @param preference
+        @return json
+        """
         access_token = self.get_access_token()
 
         preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
     
-    """
-    Create a preapproval payment
-    @param preapproval_payment
-    @return json
 
-    """
     def create_preapproval_payment(self, preapproval_payment):
+        """
+        Create a preapproval payment
+        
+        @param preapproval_payment
+        @return json
+        """
         try:
             access_token = self.get_access_token()
         except Exception,e:
@@ -212,14 +227,15 @@ class MP(object):
         preapproval_payment_result = self.__rest_client.post("/preapproval?access_token="+access_token, preapproval_payment)
         return preapproval_payment_result
     
-    """
-    Update a preapproval payment
-    @param id
-    @param preference
-    @return json
 
-    """
     def get_preapproval_payment(self, id):
+        """
+        Update a preapproval payment
+        
+        @param id
+        @param preference
+        @return json
+        """
         try:
             access_token = self.get_access_token()
         except Exception,e:
