@@ -6,11 +6,11 @@ Usage:
 ======
 
 - Get your **CLIENT_ID** and **CLIENT_SECRET** in the following address:
-    - Argentina: `<https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
-    - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/aplicacoes>`_
-    - México: `<https://www.mercadopago.com/mlm/herramientas/aplicaciones>`_
-    - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
-    - Colombia: `<https://www.mercadopago.com/mco/herramientas/aplicaciones>`_
+    - Argentina: `https://www.mercadopago.com/mla/herramientas/aplicaciones <https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
+    - Brazil: `https://www.mercadopago.com/mlb/ferramentas/aplicacoes <https://www.mercadopago.com/mlb/ferramentas/aplicacoes>`_
+    - México: `https://www.mercadopago.com/mlm/herramientas/aplicaciones <https://www.mercadopago.com/mlm/herramientas/aplicaciones>`_
+    - Venezuela: `https://www.mercadopago.com/mlv/herramientas/aplicaciones <https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
+    - Colombia: `https://www.mercadopago.com/mco/herramientas/aplicaciones <https://www.mercadopago.com/mco/herramientas/aplicaciones>`_
 
 ::
 
@@ -117,11 +117,11 @@ Receiving IPN notification:
 ---------------------------
 
 - Go to **Mercadopago IPN configuration**:
-    - Argentina: `<https://www.mercadopago.com/mla/herramientas/notificaciones>`_
-    - Brazil: `<https://www.mercadopago.com/mlb/ferramentas/notificacoes>`_
-    - México: `<https://www.mercadopago.com/mlm/herramientas/notificaciones>`_
-    - Venezuela: `<https://www.mercadopago.com/mlv/herramientas/notificaciones>`_
-    - Colombia: `<https://www.mercadopago.com/mco/herramientas/notificaciones>`_
+    - Argentina: `https://www.mercadopago.com/mla/herramientas/notificaciones <https://www.mercadopago.com/mla/herramientas/notificaciones>`_
+    - Brazil: `https://www.mercadopago.com/mlb/ferramentas/notificacoes <https://www.mercadopago.com/mlb/ferramentas/notificacoes>`_
+    - México: `https://www.mercadopago.com/mlm/herramientas/notificaciones <https://www.mercadopago.com/mlm/herramientas/notificaciones>`_
+    - Venezuela: `https://www.mercadopago.com/mlv/herramientas/notificaciones <https://www.mercadopago.com/mlv/herramientas/notificaciones>`_
+    - Colombia: `https://www.mercadopago.com/mco/herramientas/notificaciones <https://www.mercadopago.com/mco/herramientas/notificaciones>`_
 
 ::
 
@@ -161,8 +161,7 @@ Refund (only for accredited payments):
         // Show result
         return json.dumps(result, indent=4)
 
-`About Cancel & Refund
-<http://developers.mercadopago.com/documentacion/devolucion-y-cancelacion>`_
+`About Cancel & Refund <http://developers.mercadopago.com/documentacion/devolucion-y-cancelacion>`_
 
 Generic resources methods
 --------------------------------------
