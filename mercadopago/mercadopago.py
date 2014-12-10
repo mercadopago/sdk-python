@@ -32,7 +32,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.2.2"
+    version = "0.3.0"
     __access_data = None
     __sandbox = False
 
@@ -54,7 +54,7 @@ class MP(object):
                            "grant_type": "client_credentials"
                            }
 
-        access_data = self.__rest_client.post("/oauth/token", app_client_values, self.__RestClient.MIME_FORM)
+        access_data = self.__rest_client.post("/oauth/token", None, app_client_values, self.__RestClient.MIME_FORM)
 
         if access_data["status"] == 200:
             self.__access_data = access_data["response"]
@@ -213,7 +213,7 @@ class MP(object):
         return preapproval_payment_result
     
     """
-    Update a preapproval payment
+    Get a preapproval payment
     @param id
     @param preference
     @return json
@@ -228,6 +228,83 @@ class MP(object):
         preapproval_payment_result = self.__rest_client.get("/preapproval/"+id+"?access_token="+access_token)
         return preapproval_payment_result
     
+    """
+    Update a preapproval payment
+    @param id
+    @param preference
+    @return json
+
+    """
+    def update_preapproval_payment(self, id, preapproval_payment):
+        try:
+            access_token = self.get_access_token()
+        except Exception,e:
+            raise e
+        
+        preapproval_payment_result = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, preapproval_payment)
+        return preapproval_payment_result
+    
+    """
+    Generic resource get
+    @param uri
+    @param authenticate = true
+    @return json
+
+    """
+    def get(self, uri, params=None, authenticate=True):
+        if params is None:
+            params = {}
+
+        if authenticate:
+            try:
+                access_token = self.get_access_token()
+                params["access_token"] = access_token
+            except Exception,e:
+                raise e
+
+        result = self.__rest_client.get(uri, params)
+        return result
+    
+    """
+    Generic resource post
+    @param uri
+    @param data
+    @return json
+
+    """
+    def post(self, uri, data, params=None):
+        if params is None:
+            params = {}
+
+        try:
+            access_token = self.get_access_token()
+            params["access_token"] = access_token
+        except Exception,e:
+            raise e
+
+        result = self.__rest_client.post(uri, data, params)
+        return result
+    
+    """
+    Generic resource put
+    @param uri
+    @param data
+    @return json
+
+    """
+    def put(self, uri, data, params=None):
+        if params is None:
+            params = {}
+
+        try:
+            access_token = self.get_access_token()
+            params["access_token"] = access_token
+        except Exception,e:
+            raise e
+
+        result = self.__rest_client.put(uri, data, params)
+        return result
+    
     ##################################################################################
     class __RestClient(object):
         __API_BASE_URL = "https://api.mercadolibre.com"
@@ -238,10 +315,10 @@ class MP(object):
             self.__outer = outer
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
 
-        def get(self, uri, data=None):
+        def get(self, uri, params=None):
             s = requests.Session()
             s.mount(self.__API_BASE_URL, MPSSLAdapter())
-            api_result = s.get(self.__API_BASE_URL+uri, params=data, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -250,13 +327,13 @@ class MP(object):
 
             return response
 
-        def post(self, uri, data=None, content_type=MIME_JSON):
+        def post(self, uri, data=None, params=None, content_type=MIME_JSON):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
             s = requests.Session()
             s.mount(self.__API_BASE_URL, MPSSLAdapter())
-            api_result = s.post(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -265,13 +342,13 @@ class MP(object):
 
             return response
 
-        def put(self, uri, data=None, content_type=MIME_JSON):
+        def put(self, uri, data=None, params=None, content_type=MIME_JSON):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
             s = requests.Session()
             s.mount(self.__API_BASE_URL, MPSSLAdapter())
-            api_result = s.put(self.__API_BASE_URL+uri, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,

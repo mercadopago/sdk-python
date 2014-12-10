@@ -163,3 +163,25 @@ Refund (only for accredited payments):
 
 `About Cancel & Refund
 <http://developers.mercadopago.com/documentacion/devolucion-y-cancelacion>`_
+
+Generic resources methods
+--------------------------------------
+
+You can access any other resource from the MercadoPago API using the generic methods:
+
+::
+    // Get a resource, with optional URL params. Also you can disable authentication for public APIs
+    mp.get ("/resource/uri", [params], [authenticate=true]);
+
+    // Create a resource with "data" and optional URL params.
+    mp.post ("/resource/uri", data, [params]);
+
+    // Update a resource with "data" and optional URL params.
+    mp.put ("/resource/uri", data, [params]);
+
+For example, if you want to get the Sites list (no params and no authentication):
+
+::
+    result = mp.get ("/sites", null, false);
+
+    print (json.dumps(result, indent=4))
