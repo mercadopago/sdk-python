@@ -169,6 +169,7 @@ Generic resources methods
 You can access any other resource from the MercadoPago API using the generic methods:
 
 ::
+
     // Get a resource, with optional URL params. Also you can disable authentication for public APIs
     mp.get ("/resource/uri", [params], [authenticate=true]);
 
@@ -181,6 +182,7 @@ You can access any other resource from the MercadoPago API using the generic met
 For example, if you want to get the Sites list (no params and no authentication):
 
 ::
+
     result = mp.get ("/sites", null, false);
 
     print (json.dumps(result, indent=4))
