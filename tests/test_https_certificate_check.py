@@ -6,6 +6,7 @@ import mercadopago
 import os
 from multiprocessing import Process
 from requests.exceptions import SSLError
+import socket
 
 
 client_id = "CLIENT_ID"
@@ -35,7 +36,20 @@ class TestHttps(unittest.TestCase):
 
         self.handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 
-        self.httpd = BaseHTTPServer.HTTPServer(('localhost', 4443), self.handler)
+        self.httpd_port = None
+        self.httpd = None
+        for port_to_try in range(8000, 8099):
+            try:
+                self.httpd = BaseHTTPServer.HTTPServer(('localhost', port_to_try),
+                                                       self.handler)
+                self.httpd_port = port_to_try
+                break
+            except socket.error:
+                # print "Couldn't use port {0}".format(port_to_try)
+                pass
+
+        assert self.httpd_port, "Couldn't bind to any port"
+
         self.httpd.socket = ssl.wrap_socket(self.httpd.socket,
                                        certfile=self.get_pem_file(),
                                        server_side=True)
@@ -60,7 +74,7 @@ class TestHttps(unittest.TestCase):
 
         mp = mercadopago.MP(client_id, client_secret)
         mp._MP__rest_client._RestClient__API_BASE_URL = \
-            'https://localhost:4443'
+            "https://localhost:{0}".format(self.httpd_port)
 
         with self.assertRaises(SSLError):
             mp.create_preference(preference)
