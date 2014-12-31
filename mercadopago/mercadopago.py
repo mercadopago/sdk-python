@@ -344,8 +344,7 @@ class MP(object):
             return session
 
         def get(self, uri, params=None):
-            s = requests.Session()
-            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            s = self.get_session()
             api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
@@ -359,8 +358,7 @@ class MP(object):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            s = requests.Session()
-            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            s = self.get_session()
             api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
@@ -374,8 +372,7 @@ class MP(object):
             if data is not None and content_type == self.MIME_JSON:
                 data = JSONEncoder().encode(data)
 
-            s = requests.Session()
-            s.mount(self.__API_BASE_URL, MPSSLAdapter())
+            s = self.get_session()
             api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
