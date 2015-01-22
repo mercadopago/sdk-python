@@ -17,8 +17,7 @@ class MPSSLAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
-                                       block=block,
-                                       ssl_version=ssl.PROTOCOL_TLSv1)
+                                       block=block)
 
 class MPException(Exception):
     def __init__(self, value):
@@ -32,7 +31,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.3.1"
+    version = "0.3.2"
     __access_data = None
     __sandbox = False
 
@@ -320,6 +319,25 @@ class MP(object):
         result = self.__rest_client.put(uri, data, params)
         return result
     
+    def delete(self, uri, params=None):
+        """
+        Generic resource delete
+        @param uri
+        @return json
+
+        """
+        if params is None:
+            params = {}
+
+        try:
+            access_token = self.get_access_token()
+            params["access_token"] = access_token
+        except Exception,e:
+            raise e
+
+        result = self.__rest_client.delete(uri, params)
+        return result
+    
     ##################################################################################
     class __RestClient(object):
         __API_BASE_URL = "https://api.mercadolibre.com"
@@ -381,3 +399,15 @@ class MP(object):
             }
 
             return response
+
+        def delete(self, uri, params=None):
+            s = self.get_session()
+            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+
+            response = {
+                "status": api_result.status_code,
+                "response": api_result.json()
+            }
+
+            return response
+
