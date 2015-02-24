@@ -17,8 +17,7 @@ class MPSSLAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
-                                       block=block,
-                                       ssl_version=ssl.PROTOCOL_TLSv1)
+                                       block=block)
 
 class MPException(Exception):
     def __init__(self, value):
@@ -32,13 +31,27 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.3.1"
+    version = "0.3.3"
     __access_data = None
+    __ll_access_token = None
     __sandbox = False
 
-    def __init__(self, client_id, client_secret):
-        self.__client_id = client_id
-        self.__client_secret = client_secret
+    def __init__(self, *args):
+        """
+        Instantiate MP with credentials:
+        mp = mercadopago.MP(client_id, client_secret)
+
+        Instantiate MP with Long Live Access Token:
+        mp = mercadopago.MP(ll_access_token)
+        """
+        if len(args) == 2:
+            self.__client_id = args[0]
+            self.__client_secret = args[1]
+        elif len(args) == 1:
+            self.__ll_access_token = args[0]
+        else:
+            raise MPInvalidCredentials(None)
+
         self.__rest_client = self.__RestClient(self)
 
     def sandbox_mode(self, enable=None):
@@ -48,6 +61,9 @@ class MP(object):
         return self.__sandbox
 
     def get_access_token(self):
+        if not self.__ll_access_token is None:
+            return self.__ll_access_token
+
         app_client_values = {
                            "client_id": self.__client_id,
                            "client_secret": self.__client_secret,
@@ -320,9 +336,28 @@ class MP(object):
         result = self.__rest_client.put(uri, data, params)
         return result
     
+    def delete(self, uri, params=None):
+        """
+        Generic resource delete
+        @param uri
+        @return json
+
+        """
+        if params is None:
+            params = {}
+
+        try:
+            access_token = self.get_access_token()
+            params["access_token"] = access_token
+        except Exception,e:
+            raise e
+
+        result = self.__rest_client.delete(uri, params)
+        return result
+    
     ##################################################################################
     class __RestClient(object):
-        __API_BASE_URL = "https://api.mercadolibre.com"
+        __API_BASE_URL = "https://api.mercadopago.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
 
@@ -381,3 +416,15 @@ class MP(object):
             }
 
             return response
+
+        def delete(self, uri, params=None):
+            s = self.get_session()
+            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+
+            response = {
+                "status": api_result.status_code,
+                "response": api_result.json()
+            }
+
+            return response
+

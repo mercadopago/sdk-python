@@ -79,6 +79,8 @@ class TestHttps(unittest.TestCase):
         with self.assertRaises(SSLError):
             mp.create_preference(preference)
 
+        print("test_fail_if_https_certificate_check_fails OK!")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -5,6 +5,9 @@ MercadoPago SDK module for Payments integration
 Usage:
 ======
 
+...with your credentials:
+-------------------------
+
 - Get your **CLIENT_ID** and **CLIENT_SECRET** in the following address:
     - Argentina: `https://www.mercadopago.com/mla/herramientas/aplicaciones <https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
     - Brazil: `https://www.mercadopago.com/mlb/ferramentas/aplicacoes <https://www.mercadopago.com/mlb/ferramentas/aplicacoes>`_
@@ -18,6 +21,16 @@ Usage:
     import json
 
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
+
+...with your long live access token:
+------------------------------------
+
+::
+
+    import mercadopago
+    import json
+
+    mp = mercadopago.MP("LL_ACCESS_TOKEN")
 
 Get your Access Token:
 -----------------------------
@@ -178,6 +191,9 @@ You can access any other resource from the MercadoPago API using the generic met
 
     // Update a resource with "data" and optional URL params.
     mp.put ("/resource/uri", data, [params]);
+
+    // Delete a resource with optional URL params.
+    mp.delete ("/resource/uri", [params]);
 
 For example, if you want to get the Sites list (no params and no authentication):
 
