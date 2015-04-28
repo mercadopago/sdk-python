@@ -1,12 +1,23 @@
-===============================================
 MercadoPago SDK module for Payments integration
 ===============================================
 
-Usage:
-======
+* `Install`_
+* `Basic checkout`_
+* `Customized checkout`_
+* `Generic methods`_
 
-...with your credentials:
--------------------------
+Install
+-------
+
+.. code:: bash
+
+    pip install mercadopago
+
+Basic checkout
+--------------
+
+Configure your credentials
+**************************
 
 - Get your **CLIENT_ID** and **CLIENT_SECRET** in the following address:
     - Argentina: `https://www.mercadopago.com/mla/herramientas/aplicaciones <https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
@@ -15,40 +26,30 @@ Usage:
     - Venezuela: `https://www.mercadopago.com/mlv/herramientas/aplicaciones <https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
     - Colombia: `https://www.mercadopago.com/mco/herramientas/aplicaciones <https://www.mercadopago.com/mco/herramientas/aplicaciones>`_
 
-::
+.. code:: python
 
     import mercadopago
     import json
 
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
 
-...with your long live access token:
-------------------------------------
+Preferences
+***********
 
-::
+Get an existent Checkout preference
+'''''''''''''''''''''''''''''''''''
 
-    import mercadopago
-    import json
-
-    mp = mercadopago.MP("LL_ACCESS_TOKEN")
-
-Get your Access Token:
------------------------------
-
-::
+.. code:: python
 
     def index(req, **kwargs):
-        accessToken = mp.get_access_token()
+        preferenceResult = mp.get_preference("PREFERENCE_ID")
+        
+        return json.dumps(preferenceResult, indent=4)
 
-        return accessToken
+Create a Checkout preference
+''''''''''''''''''''''''''''
 
-Using MercadoPago Checkout
-==========================
-
-Create a Checkout preference:
------------------------------
-
-::
+.. code:: python
 
     def index(req, **kwargs):
         preference = {
@@ -66,26 +67,10 @@ Create a Checkout preference:
 
         return json.dumps(preferenceResult, indent=4)
 
-`Others items to use
-<http://developers.mercadopago.com/documentacion/recibir-pagos#glossary>`_
+Update an existent Checkout preference
+''''''''''''''''''''''''''''''''''''''
 
-
-
-Get an existent Checkout preference:
-------------------------------------
-
-::
-
-    def index(req, **kwargs):
-        preferenceResult = mp.get_preference("PREFERENCE_ID")
-        
-        return json.dumps(preferenceResult, indent=4)
-
-
-Update an existent Checkout preference:
----------------------------------------
-
-::
+.. code:: python
 
     def index(req, **kwargs):
         preference = {
@@ -103,14 +88,13 @@ Update an existent Checkout preference:
         
         return json.dumps(preferenceResult, indent=4)
 
+Payments/Collections
+********************
 
-Using MercadoPago Payment
-=========================
+Search for payments
+'''''''''''''''''''
 
-Searching:
-----------
-
-::
+.. code:: python
 
     def index(req, **kwargs):
         filters = {
@@ -123,38 +107,27 @@ Searching:
         
         return json.dumps(searchResult, indent=4)
 
-`More search examples
-<http://developers.mercadopago.com/documentacion/busqueda-de-pagos-recibidos>`_
+Get payment data
+''''''''''''''''
 
-Receiving IPN notification:
----------------------------
-
-- Go to **Mercadopago IPN configuration**:
-    - Argentina: `https://www.mercadopago.com/mla/herramientas/notificaciones <https://www.mercadopago.com/mla/herramientas/notificaciones>`_
-    - Brazil: `https://www.mercadopago.com/mlb/ferramentas/notificacoes <https://www.mercadopago.com/mlb/ferramentas/notificacoes>`_
-    - México: `https://www.mercadopago.com/mlm/herramientas/notificaciones <https://www.mercadopago.com/mlm/herramientas/notificaciones>`_
-    - Venezuela: `https://www.mercadopago.com/mlv/herramientas/notificaciones <https://www.mercadopago.com/mlv/herramientas/notificaciones>`_
-    - Colombia: `https://www.mercadopago.com/mco/herramientas/notificaciones <https://www.mercadopago.com/mco/herramientas/notificaciones>`_
-
-::
+.. code:: python
 
     import mercadopago
     import json
 
     def index(req, **kwargs):
         mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
-        paymentInfo = mp.get_payment_info (kwargs["id"])
+        paymentInfo = mp.get_payment (kwargs["id"])
         
         if paymentInfo["status"] == 200:
             return json.dumps(paymentInfo, indent=4)
         else:
             return None
 
+Cancel (only for pending payments)
+''''''''''''''''''''''''''''''''''
 
-Cancel (only for pending payments):
------------------------------------
-
-::
+.. code:: python
 
     def index(req, **kwargs):
         result = mp.cancel_payment("ID")
@@ -163,10 +136,10 @@ Cancel (only for pending payments):
         return json.dumps(result, indent=4)
 
 
-Refund (only for accredited payments):
---------------------------------------
+Refund (only for accredited payments)
+'''''''''''''''''''''''''''''''''''''
 
-::
+.. code:: python
 
     def index(req, **kwargs):
         result = mp.refund_payment("ID")
@@ -174,14 +147,61 @@ Refund (only for accredited payments):
         // Show result
         return json.dumps(result, indent=4)
 
-`About Cancel & Refund <http://developers.mercadopago.com/documentacion/devolucion-y-cancelacion>`_
+Customized checkout
+-------------------
 
-Generic resources methods
---------------------------------------
+
+Configure your credentials
+**************************
+
+* Get your **ACCESS_TOKEN** in the following address:
+    * Argentina: `https://www.mercadopago.com/mla/account/credentials <https://www.mercadopago.com/mla/account/credentials>`_
+    * Brazil: `https://www.mercadopago.com/mlb/account/credentials <https://www.mercadopago.com/mlb/account/credentials>`_
+    * Mexico: `https://www.mercadopago.com/mlm/account/credentials <https://www.mercadopago.com/mlm/account/credentials>`_
+    * Venezuela: `https://www.mercadopago.com/mlv/account/credentials <https://www.mercadopago.com/mlv/account/credentials>`_
+    * Colombia: `https://www.mercadopago.com/mco/account/credentials <https://www.mercadopago.com/mco/account/credentials>`_
+
+.. code:: python
+
+    import mercadopago
+    import json
+
+    mp = mercadopago.MP("ACCESS_TOKEN")
+
+Create payment
+**************
+
+.. code:: python
+
+    mp.post ("/v1/payments", payment_data)
+
+Create customer
+***************
+
+.. code:: python
+
+    mp.post ("/v1/customers", {"email": "email@test.com"})
+
+Get customer
+************
+
+.. code:: python
+
+    mp.get ("/v1/customers/CUSTOMER_ID")
+
+* View more Custom checkout related APIs in Developers Site
+    * Argentina: `https://labs.mercadopago.com.ar/developers <https://labs.mercadopago.com.ar/developers>`_
+    * Brazil: `https://labs.mercadopago.com.br/developers <https://labs.mercadopago.com.br/developers>`_
+    * Mexico: `https://labs.mercadopago.com.mx/developers <https://labs.mercadopago.com.mx/developers>`_
+    * Venezuela: `https://labs.mercadopago.com.ve/developers <https://labs.mercadopago.com.ve/developers>`_
+    * Colombia: `https://labs.mercadopago.com.co/developers <https://labs.mercadopago.com.co/developers>`_
+
+Generic methods
+---------------
 
 You can access any other resource from the MercadoPago API using the generic methods:
 
-::
+.. code:: python
 
     // Get a resource, with optional URL params. Also you can disable authentication for public APIs
     mp.get ("/resource/uri", [params], [authenticate=true]);
@@ -197,7 +217,7 @@ You can access any other resource from the MercadoPago API using the generic met
 
 For example, if you want to get the Sites list (no params and no authentication):
 
-::
+.. code:: python
 
     result = mp.get ("/sites", null, false);
 
