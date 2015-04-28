@@ -9,9 +9,7 @@ MercadoPago SDK module for Payments integration
 Install
 -------
 
-.. code:: bash
-
-    pip install mercadopago
+``pip install mercadopago``
 
 Basic checkout
 --------------
