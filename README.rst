@@ -35,7 +35,7 @@ Preferences
 ***********
 
 Get an existent Checkout preference
-'''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -45,7 +45,7 @@ Get an existent Checkout preference
         return json.dumps(preferenceResult, indent=4)
 
 Create a Checkout preference
-''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -66,7 +66,7 @@ Create a Checkout preference
         return json.dumps(preferenceResult, indent=4)
 
 Update an existent Checkout preference
-''''''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -90,7 +90,7 @@ Payments/Collections
 ********************
 
 Search for payments
-'''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -106,7 +106,7 @@ Search for payments
         return json.dumps(searchResult, indent=4)
 
 Get payment data
-''''''''''''''''
+^^^^^^^^^^^^^^^^
 
 ::
 
@@ -123,7 +123,7 @@ Get payment data
             return None
 
 Cancel (only for pending payments)
-''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -135,7 +135,7 @@ Cancel (only for pending payments)
 
 
 Refund (only for accredited payments)
-'''''''''''''''''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
