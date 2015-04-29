@@ -15,7 +15,7 @@ Basic checkout
 --------------
 
 Configure your credentials
-``````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Get your **CLIENT_ID** and **CLIENT_SECRET** in the following address:
     - Argentina: `https://www.mercadopago.com/mla/herramientas/aplicaciones <https://www.mercadopago.com/mla/herramientas/aplicaciones>`_
@@ -32,10 +32,10 @@ Configure your credentials
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
 
 Preferences
-```````````
+~~~~~~~~~~~
 
 Get an existent Checkout preference
-:::::::::::::::::::::::::::::::::::
+***********************************
 
 ::
 
@@ -45,7 +45,7 @@ Get an existent Checkout preference
         return json.dumps(preferenceResult, indent=4)
 
 Create a Checkout preference
-::::::::::::::::::::::::::::
+****************************
 
 ::
 
@@ -66,7 +66,7 @@ Create a Checkout preference
         return json.dumps(preferenceResult, indent=4)
 
 Update an existent Checkout preference
-::::::::::::::::::::::::::::::::::::::
+**************************************
 
 ::
 
@@ -87,10 +87,10 @@ Update an existent Checkout preference
         return json.dumps(preferenceResult, indent=4)
 
 Payments/Collections
-````````````````````
+~~~~~~~~~~~~~~~~~~~~
 
 Search for payments
-:::::::::::::::::::
+*******************
 
 ::
 
@@ -106,7 +106,7 @@ Search for payments
         return json.dumps(searchResult, indent=4)
 
 Get payment data
-::::::::::::::::
+****************
 
 ::
 
@@ -123,7 +123,7 @@ Get payment data
             return None
 
 Cancel (only for pending payments)
-::::::::::::::::::::::::::::::::::
+**********************************
 
 ::
 
@@ -135,7 +135,7 @@ Cancel (only for pending payments)
 
 
 Refund (only for accredited payments)
-:::::::::::::::::::::::::::::::::::::
+*************************************
 
 ::
 
@@ -150,7 +150,7 @@ Customized checkout
 
 
 Configure your credentials
-``````````````````````````
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Get your **ACCESS_TOKEN** in the following address:
     * Argentina: `https://www.mercadopago.com/mla/account/credentials <https://www.mercadopago.com/mla/account/credentials>`_
@@ -167,21 +167,21 @@ Configure your credentials
     mp = mercadopago.MP("ACCESS_TOKEN")
 
 Create payment
-``````````````
+~~~~~~~~~~~~~~
 
 ::
 
     mp.post ("/v1/payments", payment_data)
 
 Create customer
-```````````````
+~~~~~~~~~~~~~~~
 
 ::
 
     mp.post ("/v1/customers", {"email": "email@test.com"})
 
 Get customer
-````````````
+~~~~~~~~~~~~
 
 ::
 
