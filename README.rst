@@ -24,7 +24,7 @@ Configure your credentials
     - Venezuela: `https://www.mercadopago.com/mlv/herramientas/aplicaciones <https://www.mercadopago.com/mlv/herramientas/aplicaciones>`_
     - Colombia: `https://www.mercadopago.com/mco/herramientas/aplicaciones <https://www.mercadopago.com/mco/herramientas/aplicaciones>`_
 
-.. code:: python
+::
 
     import mercadopago
     import json
@@ -37,7 +37,7 @@ Preferences
 Get an existent Checkout preference
 '''''''''''''''''''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         preferenceResult = mp.get_preference("PREFERENCE_ID")
@@ -47,7 +47,7 @@ Get an existent Checkout preference
 Create a Checkout preference
 ''''''''''''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         preference = {
@@ -68,7 +68,7 @@ Create a Checkout preference
 Update an existent Checkout preference
 ''''''''''''''''''''''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         preference = {
@@ -92,7 +92,7 @@ Payments/Collections
 Search for payments
 '''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         filters = {
@@ -108,7 +108,7 @@ Search for payments
 Get payment data
 ''''''''''''''''
 
-.. code:: python
+::
 
     import mercadopago
     import json
@@ -125,7 +125,7 @@ Get payment data
 Cancel (only for pending payments)
 ''''''''''''''''''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         result = mp.cancel_payment("ID")
@@ -137,7 +137,7 @@ Cancel (only for pending payments)
 Refund (only for accredited payments)
 '''''''''''''''''''''''''''''''''''''
 
-.. code:: python
+::
 
     def index(req, **kwargs):
         result = mp.refund_payment("ID")
@@ -159,7 +159,7 @@ Configure your credentials
     * Venezuela: `https://www.mercadopago.com/mlv/account/credentials <https://www.mercadopago.com/mlv/account/credentials>`_
     * Colombia: `https://www.mercadopago.com/mco/account/credentials <https://www.mercadopago.com/mco/account/credentials>`_
 
-.. code:: python
+::
 
     import mercadopago
     import json
@@ -169,21 +169,21 @@ Configure your credentials
 Create payment
 **************
 
-.. code:: python
+::
 
     mp.post ("/v1/payments", payment_data)
 
 Create customer
 ***************
 
-.. code:: python
+::
 
     mp.post ("/v1/customers", {"email": "email@test.com"})
 
 Get customer
 ************
 
-.. code:: python
+::
 
     mp.get ("/v1/customers/CUSTOMER_ID")
 
@@ -199,7 +199,7 @@ Generic methods
 
 You can access any other resource from the MercadoPago API using the generic methods:
 
-.. code:: python
+::
 
     // Get a resource, with optional URL params. Also you can disable authentication for public APIs
     mp.get ("/resource/uri", [params], [authenticate=true]);
@@ -215,7 +215,7 @@ You can access any other resource from the MercadoPago API using the generic met
 
 For example, if you want to get the Sites list (no params and no authentication):
 
-.. code:: python
+::
 
     result = mp.get ("/sites", null, false);
 
