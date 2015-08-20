@@ -1,4 +1,9 @@
-import BaseHTTPServer, SimpleHTTPServer
+try:
+    from BaseHTTPServer import HTTPServer
+    from SimpleHTTPServer import SimpleHTTPRequestHandler
+except ImportError:
+    from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 import ssl
 import unittest
 
@@ -34,13 +39,13 @@ class TestHttps(unittest.TestCase):
     def setUp(self):
         self.unset_proxy_environment_variables()
 
-        self.handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+        self.handler = SimpleHTTPRequestHandler
 
         self.httpd_port = None
         self.httpd = None
         for port_to_try in range(8000, 8099):
             try:
-                self.httpd = BaseHTTPServer.HTTPServer(('localhost', port_to_try),
+                self.httpd = HTTPServer(('localhost', port_to_try),
                                                        self.handler)
                 self.httpd_port = port_to_try
                 break
