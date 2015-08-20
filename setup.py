@@ -30,7 +30,7 @@ setup(
     author_email='horacio.casatti@mercadolibre.com',
     keywords='api mercadopago checkout payment ipn sdk integration',
     packages=['mercadopago'],
-    url='https://github.com/mercadopago/sdk-python.git',
+    url='https://github.com/mercadopago/sdk-python',
     description='Mercadopago SDK module for Payments integration',
     long_description=open('README.rst').read(),
     install_requires='requests>=2.4.3',
@@ -41,6 +41,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: Freely Distributable',
     ]

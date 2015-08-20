@@ -1,1 +1,1 @@
-from mercadopago import MP
+from .mercadopago import MP
