@@ -9,7 +9,13 @@ MercadoPago SDK module for Payments integration
 Install
 -------
 
+On Python 2.x
+
 ``pip install mercadopago``
+
+On Python 3.x
+
+``pip3 install mercadopago``
 
 Basic checkout
 --------------
@@ -221,3 +227,14 @@ For example, if you want to get the Sites list (no params and no authentication)
     result = mp.get ("/sites", null, false);
 
     print (json.dumps(result, indent=4))
+
+Running tests
+-------------
+
+On Python 2.x
+
+``python setup.py test``
+
+On Python 3.x
+
+``python3 setup.py test``
