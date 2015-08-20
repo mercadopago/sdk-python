@@ -25,7 +25,7 @@ class Tests(Command):
 
 setup(
     name='mercadopago',
-    version='0.3.3',
+    version='0.3.4',
     author='Horacio Casatti <horacio.casatti@mercadolibre.com>',
     author_email='horacio.casatti@mercadolibre.com',
     keywords='api mercadopago checkout payment ipn sdk integration',
