@@ -90,7 +90,7 @@ class MP(object):
 
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
-        payment_info = self.__rest_client.get(uri_prefix+"/collections/notifications/"+id+"?access_token="+access_token)
+        payment_info = self.__rest_client.get("/v1/payments/"+id+"?access_token="+access_token)
         return payment_info
 
     def get_payment_info(self, id):
@@ -117,8 +117,8 @@ class MP(object):
         """
 
         access_token = self.get_access_token()
-        refund_status = {"status":"refunded"}
-        response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, refund_status)
+        refund_status = {}
+        response = self.__rest_client.post("/v1/payments/"+id+"/refunds?access_token="+access_token, refund_status)
         return response
 
 
@@ -132,7 +132,7 @@ class MP(object):
 
         access_token = self.get_access_token()
         cancel_status = {"status":"cancelled"}
-        response = self.__rest_client.put("/collections/"+id+"?access_token="+access_token, cancel_status)
+        response = self.__rest_client.put("/v1/payments/"+id+"?access_token="+access_token, cancel_status)
         return response
 
 
@@ -167,7 +167,7 @@ class MP(object):
 
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
-        payment_result = self.__rest_client.get(uri_prefix+"/collections/search", filters)
+        payment_result = self.__rest_client.get("/v1/payments/search", filters)
         return payment_result
 
     def create_preference(self, preference):

@@ -37,14 +37,13 @@ def index(req, **kwargs):
         </head>
         <body>
             <table border='1'>
-                <tr><th>id</th><th>site_id</th><th>date_created</th><th>operation_type</th><th>external_reference</th></tr>"""
+                <tr><th>id</th><th>date_created</th><th>operation_type</th><th>external_reference</th></tr>"""
     for payment in searchResult["response"]["results"]:
         output += "<tr>"
-        output += "<td>"+payment["collection"]["id"]+"</td>\n"
-        output += "<td>"+payment["collection"]["site_id"]+"</td>\n"
-        output += "<td>"+payment["collection"]["date_created"]+"</td>\n"
-        output += "<td>"+payment["collection"]["operation_type"]+"</td>\n"
-        output += "<td>"+payment["collection"]["external_reference"]+"</td>\n"
+        output += "<td>"+payment["id"]+"</td>\n"
+        output += "<td>"+payment["date_created"]+"</td>\n"
+        output += "<td>"+payment["operation_type"]+"</td>\n"
+        output += "<td>"+payment["external_reference"]+"</td>\n"
         output += "</tr>"
     output += """
             </table>

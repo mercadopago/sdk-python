@@ -2,7 +2,7 @@
 
 """
 MercadoPago SDK
-Search payments from two e-mails in January
+Search payments from an e-mail in January
 """
 
 # Import Mercadopago library
@@ -18,7 +18,7 @@ def index(req, **kwargs):
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
     
     filters = {
-        "payer_email": "mail02@mail02.com%20mail01@mail01.com",
+        "payer.email": "mail02@mail02.com",
         "begin_date": "2011-01-01T00:00:00Z",
         "end_date": "2011-02-01T00:00:00Z"
     }
@@ -31,17 +31,16 @@ def index(req, **kwargs):
     <!doctype html>
     <html>
         <head>
-            <title>Search payments from two e-mails in January</title>
+            <title>Search payments from an e-mail in January</title>
         </head>
         <body>
             <table border='1'>
-                <tr><th>id</th><th>site_id</th><th>payment_type</th><th>status</th></tr>"""
+                <tr><th>id</th><th>payment_type</th><th>status</th></tr>"""
     for payment in searchResult["response"]["results"]:
         output += "<tr>"
-        output += "<td>"+payment["collection"]["id"]+"\n"
-        output += "<td>"+payment["collection"]["site_id"]+"\n"
-        output += "<td>"+payment["collection"]["payment_type"]+"\n"
-        output += "<td>"+payment["collection"]["status"]+"\n"
+        output += "<td>"+payment["id"]+"\n"
+        output += "<td>"+payment["payment_type"]+"\n"
+        output += "<td>"+payment["status"]+"\n"
         output += "</tr>"
     output += """
             </table>
