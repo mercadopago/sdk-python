@@ -104,7 +104,6 @@ Search for payments
     def index(req, **kwargs):
         filters = {
             "id": None,
-            "site_id": None,
             "external_reference": None
         }
 

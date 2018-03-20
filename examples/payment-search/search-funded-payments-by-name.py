@@ -19,7 +19,7 @@ def index(req, **kwargs):
     
     filters = {
         "installments": 12,
-        "reason": "product_name",
+        "description": "product_name",
         "operation_type": "regular_payment"
     }
     
@@ -38,9 +38,9 @@ def index(req, **kwargs):
                 <tr><th>id</th><th>external_reference</th><th>status</th></tr>"""
     for payment in searchResult["response"]["results"]:
         output += "<tr>"
-        output += "<td>"+payment["collection"]["id"]+"\n"
-        output += "<td>"+payment["collection"]["external_reference"]+"\n"
-        output += "<td>"+payment["collection"]["status"]+"\n"
+        output += "<td>"+payment["id"]+"\n"
+        output += "<td>"+payment["external_reference"]+"\n"
+        output += "<td>"+payment["status"]+"\n"
         output += "</tr>"
     output += """
             </table>

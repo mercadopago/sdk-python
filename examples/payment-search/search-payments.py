@@ -18,7 +18,6 @@ def index(req, **kwargs):
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
     
     filters = {
-        "site_id": "MLA", # Argentina: MLA; Brasil: MLB
         "external_reference": "Bill001"
     }
 
@@ -37,9 +36,9 @@ def index(req, **kwargs):
                 <tr><th>id</th><th>external_reference</th><th>status</th></tr>"""
     for payment in searchResult["response"]["results"]:
         output += "<tr>"
-        output += "<td>"+payment["collection"]["id"]+"</td>\n"
-        output += "<td>"+payment["collection"]["external_reference"]+"</td>\n"
-        output += "<td>"+payment["collection"]["status"]+"</td>\n"
+        output += "<td>"+payment["id"]+"</td>\n"
+        output += "<td>"+payment["external_reference"]+"</td>\n"
+        output += "<td>"+payment["status"]+"</td>\n"
         output += "</tr>"
     output += """
             </table>
