@@ -19,12 +19,14 @@ class MPSSLAdapter(HTTPAdapter):
                                        maxsize=maxsize,
                                        block=block)
 
+
 class MPException(Exception):
     def __init__(self, value):
         self.value = value
 
     def __repr__(self):
         return self.value
+
 
 class MPInvalidCredentials(MPException):
     pass
@@ -65,16 +67,18 @@ class MP(object):
             return self.__ll_access_token
 
         app_client_values = {
-                           "client_id": self.__client_id,
-                           "client_secret": self.__client_secret,
-                           "grant_type": "client_credentials"
-                           }
+            "client_id": self.__client_id,
+            "client_secret": self.__client_secret,
+            "grant_type": "client_credentials"
+        }
 
-        access_data = self.__rest_client.post("/oauth/token", None, app_client_values, self.__RestClient.MIME_FORM)
+        access_data = self.__rest_client.post("/oauth/token", None,
+                                              app_client_values,
+                                              self.__RestClient.MIME_FORM)
 
         if access_data["status"] == 200:
             self.__access_data = access_data["response"]
-            return  self.__access_data["access_token"]
+            return self.__access_data["access_token"]
         else:
             raise MPInvalidCredentials(str(access_data))
 
@@ -90,7 +94,8 @@ class MP(object):
 
         uri_prefix = "/sandbox" if self.__sandbox else ""
 
-        payment_info = self.__rest_client.get("/v1/payments/"+id+"?access_token="+access_token)
+        payment_info = self.__rest_client.get(
+            "/v1/payments/" + id + "?access_token=" + access_token)
         return payment_info
 
     def get_payment_info(self, id):
@@ -104,9 +109,9 @@ class MP(object):
         @return json
         """
         access_token = self.get_access_token()
-        authorized_payment_info = self.__rest_client.get("/authorized_payments/"+id+"?access_token="+access_token)
+        authorized_payment_info = self.__rest_client.get(
+            "/authorized_payments/" + id + "?access_token=" + access_token)
         return authorized_payment_info
-
 
     def refund_payment(self, id):
         """
@@ -118,9 +123,10 @@ class MP(object):
 
         access_token = self.get_access_token()
         refund_status = {}
-        response = self.__rest_client.post("/v1/payments/"+id+"/refunds?access_token="+access_token, refund_status)
+        response = self.__rest_client.post(
+            "/v1/payments/" + id + "/refunds?access_token=" + access_token,
+            refund_status)
         return response
-
 
     def cancel_payment(self, id):
         """
@@ -131,10 +137,11 @@ class MP(object):
         """
 
         access_token = self.get_access_token()
-        cancel_status = {"status":"cancelled"}
-        response = self.__rest_client.put("/v1/payments/"+id+"?access_token="+access_token, cancel_status)
+        cancel_status = {"status": "cancelled"}
+        response = self.__rest_client.put(
+            "/v1/payments/" + id + "?access_token=" + access_token,
+            cancel_status)
         return response
-
 
     def cancel_preapproval_payment(self, id):
         """
@@ -145,10 +152,11 @@ class MP(object):
         """
 
         access_token = self.get_access_token()
-        cancel_status = {"status":"cancelled"}
-        response = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, cancel_status)
+        cancel_status = {"status": "cancelled"}
+        response = self.__rest_client.put(
+            "/preapproval/" + id + "?access_token=" + access_token,
+            cancel_status)
         return response
-
 
     def search_payment(self, filters, offset=0, limit=0):
         """
@@ -179,9 +187,9 @@ class MP(object):
         """
 
         access_token = self.get_access_token()
-        preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
+        preference_result = self.__rest_client.post(
+            "/checkout/preferences?access_token=" + access_token, preference)
         return preference_result
-
 
     def update_preference(self, id, preference):
         """
@@ -193,9 +201,10 @@ class MP(object):
         """
 
         access_token = self.get_access_token()
-        preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
+        preference_result = self.__rest_client.put(
+            "/checkout/preferences/" + id + "?access_token=" + access_token,
+            preference)
         return preference_result
-
 
     def get_preference(self, id):
         """
@@ -206,9 +215,9 @@ class MP(object):
         @return json
         """
         access_token = self.get_access_token()
-        preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
+        preference_result = self.__rest_client.get(
+            "/checkout/preferences/" + id + "?access_token=" + access_token)
         return preference_result
-
 
     def create_preapproval_payment(self, preapproval_payment):
         """
@@ -218,7 +227,8 @@ class MP(object):
         @return json
         """
         access_token = self.get_access_token()
-        preapproval_payment_result = self.__rest_client.post("/preapproval?access_token="+access_token, preapproval_payment)
+        preapproval_payment_result = self.__rest_client.post(
+            "/preapproval?access_token=" + access_token, preapproval_payment)
         return preapproval_payment_result
 
     def get_preapproval_payment(self, id):
@@ -230,7 +240,8 @@ class MP(object):
 
         """
         access_token = self.get_access_token()
-        preapproval_payment_result = self.__rest_client.get("/preapproval/"+id+"?access_token="+access_token)
+        preapproval_payment_result = self.__rest_client.get(
+            "/preapproval/" + id + "?access_token=" + access_token)
         return preapproval_payment_result
 
     def update_preapproval_payment(self, id, preapproval_payment):
@@ -242,7 +253,9 @@ class MP(object):
 
         """
         access_token = self.get_access_token()
-        preapproval_payment_result = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, preapproval_payment)
+        preapproval_payment_result = self.__rest_client.put(
+            "/preapproval/" + id + "?access_token=" + access_token,
+            preapproval_payment)
         return preapproval_payment_result
 
     def get(self, uri, params=None, authenticate=True):
@@ -310,7 +323,7 @@ class MP(object):
         result = self.__rest_client.delete(uri, params)
         return result
 
-    ##################################################################################
+    ############################################################################
     class __RestClient(object):
         __API_BASE_URL = "https://api.mercadopago.com"
         MIME_JSON = "application/json"
@@ -318,7 +331,7 @@ class MP(object):
 
         def __init__(self, outer):
             self.__outer = outer
-            self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
+            self.USER_AGENT = "MercadoPago Python SDK v" + self.__outer.version
 
         def get_mercadopago_transport_adapter(self):
             """Creates and returns the transport adaptor for MP"""
@@ -335,7 +348,9 @@ class MP(object):
 
         def get(self, uri, params=None):
             s = self.get_session()
-            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            api_result = s.get(self.__API_BASE_URL + uri, params=params,
+                               headers={'User-Agent': self.USER_AGENT,
+                                        'Accept': self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -349,7 +364,11 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.post(self.__API_BASE_URL + uri, params=params,
+                                data=data,
+                                headers={'User-Agent': self.USER_AGENT,
+                                         'Content-type': content_type,
+                                         'Accept': self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -363,7 +382,11 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.put(self.__API_BASE_URL + uri, params=params,
+                               data=data,
+                               headers={'User-Agent': self.USER_AGENT,
+                                        'Content-type': content_type,
+                                        'Accept': self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -374,7 +397,9 @@ class MP(object):
 
         def delete(self, uri, params=None):
             s = self.get_session()
-            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            api_result = s.delete(self.__API_BASE_URL + uri, params=params,
+                                  headers={'User-Agent': self.USER_AGENT,
+                                           'Accept': self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -382,4 +407,3 @@ class MP(object):
             }
 
             return response
-
