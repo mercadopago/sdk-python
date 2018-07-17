@@ -348,7 +348,8 @@ class MP(object):
 
         def get(self, uri, params=None):
             s = self.get_session()
-            api_result = s.get(self.__API_BASE_URL + uri, params=params,
+            api_result = s.get(self.__API_BASE_URL + _resolve_uri(uri),
+                               params=params,
                                headers={'User-Agent': self.USER_AGENT,
                                         'Accept': self.MIME_JSON})
 
@@ -364,7 +365,8 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL + uri, params=params,
+            api_result = s.post(self.__API_BASE_URL + _resolve_uri(uri),
+                                params=params,
                                 data=data,
                                 headers={'User-Agent': self.USER_AGENT,
                                          'Content-type': content_type,
@@ -382,7 +384,8 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.put(self.__API_BASE_URL + uri, params=params,
+            api_result = s.put(self.__API_BASE_URL + _resolve_uri(uri),
+                               params=params,
                                data=data,
                                headers={'User-Agent': self.USER_AGENT,
                                         'Content-type': content_type,
@@ -397,7 +400,8 @@ class MP(object):
 
         def delete(self, uri, params=None):
             s = self.get_session()
-            api_result = s.delete(self.__API_BASE_URL + uri, params=params,
+            api_result = s.delete(self.__API_BASE_URL + _resolve_uri(uri),
+                                  params=params,
                                   headers={'User-Agent': self.USER_AGENT,
                                            'Accept': self.MIME_JSON})
 
@@ -407,3 +411,7 @@ class MP(object):
             }
 
             return response
+
+
+def _resolve_uri(uri):
+    return uri if uri[0] == "/" else "".join(["/", uri])
