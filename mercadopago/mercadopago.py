@@ -10,9 +10,10 @@ import requests
 
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
-import ssl
 
 import platform
+import ssl
+import sys
 
 class MPSSLAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
@@ -321,7 +322,7 @@ class MP(object):
             self.__outer = outer
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
             self.PRODUCT_ID = "bc32bpftrpp001u8nhlg"
-            self.TRACKING_ID = "platform:"+platform.python_version()+",type:SDK"+self.__outer.version+",so;"
+            self.TRACKING_ID = "platform:"+str(sys.version_info.major)+"|"+platform.python_version()+",type:SDK"+self.__outer.version+",so;"
 
         def get_mercadopago_transport_adapter(self):
             """Creates and returns the transport adaptor for MP"""
