@@ -10,8 +10,10 @@ import requests
 
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
-import ssl
 
+import platform
+import ssl
+import sys
 
 class MPSSLAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
@@ -31,7 +33,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "0.3.4"
+    version = "1.1.1"
     __access_data = None
     __ll_access_token = None
     __sandbox = False
@@ -319,6 +321,8 @@ class MP(object):
         def __init__(self, outer):
             self.__outer = outer
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
+            self.PRODUCT_ID = "bc32bpftrpp001u8nhlg"
+            self.TRACKING_ID = "platform:"+str(sys.version_info.major)+"|"+platform.python_version()+",type:SDK"+self.__outer.version+",so;"
 
         def get_mercadopago_transport_adapter(self):
             """Creates and returns the transport adaptor for MP"""
@@ -335,7 +339,7 @@ class MP(object):
 
         def get(self, uri, params=None):
             s = self.get_session()
-            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -349,7 +353,7 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -363,7 +367,7 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -374,7 +378,7 @@ class MP(object):
 
         def delete(self, uri, params=None):
             s = self.get_session()
-            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
+            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
