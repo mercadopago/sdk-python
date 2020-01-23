@@ -33,10 +33,13 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "1.1.1"
+    version = "1.2.0"
     __access_data = None
     __ll_access_token = None
     __sandbox = False
+    platform_id = None
+    integrator_id = None
+    corporation_id = None
 
     def __init__(self, *args):
         """
@@ -79,6 +82,15 @@ class MP(object):
             return  self.__access_data["access_token"]
         else:
             raise MPInvalidCredentials(str(access_data))
+
+    def set_platform_id(self, platform_id):
+        self.platform_id = platform_id
+
+    def set_integrator_id(self, integrator_id):
+        self.integrator_id = integrator_id
+
+    def set_corporation_id(self, corporation_id):
+        self.corporation_id = corporation_id
 
     def get_payment(self, id):
         """
@@ -353,7 +365,7 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
+            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON, 'x-platform-id':self.__outer.platform_id, 'x-integrator-id':self.__outer.integrator_id, 'x-corporation-id':self.__outer.corporation_id})
 
             response = {
                 "status": api_result.status_code,
