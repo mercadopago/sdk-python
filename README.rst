@@ -8,14 +8,15 @@ MercadoPago SDK module for Payments integration
 
 Install
 -------
+NOTE: IF YOU INSTALL THIS THE MERCADOPAGO IMPORT WILL BE OVERWRITTEN AND MAY NOT BE UPDATED AS CONSTANTLY AS THE OFFICIAL
 
 On Python 2.x
 
-``pip install mercadopago``
+``pip install mercadopago-sdk-fork``
 
 On Python 3.x
 
-``pip3 install mercadopago``
+``pip3 install mercadopago-sdk-fork``
 
 Basic checkout
 --------------
