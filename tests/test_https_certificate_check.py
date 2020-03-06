@@ -82,7 +82,7 @@ class TestHttps(unittest.TestCase):
             "https://localhost:{0}".format(self.httpd_port)
 
         with self.assertRaises(SSLError):
-            mp.create_preference(preference)
+            mp.preference.create(preference)
 
         print("test_fail_if_https_certificate_check_fails OK!")
 

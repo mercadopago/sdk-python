@@ -26,8 +26,8 @@ class Tests(Command):
 setup(
     name='mercadopago',
     version='0.3.5',
-    author='Horacio Casatti <horacio.casatti@mercadolibre.com>',
-    author_email='horacio.casatti@mercadolibre.com',
+    author='MP SDK <mp_sdk@mercadopago.com>',
+    author_email='mp_sdk@mercadopago.com',
     keywords='api mercadopago checkout payment ipn sdk integration',
     packages=['mercadopago'],
     url='https://github.com/mercadopago/sdk-python',
