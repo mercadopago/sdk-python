@@ -10,6 +10,7 @@ from discountcampaign import DiscountCampaign
 from identificationtype import IdentificationType
 from merchantorder import MerchantOrder
 
+
 class MP(object):
     version = "2.0.0"
     __sandbox = False
