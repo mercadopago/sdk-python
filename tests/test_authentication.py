@@ -1,4 +1,7 @@
 import unittest
+import sys
+sys.path.append("../")
+
 import mercadopago
 import json
 
@@ -23,7 +26,7 @@ class TestAuthentication(unittest.TestCase):
 
     mp = mercadopago.MP(client_id, client_secret)
 
-    self.assertEquals(mp.create_preference(preference)["status"], 201)
+    self.assertEquals(mp.preference.create(preference)["status"], 201)
 
     print("test_client_id_and_client_secret OK!")
 
@@ -44,7 +47,7 @@ class TestAuthentication(unittest.TestCase):
 
       mp = mercadopago.MP(ll_access_token)
 
-      self.assertEquals(mp.create_preference(preference)["status"], 201)
+      self.assertEquals(mp.preference.create(preference)["status"], 201)
 
       print("test_long_live_access_token OK!")
 

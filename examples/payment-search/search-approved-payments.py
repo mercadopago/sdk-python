@@ -26,7 +26,7 @@ def index(req, **kwargs):
     }
 
     # Search payment data according to filters
-    searchResult = mp.search_payment(filters)
+    searchResult = mp.payment.search(filters)
     
     # Processes the payment information
     output = """
@@ -45,7 +45,7 @@ def index(req, **kwargs):
         output += "<td>"+payment["operation_type"]+"</td>\n"
         output += "<td>"+payment["external_reference"]+"</td>\n"
         output += "</tr>"
-    output += """
+        output += """
             </table>
         </body>
     </html>

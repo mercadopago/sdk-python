@@ -24,7 +24,7 @@ def index(req, **kwargs):
     }
     
     # Search payment data according to filters
-    searchResult = mp.search_payment(filters)
+    searchResult = mp.payment.search(filters)
     
     # Show payment information
     output = """

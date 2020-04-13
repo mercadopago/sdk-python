@@ -22,7 +22,7 @@ class TestMercadopago(unittest.TestCase):
 
     mp = mercadopago.MP(client_id, client_secret)
 
-    create_preference_result = mp.create_preference(preference)
+    create_preference_result = mp.preference.create(preference)
 
     #print(create_preference_result)
 
@@ -30,7 +30,7 @@ class TestMercadopago(unittest.TestCase):
 
     created_preference_id = create_preference_result["response"]["id"]
 
-    get_preference_result = mp.get_preference(created_preference_id)
+    get_preference_result = mp.preference.get(created_preference_id)
 
     self.assertEquals(get_preference_result["status"], 200)
 
@@ -58,7 +58,7 @@ class TestMercadopago(unittest.TestCase):
 
     mp = mercadopago.MP(client_id, client_secret)
 
-    create_preference_result = mp.create_preference(preference)
+    create_preference_result = mp.preference.create(preference)
 
     self.assertEquals(create_preference_result["status"], 201)
 
@@ -86,7 +86,7 @@ class TestMercadopago(unittest.TestCase):
 
     mp = mercadopago.MP(client_id, client_secret)
 
-    create_preference_result = mp.create_preference(preference)
+    create_preference_result = mp.preference.create(preference)
 
     self.assertEquals(create_preference_result["status"], 201)
 
@@ -103,11 +103,11 @@ class TestMercadopago(unittest.TestCase):
       ]
     }
 
-    update_preference_result = mp.update_preference(created_preference_id, preference_update)
+    update_preference_result = mp.preference.update(created_preference_id, preference_update)
 
     self.assertEquals(update_preference_result["status"], 200)
 
-    get_preference_result = mp.get_preference(created_preference_id)
+    get_preference_result = mp.preference.get(created_preference_id)
 
     self.assertEquals(get_preference_result["status"], 200)
 

@@ -20,7 +20,7 @@ def index(req, **kwargs):
     mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
     
     # Get the payment reported by the IPN. Glossary of attributes response in https://developers.mercadopago.com
-    paymentInfo = mp.get_payment_info(kwargs["id"])
+    paymentInfo = mp.payment.get(kwargs["id"])
     
     # Show payment information
     if paymentInfo["status"] == 200:
