@@ -11,7 +11,7 @@ from identificationtype import IdentificationType
 from merchantorder import MerchantOrder
 
 class MP(object):
-    version = "1.1.0"
+    version = "2.0.0"
     __sandbox = False
     card = None
     cardtoken = None
