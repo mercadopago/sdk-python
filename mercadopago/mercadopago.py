@@ -1,14 +1,14 @@
-from mpinvalidcredentials import MPInvalidCredentials
+from .mpinvalidcredentials import MPInvalidCredentials
 
-from card import Card
-from cardtoken import CardToken
-from customer import Customer
-from payment import Payment
-from preference import Preference
-from genericcall import GenericCall
-from discountcampaign import DiscountCampaign
-from identificationtype import IdentificationType
-from merchantorder import MerchantOrder
+from .card import Card
+from .cardtoken import CardToken
+from .customer import Customer
+from .payment import Payment
+from .preference import Preference
+from .genericcall import GenericCall
+from .discountcampaign import DiscountCampaign
+from .identificationtype import IdentificationType
+from .merchantorder import MerchantOrder
 
 
 class MP(object):

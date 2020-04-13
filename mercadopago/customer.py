@@ -1,4 +1,4 @@
-from mercadopagorestclient import MercadoPagoRestClient
+from .mercadopagorestclient import MercadoPagoRestClient
 
 class Customer(MercadoPagoRestClient):
     def __init__(self, client_id, client_secret, access_token):

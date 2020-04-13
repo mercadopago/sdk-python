@@ -1,5 +1,5 @@
-from mpinvalidcredentials import MPInvalidCredentials
-from restclient import __RestClient
+from .mpinvalidcredentials import MPInvalidCredentials
+from .restclient import __RestClient
 
 class MercadoPagoRestClient(object):
     __access_data = None

@@ -1,4 +1,4 @@
-from mpexception import MPException
+from .mpexception import MPException
 
 class MPInvalidCredentials(MPException):
     pass
