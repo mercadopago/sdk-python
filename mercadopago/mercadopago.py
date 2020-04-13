@@ -12,7 +12,10 @@ from .merchantorder import MerchantOrder
 
 
 class MP(object):
-    version = "2.0.2"
+    version = "2.0.3"
+    __client_id = None
+    __client_secret = None
+    __ll_access_token = None
     __sandbox = False
     card = None
     cardtoken = None
