@@ -1,7 +1,7 @@
 from json.encoder import JSONEncoder
 import requests
 
-from mpssladapter import MPSSLAdapter
+from .mpssladapter import MPSSLAdapter
 
 import platform
 
