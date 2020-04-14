@@ -5,16 +5,15 @@ from .mpssladapter import MPSSLAdapter
 
 import platform
 
-class __RestClient(object):
+class RestClient(object):
     __API_BASE_URL = "https://api.mercadopago.com"
     MIME_JSON = "application/json"
     MIME_FORM = "application/x-www-form-urlencoded"
 
-    def __init__(self, outer):
-        self.__outer = outer
-        self.USER_AGENT = "MercadoPago Python SDK v" + self.__outer.version
+    def __init__(self, version):
+        self.USER_AGENT = "MercadoPago Python SDK v" + version
         self.PRODUCT_ID = "bc32bpftrpp001u8nhlg"
-        self.TRACKING_ID = "platform:" + platform.python_version() + ",type:SDK" + self.__outer.version + ",so;"
+        self.TRACKING_ID = "platform:" + platform.python_version() + ",type:SDK" + version + ",so;"
 
     def get_mercadopago_transport_adapter(self):
         """Creates and returns the transport adaptor for MP"""

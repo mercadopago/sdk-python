@@ -12,7 +12,7 @@ from .merchantorder import MerchantOrder
 
 
 class MP(object):
-    version = "2.0.3"
+    version = "2.0.4"
     __client_id = None
     __client_secret = None
     __ll_access_token = None
@@ -43,15 +43,15 @@ class MP(object):
         else:
             raise MPInvalidCredentials(None)
 
-        self.card = Card(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.cardtoken = CardToken(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.customer = Customer(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.payment = Payment(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.preference = Preference(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.genericcall = GenericCall(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.discountcampaign = DiscountCampaign(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.identificationtype = IdentificationType(self.__client_id, self.__client_secret, self.__ll_access_token)
-        self.merchantorder = MerchantOrder(self.__client_id, self.__client_secret, self.__ll_access_token)
+        self.card = Card(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.cardtoken = CardToken(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.customer = Customer(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.payment = Payment(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.preference = Preference(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.genericcall = GenericCall(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.discountcampaign = DiscountCampaign(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.identificationtype = IdentificationType(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.merchantorder = MerchantOrder(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
 
     def sandbox_mode(self, enable=None):
         if not enable is None:
