@@ -1,7 +1,7 @@
 # Mercado Pago SDK for Python
 
 [![PyPI](https://img.shields.io/pypi/v/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
-![APM](https://img.shields.io/apm/l/vim-mode)
+![APM](https://img.shields.io/apm/l/vim-mode)(https://github.com/mercadopago/sdk-python)
 
 This library provides developers with a simple set of bindings to help you integrate Mercado Pago API to a website and start receiving payments.
 
