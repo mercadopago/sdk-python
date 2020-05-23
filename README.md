@@ -31,7 +31,7 @@ Thats all, you have Mercado Pago SDK installed.
 import mercadopago
 import json
 
-mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
+mp = mercadopago.MP("YOUR_ACCESS_TOKEN")
 
 def index(req, **kwargs):
     preference = {
