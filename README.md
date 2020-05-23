@@ -27,22 +27,24 @@ Thats all, you have Mercado Pago SDK installed.
   Simple usage looks like:
   
 ```python
-      import mercadopago
-      import json
+import mercadopago
+import json
 
-      mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
-      preference = {
+mp = mercadopago.MP("CLIENT_ID", "CLIENT_SECRET")
+
+def index(req, **kwargs):
+    preference = {
         "items": [
-          {
-            "title": "Test",
-            "quantity": 1,
-            "currency_id": "USD",
-            "unit_price": 10.4
-          }
-          ]
-      }
+            {
+                "title": "Test",
+                "quantity": 1,
+                "currency_id": "USD",
+                "unit_price": 10.4
+            }
+        ]
+    }
 
-      mp.create_preference(preference)
+    mp.create_preference(preference)
 ```
 
 ## 📚 Documentation 
