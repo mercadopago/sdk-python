@@ -3,6 +3,8 @@
 [![PyPI](https://img.shields.io/pypi/v/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
 ![APM](https://img.shields.io/apm/l/vim-mode)
 
+This library provides developers with a simple set of bindings to help you integrate Mercado Pago API to a website and start receiving payments.
+
 ## 💡 Requirements
 
 Python 2 or major
