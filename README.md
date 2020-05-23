@@ -1,6 +1,7 @@
 # Mercado Pago SDK for Python
 
 [![PyPI](https://img.shields.io/pypi/v/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
+![APM](https://img.shields.io/apm/l/vim-mode)
 
 ## 💡 Requirements
 
