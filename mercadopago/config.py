@@ -6,6 +6,12 @@ import platform
 
 class Config(object):
 
+    #TODO RETRY
+    MAX_DELAY = 2
+    INITIAL_DELAY = 0.5
+    MAX_RETRY_AFTER = 60
+
+    
     __API_BASE_URL = "https://api.mercadopago.com"
     MIME_JSON = "application/json"
     MIME_FORM = "application/x-www-form-urlencoded"

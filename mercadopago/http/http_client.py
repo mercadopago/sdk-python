@@ -2,7 +2,7 @@ from mercadopago.config import Config
 from mercadopago.SDK import SDK
 from json.encoder import JSONEncoder
 
-import http.client
+import requests
 
 #TODO VERIFICAR SE ISSO AINDA FUNCIONA PARA O REFACTOR
 
@@ -19,7 +19,7 @@ class HttpClient(object):
         Session, with all thecustomizations made to access MP
 
         """
-        session = http.client.HTTPConnection.request()
+        session = requests.Session()
         session.mount(self.Config.__API_BASE_URL,
                         self.get_mercadopago_transport_adapter())
         return session

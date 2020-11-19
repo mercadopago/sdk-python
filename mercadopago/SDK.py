@@ -1,5 +1,5 @@
-from .resources.Payment import Payment
-from .resources.Preference import Preference
+from .resources.payment import Payment
+from .resources.preference import Preference
 
 class SDK(object):
     

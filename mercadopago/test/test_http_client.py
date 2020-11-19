@@ -1,14 +1,13 @@
-from mercadopago.http.http_client import HttpClient
+#from .http.http_client import HttpClient
 
-import http.client
+import requests
 headers = {}
 url_base = ''
 
 class TestHttpClient:
-    session = http.client.HTTPConnection.request()
+    session = requests.Session()
 
     def test_get(self):
         modelo = session.get(url=self.url_base, headers=self.headers)
 
         assert modelo.status_code == 200
-        

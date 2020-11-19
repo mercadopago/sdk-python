@@ -1,65 +1,118 @@
+from mercadopago.http.http_client import HttpClient
+from mercadopago.resources.refund import Refund
+from mercadopago.core.requestOptions import RequestOptions
 from mercadopago.SDK import SDK
-from mercadopago.core.RequestOptions import RequestOptions
-
 
 #TODO DATASTRUCTURES
 #TODO EXCEPETIONS
 #TODO PROCESSO METHOD BULK | MPBASE
 
-class Payment(object):
+class Payment(MPBase):
     def __init__(self, SDK):
         self.SDK = SDK
 
+#TODO EXEMPLO DE CONSTRUÇÃO
+#SDK.Payment.save({
+#    'atributo': 'valor',
+#    'atributo': 'valor',
+#})
 
-    #@GET(path="/v1/payments/search")
+    #TODO @GET(path="/v1/payments/search")
     def search(self, 
-               hashMap,
+               search,
                filters, 
                useCache, 
                requestOptions):
-        if type(hashMap) is not dict:
-            raise Exception('HasMap must be a Dictionary')
+        if type(search) is not dict:
+            raise Exception('Search must be a Dictionary')
         if type(requestOptions) is not RequestOptions:
             raise Exception('Param requestOptions must be a RequestOptions Object')
-            return processMethodBulk(self, 'search', filters, useCache, requestOptions)
-
-#public static MPResourceArray search(HashMap<String, String> filters, Boolean useCache, MPRequestOptions requestOptions) throws #MPException {
-#        return processMethodBulk(Payment.class, "search", filters, useCache, requestOptions);
-#}
+        
+        return self, search, filters, useCache, requestOptions
 
 
-    def findById(self, id):
-        def __bool__ (self, withoud_cache):
-            False 
-            return self, id, withoud_cache
+    def findById(self, 
+                 id, 
+                 withoutCache=False):
+        if type(id) is not str:
+            raise Exception('HasMap must be a String')
 
+        return self, id, withoutCache
 
-    #@GET(path="/v1/payments/{id}")    
-    def findById(self, id, useCache, requetOptions):
-        pass
+    def findById(self, 
+                 id, 
+                 useCache):
+        if type(id) is not str:
+            raise Exception('ID must be a String') 
+               
+        return self, id, useCache, RequestOptions.createDefault()
 
-    def save(self):
-        pass
+    #TODO @GET(path="/v1/payments/{id}")    
+    def findById(self, 
+                 id, 
+                 useCache, 
+                 requestOptions):
+        if type(id) is not str:
+            raise Exception('ID must be a String')     
+        if type(requestOptions) is not RequestOptions:
+            raise Exception('Param requestOptions must be a RequestOptions Object')    
+        
+        return self, useCache, useCache, requestOptions, id
 
-    #@POST(path="/v1/payments")    
-    def save(self, requetOptions):
-        pass
+    def save(self):        
+        return self, RequestOptions.createDefault()
+
+    #TODO @POST(path="/v1/payments")    
+    def save(self, 
+             requestOptions, 
+             withoutCache=False):
+        if requestOptions is None:
+            requestOptions = requestOptions.createDefault
+            requestOptions.addTrackingHeaders(requestOptions)
+    #TODO addTrackingHeaders
+        return self, requestOptions, withoutCache
 
     def update(self):
-        pass
+        return self, RequestOptions.createDefault()
 
-    #@PUT(path="/v1/payments/{id}")    
-    def update(self, requetOptions):
-        pass
+    #TODO @PUT(path="/v1/payments/{id}")    
+    def update(self, 
+               requestOptions, 
+               withoutCache=False):
+        return self, requestOptions, withoutCache
 
-    def refund(self):
-        pass
+    def refund(self, 
+               r):
+        return self, r is None, RequestOptions.createDefault() 
 
-    def refund(self, requetOptions):
-        pass
+    def refund(self, 
+               r, 
+               requestOptions):
+        return self, r is None, requestOptions
 
-    def refund(self, amount):
-        pass
+    def refund(self, 
+               amount):
+        if type(amount) is not float:
+            raise Exception('Amount must be a Float')  
 
-    def refund(self, amount, requetOptions):
-        pass
+        return self, amount, RequestOptions.createDefault()
+
+    def refund(self, 
+               amount, 
+               requestOptions):
+
+        def __init__(refund):
+            Refund.setPaymentId == id
+            Refund.setAmount(amount)
+            Refund.save(requestOptions)
+            self.lastApiResponse = Refund.getLastApiResponse()
+
+        #TODO VERIFICAR ESSA CONSTRUÇÃO
+        #if id is None:
+        #    payment = Payment.findById(self, id, requestOptions, withoutCache=False)
+        #    self.status = payment.getStatus(self)
+        #    self.statusDetail = payment.getStatusDetail(self)
+        #    self.refunds = payment.getRefunds(self)
+        #    self.transactionAmountRefunded = payment.getTransactionAmountRefunded(self)
+
+        return self        
