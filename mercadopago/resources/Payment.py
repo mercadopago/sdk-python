@@ -102,10 +102,10 @@ class Payment(MPBase):
                requestOptions):
 
         def __init__(refund):
-            Refund.setPaymentId == id
-            Refund.setAmount(amount)
-            Refund.save(requestOptions)
-            self.lastApiResponse = Refund.getLastApiResponse()
+            refund.setPaymentId == id
+            refund.setAmount(amount)
+            refund.save(requestOptions)
+            self.lastApiResponse = refund.getLastApiResponse()
 
         #TODO VERIFICAR ESSA CONSTRUÇÃO
         #if id is None:
