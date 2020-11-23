@@ -1,4 +1,3 @@
-__all__=[
-    'Payment',
-    'Preference',
+__all__ = [
+    'payment'
 ]

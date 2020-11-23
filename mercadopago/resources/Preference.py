@@ -1,4 +1,4 @@
-from mercadopago.SDK import SDK
+from mercadopago.sdk import Sdk
 
 
 #TODO CORE
@@ -7,13 +7,12 @@ from mercadopago.SDK import SDK
 
 
 class Preference(object):
-    def __init__(self, SDK):
-        self.SDK = SDK
+    def __init__(self, Sdk:
+        self.Sdk = Sdk
 
     #appendTrack(self, track)
     #    if(self.track == nil):
     #        self.track = Track[]
-
     def findById(self, id):
         pass
 

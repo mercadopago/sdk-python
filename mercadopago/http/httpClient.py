@@ -1,5 +1,5 @@
-from mercadopago.config import Config
-from mercadopago.SDK import SDK
+from ..config import Config
+from ..sdk import Sdk
 from json.encoder import JSONEncoder
 
 import requests
@@ -7,10 +7,10 @@ import requests
 #TODO VERIFICAR SE ISSO AINDA FUNCIONA PARA O REFACTOR
 
 
-class HttpClient(object):
+class HttpClient():
 
-    def __init__(self, SDK):
-        self.SDK = SDK
+    def __init__(self, Sdk):
+        self.Sdk = Sdk
         self.Config = Config()
 
 
@@ -19,16 +19,20 @@ class HttpClient(object):
         Session, with all thecustomizations made to access MP
 
         """
+        
         session = requests.Session()
-        session.mount(self.Config.__API_BASE_URL,
-                        self.get_mercadopago_transport_adapter())
+        #session.mount(self.Config.API_BASE_URL,
+        #              self.get_mercadopago_transport_adapter())
         return session
 
-    def get(self, uri, params=None):
+    def get(self, uri, params=None, requestOptions=None):
         s = self.get_session()
-        api_result = s.get(self.Config.__API_BASE_URL+uri, 
+        accessToken = requestOptions is None and self.Sdk.accessToken or requestOptions.accessToken
+        print(accessToken)
+
+        api_result = s.get(self.Config.API_BASE_URL+uri, 
                             params=params, headers={
-                                                    'accessToken': self.SDK.getAccessToken(),
+                                                    'accessToken': accessToken,
                                                     'x-product-id': self.Config.PRODUCT_ID, 
                                                     'x-tracking-id': self.Config.TRACKING_ID, 
                                                     'User-Agent':self.Config.USER_AGENT,
@@ -41,15 +45,15 @@ class HttpClient(object):
 
         return response
 
-    def post(self, uri, data=None, params=None, content_type=MIME_JSON):
+    def post(self, uri, data=None, params=None, content_type=None):
         if data is not None and content_type == self.Config.MIME_JSON:
             data = JSONEncoder().encode(data)
 
         s = self.get_session()
-        api_result = s.post(self.Config.__API_BASE_URL+uri, 
+        api_result = s.post(self.Config.API_BASE_URL+uri, 
                             params=params, data=data, 
                             headers={
-                                     'accessToken': self.SDK.getAccessToken(),
+                                     'accessToken': self.Sdk.getAccessToken(),
                                      'x-product-id': self.Config.PRODUCT_ID, 
                                      'x-tracking-id': self.Config.TRACKING_ID, 
                                      'User-Agent':self.Config.USER_AGENT, 
@@ -63,15 +67,15 @@ class HttpClient(object):
 
         return response
 
-    def put(self, uri, data=None, params=None, content_type=MIME_JSON):
+    def put(self, uri, data=None, params=None, content_type=None):
         if data is not None and content_type == self.Config.MIME_JSON:
             data = JSONEncoder().encode(data)
 
         s = self.get_session()
-        api_result = s.put(self.Config.__API_BASE_URL+uri, 
+        api_result = s.put(self.Config.API_BASE_URL+uri, 
                            params=params, data=data, 
                            headers={
-                                    'accessToken': self.SDK.getAccessToken(),    
+                                    'accessToken': self.Sdk.getAccessToken(),    
                                     'x-product-id': self.Config.PRODUCT_ID, 
                                     'x-tracking-id': self.Config.TRACKING_ID, 
                                     'User-Agent':self.Config.USER_AGENT, 
@@ -87,10 +91,10 @@ class HttpClient(object):
 
     def delete(self, uri, params=None):
         s = self.get_session()
-        api_result = s.delete(self.Config.__API_BASE_URL+uri, 
+        api_result = s.delete(self.Config.API_BASE_URL+uri, 
                               params=params, 
                               headers={
-                                       'accessToken': self.SDK.getAccessToken(), 
+                                       'accessToken': self.Sdk.getAccessToken(), 
                                        'x-product-id': self.Config.PRODUCT_ID, 
                                        'x-tracking-id': self.Config.TRACKING_ID, 
                                        'User-Agent':self.Config.USER_AGENT, 

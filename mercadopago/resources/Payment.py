@@ -1,15 +1,15 @@
-from mercadopago.http.http_client import HttpClient
-from mercadopago.resources.refund import Refund
-from mercadopago.core.requestOptions import RequestOptions
-from mercadopago.SDK import SDK
+from ..http.http_client import HttpClient
+#from .resources.refund import Refund
+from ..core.requestOptions import RequestOptions
+from ..sdk import Sdk
 
 #TODO DATASTRUCTURES
 #TODO EXCEPETIONS
 #TODO PROCESSO METHOD BULK | MPBASE
 
-class Payment(MPBase):
-    def __init__(self, SDK):
-        self.SDK = SDK
+class Payment(Sdk):
+    def __init__(self, Sdk):
+        self.Sdk = Sdk
 
 #TODO EXEMPLO DE CONSTRUÇÃO
 #SDK.Payment.save({
@@ -19,33 +19,22 @@ class Payment(MPBase):
 
     #TODO @GET(path="/v1/payments/search")
     def search(self, 
-               search,
                filters, 
-               useCache, 
-               requestOptions):
-        if type(search) is not dict:
-            raise Exception('Search must be a Dictionary')
-        if type(requestOptions) is not RequestOptions:
+               requestOptions=None):
+        if type(filters) is not dict:
+            raise Exception('Filters must be a Dictionary')
+        if requestOptions !=None and type(requestOptions) is not RequestOptions:
             raise Exception('Param requestOptions must be a RequestOptions Object')
         
-        return self, search, filters, useCache, requestOptions
-
-
-    def findById(self, 
-                 id, 
-                 withoutCache=False):
-        if type(id) is not str:
-            raise Exception('HasMap must be a String')
-
-        return self, id, withoutCache
+        http_client = HttpClient(self.Sdk)
+        return http_client.get("/v1/payments/search", filters, requestOptions)
 
     def findById(self, 
-                 id, 
-                 useCache):
+                 id):
         if type(id) is not str:
             raise Exception('ID must be a String') 
                
-        return self, id, useCache, RequestOptions.createDefault()
+        #return
 
     #TODO @GET(path="/v1/payments/{id}")    
     def findById(self, 
@@ -57,7 +46,7 @@ class Payment(MPBase):
         if type(requestOptions) is not RequestOptions:
             raise Exception('Param requestOptions must be a RequestOptions Object')    
         
-        return self, useCache, useCache, requestOptions, id
+        #return self, useCache, useCache, requestOptions, id
 
     def save(self):        
         return self, RequestOptions.createDefault()
