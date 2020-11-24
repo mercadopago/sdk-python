@@ -1,7 +1,7 @@
-from ..http.http_client import HttpClient
+from mercadopago.http.httpClient import HttpClient
 #from .resources.refund import Refund
-from ..core.requestOptions import RequestOptions
-from ..sdk import Sdk
+from mercadopago.core.RequestOptions import RequestOptions
+from mercadopago.SDK import Sdk
 
 #TODO DATASTRUCTURES
 #TODO EXCEPETIONS

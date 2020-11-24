@@ -1,5 +1,5 @@
-from ..config import Config
-from ..sdk import Sdk
+from mercadopago.config import Config
+from mercadopago.SDK import Sdk
 from json.encoder import JSONEncoder
 
 import requests
