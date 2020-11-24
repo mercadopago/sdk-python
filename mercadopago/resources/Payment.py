@@ -1,23 +1,13 @@
 from mercadopago.http.httpClient import HttpClient
-#from .resources.refund import Refund
 from mercadopago.core.RequestOptions import RequestOptions
 from mercadopago.SDK import Sdk
 
-#TODO DATASTRUCTURES
-#TODO EXCEPETIONS
-#TODO PROCESSO METHOD BULK | MPBASE
 
 class Payment(Sdk):
     def __init__(self, Sdk):
         self.Sdk = Sdk
 
-#TODO EXEMPLO DE CONSTRUÇÃO
-#SDK.Payment.save({
-#    'atributo': 'valor',
-#    'atributo': 'valor',
-#})
-
-    #TODO @GET(path="/v1/payments/search")
+    #TODO TESTADO OK!!
     def search(self, 
                filters, 
                requestOptions=None):
@@ -27,81 +17,30 @@ class Payment(Sdk):
             raise Exception('Param requestOptions must be a RequestOptions Object')
         
         http_client = HttpClient(self.Sdk)
-        return http_client.get("/v1/payments/search", filters, requestOptions)
+        return http_client.get(uri="/v1/payments/search", params=filters, requestOptions=requestOptions)
 
-    def findById(self, 
-                 id):
-        if type(id) is not str:
-            raise Exception('ID must be a String') 
-               
-        #return
-
-    #TODO @GET(path="/v1/payments/{id}")    
-    def findById(self, 
+    #TODO SEM TESTE
+    def find_by_id(self, 
                  id, 
-                 useCache, 
-                 requestOptions):
+                 requestOptions=None):
         if type(id) is not str:
             raise Exception('ID must be a String')     
-        if type(requestOptions) is not RequestOptions:
+        if requestOptions !=None and type(requestOptions) is not RequestOptions:
             raise Exception('Param requestOptions must be a RequestOptions Object')    
+                       
+        http_client = HttpClient(self.Sdk)
+        return http_client.get(uri="/v1/payments/" + str(id), requestOptions=requestOptions)
+
+    #TODO SEM TESTE
+    def save(self, requestOptions):        
+        if requestOptions !=None:
         
-        #return self, useCache, useCache, requestOptions, id
+            http_client = HttpClient(self.Sdk)
+            return http_client.post(uri="/v1/payments/", requestOptions=requestOptions)
 
-    def save(self):        
-        return self, RequestOptions.createDefault()
+    #TODO SEM TESTE 
+    def update(self, requestOptions):
+        if requestOptions !=None:
 
-    #TODO @POST(path="/v1/payments")    
-    def save(self, 
-             requestOptions, 
-             withoutCache=False):
-        if requestOptions is None:
-            requestOptions = requestOptions.createDefault
-            requestOptions.addTrackingHeaders(requestOptions)
-    #TODO addTrackingHeaders
-        return self, requestOptions, withoutCache
-
-    def update(self):
-        return self, RequestOptions.createDefault()
-
-    #TODO @PUT(path="/v1/payments/{id}")    
-    def update(self, 
-               requestOptions, 
-               withoutCache=False):
-        return self, requestOptions, withoutCache
-
-    def refund(self, 
-               r):
-        return self, r is None, RequestOptions.createDefault() 
-
-    def refund(self, 
-               r, 
-               requestOptions):
-        return self, r is None, requestOptions
-
-    def refund(self, 
-               amount):
-        if type(amount) is not float:
-            raise Exception('Amount must be a Float')  
-
-        return self, amount, RequestOptions.createDefault()
-
-    def refund(self, 
-               amount, 
-               requestOptions):
-
-        def __init__(refund):
-            refund.setPaymentId == id
-            refund.setAmount(amount)
-            refund.save(requestOptions)
-            self.lastApiResponse = refund.getLastApiResponse()
-
-        #TODO VERIFICAR ESSA CONSTRUÇÃO
-        #if id is None:
-        #    payment = Payment.findById(self, id, requestOptions, withoutCache=False)
-        #    self.status = payment.getStatus(self)
-        #    self.statusDetail = payment.getStatusDetail(self)
-        #    self.refunds = payment.getRefunds(self)
-        #    self.transactionAmountRefunded = payment.getTransactionAmountRefunded(self)
-
-        return self        
+            http_client = HttpClient(self.Sdk)
+            return http_client.put(uri="/v1/payments/" + id, requestOptions=requestOptions)

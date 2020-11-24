@@ -1,38 +1,42 @@
-from mercadopago.sdk import Sdk
+from mercadopago.http.httpClient import HttpClient
+from mercadopago.core.RequestOptions import RequestOptions
+from mercadopago.SDK import Sdk
 
 
-#TODO CORE
-#TODO DATASTRUCTURES
-#TODO EXCEPETIONS
-
-
-class Preference(object):
-    def __init__(self, Sdk:
+class Preference():
+    def __init__(self, Sdk):
         self.Sdk = Sdk
+        
+    #TODO TESTE OK!!
+    def search(self, id):
+        if type(id) is not str:
+            raise Exception('ID must be a String') 
+               
+        http_client = HttpClient(self.Sdk)
+        return http_client.get(uri="/checkout/preferences/search", params=id)
 
-    #appendTrack(self, track)
-    #    if(self.track == nil):
-    #        self.track = Track[]
-    def findById(self, id):
-        pass
+    #TODO SEM TESTE
+    def findById(self, 
+                 id, 
+                 requestOptions=None):
+        if type(id) is not str:
+            raise Exception('ID must be a String')     
+        if type(requestOptions) is not RequestOptions:
+            raise Exception('Param requestOptions must be a RequestOptions Object')    
+                       
+        http_client = HttpClient(self.Sdk)
+        return http_client.get(uri="/checkout/preferences/" + id, requestOptions=requestOptions)
 
-    def findById(self, useCache):
-        pass
+    #TODO SEM TESTE
+    def save(self, requestOptions):        
+        if requestOptions != None:
+        
+            http_client = HttpClient(self.Sdk)
+            return http_client.post(uri="/checkout/preferences/", requestOptions=requestOptions)
 
-    #@GET(path="/checkout/preferences/:id")
-    def findById(self, id, useCache, requestOptions):
-        pass
-
-    def save(self):
-        pass
-
-    #@POST(path="/checkout/preferences")
-    def save(self, requestOptions):
-        pass
-
-    def update(self):
-        pass
-
-    #@PUT(path="/checkout/preferences/:id")
+    #TODO SEM TESTE
     def update(self, requestOptions):
-        pass
+        if requestOptions != None:
+
+            http_client = HttpClient(self.Sdk)
+            return http_client.put(uri="/v1/payments/" + id, requestOptions=requestOptions)

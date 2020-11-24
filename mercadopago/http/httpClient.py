@@ -1,10 +1,9 @@
 from mercadopago.config import Config
+from mercadopago.core.RequestOptions import RequestOptions
 from mercadopago.SDK import Sdk
+
 from json.encoder import JSONEncoder
-
 import requests
-
-#TODO VERIFICAR SE ISSO AINDA FUNCIONA PARA O REFACTOR
 
 
 class HttpClient():
@@ -13,7 +12,6 @@ class HttpClient():
         self.Sdk = Sdk
         self.Config = Config()
 
-
     def get_session(self):
         """Creates and returns a ready-to-use requests.
         Session, with all thecustomizations made to access MP
@@ -21,18 +19,19 @@ class HttpClient():
         """
         
         session = requests.Session()
-        #session.mount(self.Config.API_BASE_URL,
-        #              self.get_mercadopago_transport_adapter())
         return session
 
     def get(self, uri, params=None, requestOptions=None):
         s = self.get_session()
         accessToken = requestOptions is None and self.Sdk.accessToken or requestOptions.accessToken
-        print(accessToken)
+
+        #TODO VERIFICAR
+        #for index in requestOptions.customHeaders:
+        #    headers[index] = requestOptions.customHeaders[index]
 
         api_result = s.get(self.Config.API_BASE_URL+uri, 
                             params=params, headers={
-                                                    'accessToken': accessToken,
+                                                    'Authorization': 'Bearer ' + accessToken,
                                                     'x-product-id': self.Config.PRODUCT_ID, 
                                                     'x-tracking-id': self.Config.TRACKING_ID, 
                                                     'User-Agent':self.Config.USER_AGENT,
@@ -50,10 +49,12 @@ class HttpClient():
             data = JSONEncoder().encode(data)
 
         s = self.get_session()
+        accessToken = RequestOptions is None and self.Sdk.accessToken or RequestOptions.accessToken
+
         api_result = s.post(self.Config.API_BASE_URL+uri, 
                             params=params, data=data, 
                             headers={
-                                     'accessToken': self.Sdk.getAccessToken(),
+                                     'Authorization': 'Bearer ' + accessToken,
                                      'x-product-id': self.Config.PRODUCT_ID, 
                                      'x-tracking-id': self.Config.TRACKING_ID, 
                                      'User-Agent':self.Config.USER_AGENT, 
@@ -72,10 +73,12 @@ class HttpClient():
             data = JSONEncoder().encode(data)
 
         s = self.get_session()
+        accessToken = RequestOptions is None and self.Sdk.accessToken or RequestOptions.accessToken
+
         api_result = s.put(self.Config.API_BASE_URL+uri, 
                            params=params, data=data, 
                            headers={
-                                    'accessToken': self.Sdk.getAccessToken(),    
+                                    'Authorization': 'Bearer ' + accessToken,    
                                     'x-product-id': self.Config.PRODUCT_ID, 
                                     'x-tracking-id': self.Config.TRACKING_ID, 
                                     'User-Agent':self.Config.USER_AGENT, 
@@ -91,10 +94,12 @@ class HttpClient():
 
     def delete(self, uri, params=None):
         s = self.get_session()
+        accessToken = RequestOptions is None and self.Sdk.accessToken or RequestOptions.accessToken
+
         api_result = s.delete(self.Config.API_BASE_URL+uri, 
                               params=params, 
                               headers={
-                                       'accessToken': self.Sdk.getAccessToken(), 
+                                       'Authorization': 'Bearer ' + accessToken, 
                                        'x-product-id': self.Config.PRODUCT_ID, 
                                        'x-tracking-id': self.Config.TRACKING_ID, 
                                        'User-Agent':self.Config.USER_AGENT, 

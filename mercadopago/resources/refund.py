@@ -1,5 +1,5 @@
-from mercadopago.core.base import Base
-from mercadopago.core.requestOptions import RequestOptions
+from mercadopago.core.MPBase import MPBase
+from mercadopago.core.RequestOptions import RequestOptions
 
 #TODO REFUND (PAYMENT)
 

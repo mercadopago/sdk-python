@@ -23,8 +23,8 @@ setup(
     #TODO python_requires="!=3.0*",
     #TODO PYTEST cmdclass={"test": PyTest},
     project_urls={
-        "Documentation | ES": "https://www.mercadopago.com.br/developers/es/reference/",
         "Source Code": "https://github.com/mercadopago/sdk-python",
+        "Documentation | ES": "https://www.mercadopago.com.br/developers/es/reference/",
         "Documentation | PT-BR": "https://www.mercadopago.com.br/developers/pt/reference/",
         "Documentation | EN": "https://www.mercadopago.com.br/developers/en/reference/",
     },
