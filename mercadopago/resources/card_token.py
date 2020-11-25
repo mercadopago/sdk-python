@@ -6,3 +6,6 @@ class CardToken(MPBase):
 
     def find_by_id(self, id, request_options=None):
         return self._get(uri="/v1/card_tokens/" + str(id), request_options=request_options)
+
+    def save(self, request_options=None):
+        return self._post(uri="/v1/card_tokens",  request_options=request_options)
