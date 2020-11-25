@@ -1,7 +1,4 @@
-from json.encoder import JSONEncoder
-
 import platform
-
 
 class Config(object):
 
@@ -12,28 +9,8 @@ class Config(object):
         self.PRODUCT_ID = "bc32bpftrpp001u8nhlg"
         self.TRACKING_ID = "platform:" + platform.python_version() + ",type:SDK" + version + ",so;"
 
-    #TODO RETRY STRATEGY
-    MAX_DELAY = 2
-    INITIAL_DELAY = 0.5
-    MAX_RETRY_AFTER = 60
-
     API_BASE_URL = "https://api.mercadopago.com"
     MIME_JSON = "application/json"
     MIME_FORM = "application/x-www-form-urlencoded"
-
-        
-
-        #def corporationId(self):
-        #    pass
-
-        #def integratorId(self):
-        #    pass
-
-        #def platformId(self):
-        #    pass
-
-        #TODO SERIALIZER
-
-
 
        

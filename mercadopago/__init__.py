@@ -1,8 +1,8 @@
 __all__ = [
-    'config',
     'core',
     'http',
     'resources',
+    'config',
     'sdk',
-    'test'
+    'setup',
 ]

@@ -2,45 +2,47 @@ import sys
 sys.path.append('../')
 
 
-from mercadopago.resources.Card import Card
-from mercadopago.resources.CardToken import CardToken
-from mercadopago.resources.Customer import Customer
-from mercadopago.resources.MerchantOrder import MerchantOrder
-from mercadopago.resources.Payment import Payment
-from mercadopago.resources.Preference import Preference
-from mercadopago.core.RequestOptions import RequestOptions
-from mercadopago.SDK import Sdk
+from mercadopago.resources.card import Card
+from mercadopago.resources.card_token import CardToken
+from mercadopago.resources.customer import Customer
+from mercadopago.resources.merchant_order import MerchantOrder
+from mercadopago.resources.payment import Payment
+from mercadopago.resources.preference import Preference
+from mercadopago.core.request_options import RequestOptions
+from mercadopago.sdk import SDK
 
 
-SDK = Sdk('APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966')
-requestOptions = RequestOptions(accessToken='APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966')
+sdk = SDK('APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966')
+request_options = RequestOptions(access_token='APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966')
 
 id = '0000001'
 
 #PAYMENT
-#payment = Payment(SDK)
-#print(payment.search({}, requestOptions)) #SEARCH LINHAS 15-24 OK!!
-#print(payment.find_by_id(id, requestOptions)) #SEARCH LINHAS 26-32
-#print(payment.findById(id, requestOptions)) #SEARCH LINHAS 36-45
+#payment = sdk.payment()
+#print(payment.search({}, request_options)) #SEARCH LINHAS 15-24 OK!!
+#print(payment.find_by_id(id, request_options)) #SEARCH LINHAS 26-32
 
 
 #PREFERENCE
-#preference = Preference(SDK)
+#preference = sdk.preference()
 #print(preference.search(id)) #SEARCH LINHAS 15-24 OK!!
 
 
 #CARD
-#card = Card(SDK)
-#print(card.find_by_id(id, requestOptions))
+#card = sdk.card()
+#print(card.find_by_id(id, request_options))
+
 
 #CARD TOKEN
-#cardToken = CardToken(SDK)
-#print(cardToken.find_by_id(id, requestOptions))
+#card_token = sdk.card_token()
+#print(card_token.find_by_id(id, request_options))
+
 
 #CUSTOMER
-#customer = Customer()
-#print(customer.search({}, requestOptions))
+#customer = sdk.customer()
+#print(customer.search({}, request_options))
 
-#MERCHAN ORDER
-#merchanOrder = MerchantOrder()
-#print(merchanOrder.search(id))
+
+#MERCHANT ORDER
+#merchant_order = sdk.merchant_order()
+#print(merchant_order.search(id))

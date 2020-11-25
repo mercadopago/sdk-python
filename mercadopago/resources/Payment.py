@@ -1,46 +1,33 @@
-from mercadopago.http.httpClient import HttpClient
-from mercadopago.core.RequestOptions import RequestOptions
-from mercadopago.SDK import Sdk
+from mercadopago.core.mp_base import MPBase
 
-
-class Payment(Sdk):
-    def __init__(self, Sdk):
-        self.Sdk = Sdk
+class Payment(MPBase):
+    def __init__(self, request_options):
+        super(Payment, self).__init__(request_options)
 
     #TODO TESTADO OK!!
-    def search(self, 
-               filters, 
-               requestOptions=None):
-        if type(filters) is not dict:
-            raise Exception('Filters must be a Dictionary')
-        if requestOptions !=None and type(requestOptions) is not RequestOptions:
-            raise Exception('Param requestOptions must be a RequestOptions Object')
-        
-        http_client = HttpClient(self.Sdk)
-        return http_client.get(uri="/v1/payments/search", params=filters, requestOptions=requestOptions)
+    def search(self, filters, request_options=None):
+        return self._get(uri="/v1/payments/search", filters=filters, request_options=request_options)
 
     #TODO SEM TESTE
-    def find_by_id(self, 
-                 id, 
-                 requestOptions=None):
+    def find_by_id(self, id, request_options=None):
         if type(id) is not str:
-            raise Exception('ID must be a String')     
-        if requestOptions !=None and type(requestOptions) is not RequestOptions:
-            raise Exception('Param requestOptions must be a RequestOptions Object')    
-                       
-        http_client = HttpClient(self.Sdk)
-        return http_client.get(uri="/v1/payments/" + str(id), requestOptions=requestOptions)
+            raise Exception('Param id must be a String')
+        
+        return self._get(uri="/v1/payments/" + str(id), request_options=request_options)
 
     #TODO SEM TESTE
-    def save(self, requestOptions):        
-        if requestOptions !=None:
-        
-            http_client = HttpClient(self.Sdk)
-            return http_client.post(uri="/v1/payments/", requestOptions=requestOptions)
+    def save(self, payment_object, request_options=None):
+        if type(payment_object) is not dict:
+            raise Exception('Param payment_object must be a Dictionary')
+
+        return self._post(uri="/v1/payments/", data=payment_object, request_options=request_options)
 
     #TODO SEM TESTE 
-    def update(self, requestOptions):
-        if requestOptions !=None:
+    def update(self, id, payment_object, request_options=None):
+        if type(id) is not str:
+            raise Exception('Param id must be a String')
 
-            http_client = HttpClient(self.Sdk)
-            return http_client.put(uri="/v1/payments/" + id, requestOptions=requestOptions)
+        if type(payment_object) is not dict:
+            raise Exception('Param payment_object must be a Dictionary')
+
+        return self._put(uri="/v1/payments/" + id, data=payment_object, request_options=request_options)
