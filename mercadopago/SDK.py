@@ -49,4 +49,5 @@ class SDK():
 
     def __validate_access_token(self):
         if self.access_token is None:
-            raise Exception('An access_token must be informed')
+            raise Exception("An access_token must be informed")
+        
