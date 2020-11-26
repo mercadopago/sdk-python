@@ -1,9 +1,15 @@
 __all__ = [
-    'card',
-    'card_token',
-    'customer',
-    'merchant_order',
-    'payment',
-    'preference',
-    'refund',
+    "advanced_payment",
+    "card_token",
+    "card",
+    "customer",
+    "disbursement_refund",
+    "disbursement",
+    "identification_type",
+    "merchant_order",
+    "o_auth",
+    "payment",
+    "preference",
+    "refund",
+    "user"
 ]
