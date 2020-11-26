@@ -7,8 +7,12 @@ class Disbursement(MPBase):
         super(Disbursement, self).__init__(request_options)
 
     #TODO RESPONSE + PROCESSO METHOD
-    def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None, filters={"advanced_payment_id":"", "disbursement_id":""}):
-        if type(release_date) is not datetime:
+    def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None):
+        if type(release_date) is not datetime.datetime:
             raise Exception("Param release_date must be a DateTime")
 
-        return self._post(uri="/v1/advanced_payments/" + str(advanced_payment_id) + "/disbursements/" + str(disbursement_id) + "/disburses", request_options=request_options, filters=filters)
+        #TODO Validar se é esse mesmo o nome do parametro
+        #TODO Validar se temos que enviar realmente "date + time"
+        disbursement_object = {"money_release_date": release_date.strftime("%m/%d/%Y, %H:%M:%S")}
+
+        return self._post(uri="/v1/advanced_payments/" + str(advanced_payment_id) + "/disbursements/" + str(disbursement_id) + "/disburses", data=disbursement_object, request_options=request_options)

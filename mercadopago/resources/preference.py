@@ -10,8 +10,12 @@ class Preference(MPBase):
     def update(self, id, preference_object, request_options=None):
         if type(preference_object) is not dict:
             raise Exception("Param preference_object must be a Dictionary")
+
         return self._put(uri="/checkout/preferences/" + str(id), data=preference_object, request_options=request_options)
 
-    def save(self, request_options=None):
-        return self._post(uri="/checkout/preferences", request_options=request_options)
+    def save(self, preference_object, request_options=None):
+        if type(preference_object) is not dict:
+            raise Exception("Param preference_object must be a Dictionary")
+
+        return self._post(uri="/checkout/preferences", data=preference_object, request_options=request_options)
         
