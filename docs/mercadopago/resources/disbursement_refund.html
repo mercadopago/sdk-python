@@ -42,13 +42,13 @@ class DisbursementRefund(MPBase):
 
     def create_all(self, advanced_payment_id, disbursement_refund_object, request_options=None):
         if type(disbursement_refund_object) is not dict:
-            raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)
         
     def create(self, advanced_payment_id, disbursement_id, amount, request_options=None):
         if type(amount) is not float:
-            raise Exception(&#39;Param amount must be a Float&#39;)
+            raise ValueError(&#39;Param amount must be a Float&#39;)
 
         disbursement_refund_object = {&#34;amount&#34;: amount}
 
@@ -56,7 +56,7 @@ class DisbursementRefund(MPBase):
     
     def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object, request_options=None):
         if type(disbursement_refund_object) is not dict:
-            raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
 </details>
@@ -94,13 +94,13 @@ class DisbursementRefund(MPBase):
 
     def create_all(self, advanced_payment_id, disbursement_refund_object, request_options=None):
         if type(disbursement_refund_object) is not dict:
-            raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)
         
     def create(self, advanced_payment_id, disbursement_id, amount, request_options=None):
         if type(amount) is not float:
-            raise Exception(&#39;Param amount must be a Float&#39;)
+            raise ValueError(&#39;Param amount must be a Float&#39;)
 
         disbursement_refund_object = {&#34;amount&#34;: amount}
 
@@ -108,7 +108,7 @@ class DisbursementRefund(MPBase):
     
     def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object, request_options=None):
         if type(disbursement_refund_object) is not dict:
-            raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
 </details>
@@ -129,7 +129,7 @@ class DisbursementRefund(MPBase):
 </summary>
 <pre><code class="python">def create(self, advanced_payment_id, disbursement_id, amount, request_options=None):
     if type(amount) is not float:
-        raise Exception(&#39;Param amount must be a Float&#39;)
+        raise ValueError(&#39;Param amount must be a Float&#39;)
 
     disbursement_refund_object = {&#34;amount&#34;: amount}
 
@@ -147,7 +147,7 @@ class DisbursementRefund(MPBase):
 </summary>
 <pre><code class="python">def create_all(self, advanced_payment_id, disbursement_refund_object, request_options=None):
     if type(disbursement_refund_object) is not dict:
-        raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+        raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
     return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
 </details>
@@ -176,7 +176,7 @@ class DisbursementRefund(MPBase):
 </summary>
 <pre><code class="python">def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object, request_options=None):
     if type(disbursement_refund_object) is not dict:
-        raise Exception(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
+        raise ValueError(&#39;Param disbursement_refund_object must be a Dictionary&#39;)
 
     return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
 </details>

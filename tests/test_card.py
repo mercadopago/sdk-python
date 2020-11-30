@@ -2,6 +2,7 @@ import sys
 sys.path.append('../')
 
 from mercadopago import SDK
+from mercadopago.config import RequestOptions
 import unittest
 
 class TestCard(unittest.TestCase):
@@ -9,17 +10,7 @@ class TestCard(unittest.TestCase):
 
     def test_find_all(self):
         self.assertEqual(self.sdk.card().find_all("67243")["status"], 404)
+        self.assertEqual(self.sdk.card().find_all("67243", request_options=RequestOptions(access_token=""))["status"], 401)
 
 if __name__ == '__main__':
     unittest.main()
-
-
-#print(sdk.card().find_all("67243"))
-
-#print(sdk.card().find_by_id("67243", "456"))
-
-#print(sdk.card().create("67243", {}))
-
-#print(sdk.card().update("67243", "456", {}))
-
-#print(sdk.card().delete("67243", "456"))

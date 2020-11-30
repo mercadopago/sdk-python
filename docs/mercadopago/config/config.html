@@ -35,16 +35,42 @@ class Config(object):
     &#34;&#34;&#34;
     
     def __init__(self):
-        #TODO VERIFICAR COM DANILO O NÚMERO CORRETO DESTA VERSÃO
-        version = &#34;2.0.0&#34; 
-        self.USER_AGENT = &#34;MercadoPago Python SDK v&#34; + version
-        self.PRODUCT_ID = &#34;bc32bpftrpp001u8nhlg&#34;
-        self.TRACKING_ID = &#34;platform:&#34; + platform.python_version() + &#34;,type:SDK&#34; + version + &#34;,so;&#34;
+        self.__version = &#34;2.0.0&#34; 
+        self.__USER_AGENT = &#34;MercadoPago Python SDK v&#34; + self.__version
+        self.__PRODUCT_ID = &#34;bc32bpftrpp001u8nhlg&#34;
+        self.__TRACKING_ID = &#34;platform:&#34; + platform.python_version() + &#34;,type:SDK&#34; + self.__version + &#34;,so;&#34;
 
-    API_BASE_URL = &#34;https://api.mercadopago.com&#34;
-    MIME_JSON = &#34;application/json&#34;
-    MIME_FORM = &#34;application/x-www-form-urlencoded&#34;
+    __API_BASE_URL = &#34;https://api.mercadopago.com&#34;
+    __MIME_JSON = &#34;application/json&#34;
+    __MIME_FORM = &#34;application/x-www-form-urlencoded&#34;
 
+    @property
+    def version(self):
+        return self.__version
+
+    @property
+    def userAgent(self):
+        return self.__USER_AGENT
+
+    @property
+    def productId(self):
+        return self.__PRODUCT_ID
+
+    @property
+    def trackingId(self):
+        return self.__TRACKING_ID
+
+    @property
+    def apiBaseUrl(self):
+        return self.__API_BASE_URL
+
+    @property
+    def mimeJson(self):
+        return self.__MIME_JSON
+
+    @property
+    def mimeForm(self):
+        return self.__MIME_FORM
        </code></pre>
 </details>
 </section>
@@ -73,29 +99,128 @@ class Config(object):
     &#34;&#34;&#34;
     
     def __init__(self):
-        #TODO VERIFICAR COM DANILO O NÚMERO CORRETO DESTA VERSÃO
-        version = &#34;2.0.0&#34; 
-        self.USER_AGENT = &#34;MercadoPago Python SDK v&#34; + version
-        self.PRODUCT_ID = &#34;bc32bpftrpp001u8nhlg&#34;
-        self.TRACKING_ID = &#34;platform:&#34; + platform.python_version() + &#34;,type:SDK&#34; + version + &#34;,so;&#34;
+        self.__version = &#34;2.0.0&#34; 
+        self.__USER_AGENT = &#34;MercadoPago Python SDK v&#34; + self.__version
+        self.__PRODUCT_ID = &#34;bc32bpftrpp001u8nhlg&#34;
+        self.__TRACKING_ID = &#34;platform:&#34; + platform.python_version() + &#34;,type:SDK&#34; + self.__version + &#34;,so;&#34;
 
-    API_BASE_URL = &#34;https://api.mercadopago.com&#34;
-    MIME_JSON = &#34;application/json&#34;
-    MIME_FORM = &#34;application/x-www-form-urlencoded&#34;</code></pre>
+    __API_BASE_URL = &#34;https://api.mercadopago.com&#34;
+    __MIME_JSON = &#34;application/json&#34;
+    __MIME_FORM = &#34;application/x-www-form-urlencoded&#34;
+
+    @property
+    def version(self):
+        return self.__version
+
+    @property
+    def userAgent(self):
+        return self.__USER_AGENT
+
+    @property
+    def productId(self):
+        return self.__PRODUCT_ID
+
+    @property
+    def trackingId(self):
+        return self.__TRACKING_ID
+
+    @property
+    def apiBaseUrl(self):
+        return self.__API_BASE_URL
+
+    @property
+    def mimeJson(self):
+        return self.__MIME_JSON
+
+    @property
+    def mimeForm(self):
+        return self.__MIME_FORM</code></pre>
 </details>
-<h3>Class variables</h3>
+<h3>Instance variables</h3>
 <dl>
-<dt id="mercadopago.config.config.Config.API_BASE_URL"><code class="name">var <span class="ident">API_BASE_URL</span></code></dt>
+<dt id="mercadopago.config.config.Config.apiBaseUrl"><code class="name">var <span class="ident">apiBaseUrl</span></code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def apiBaseUrl(self):
+    return self.__API_BASE_URL</code></pre>
+</details>
 </dd>
-<dt id="mercadopago.config.config.Config.MIME_FORM"><code class="name">var <span class="ident">MIME_FORM</span></code></dt>
+<dt id="mercadopago.config.config.Config.mimeForm"><code class="name">var <span class="ident">mimeForm</span></code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def mimeForm(self):
+    return self.__MIME_FORM</code></pre>
+</details>
 </dd>
-<dt id="mercadopago.config.config.Config.MIME_JSON"><code class="name">var <span class="ident">MIME_JSON</span></code></dt>
+<dt id="mercadopago.config.config.Config.mimeJson"><code class="name">var <span class="ident">mimeJson</span></code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def mimeJson(self):
+    return self.__MIME_JSON</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.config.config.Config.productId"><code class="name">var <span class="ident">productId</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def productId(self):
+    return self.__PRODUCT_ID</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.config.config.Config.trackingId"><code class="name">var <span class="ident">trackingId</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def trackingId(self):
+    return self.__TRACKING_ID</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.config.config.Config.userAgent"><code class="name">var <span class="ident">userAgent</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def userAgent(self):
+    return self.__USER_AGENT</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.config.config.Config.version"><code class="name">var <span class="ident">version</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def version(self):
+    return self.__version</code></pre>
+</details>
 </dd>
 </dl>
 </dd>
@@ -117,10 +242,14 @@ class Config(object):
 <ul>
 <li>
 <h4><code><a title="mercadopago.config.config.Config" href="#mercadopago.config.config.Config">Config</a></code></h4>
-<ul class="">
-<li><code><a title="mercadopago.config.config.Config.API_BASE_URL" href="#mercadopago.config.config.Config.API_BASE_URL">API_BASE_URL</a></code></li>
-<li><code><a title="mercadopago.config.config.Config.MIME_FORM" href="#mercadopago.config.config.Config.MIME_FORM">MIME_FORM</a></code></li>
-<li><code><a title="mercadopago.config.config.Config.MIME_JSON" href="#mercadopago.config.config.Config.MIME_JSON">MIME_JSON</a></code></li>
+<ul class="two-column">
+<li><code><a title="mercadopago.config.config.Config.apiBaseUrl" href="#mercadopago.config.config.Config.apiBaseUrl">apiBaseUrl</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.mimeForm" href="#mercadopago.config.config.Config.mimeForm">mimeForm</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.mimeJson" href="#mercadopago.config.config.Config.mimeJson">mimeJson</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.productId" href="#mercadopago.config.config.Config.productId">productId</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.trackingId" href="#mercadopago.config.config.Config.trackingId">trackingId</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.userAgent" href="#mercadopago.config.config.Config.userAgent">userAgent</a></code></li>
+<li><code><a title="mercadopago.config.config.Config.version" href="#mercadopago.config.config.Config.version">version</a></code></li>
 </ul>
 </li>
 </ul>

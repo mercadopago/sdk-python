@@ -14,12 +14,12 @@ class MerchantOrder(MPBase):
 
     def update(self, id, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception('Param merchant_order_object must be a Dictionary')
+            raise ValueError('Param merchant_order_object must be a Dictionary')
 
         return self._put(uri="/merchant_orders/" + str(id), data=merchant_order_object, request_options=request_options)
 
     def save(self, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception('Param merchant_order_object must be a Dictionary')
+            raise ValueError('Param merchant_order_object must be a Dictionary')
 
         return self._post(uri="/merchant_orders", data=merchant_order_object, request_options=request_options)

@@ -32,65 +32,45 @@ import requests
 class HttpClient():
 
     &#34;&#34;&#34;
-    gdfbdgh
+    Default implementation to call all REST API`s
     &#34;&#34;&#34;
     
     def __init__(self):
         pass
 
-    def get_session(self):
-        &#34;&#34;&#34;Creates and returns a ready-to-use requests.
-        Session, with all thecustomizations made to access MP
-        &#34;&#34;&#34;
-        
-        session = requests.Session()
-        return session
-
     def get(self, url, headers, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.get(url, params=params, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def post(self, url, headers, data=None, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.post(url, params=params, data=data, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def put(self, url, headers, data=None, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.put(url, params=params, data=data, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def delete(self, url, headers, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.delete(url, params=params, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response</code></pre>
 </details>
@@ -108,7 +88,7 @@ class HttpClient():
 <span>class <span class="ident">HttpClient</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>gdfbdgh</p></div>
+<div class="desc"><p>Default implementation to call all REST API`s</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -116,65 +96,45 @@ class HttpClient():
 <pre><code class="python">class HttpClient():
 
     &#34;&#34;&#34;
-    gdfbdgh
+    Default implementation to call all REST API`s
     &#34;&#34;&#34;
     
     def __init__(self):
         pass
 
-    def get_session(self):
-        &#34;&#34;&#34;Creates and returns a ready-to-use requests.
-        Session, with all thecustomizations made to access MP
-        &#34;&#34;&#34;
-        
-        session = requests.Session()
-        return session
-
     def get(self, url, headers, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.get(url, params=params, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def post(self, url, headers, data=None, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.post(url, params=params, data=data, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def put(self, url, headers, data=None, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.put(url, params=params, data=data, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response
 
     def delete(self, url, headers, params=None, timeout=None):
-        s = self.get_session()
-
-        api_result = s.delete(url, params=params, headers=headers, timeout=timeout)
-
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
+        with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
 
         return response</code></pre>
 </details>
@@ -190,14 +150,11 @@ class HttpClient():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def delete(self, url, headers, params=None, timeout=None):
-    s = self.get_session()
-
-    api_result = s.delete(url, params=params, headers=headers, timeout=timeout)
-
-    response = {
-        &#34;status&#34;: api_result.status_code,
-        &#34;response&#34;: api_result.json()
-    }
+    with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+        response = {
+            &#34;status&#34;: api_result.status_code,
+            &#34;response&#34;: api_result.json()
+        }
 
     return response</code></pre>
 </details>
@@ -212,35 +169,13 @@ class HttpClient():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get(self, url, headers, params=None, timeout=None):
-    s = self.get_session()
-
-    api_result = s.get(url, params=params, headers=headers, timeout=timeout)
-
-    response = {
-        &#34;status&#34;: api_result.status_code,
-        &#34;response&#34;: api_result.json()
-    }
+    with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+        response = {
+            &#34;status&#34;: api_result.status_code,
+            &#34;response&#34;: api_result.json()
+        }
 
     return response</code></pre>
-</details>
-</dd>
-<dt id="mercadopago.http.http_client.HttpClient.get_session"><code class="name flex">
-<span>def <span class="ident">get_session</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Creates and returns a ready-to-use requests.
-Session, with all thecustomizations made to access MP</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_session(self):
-    &#34;&#34;&#34;Creates and returns a ready-to-use requests.
-    Session, with all thecustomizations made to access MP
-    &#34;&#34;&#34;
-    
-    session = requests.Session()
-    return session</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.post"><code class="name flex">
@@ -253,14 +188,11 @@ Session, with all thecustomizations made to access MP</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None):
-    s = self.get_session()
-
-    api_result = s.post(url, params=params, data=data, headers=headers, timeout=timeout)
-
-    response = {
-        &#34;status&#34;: api_result.status_code,
-        &#34;response&#34;: api_result.json()
-    }
+    with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+        response = {
+            &#34;status&#34;: api_result.status_code,
+            &#34;response&#34;: api_result.json()
+        }
 
     return response</code></pre>
 </details>
@@ -275,14 +207,11 @@ Session, with all thecustomizations made to access MP</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None):
-    s = self.get_session()
-
-    api_result = s.put(url, params=params, data=data, headers=headers, timeout=timeout)
-
-    response = {
-        &#34;status&#34;: api_result.status_code,
-        &#34;response&#34;: api_result.json()
-    }
+    with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+        response = {
+            &#34;status&#34;: api_result.status_code,
+            &#34;response&#34;: api_result.json()
+        }
 
     return response</code></pre>
 </details>
@@ -310,7 +239,6 @@ Session, with all thecustomizations made to access MP</p></div>
 <ul class="">
 <li><code><a title="mercadopago.http.http_client.HttpClient.delete" href="#mercadopago.http.http_client.HttpClient.delete">delete</a></code></li>
 <li><code><a title="mercadopago.http.http_client.HttpClient.get" href="#mercadopago.http.http_client.HttpClient.get">get</a></code></li>
-<li><code><a title="mercadopago.http.http_client.HttpClient.get_session" href="#mercadopago.http.http_client.HttpClient.get_session">get_session</a></code></li>
 <li><code><a title="mercadopago.http.http_client.HttpClient.post" href="#mercadopago.http.http_client.HttpClient.post">post</a></code></li>
 <li><code><a title="mercadopago.http.http_client.HttpClient.put" href="#mercadopago.http.http_client.HttpClient.put">put</a></code></li>
 </ul>

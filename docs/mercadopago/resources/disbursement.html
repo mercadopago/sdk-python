@@ -39,10 +39,9 @@ class Disbursement(MPBase):
     def __init__(self, request_options, http_client):
         super(Disbursement, self).__init__(request_options, http_client)
 
-    #TODO RESPONSE + PROCESSO METHOD
     def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None):
         if type(release_date) is not datetime.datetime:
-            raise Exception(&#34;Param release_date must be a DateTime&#34;)
+            raise ValueError(&#34;Param release_date must be a DateTime&#34;)
 
         #TODO Validar se é esse mesmo o nome do parametro
         #TODO Validar se temos que enviar realmente &#34;date + time&#34;
@@ -79,10 +78,9 @@ class Disbursement(MPBase):
     def __init__(self, request_options, http_client):
         super(Disbursement, self).__init__(request_options, http_client)
 
-    #TODO RESPONSE + PROCESSO METHOD
     def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None):
         if type(release_date) is not datetime.datetime:
-            raise Exception(&#34;Param release_date must be a DateTime&#34;)
+            raise ValueError(&#34;Param release_date must be a DateTime&#34;)
 
         #TODO Validar se é esse mesmo o nome do parametro
         #TODO Validar se temos que enviar realmente &#34;date + time&#34;
@@ -107,7 +105,7 @@ class Disbursement(MPBase):
 </summary>
 <pre><code class="python">def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None):
     if type(release_date) is not datetime.datetime:
-        raise Exception(&#34;Param release_date must be a DateTime&#34;)
+        raise ValueError(&#34;Param release_date must be a DateTime&#34;)
 
     #TODO Validar se é esse mesmo o nome do parametro
     #TODO Validar se temos que enviar realmente &#34;date + time&#34;

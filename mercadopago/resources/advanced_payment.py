@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class AdvancedPayment(MPBase):
 
     """
-    gdfbdgh
+    Access to Advanced Payments
     """
     
     def __init__(self, request_options, http_client):
@@ -11,5 +11,3 @@ class AdvancedPayment(MPBase):
 
     def find_by_id(self, id, request_options=None):
         return self._get(uri="/v1/advanced_payments/" + str(id), request_options=request_options) 
-
-#TODO PROCESS METHOD IN MPBASE

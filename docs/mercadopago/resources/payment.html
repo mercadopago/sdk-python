@@ -49,13 +49,13 @@ class Payment(MPBase):
 
     def save(self, payment_object, request_options=None):
         if type(payment_object) is not dict:
-            raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
     def update(self, id, payment_object, request_options=None):
         if type(payment_object) is not dict:
-            raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
 </details>
@@ -102,13 +102,13 @@ class Payment(MPBase):
 
     def save(self, payment_object, request_options=None):
         if type(payment_object) is not dict:
-            raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
     def update(self, id, payment_object, request_options=None):
         if type(payment_object) is not dict:
-            raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
 </details>
@@ -142,7 +142,7 @@ class Payment(MPBase):
 </summary>
 <pre><code class="python">def save(self, payment_object, request_options=None):
     if type(payment_object) is not dict:
-        raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)</code></pre>
 </details>
@@ -171,7 +171,7 @@ class Payment(MPBase):
 </summary>
 <pre><code class="python">def update(self, id, payment_object, request_options=None):
     if type(payment_object) is not dict:
-        raise Exception(&#34;Param payment_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
     return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
 </details>

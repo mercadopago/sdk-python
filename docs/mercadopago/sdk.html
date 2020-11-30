@@ -108,7 +108,7 @@ class SDK():
     @access_token.setter
     def access_token(self, value):
         if type(value) is not str:
-            raise Exception(&#39;Param access_token must be a String&#39;)
+            raise ValueError(&#39;Param access_token must be a String&#39;)
         self.__access_token = value
 
     @property
@@ -121,7 +121,7 @@ class SDK():
     @request_options.setter
     def request_options(self, value):
         if type(value) is not RequestOptions:
-            raise Exception(&#39;Param request_options must be a RequestOptions Object&#39;)
+            raise ValueError(&#39;Param request_options must be a RequestOptions Object&#39;)
         self.__request_options = value
 
     @property
@@ -130,12 +130,7 @@ class SDK():
 
     @http_client.setter
     def http_client(self, value):
-        self.__http_client = value
-
-    def __validate_access_token(self):
-        if self.access_token is None:
-            raise Exception(&#34;An access_token must be informed&#34;)
-        </code></pre>
+        self.__http_client = value</code></pre>
 </details>
 </section>
 <section>
@@ -260,7 +255,7 @@ class SDK():
     @access_token.setter
     def access_token(self, value):
         if type(value) is not str:
-            raise Exception(&#39;Param access_token must be a String&#39;)
+            raise ValueError(&#39;Param access_token must be a String&#39;)
         self.__access_token = value
 
     @property
@@ -273,7 +268,7 @@ class SDK():
     @request_options.setter
     def request_options(self, value):
         if type(value) is not RequestOptions:
-            raise Exception(&#39;Param request_options must be a RequestOptions Object&#39;)
+            raise ValueError(&#39;Param request_options must be a RequestOptions Object&#39;)
         self.__request_options = value
 
     @property
@@ -282,11 +277,7 @@ class SDK():
 
     @http_client.setter
     def http_client(self, value):
-        self.__http_client = value
-
-    def __validate_access_token(self):
-        if self.access_token is None:
-            raise Exception(&#34;An access_token must be informed&#34;)</code></pre>
+        self.__http_client = value</code></pre>
 </details>
 <h3>Instance variables</h3>
 <dl>

@@ -43,21 +43,21 @@ class Card(MPBase):
     def __init__(self, request_options, http_client):
         super(Card, self).__init__(request_options, http_client)
 
-    def find_all(self, customer_id):
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id))
+    def find_all(self, customer_id, request_options=None):
+        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id), request_options=request_options)
 
     def find_by_id(self, customer_id, card_id, request_options=None):
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)
 
     def create(self, customer_id, card_object, request_options=None):
         if type(card_object) is not dict:
-            raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
         if type(card_object) is not dict:
-            raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), data=card_object, request_options=request_options)
 
@@ -103,21 +103,21 @@ class Card(MPBase):
     def __init__(self, request_options, http_client):
         super(Card, self).__init__(request_options, http_client)
 
-    def find_all(self, customer_id):
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id))
+    def find_all(self, customer_id, request_options=None):
+        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id), request_options=request_options)
 
     def find_by_id(self, customer_id, card_id, request_options=None):
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)
 
     def create(self, customer_id, card_object, request_options=None):
         if type(card_object) is not dict:
-            raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
         if type(card_object) is not dict:
-            raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), data=card_object, request_options=request_options)
 
@@ -141,7 +141,7 @@ class Card(MPBase):
 </summary>
 <pre><code class="python">def create(self, customer_id, card_object, request_options=None):
     if type(card_object) is not dict:
-        raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34;, data=card_object, request_options=request_options)</code></pre>
 </details>
@@ -160,7 +160,7 @@ class Card(MPBase):
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.find_all"><code class="name flex">
-<span>def <span class="ident">find_all</span></span>(<span>self, customer_id)</span>
+<span>def <span class="ident">find_all</span></span>(<span>self, customer_id, request_options=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -168,8 +168,8 @@ class Card(MPBase):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_all(self, customer_id):
-    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id))</code></pre>
+<pre><code class="python">def find_all(self, customer_id, request_options=None):
+    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id), request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.find_by_id"><code class="name flex">
@@ -196,7 +196,7 @@ class Card(MPBase):
 </summary>
 <pre><code class="python">def update(self, customer_id, card_id, card_object, request_options=None):
     if type(card_object) is not dict:
-        raise Exception(&#34;Param card_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
     return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), data=card_object, request_options=request_options)</code></pre>
 </details>

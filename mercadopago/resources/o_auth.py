@@ -15,6 +15,6 @@ class OAuth(MPBase):
 
     def save(self, o_auth_object, request_options=None):
         if type(o_auth_object) is not dict:
-            raise Exception('Param o_auth_object must be a Dictionary')
+            raise ValueError('Param o_auth_object must be a Dictionary')
 
         return self._post(uri="/oauth/token", data=o_auth_object, request_options=request_options)

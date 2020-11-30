@@ -42,13 +42,13 @@ class MerchantOrder(MPBase):
 
     def update(self, id, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
 
     def save(self, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
 </details>
@@ -86,13 +86,13 @@ class MerchantOrder(MPBase):
 
     def update(self, id, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
 
     def save(self, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
-            raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
 </details>
@@ -126,7 +126,7 @@ class MerchantOrder(MPBase):
 </summary>
 <pre><code class="python">def save(self, merchant_order_object, request_options=None):
     if type(merchant_order_object) is not dict:
-        raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
     return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
 </details>
@@ -142,7 +142,7 @@ class MerchantOrder(MPBase):
 </summary>
 <pre><code class="python">def update(self, id, merchant_order_object, request_options=None):
     if type(merchant_order_object) is not dict:
-        raise Exception(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
     return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)</code></pre>
 </details>

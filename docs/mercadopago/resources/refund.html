@@ -48,7 +48,7 @@ class Refund(MPBase):
 
     def save(self, payment_id, refund_object, request_options=None):
         if type(refund_object) is not dict:
-            raise Exception(&#34;Param refund_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param refund_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments/&#34; + str(payment_id) + &#34;/refunds&#34;, data=refund_object, request_options=request_options)</code></pre>
 </details>
@@ -95,7 +95,7 @@ class Refund(MPBase):
 
     def save(self, payment_id, refund_object, request_options=None):
         if type(refund_object) is not dict:
-            raise Exception(&#34;Param refund_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param refund_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments/&#34; + str(payment_id) + &#34;/refunds&#34;, data=refund_object, request_options=request_options)</code></pre>
 </details>
@@ -129,7 +129,7 @@ class Refund(MPBase):
 </summary>
 <pre><code class="python">def save(self, payment_id, refund_object, request_options=None):
     if type(refund_object) is not dict:
-        raise Exception(&#34;Param refund_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param refund_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/payments/&#34; + str(payment_id) + &#34;/refunds&#34;, data=refund_object, request_options=request_options)</code></pre>
 </details>

@@ -80,7 +80,7 @@ class SDK():
     @access_token.setter
     def access_token(self, value):
         if type(value) is not str:
-            raise Exception('Param access_token must be a String')
+            raise ValueError('Param access_token must be a String')
         self.__access_token = value
 
     @property
@@ -93,7 +93,7 @@ class SDK():
     @request_options.setter
     def request_options(self, value):
         if type(value) is not RequestOptions:
-            raise Exception('Param request_options must be a RequestOptions Object')
+            raise ValueError('Param request_options must be a RequestOptions Object')
         self.__request_options = value
 
     @property
@@ -103,8 +103,3 @@ class SDK():
     @http_client.setter
     def http_client(self, value):
         self.__http_client = value
-
-    def __validate_access_token(self):
-        if self.access_token is None:
-            raise Exception("An access_token must be informed")
-        

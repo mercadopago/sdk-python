@@ -42,7 +42,7 @@ class CardToken(MPBase):
 
     def save(self, card_token_object, request_options=None):
         if type(card_token_object) is not dict:
-            raise Exception(&#34;Param card_token_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/card_tokens&#34;, data=card_token_object, request_options=request_options)</code></pre>
 </details>
@@ -80,7 +80,7 @@ class CardToken(MPBase):
 
     def save(self, card_token_object, request_options=None):
         if type(card_token_object) is not dict:
-            raise Exception(&#34;Param card_token_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/card_tokens&#34;, data=card_token_object, request_options=request_options)</code></pre>
 </details>
@@ -114,7 +114,7 @@ class CardToken(MPBase):
 </summary>
 <pre><code class="python">def save(self, card_token_object, request_options=None):
     if type(card_token_object) is not dict:
-        raise Exception(&#34;Param card_token_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/card_tokens&#34;, data=card_token_object, request_options=request_options)</code></pre>
 </details>

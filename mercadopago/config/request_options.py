@@ -6,6 +6,11 @@ class RequestOptions(object):
     All here u can customize as well add params in the requisition header (custom_headers)
     """
     
+    __access_token = None
+    __connection_timeout = None
+    __custom_headers = None
+    __max_retries = None
+    
     def __init__(self, 
                  access_token=None, 
                  connection_timeout=60.0, 
@@ -20,37 +25,73 @@ class RequestOptions(object):
             max_retries (int, optional): [description]. Defaults to 3.
 
         Raises:
-            Exception: Param access_token must be a String
-            Exception: Param connection_timeout must be a Float
-            Exception: Param custom_headers must be a Dictionary
-            Exception: Param max_retries must be an Integer
+            ValueError: Param access_token must be a String
+            ValueError: Param connection_timeout must be a Float
+            ValueError: Param custom_headers must be a Dictionary
+            ValueError: Param max_retries must be an Integer
         """
-        if access_token is not None and type(access_token) is not str:
-            raise Exception('Param access_token must be a String')
-        if connection_timeout is not None and type(connection_timeout) is not float:
-            raise Exception('Param connection_timeout must be a Float')
-        if custom_headers is not None and type(custom_headers) is not dict:
-            raise Exception('Param custom_headers must be a Dictionary')  
-        if max_retries is not None and type(max_retries) is not int:
-            raise Exception('Param max_retries must be an Integer')      
-
         from mercadopago.config import Config
 
-        self.access_token = access_token
-        self.connection_timeout = connection_timeout
-        self.custom_headers = custom_headers
-        self.max_retries = max_retries
-        self.config = Config()
+        if access_token is not None:
+            self.access_token = access_token
+        if connection_timeout is not None:
+            self.connection_timeout = connection_timeout
+        if custom_headers is not None:
+            self.custom_headers = custom_headers
+        if max_retries is not None:
+            self.max_retries = max_retries
+
+        self.__config = Config()
 
     def get_headers(self):
-        headers = {'Authorization': 'Bearer ' + self.access_token,
-                'x-product-id': self.config.PRODUCT_ID, 
-                'x-tracking-id': self.config.TRACKING_ID, 
-                'User-Agent':self.config.USER_AGENT,
-                'Accept':self.config.MIME_JSON}
+        headers = {'Authorization': 'Bearer ' + self.__access_token,
+                'x-product-id': self.__config.productId, 
+                'x-tracking-id': self.__config.trackingId, 
+                'User-Agent':self.__config.userAgent,
+                'Accept':self.__config.mimeJson}
 
-        if self.custom_headers is not None:
-            headers.update(self.custom_headers)
+        if self.__custom_headers is not None:
+            headers.update(self.__custom_headers)
 
         return headers
+
+    @property
+    def access_token(self):
+        return self.__access_token
+
+    @access_token.setter
+    def access_token(self, value):
+        if type(value) is not str:
+            raise ValueError('Param access_token must be a String')
+        self.__access_token = value
+
+    @property
+    def connection_timeout(self):
+        return self.__connection_timeout
+
+    @connection_timeout.setter
+    def connection_timeout(self, value):
+        if type(value) is not float:
+            raise ValueError('Param connection_timeout must be a Float')
+        self.__connection_timeout = value
+
+    @property
+    def custom_headers(self):
+        return self.__custom_headers
+
+    @custom_headers.setter
+    def custom_headers(self, value):
+        if type(value) is not dict:
+            raise ValueError('Param custom_headers must be a Dictionary')
+        self.__custom_headers = value
+
+    @property
+    def max_retries(self):
+        return self.__max_retries
+
+    @max_retries.setter
+    def max_retries(self, value):
+        if type(value) is not int:
+            raise ValueError('Param max_retries must be an Integer')
+        self.__max_retries = value
 

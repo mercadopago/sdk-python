@@ -49,13 +49,13 @@ class Customer(MPBase):
         
     def save(self, customer_object, request_options=None):
         if type(customer_object) is not dict:
-            raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers&#34;, data=customer_object, request_options=request_options)
 
     def update(self, id, customer_object, request_options=None):
         if type(customer_object) is not dict:
-            raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(id), data=customer_object, request_options=request_options)
 
@@ -105,13 +105,13 @@ class Customer(MPBase):
         
     def save(self, customer_object, request_options=None):
         if type(customer_object) is not dict:
-            raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers&#34;, data=customer_object, request_options=request_options)
 
     def update(self, id, customer_object, request_options=None):
         if type(customer_object) is not dict:
-            raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+            raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(id), data=customer_object, request_options=request_options)
 
@@ -161,7 +161,7 @@ class Customer(MPBase):
 </summary>
 <pre><code class="python">def save(self, customer_object, request_options=None):
     if type(customer_object) is not dict:
-        raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/customers&#34;, data=customer_object, request_options=request_options)</code></pre>
 </details>
@@ -190,7 +190,7 @@ class Customer(MPBase):
 </summary>
 <pre><code class="python">def update(self, id, customer_object, request_options=None):
     if type(customer_object) is not dict:
-        raise Exception(&#34;Param customer_object must be a Dictionary&#34;)
+        raise ValueError(&#34;Param customer_object must be a Dictionary&#34;)
 
     return self._put(uri=&#34;/v1/customers/&#34; + str(id), data=customer_object, request_options=request_options)</code></pre>
 </details>
