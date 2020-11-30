@@ -28,12 +28,13 @@
 </summary>
 <pre><code class="python">from mercadopago.http import HttpClient
 from json.encoder import JSONEncoder
-from mercadopago.core import RequestOptions
+from mercadopago.config import RequestOptions
+from mercadopago.config import Config
 
 class MPBase(object):
 
     &#34;&#34;&#34;
-    gdfbdgh
+    All mercadopago.resources extends this one to call the REST services
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
@@ -43,7 +44,6 @@ class MPBase(object):
         self.request_options = request_options
         self.http_client = http_client
 
-        from mercadopago import Config
         self.config = Config()
 
     def __check_request_options(self, request_options):
@@ -116,7 +116,7 @@ class MPBase(object):
 <span>(</span><span>request_options, http_client)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>gdfbdgh</p></div>
+<div class="desc"><p>All mercadopago.resources extends this one to call the REST services</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -124,7 +124,7 @@ class MPBase(object):
 <pre><code class="python">class MPBase(object):
 
     &#34;&#34;&#34;
-    gdfbdgh
+    All mercadopago.resources extends this one to call the REST services
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
@@ -134,7 +134,6 @@ class MPBase(object):
         self.request_options = request_options
         self.http_client = http_client
 
-        from mercadopago import Config
         self.config = Config()
 
     def __check_request_options(self, request_options):

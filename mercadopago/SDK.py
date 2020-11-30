@@ -1,5 +1,5 @@
 from mercadopago.resources import *
-from mercadopago.core import RequestOptions
+from mercadopago.config import RequestOptions
 from mercadopago.http import HttpClient
 
 class SDK():
@@ -17,7 +17,7 @@ class SDK():
         Args:
             access_token ([str]): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
             http_client ([mercadopago.http.http_client], optional): [description]. Defaults to None.
-            request_options ([mercadopago.core.request_options], optional): [description]. Defaults to None.
+            request_options ([mercadopago.config.request_options], optional): [description]. Defaults to None.
         """
         self.__access_token = access_token
         self.__http_client = http_client is None and HttpClient() or http_client

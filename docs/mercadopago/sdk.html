@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">from mercadopago.resources import *
-from mercadopago.core import RequestOptions
+from mercadopago.config import RequestOptions
 from mercadopago.http import HttpClient
 
 class SDK():
@@ -45,7 +45,7 @@ class SDK():
         Args:
             access_token ([str]): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
             http_client ([mercadopago.http.http_client], optional): [description]. Defaults to None.
-            request_options ([mercadopago.core.request_options], optional): [description]. Defaults to None.
+            request_options ([mercadopago.config.request_options], optional): [description]. Defaults to None.
         &#34;&#34;&#34;
         self.__access_token = access_token
         self.__http_client = http_client is None and HttpClient() or http_client
@@ -152,7 +152,7 @@ class SDK():
 <dd>Your access token to the MercadoPago APIs. <a href="https://www.mercadopago.com/mlb/account/credentials">Click here for more infos</a></dd>
 <dt><strong><code>http_client</code></strong> :&ensp;<code>[<a title="mercadopago.http.http_client" href="http/http_client.html">mercadopago.http.http_client</a>]</code>, optional</dt>
 <dd>[description]. Defaults to None.</dd>
-<dt><strong><code>request_options</code></strong> :&ensp;<code>[<a title="mercadopago.core.request_options" href="core/request_options.html">mercadopago.core.request_options</a>]</code>, optional</dt>
+<dt><strong><code>request_options</code></strong> :&ensp;<code>[<a title="mercadopago.config.request_options" href="config/request_options.html">mercadopago.config.request_options</a>]</code>, optional</dt>
 <dd>[description]. Defaults to None.</dd>
 </dl></div>
 <details class="source">
@@ -174,7 +174,7 @@ class SDK():
         Args:
             access_token ([str]): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
             http_client ([mercadopago.http.http_client], optional): [description]. Defaults to None.
-            request_options ([mercadopago.core.request_options], optional): [description]. Defaults to None.
+            request_options ([mercadopago.config.request_options], optional): [description]. Defaults to None.
         &#34;&#34;&#34;
         self.__access_token = access_token
         self.__http_client = http_client is None and HttpClient() or http_client

@@ -3,7 +3,7 @@ import platform
 class Config(object):
 
     """
-    gdfbdgh
+    General infos of your SDK
     """
     
     def __init__(self):

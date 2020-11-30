@@ -1,11 +1,12 @@
 from mercadopago.http import HttpClient
 from json.encoder import JSONEncoder
-from mercadopago.core import RequestOptions
+from mercadopago.config import RequestOptions
+from mercadopago.config import Config
 
 class MPBase(object):
 
     """
-    gdfbdgh
+    All mercadopago.resources extends this one to call the REST services
     """
     
     def __init__(self, request_options, http_client):
@@ -15,7 +16,6 @@ class MPBase(object):
         self.request_options = request_options
         self.http_client = http_client
 
-        from mercadopago import Config
         self.config = Config()
 
     def __check_request_options(self, request_options):
@@ -30,13 +30,10 @@ class MPBase(object):
         return request_options
 
     def __check_headers(self, request_options, extra_headers=None):
-        headers = request_options.default_headers()
+        headers = request_options is None and self.request_options.get_headers() or request_options.get_headers()
 
         if extra_headers is not None:
             headers.update(extra_headers)
-
-        if request_options.custom_headers is not None:
-            headers.update(request_options.custom_headers)
 
         return headers
 
@@ -46,7 +43,7 @@ class MPBase(object):
 
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.config.MIME_JSON})
-
+        print(headers)
         return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
 
     def _post(self, uri, data=None, params=None, request_options=None):
