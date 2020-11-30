@@ -32,7 +32,6 @@ That's it! Mercado Pago SDK has been successfully installed.
   
 ```python
 import mercadopago
-import json
 
 mp = mercadopago.MP("YOUR_ACCESS_TOKEN")
 
@@ -48,7 +47,7 @@ def index(req, **kwargs):
         ]
     }
 
-    mp.create_preference(preference)
+    mp.preference().save(preference)
 ```
 
 ## 📚 Documentation 
