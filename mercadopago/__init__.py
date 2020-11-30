@@ -1,8 +1,2 @@
-__all__ = [
-    'core',
-    'http',
-    'resources',
-    'config',
-    'sdk',
-    'setup',
-]
+from .sdk import SDK
+from .config import Config

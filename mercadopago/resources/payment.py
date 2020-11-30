@@ -1,8 +1,13 @@
-from mercadopago.core.mp_base import MPBase
+from mercadopago.core import MPBase
 
 class Payment(MPBase):
-    def __init__(self, request_options):
-        super(Payment, self).__init__(request_options)
+
+    """
+    gdfbdgh
+    """
+    
+    def __init__(self, request_options, http_client):
+        super(Payment, self).__init__(request_options, http_client)
 
     def search(self, filters, request_options=None):
         return self._get(uri="/v1/payments/search", filters=filters, request_options=request_options)

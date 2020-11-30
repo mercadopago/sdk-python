@@ -1,10 +1,15 @@
-from mercadopago.core.mp_base import MPBase
+from mercadopago.core import MPBase
 
 from datetime import datetime
 
 class Disbursement(MPBase):
-    def __init__(self, request_options):
-        super(Disbursement, self).__init__(request_options)
+
+    """
+    gdfbdgh
+    """
+    
+    def __init__(self, request_options, http_client):
+        super(Disbursement, self).__init__(request_options, http_client)
 
     #TODO RESPONSE + PROCESSO METHOD
     def update_release_date(self, advanced_payment_id, disbursement_id, release_date, request_options=None):

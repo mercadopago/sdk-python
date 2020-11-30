@@ -14,9 +14,9 @@ setup(
     author_email="mp_sdk@mercadopago.com",
     url="https://github.com/mercadopago/sdk-python",
     license="MIT",
-    keywords="api mercadopago checkout payment ipn sdk integration lts",
+    keywords="api mercadopago checkout payment in sdk integration lts",
     packages=["mercadopago"],
-    long_description=open("README.rst").read(),
+    long_description=open("README.md").read(),
     #TODO tests_require=[
     #    'pytest'
     #],

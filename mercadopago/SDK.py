@@ -1,73 +1,66 @@
-from mercadopago.resources.advanced_payment import AdvancedPayment
-from mercadopago.resources.card_token import CardToken
-from mercadopago.resources.card import Card
-from mercadopago.resources.customer import Customer
-from mercadopago.resources.disbursement_refund import DisbursementRefund
-from mercadopago.resources.disbursement import Disbursement
-from mercadopago.resources.identification_type import IdentificationType
-from mercadopago.resources.merchant_order import MerchantOrder
-from mercadopago.resources.o_auth import OAuth
-from mercadopago.resources.payment import Payment
-from mercadopago.resources.preference import Preference
-from mercadopago.resources.refund import Refund
-from mercadopago.resources.user import User
-from mercadopago.core.request_options import RequestOptions
+from mercadopago.resources import *
+from mercadopago.core import RequestOptions
+from mercadopago.http import HttpClient
 
 class SDK():
-    def __init__(self, access_token):
+
+    """
+    Generate access to all API' modules, which are:
+
+    1. Advanced Payment
+
+    """
+
+    def __init__(self, access_token, http_client=None, request_options=None):
+        """Construct ur SDK Object to have access to all APIs modules.
+
+        Args:
+            access_token ([str]): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
+            http_client ([mercadopago.http.http_client], optional): [description]. Defaults to None.
+            request_options ([mercadopago.core.request_options], optional): [description]. Defaults to None.
+        """
         self.__access_token = access_token
+        self.__http_client = http_client is None and HttpClient() or http_client
+        self.request_options = request_options is None and RequestOptions() or request_options
 
     def advanced_payment(self):
-        self.__validate_access_token()
-        return AdvancedPayment(RequestOptions(access_token=self.access_token))
+        return AdvancedPayment(self.request_options, self.http_client)
 
     def card_token(self):
-        self.__validate_access_token()
-        return CardToken(RequestOptions(access_token=self.access_token))
+        return CardToken(self.request_options, self.http_client)
 
     def card(self):
-        self.__validate_access_token()
-        return Card(RequestOptions(access_token=self.access_token))
+        return Card(self.request_options, self.http_client)
 
     def customer(self):
-        self.__validate_access_token()
-        return Customer(RequestOptions(access_token=self.access_token))
+        return Customer(self.request_options, self.http_client)
 
     def disbursement_refund(self):
-        self.__validate_access_token()
-        return DisbursementRefund(RequestOptions(access_token=self.access_token))
+        return DisbursementRefund(self.request_options, self.http_client)
 
     def disbursement(self):
-        self.__validate_access_token()
-        return Disbursement(RequestOptions(access_token=self.access_token))
+        return Disbursement(self.request_options, self.http_client)
 
     def identification_type(self):
-        self.__validate_access_token()
-        return IdentificationType(RequestOptions(access_token=self.access_token))
+        return IdentificationType(self.request_options, self.http_client)
 
     def merchant_order(self):
-        self.__validate_access_token()
-        return MerchantOrder(RequestOptions(access_token=self.access_token))
+        return MerchantOrder(self.request_options, self.http_client)
 
     def o_auth(self):
-        self.__validate_access_token()
-        return OAuth(RequestOptions(access_token=self.access_token))
+        return OAuth(self.request_options, self.http_client)
 
     def payment(self):
-        self.__validate_access_token()
-        return Payment(RequestOptions(access_token=self.access_token))
+        return Payment(self.request_options, self.http_client)
 
     def preference(self):
-        self.__validate_access_token()
-        return Preference(RequestOptions(access_token=self.access_token))
+        return Preference(self.request_options, self.http_client)
 
     def refund(self):
-        self.__validate_access_token()
-        return Refund(RequestOptions(access_token=self.access_token))
+        return Refund(self.request_options, self.http_client)
 
     def user(self):
-        self.__validate_access_token()
-        return User(RequestOptions(access_token=self.access_token))
+        return User(self.request_options, self.http_client)
 
     @property
     def access_token(self):
@@ -75,7 +68,30 @@ class SDK():
 
     @access_token.setter
     def access_token(self, value):
+        if type(value) is not str:
+            raise Exception('Param access_token must be a String')
         self.__access_token = value
+
+    @property
+    def request_options(self):
+        if self.__request_options.access_token is None:
+            self.__request_options.access_token = self.access_token
+        
+        return self.__request_options
+
+    @request_options.setter
+    def request_options(self, value):
+        if type(value) is not RequestOptions:
+            raise Exception('Param request_options must be a RequestOptions Object')
+        self.__request_options = value
+
+    @property
+    def http_client(self):
+        return self.__http_client
+
+    @http_client.setter
+    def http_client(self, value):
+        self.__http_client = value
 
     def __validate_access_token(self):
         if self.access_token is None:

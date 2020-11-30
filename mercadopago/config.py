@@ -2,6 +2,10 @@ import platform
 
 class Config(object):
 
+    """
+    gdfbdgh
+    """
+    
     def __init__(self):
         #TODO VERIFICAR COM DANILO O NÚMERO CORRETO DESTA VERSÃO
         version = "2.0.0" 

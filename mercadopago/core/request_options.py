@@ -1,22 +1,29 @@
-from mercadopago.config import Config
+class RequestOptions(object):
 
-class RequestOptions():
-
+    """
+    gdfbdgh
+    """
+    
     def __init__(self, 
                  access_token=None, 
-                 connection_timeout=None, 
-                 custom_headers=None):
-        
+                 connection_timeout=60.0, 
+                 custom_headers=None,
+                 max_retries=3):
         if access_token is not None and type(access_token) is not str:
-            raise Exception('Warning: access_token must be a String')
-        if connection_timeout is not None and type(connection_timeout) is not int:
-            raise Exception('Warning: connection_timeout must be a Integer')
+            raise Exception('Param access_token must be a String')
+        if connection_timeout is not None and type(connection_timeout) is not float:
+            raise Exception('Param connection_timeout must be a Float')
         if custom_headers is not None and type(custom_headers) is not dict:
-            raise Exception('Warning: custom_headers must be a Dictionary')        
+            raise Exception('Param custom_headers must be a Dictionary')  
+        if max_retries is not None and type(max_retries) is not int:
+            raise Exception('Param max_retries must be an Int')      
+
+        from mercadopago import Config
 
         self.access_token = access_token
         self.connection_timeout = connection_timeout
         self.custom_headers = custom_headers
+        self.max_retries = max_retries
         self.config = Config()
 
     def default_headers(self):

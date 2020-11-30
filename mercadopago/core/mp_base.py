@@ -1,15 +1,21 @@
-from mercadopago.core.request_options import RequestOptions
-from mercadopago.http.http_client import HttpClient
-from mercadopago.config import Config
+from mercadopago.http import HttpClient
 from json.encoder import JSONEncoder
+from mercadopago.core import RequestOptions
 
 class MPBase(object):
-    def __init__(self, request_options):
+
+    """
+    gdfbdgh
+    """
+    
+    def __init__(self, request_options, http_client):
         if type(request_options) is not RequestOptions:
             raise Exception('A valid request_options must be informed')
 
         self.request_options = request_options
-        self.http_client = HttpClient()
+        self.http_client = http_client
+
+        from mercadopago import Config
         self.config = Config()
 
     def __check_request_options(self, request_options):
@@ -41,7 +47,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.config.MIME_JSON})
 
-        return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers)
+        return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -50,7 +56,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.config.MIME_JSON})
 
-        return self.http_client.post(url=self.config.API_BASE_URL + uri, data=data, params=params, headers=headers)
+        return self.http_client.post(url=self.config.API_BASE_URL + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -59,10 +65,10 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.config.MIME_JSON})
 
-        return self.http_client.put(url=self.config.API_BASE_URL + uri, data=data, params=params, headers=headers)
+        return self.http_client.put(url=self.config.API_BASE_URL + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.http_client.delete(url=self.config.API_BASE_URL + uri, params=params, headers=headers)
+        return self.http_client.delete(url=self.config.API_BASE_URL + uri, params=params, headers=headers, timeout=request_options.connection_timeout)

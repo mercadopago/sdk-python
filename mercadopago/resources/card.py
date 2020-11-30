@@ -1,8 +1,13 @@
-from mercadopago.core.mp_base import MPBase
+from mercadopago.core import MPBase
 
 class Card(MPBase):
-    def __init__(self, request_options):
-        super(Card, self).__init__(request_options)
+
+    """
+    gdfbdgh
+    """
+    
+    def __init__(self, request_options, http_client):
+        super(Card, self).__init__(request_options, http_client)
 
     def find_all(self, customer_id):
         return self._get(uri="/v1/customers/" + str(customer_id))
