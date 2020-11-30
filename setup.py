@@ -1,9 +1,10 @@
-import sys
 import os
+import unittest
+import sys
 
 
-from setuptools import setup
 from distutils.core import Command
+from setuptools import setup
 
 
 setup(
@@ -17,11 +18,11 @@ setup(
     keywords="api mercadopago checkout payment in sdk integration lts",
     packages=["mercadopago"],
     long_description=open("README.md").read(),
-    #TODO tests_require=[
-    #    'pytest'
-    #],
+    tests_require=[
+        'unittest'
+    ],
     #TODO python_requires="!=3.0*",
-    #TODO PYTEST cmdclass={"test": PyTest},
+    cmdclass={"test": unittest},
     project_urls={
         "Source Code": "https://github.com/mercadopago/sdk-python",
         "Documentation | ES": "https://www.mercadopago.com.br/developers/es/reference/",

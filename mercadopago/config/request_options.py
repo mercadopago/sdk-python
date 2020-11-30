@@ -15,7 +15,7 @@ class RequestOptions(object):
                  access_token=None, 
                  connection_timeout=60.0, 
                  custom_headers=None,
-                 max_retries=3):
+                 max_retries=30):
         """Initialize
 
         Args:
