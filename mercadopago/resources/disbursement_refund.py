@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class DisbursementRefund(MPBase):
 
     """
-    gdfbdgh
+    Access to Advanced Payments Refunds
     """
     
     def __init__(self, request_options, http_client):

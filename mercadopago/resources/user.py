@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class User(MPBase):
 
     """
-    gdfbdgh
+    Access to Users
     """
     
     def __init__(self, request_options, http_client):

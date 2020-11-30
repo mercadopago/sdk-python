@@ -8,16 +8,27 @@ class SDK():
     Generate access to all API' modules, which are:
 
     1. Advanced Payment
-
+    2. Card Token
+    3. Card
+    4. Customer
+    5. Disbursement Refund
+    6. Disbursement
+    7. Identification Type
+    8. Merchant Order
+    9. OAuth
+    10. Payment
+    11. Preference
+    12. Refund
+    13. User
     """
 
     def __init__(self, access_token, http_client=None, request_options=None):
         """Construct ur SDK Object to have access to all APIs modules.
 
         Args:
-            access_token ([str]): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
-            http_client ([mercadopago.http.http_client], optional): [description]. Defaults to None.
-            request_options ([mercadopago.config.request_options], optional): [description]. Defaults to None.
+            access_token (str): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
+            http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
         """
         self.__access_token = access_token
         self.__http_client = http_client is None and HttpClient() or http_client

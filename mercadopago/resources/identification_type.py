@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class IdentificationType(MPBase):
 
     """
-    gdfbdgh
+    Access to Identification Types
     """
     
     def __init__(self, request_options, http_client):

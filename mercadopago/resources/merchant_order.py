@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class MerchantOrder(MPBase):
 
     """
-    gdfbdgh
+    This class will allow you to create and manage your orders. You can attach one or more payments in your merchant order.
     """
     
     def __init__(self, request_options, http_client):

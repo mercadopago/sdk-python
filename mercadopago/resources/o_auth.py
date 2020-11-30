@@ -3,7 +3,11 @@ from mercadopago.core import MPBase
 class OAuth(MPBase):
 
     """
-    gdfbdgh
+    This class will allow you to authorize your application to make request on others behalf.
+    
+    This is necessary to work with the Marketplace integration.
+    
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/marketplace/checkout-pro/create-marketplace)
     """
     
     def __init__(self, request_options, http_client):

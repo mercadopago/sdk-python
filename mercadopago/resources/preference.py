@@ -3,7 +3,9 @@ from mercadopago.core import MPBase
 class Preference(MPBase):
 
     """
-    gdfbdgh
+    This class will allow you to charge your customers through our web form from any device in a simple, fast and secure way.
+    
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-pro/introduction)
     """
     
     def __init__(self, request_options, http_client):

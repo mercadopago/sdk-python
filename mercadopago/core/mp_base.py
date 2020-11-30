@@ -43,7 +43,7 @@ class MPBase(object):
 
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.config.MIME_JSON})
-        print(headers)
+        
         return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
 
     def _post(self, uri, data=None, params=None, request_options=None):

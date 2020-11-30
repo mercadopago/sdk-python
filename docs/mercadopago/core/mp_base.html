@@ -58,13 +58,10 @@ class MPBase(object):
         return request_options
 
     def __check_headers(self, request_options, extra_headers=None):
-        headers = request_options.default_headers()
+        headers = request_options is None and self.request_options.get_headers() or request_options.get_headers()
 
         if extra_headers is not None:
             headers.update(extra_headers)
-
-        if request_options.custom_headers is not None:
-            headers.update(request_options.custom_headers)
 
         return headers
 
@@ -74,7 +71,7 @@ class MPBase(object):
 
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.config.MIME_JSON})
-
+        print(headers)
         return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
 
     def _post(self, uri, data=None, params=None, request_options=None):
@@ -148,13 +145,10 @@ class MPBase(object):
         return request_options
 
     def __check_headers(self, request_options, extra_headers=None):
-        headers = request_options.default_headers()
+        headers = request_options is None and self.request_options.get_headers() or request_options.get_headers()
 
         if extra_headers is not None:
             headers.update(extra_headers)
-
-        if request_options.custom_headers is not None:
-            headers.update(request_options.custom_headers)
 
         return headers
 
@@ -164,7 +158,7 @@ class MPBase(object):
 
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.config.MIME_JSON})
-
+        print(headers)
         return self.http_client.get(url=self.config.API_BASE_URL + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
 
     def _post(self, uri, data=None, params=None, request_options=None):

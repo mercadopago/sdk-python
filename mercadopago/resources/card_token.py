@@ -3,7 +3,7 @@ from mercadopago.core import MPBase
 class CardToken(MPBase):
 
     """
-    gdfbdgh
+    This class will allow you to send your customers card data for Mercado Pagos server and receive a token to complete the payments transactions.
     """
     
     def __init__(self, request_options, http_client):

@@ -3,7 +3,11 @@ from mercadopago.core import MPBase
 class Payment(MPBase):
 
     """
-    gdfbdgh
+    This class provides the methods to access the API that will allow you to create your own payment experience on your website.
+    
+    From basic to advanced configurations, you control the whole experience.
+    
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)
     """
     
     def __init__(self, request_options, http_client):

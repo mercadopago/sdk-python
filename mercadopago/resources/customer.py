@@ -3,7 +3,11 @@ from mercadopago.core import MPBase
 class Customer(MPBase):
 
     """
-    gdfbdgh
+    This class allows you to store customers data safely to improve the shopping experience.
+    
+    This will allow your customer to complete their purchases much faster and easily when used in conjunction with the Cards class.
+
+    [Click here for more infos](https://mercadopago.com.br/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)
     """
     
     def __init__(self, request_options, http_client):

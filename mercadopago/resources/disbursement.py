@@ -5,7 +5,7 @@ from datetime import datetime
 class Disbursement(MPBase):
 
     """
-    gdfbdgh
+    Access to Advanced Payments Disbursements
     """
     
     def __init__(self, request_options, http_client):
