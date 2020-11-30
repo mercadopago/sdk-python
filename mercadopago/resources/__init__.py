@@ -3,7 +3,6 @@ from .card_token import CardToken
 from .card import Card
 from .customer import Customer
 from .disbursement_refund import DisbursementRefund
-from .disbursement import Disbursement
 from .identification_type import IdentificationType
 from .merchant_order import MerchantOrder
 from .o_auth import OAuth

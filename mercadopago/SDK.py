@@ -12,14 +12,13 @@ class SDK():
     3. Card
     4. Customer
     5. Disbursement Refund
-    6. Disbursement
-    7. Identification Type
-    8. Merchant Order
-    9. OAuth
-    10. Payment
-    11. Preference
-    12. Refund
-    13. User
+    6. Identification Type
+    7. Merchant Order
+    8. OAuth
+    9. Payment
+    10. Preference
+    11. Refund
+    12. User
     """
 
     def __init__(self, access_token, http_client=None, request_options=None):
@@ -48,9 +47,6 @@ class SDK():
 
     def disbursement_refund(self):
         return DisbursementRefund(self.request_options, self.http_client)
-
-    def disbursement(self):
-        return Disbursement(self.request_options, self.http_client)
 
     def identification_type(self):
         return IdentificationType(self.request_options, self.http_client)

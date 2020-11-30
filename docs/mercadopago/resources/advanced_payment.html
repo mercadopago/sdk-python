@@ -28,6 +28,8 @@
 </summary>
 <pre><code class="python">from mercadopago.core import MPBase
 
+from datetime import datetime
+
 class AdvancedPayment(MPBase):
 
     &#34;&#34;&#34;
@@ -38,7 +40,37 @@ class AdvancedPayment(MPBase):
         super(AdvancedPayment, self).__init__(request_options, http_client)
 
     def find_by_id(self, id, request_options=None):
-        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(id), request_options=request_options) </code></pre>
+        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(id), request_options=request_options) 
+
+    def save(self, advanced_payment_object, request_options=None):
+        if type(advanced_payment_object) is not dict:
+            raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+        return self._post(uri=&#34;/v1/advanced_payments&#34;, data=advanced_payment_object, request_options=request_options)
+
+    def capture(self, id, request_options=None):
+        capture_object = {&#34;capture&#34;: True}
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=capture_object, request_options=request_options) 
+
+    def update(self, id, advanced_payment_object, request_options=None):
+        if type(advanced_payment_object) is not dict:
+            raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=advanced_payment_object, request_options=request_options) 
+
+    def cancel(self, id, request_options=None):
+        cancel_object = {&#34;status&#34;: &#34;cancelled&#34;}
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=cancel_object, request_options=request_options) 
+
+    def update_release_date(self, advanced_payment_id, release_date, request_options=None):
+        if type(release_date) is not datetime.datetime:
+            raise ValueError(&#34;Param release_date must be a DateTime&#34;)
+
+        #TODO Validar se é esse mesmo o nome do parametro
+        #TODO Validar se temos que enviar realmente &#34;date + time&#34;
+        disbursement_object = {&#34;money_release_date&#34;: release_date.strftime(&#34;%m/%d/%Y, %H:%M:%S&#34;)}
+
+        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disburses&#34;, data=disbursement_object, request_options=request_options)</code></pre>
 </details>
 </section>
 <section>
@@ -70,7 +102,37 @@ class AdvancedPayment(MPBase):
         super(AdvancedPayment, self).__init__(request_options, http_client)
 
     def find_by_id(self, id, request_options=None):
-        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(id), request_options=request_options) </code></pre>
+        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(id), request_options=request_options) 
+
+    def save(self, advanced_payment_object, request_options=None):
+        if type(advanced_payment_object) is not dict:
+            raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+        return self._post(uri=&#34;/v1/advanced_payments&#34;, data=advanced_payment_object, request_options=request_options)
+
+    def capture(self, id, request_options=None):
+        capture_object = {&#34;capture&#34;: True}
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=capture_object, request_options=request_options) 
+
+    def update(self, id, advanced_payment_object, request_options=None):
+        if type(advanced_payment_object) is not dict:
+            raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=advanced_payment_object, request_options=request_options) 
+
+    def cancel(self, id, request_options=None):
+        cancel_object = {&#34;status&#34;: &#34;cancelled&#34;}
+        return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=cancel_object, request_options=request_options) 
+
+    def update_release_date(self, advanced_payment_id, release_date, request_options=None):
+        if type(release_date) is not datetime.datetime:
+            raise ValueError(&#34;Param release_date must be a DateTime&#34;)
+
+        #TODO Validar se é esse mesmo o nome do parametro
+        #TODO Validar se temos que enviar realmente &#34;date + time&#34;
+        disbursement_object = {&#34;money_release_date&#34;: release_date.strftime(&#34;%m/%d/%Y, %H:%M:%S&#34;)}
+
+        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disburses&#34;, data=disbursement_object, request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -78,6 +140,34 @@ class AdvancedPayment(MPBase):
 </ul>
 <h3>Methods</h3>
 <dl>
+<dt id="mercadopago.resources.advanced_payment.AdvancedPayment.cancel"><code class="name flex">
+<span>def <span class="ident">cancel</span></span>(<span>self, id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cancel(self, id, request_options=None):
+    cancel_object = {&#34;status&#34;: &#34;cancelled&#34;}
+    return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=cancel_object, request_options=request_options) </code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.advanced_payment.AdvancedPayment.capture"><code class="name flex">
+<span>def <span class="ident">capture</span></span>(<span>self, id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capture(self, id, request_options=None):
+    capture_object = {&#34;capture&#34;: True}
+    return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=capture_object, request_options=request_options) </code></pre>
+</details>
+</dd>
 <dt id="mercadopago.resources.advanced_payment.AdvancedPayment.find_by_id"><code class="name flex">
 <span>def <span class="ident">find_by_id</span></span>(<span>self, id, request_options=None)</span>
 </code></dt>
@@ -89,6 +179,58 @@ class AdvancedPayment(MPBase):
 </summary>
 <pre><code class="python">def find_by_id(self, id, request_options=None):
     return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(id), request_options=request_options) </code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.advanced_payment.AdvancedPayment.save"><code class="name flex">
+<span>def <span class="ident">save</span></span>(<span>self, advanced_payment_object, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save(self, advanced_payment_object, request_options=None):
+    if type(advanced_payment_object) is not dict:
+        raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+    return self._post(uri=&#34;/v1/advanced_payments&#34;, data=advanced_payment_object, request_options=request_options)</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.advanced_payment.AdvancedPayment.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, id, advanced_payment_object, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, id, advanced_payment_object, request_options=None):
+    if type(advanced_payment_object) is not dict:
+        raise ValueError(&#34;Param advanced_payment_object must be a Dictionary&#34;)
+
+    return self._put(uri=&#34;/v1/advanced_payments/&#34; + str(id), data=advanced_payment_object, request_options=request_options) </code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.advanced_payment.AdvancedPayment.update_release_date"><code class="name flex">
+<span>def <span class="ident">update_release_date</span></span>(<span>self, advanced_payment_id, release_date, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_release_date(self, advanced_payment_id, release_date, request_options=None):
+    if type(release_date) is not datetime.datetime:
+        raise ValueError(&#34;Param release_date must be a DateTime&#34;)
+
+    #TODO Validar se é esse mesmo o nome do parametro
+    #TODO Validar se temos que enviar realmente &#34;date + time&#34;
+    disbursement_object = {&#34;money_release_date&#34;: release_date.strftime(&#34;%m/%d/%Y, %H:%M:%S&#34;)}
+
+    return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/disburses&#34;, data=disbursement_object, request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
@@ -111,8 +253,13 @@ class AdvancedPayment(MPBase):
 <ul>
 <li>
 <h4><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment" href="#mercadopago.resources.advanced_payment.AdvancedPayment">AdvancedPayment</a></code></h4>
-<ul class="">
+<ul class="two-column">
+<li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.cancel" href="#mercadopago.resources.advanced_payment.AdvancedPayment.cancel">cancel</a></code></li>
+<li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.capture" href="#mercadopago.resources.advanced_payment.AdvancedPayment.capture">capture</a></code></li>
 <li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.find_by_id" href="#mercadopago.resources.advanced_payment.AdvancedPayment.find_by_id">find_by_id</a></code></li>
+<li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.save" href="#mercadopago.resources.advanced_payment.AdvancedPayment.save">save</a></code></li>
+<li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.update" href="#mercadopago.resources.advanced_payment.AdvancedPayment.update">update</a></code></li>
+<li><code><a title="mercadopago.resources.advanced_payment.AdvancedPayment.update_release_date" href="#mercadopago.resources.advanced_payment.AdvancedPayment.update_release_date">update_release_date</a></code></li>
 </ul>
 </li>
 </ul>

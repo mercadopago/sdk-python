@@ -40,14 +40,13 @@ class SDK():
     3. Card
     4. Customer
     5. Disbursement Refund
-    6. Disbursement
-    7. Identification Type
-    8. Merchant Order
-    9. OAuth
-    10. Payment
-    11. Preference
-    12. Refund
-    13. User
+    6. Identification Type
+    7. Merchant Order
+    8. OAuth
+    9. Payment
+    10. Preference
+    11. Refund
+    12. User
     &#34;&#34;&#34;
 
     def __init__(self, access_token, http_client=None, request_options=None):
@@ -76,9 +75,6 @@ class SDK():
 
     def disbursement_refund(self):
         return DisbursementRefund(self.request_options, self.http_client)
-
-    def disbursement(self):
-        return Disbursement(self.request_options, self.http_client)
 
     def identification_type(self):
         return IdentificationType(self.request_options, self.http_client)
@@ -154,7 +150,6 @@ class SDK():
 <li>Card</li>
 <li>Customer</li>
 <li>Disbursement Refund</li>
-<li>Disbursement</li>
 <li>Identification Type</li>
 <li>Merchant Order</li>
 <li>OAuth</li>
@@ -187,14 +182,13 @@ class SDK():
     3. Card
     4. Customer
     5. Disbursement Refund
-    6. Disbursement
-    7. Identification Type
-    8. Merchant Order
-    9. OAuth
-    10. Payment
-    11. Preference
-    12. Refund
-    13. User
+    6. Identification Type
+    7. Merchant Order
+    8. OAuth
+    9. Payment
+    10. Preference
+    11. Refund
+    12. User
     &#34;&#34;&#34;
 
     def __init__(self, access_token, http_client=None, request_options=None):
@@ -223,9 +217,6 @@ class SDK():
 
     def disbursement_refund(self):
         return DisbursementRefund(self.request_options, self.http_client)
-
-    def disbursement(self):
-        return Disbursement(self.request_options, self.http_client)
 
     def identification_type(self):
         return IdentificationType(self.request_options, self.http_client)
@@ -375,19 +366,6 @@ def request_options(self):
     return Customer(self.request_options, self.http_client)</code></pre>
 </details>
 </dd>
-<dt id="mercadopago.sdk.SDK.disbursement"><code class="name flex">
-<span>def <span class="ident">disbursement</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def disbursement(self):
-    return Disbursement(self.request_options, self.http_client)</code></pre>
-</details>
-</dd>
 <dt id="mercadopago.sdk.SDK.disbursement_refund"><code class="name flex">
 <span>def <span class="ident">disbursement_refund</span></span>(<span>self)</span>
 </code></dt>
@@ -518,7 +496,6 @@ def request_options(self):
 <li><code><a title="mercadopago.sdk.SDK.card" href="#mercadopago.sdk.SDK.card">card</a></code></li>
 <li><code><a title="mercadopago.sdk.SDK.card_token" href="#mercadopago.sdk.SDK.card_token">card_token</a></code></li>
 <li><code><a title="mercadopago.sdk.SDK.customer" href="#mercadopago.sdk.SDK.customer">customer</a></code></li>
-<li><code><a title="mercadopago.sdk.SDK.disbursement" href="#mercadopago.sdk.SDK.disbursement">disbursement</a></code></li>
 <li><code><a title="mercadopago.sdk.SDK.disbursement_refund" href="#mercadopago.sdk.SDK.disbursement_refund">disbursement_refund</a></code></li>
 <li><code><a title="mercadopago.sdk.SDK.http_client" href="#mercadopago.sdk.SDK.http_client">http_client</a></code></li>
 <li><code><a title="mercadopago.sdk.SDK.identification_type" href="#mercadopago.sdk.SDK.identification_type">identification_type</a></code></li>

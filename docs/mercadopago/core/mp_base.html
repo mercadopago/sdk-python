@@ -71,7 +71,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
         
-        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -80,7 +80,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
 
-        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -89,13 +89,13 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
 
-        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout)</code></pre>
+        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)</code></pre>
 </details>
 </section>
 <section>
@@ -157,7 +157,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
         
-        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -166,7 +166,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
 
-        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -175,13 +175,13 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {&#39;Content-type&#39;: self.__config.mimeJson})
 
-        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout)</code></pre>
+        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -189,7 +189,6 @@ class MPBase(object):
 <li><a title="mercadopago.resources.card.Card" href="../resources/card.html#mercadopago.resources.card.Card">Card</a></li>
 <li><a title="mercadopago.resources.card_token.CardToken" href="../resources/card_token.html#mercadopago.resources.card_token.CardToken">CardToken</a></li>
 <li><a title="mercadopago.resources.customer.Customer" href="../resources/customer.html#mercadopago.resources.customer.Customer">Customer</a></li>
-<li><a title="mercadopago.resources.disbursement.Disbursement" href="../resources/disbursement.html#mercadopago.resources.disbursement.Disbursement">Disbursement</a></li>
 <li><a title="mercadopago.resources.disbursement_refund.DisbursementRefund" href="../resources/disbursement_refund.html#mercadopago.resources.disbursement_refund.DisbursementRefund">DisbursementRefund</a></li>
 <li><a title="mercadopago.resources.identification_type.IdentificationType" href="../resources/identification_type.html#mercadopago.resources.identification_type.IdentificationType">IdentificationType</a></li>
 <li><a title="mercadopago.resources.merchant_order.MerchantOrder" href="../resources/merchant_order.html#mercadopago.resources.merchant_order.MerchantOrder">MerchantOrder</a></li>

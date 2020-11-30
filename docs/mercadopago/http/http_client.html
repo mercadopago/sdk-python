@@ -28,6 +28,8 @@
 </summary>
 <pre><code class="python">from json.encoder import JSONEncoder
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 class HttpClient():
 
@@ -38,8 +40,19 @@ class HttpClient():
     def __init__(self):
         pass
 
-    def get(self, url, headers, params=None, timeout=None):
-        with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+    def __getSession(self, maxRetries):
+        retry_strategy = Retry(
+            total=maxRetries,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=[&#34;GET&#34;]
+        )
+        http = requests.Session()
+        http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
+        return http
+
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.get(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -47,8 +60,9 @@ class HttpClient():
 
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None):
-        with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -56,8 +70,9 @@ class HttpClient():
 
         return response
 
-    def put(self, url, headers, data=None, params=None, timeout=None):
-        with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -65,8 +80,9 @@ class HttpClient():
 
         return response
 
-    def delete(self, url, headers, params=None, timeout=None):
-        with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -102,8 +118,19 @@ class HttpClient():
     def __init__(self):
         pass
 
-    def get(self, url, headers, params=None, timeout=None):
-        with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+    def __getSession(self, maxRetries):
+        retry_strategy = Retry(
+            total=maxRetries,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=[&#34;GET&#34;]
+        )
+        http = requests.Session()
+        http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
+        return http
+
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.get(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -111,8 +138,9 @@ class HttpClient():
 
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None):
-        with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -120,8 +148,9 @@ class HttpClient():
 
         return response
 
-    def put(self, url, headers, data=None, params=None, timeout=None):
-        with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -129,8 +158,9 @@ class HttpClient():
 
         return response
 
-    def delete(self, url, headers, params=None, timeout=None):
-        with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None):
+        with self.__getSession(maxretries) as session:
+            api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -141,7 +171,7 @@ class HttpClient():
 <h3>Methods</h3>
 <dl>
 <dt id="mercadopago.http.http_client.HttpClient.delete"><code class="name flex">
-<span>def <span class="ident">delete</span></span>(<span>self, url, headers, params=None, timeout=None)</span>
+<span>def <span class="ident">delete</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -149,8 +179,9 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def delete(self, url, headers, params=None, timeout=None):
-    with requests.delete(url, params=params, headers=headers, timeout=timeout) as api_result:
+<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None):
+    with self.__getSession(maxretries) as session:
+        api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
@@ -160,7 +191,7 @@ class HttpClient():
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>self, url, headers, params=None, timeout=None)</span>
+<span>def <span class="ident">get</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -168,8 +199,9 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get(self, url, headers, params=None, timeout=None):
-    with requests.get(url, params=params, headers=headers, timeout=timeout) as api_result:
+<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None):
+    with self.__getSession(maxretries) as session:
+        api_result = session.get(url, params=params, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
@@ -179,7 +211,7 @@ class HttpClient():
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.post"><code class="name flex">
-<span>def <span class="ident">post</span></span>(<span>self, url, headers, data=None, params=None, timeout=None)</span>
+<span>def <span class="ident">post</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -187,8 +219,9 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None):
-    with requests.post(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+    with self.__getSession(maxretries) as session:
+        api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
@@ -198,7 +231,7 @@ class HttpClient():
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.put"><code class="name flex">
-<span>def <span class="ident">put</span></span>(<span>self, url, headers, data=None, params=None, timeout=None)</span>
+<span>def <span class="ident">put</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -206,8 +239,9 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None):
-    with requests.put(url, params=params, data=data, headers=headers, timeout=timeout) as api_result:
+<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+    with self.__getSession(maxretries) as session:
+        api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
