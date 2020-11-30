@@ -43,7 +43,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.__config.mimeJson})
         
-        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.get(url=self.__config.apiBaseUrl + uri, params=filters, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -52,7 +52,7 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.__config.mimeJson})
 
-        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.post(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
@@ -61,10 +61,10 @@ class MPBase(object):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options, {'Content-type': self.__config.mimeJson})
 
-        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.put(url=self.__config.apiBaseUrl + uri, data=data, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout)
+        return self.__http_client.delete(url=self.__config.apiBaseUrl + uri, params=params, headers=headers, timeout=request_options.connection_timeout, maxretries=request_options.max_retries)
