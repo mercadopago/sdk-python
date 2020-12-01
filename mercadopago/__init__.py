@@ -1,1 +1,1 @@
-from .sdk import SDK
+from mercadopago.SDK import SDK
