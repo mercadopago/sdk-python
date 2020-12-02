@@ -1,3 +1,6 @@
+import base64
+import uuid
+
 class RequestOptions(object):
 
     """
@@ -10,7 +13,7 @@ class RequestOptions(object):
     __connection_timeout = None
     __custom_headers = None
     __max_retries = None
-    __idempotence_key = None
+    __idempotency_key = None
     __corporation_id = None
     __integrator_id = None
     __platform_id = None
@@ -59,11 +62,15 @@ class RequestOptions(object):
 
         self.__config = Config()
 
+    def get_idempotency_key(self):
+        idempotency_key = base64.urlsafe_b64encode(uuid.uuid4().bytes)
+        return idempotency_key.__str__.replace('=', '')
+
     def get_headers(self):
         headers = {'Authorization': 'Bearer ' + self.__access_token,
                 'x-product-id': self.__config.productId, 
                 'x-tracking-id': self.__config.trackingId,
-                'x-idempotency-key': self.__config.idempotency_key, 
+                'x-idempotency-key': self.__idempotency_key, 
                 'x-corporation-id': self.__config.corporation_id, 
                 'x-integrator-id': self.__config.integrator_id,
                 'x-platform-id': self.__config.platform_id, 
@@ -75,13 +82,18 @@ class RequestOptions(object):
 
         return headers
 
+        if self.idempotency_key is not None:
+            headers.update(self.__idempotency_key)
+
+        return headers    
+
     @property
     def access_token(self):
         return self.__access_token
 
     @access_token.setter
     def access_token(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param access_token must be a String')
         self.__access_token = value
 
@@ -91,7 +103,7 @@ class RequestOptions(object):
 
     @connection_timeout.setter
     def connection_timeout(self, value):
-        if type(value) is not float:
+        if isinstance(value, float):
             raise ValueError('Param connection_timeout must be a Float')
         self.__connection_timeout = value
 
@@ -101,7 +113,7 @@ class RequestOptions(object):
 
     @corporation_id.setter
     def corporation_id(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param corporation_id must be a String')
 
     @property
@@ -110,7 +122,7 @@ class RequestOptions(object):
 
     @custom_headers.setter
     def custom_headers(self, value):
-        if type(value) is not dict:
+        if isinstance(value, dict):
             raise ValueError('Param custom_headers must be a Dictionary')
         self.__custom_headers = value
 
@@ -120,7 +132,7 @@ class RequestOptions(object):
 
     @idempotency_key.setter
     def idempotency_key(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param idempotency_key must be a String')
 
     @property        
@@ -129,7 +141,7 @@ class RequestOptions(object):
 
     @integrator_id.setter
     def integrator_id(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param integrator_id must be a String')
 
     @property
@@ -138,7 +150,7 @@ class RequestOptions(object):
 
     @max_retries.setter
     def max_retries(self, value):
-        if type(value) is not int:
+        if isinstance(value, int):
             raise ValueError('Param max_retries must be an Integer')
         self.__max_retries = value
 
@@ -148,5 +160,5 @@ class RequestOptions(object):
 
     @platform_id.setter
     def platform_id(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param platform_id must be a String')         

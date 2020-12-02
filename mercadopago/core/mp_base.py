@@ -10,7 +10,7 @@ class MPBase(object):
     """
     
     def __init__(self, request_options, http_client):
-        if type(request_options) is not RequestOptions:
+        if isinstance(request_options, RequestOptions):
             raise ValueError('Param request_options must be a RequestOptions Object')
 
         self.__request_options = request_options
@@ -18,7 +18,7 @@ class MPBase(object):
         self.__config = Config()
 
     def __check_request_options(self, request_options):
-        if request_options is not None and type(request_options) is not RequestOptions:
+        if request_options is not None and isinstance(request_options, RequestOptions):
             raise ValueError('Param request_options must be a RequestOptions Object')
         elif request_options is None:
             request_options = self.__request_options
@@ -37,7 +37,7 @@ class MPBase(object):
         return headers
 
     def _get(self, uri, filters=None, request_options=None):
-        if filters is not None and type(filters) is not dict:
+        if filters is not None and isinstance(filters, dict):
             raise ValueError('Filters must be a Dictionary')
 
         request_options = self.__check_request_options(request_options)

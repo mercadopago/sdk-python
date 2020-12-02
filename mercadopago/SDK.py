@@ -75,7 +75,7 @@ class SDK():
 
     @access_token.setter
     def access_token(self, value):
-        if type(value) is not str:
+        if isinstance(value, str):
             raise ValueError('Param access_token must be a String')
         self.__access_token = value
 
@@ -88,7 +88,7 @@ class SDK():
 
     @request_options.setter
     def request_options(self, value):
-        if type(value) is not RequestOptions:
+        if isinstance(value, RequestOptions):
             raise ValueError('Param request_options must be a RequestOptions Object')
         self.__request_options = value
 
