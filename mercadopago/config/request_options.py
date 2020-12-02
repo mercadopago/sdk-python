@@ -63,10 +63,10 @@ class RequestOptions(object):
         headers = {'Authorization': 'Bearer ' + self.__access_token,
                 'x-product-id': self.__config.productId, 
                 'x-tracking-id': self.__config.trackingId,
-                'x-idempotency-key': self.__idempotency_key, 
-                'x-corporation-id': self.__corporation_id, 
-                'x-integrator-id': self.__integrator_id,
-                'x-platform-id': self.__platform_id, 
+                'x-idempotency-key': self.__config.idempotency_key, 
+                'x-corporation-id': self.__config.corporation_id, 
+                'x-integrator-id': self.__config.integrator_id,
+                'x-platform-id': self.__config.platform_id, 
                 'User-Agent': self.__config.userAgent,
                 'Accept': self.__config.mimeJson}
 
