@@ -9,7 +9,7 @@ class MerchantOrder(MPBase):
     def __init__(self, request_options, http_client):
         super(MerchantOrder, self).__init__(request_options, http_client)
      
-    def find_by_id(self, id, request_options=None):  
+    def get(self, id, request_options=None):  
         return self._get(uri="/merchant_orders/" + str(id), request_options=request_options)
 
     def update(self, id, merchant_order_object, request_options=None):
@@ -18,7 +18,7 @@ class MerchantOrder(MPBase):
 
         return self._put(uri="/merchant_orders/" + str(id), data=merchant_order_object, request_options=request_options)
 
-    def save(self, merchant_order_object, request_options=None):
+    def create(self, merchant_order_object, request_options=None):
         if type(merchant_order_object) is not dict:
             raise ValueError('Param merchant_order_object must be a Dictionary')
 

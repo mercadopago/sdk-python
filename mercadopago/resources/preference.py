@@ -14,7 +14,6 @@ class Preference(MPBase):
     def get(self, id, request_options=None):
         return self._get(uri="/checkout/preferences/" + str(id), request_options=request_options)
 
-    #TODO VERIFICAR COM O DANILO
     def update(self, id, preference_object, request_options=None):
         if type(preference_object) is not dict:
             raise ValueError("Param preference_object must be a Dictionary")

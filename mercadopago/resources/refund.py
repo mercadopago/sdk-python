@@ -15,10 +15,10 @@ class Refund(MPBase):
     def __init__(self, request_options, http_client):
         super(Refund, self).__init__(request_options, http_client)
 
-    def find_all(self, payment_id, request_options=None):
+    def get_list(self, payment_id, request_options=None):
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds", request_options=request_options)
 
-    def save(self, payment_id, refund_object, request_options=None):
+    def create(self, payment_id, refund_object, request_options=None):
         if type(refund_object) is not dict:
             raise ValueError("Param refund_object must be a Dictionary")
 

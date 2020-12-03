@@ -16,7 +16,7 @@ class Payment(MPBase):
     def search(self, filters, request_options=None):
         return self._get(uri="/v1/payments/search", filters=filters, request_options=request_options)
 
-    def find_by_id(self, id, request_options=None):
+    def get(self, id, request_options=None):
         return self._get(uri="/v1/payments/" + str(id), request_options=request_options)
 
     #TODO LÓGICA REQUEST_OPTION IS NOT NONE INSERIR IDEMPOTENCE_KEY
