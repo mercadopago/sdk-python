@@ -20,9 +20,9 @@ class TestPreference(unittest.TestCase):
                 }
             ]
         }
-        preference_saved = self.sdk.preference().save(preference_object)
+        preference_saved = self.sdk.preference().create(preference_object)
         self.assertEqual(preference_saved["status"], 201)
-        self.assertEqual(self.sdk.preference().find_by_id(preference_saved["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.preference().get(preference_saved["response"]["id"])["status"], 200)
 
 if __name__ == '__main__':
     unittest.main()

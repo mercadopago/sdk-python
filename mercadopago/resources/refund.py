@@ -19,7 +19,7 @@ class Refund(MPBase):
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds", request_options=request_options)
 
     def save(self, payment_id, refund_object, request_options=None):
-        if isinstance(refund_object, dict):
+        if type(refund_object) is not dict:
             raise ValueError("Param refund_object must be a Dictionary")
 
         return self._post(uri="/v1/payments/" + str(payment_id) + "/refunds", data=refund_object, request_options=request_options)

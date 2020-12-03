@@ -11,9 +11,6 @@ class Config(object):
         self.__USER_AGENT = "MercadoPago Python SDK v" + self.__version
         self.__PRODUCT_ID = "bc32bpftrpp001u8nhlg"
         self.__TRACKING_ID = "platform:" + platform.python_version() + ",type:SDK" + self.__version + ",so;"
-        self.__CORPORATION_ID = None
-        self.__INTEGRATOR_ID = None
-        self.__PLATFORM_ID = None
 
     __API_BASE_URL = "https://api.mercadopago.com"
     __MIME_JSON = "application/json"
@@ -34,18 +31,6 @@ class Config(object):
     @property
     def trackingId(self):
         return self.__TRACKING_ID   
-
-    @property
-    def corporationId(self):
-        return self.__CORPORATION_ID
-
-    @property
-    def integratorId(self):
-        return self.__INTEGRATOR_ID
-
-    @property
-    def platformId(self):
-        return self.__PLATFORM_ID
 
     @property
     def apiBaseUrl(self):

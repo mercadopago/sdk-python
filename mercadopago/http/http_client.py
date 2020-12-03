@@ -16,7 +16,7 @@ class HttpClient():
         retry_strategy = Retry(
             total=maxRetries,
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["GET"]
+            #allowed_methods=["GET"]
         )
         http = requests.Session()
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))

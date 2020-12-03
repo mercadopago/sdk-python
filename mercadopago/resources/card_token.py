@@ -13,7 +13,7 @@ class CardToken(MPBase):
         return self._get(uri="/v1/card_tokens/" + str(id), request_options=request_options)
 
     def save(self, card_token_object, request_options=None):
-        if isinstance(card_token_object, dict):
+        if type(card_token_object) is not dict:
             raise ValueError("Param card_token_object must be a Dictionary")
 
         return self._post(uri="/v1/card_tokens", data=card_token_object, request_options=request_options)
