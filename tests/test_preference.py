@@ -47,11 +47,9 @@ class TestPreference(unittest.TestCase):
         preference_object["items"][0]["title"] = "Testando 1 2 3"
 
         preference_update = self.sdk.preference().update(preference_saved["response"]["id"], preference_object)
-
         self.assertEqual(preference_update["status"], 200)
 
         preference_saved = self.sdk.preference().get(preference_saved["response"]["id"])
-        #self.assertEqual(preference_saved)
 
         self.assertEqual(preference_saved["response"]["items"][0]["title"], "Testando 1 2 3")
 
