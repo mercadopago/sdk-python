@@ -5,7 +5,7 @@ from .customer import Customer
 from .disbursement_refund import DisbursementRefund
 from .identification_type import IdentificationType
 from .merchant_order import MerchantOrder
-from .o_auth import OAuth
+from .payment_methods import PaymentMethods
 from .payment import Payment
 from .preference import Preference
 from .refund import Refund

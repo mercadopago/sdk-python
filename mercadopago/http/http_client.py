@@ -29,7 +29,7 @@ class HttpClient():
                 "status": api_result.status_code,
                 "response": api_result.json()
             }
-
+        
         return response
 
     def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):

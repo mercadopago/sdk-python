@@ -14,14 +14,18 @@ class SDK():
     5. Disbursement Refund
     6. Identification Type
     7. Merchant Order
-    8. OAuth
+    8. PaymentMethods
     9. Payment
     10. Preference
     11. Refund
     12. User
     """
 
-    def __init__(self, access_token, http_client=None, request_options=None):
+    def __init__(self, 
+                    access_token, 
+                    corporation_id=None,
+                    http_client=None, 
+                    request_options=None):
         """Construct ur SDK Object to have access to all APIs modules.
 
         Args:
@@ -30,6 +34,7 @@ class SDK():
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
         """
         self.__access_token = access_token
+        self.__corporation_id = corporation_id
         self.__http_client = http_client is None and HttpClient() or http_client
         self.request_options = request_options is None and RequestOptions() or request_options
 
@@ -54,11 +59,11 @@ class SDK():
     def merchant_order(self):
         return MerchantOrder(self.request_options, self.http_client)
 
-    def o_auth(self):
-        return OAuth(self.request_options, self.http_client)
-
     def payment(self):
         return Payment(self.request_options, self.http_client)
+
+    def payment_methods(self):
+        return PaymentMethods(self.request_options, self.http_client)
 
     def preference(self):
         return Preference(self.request_options, self.http_client)
@@ -83,6 +88,9 @@ class SDK():
     def request_options(self):
         if self.__request_options.access_token is None:
             self.__request_options.access_token = self.access_token
+
+        if self.__request_options.corporation_id is None and self.corporation_id is not None:
+            self.__request_options.corporation_id = self.corporation_id
         
         return self.__request_options
 
@@ -99,3 +107,13 @@ class SDK():
     @http_client.setter
     def http_client(self, value):
         self.__http_client = value
+
+    @property
+    def corporation_id(self):
+        return self.__corporation_id
+
+    @corporation_id.setter
+    def corporation_id(self, value):
+        if type(value) is not str:
+            raise ValueError('Param corporation_id must be a String')
+        self.__corporation_id = value

@@ -15,6 +15,18 @@ class AdvancedPayment(MPBase):
         return self._get(uri="/v1/advanced_payments/" + str(id), request_options=request_options) 
 
     def create(self, advanced_payment_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/advanced_payments/_advanced_payments/post/)
+
+        Args:
+            advanced_payment_object (dict): Advanced Payment to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param advanced_payment_object must be a Dictionary
+
+        Returns:
+            dict: Advanced Payment creation response
+        """
         if type(advanced_payment_object) is not dict:
             raise ValueError("Param advanced_payment_object must be a Dictionary")
 

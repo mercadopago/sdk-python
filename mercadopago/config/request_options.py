@@ -1,4 +1,3 @@
-import base64
 import uuid
 
 class RequestOptions(object):
@@ -24,19 +23,25 @@ class RequestOptions(object):
                  corporation_id=None,
                  integrator_id=None,
                  platform_id=None,
-                 max_retries=30):
+                 max_retries=3):
         """Initialize
 
         Args:
-            access_token (str, optional): [description]. Defaults to None.
-            connection_timeout (float, optional): [description]. Defaults to 60.0.
-            custom_headers (dict, optional): [description]. Defaults to None.
-            max_retries (int, optional): [description]. Defaults to 3.
+            access_token (str, optional): Your User Access Token. Defaults to None.
+            connection_timeout (float, optional): Time to timeout the REST call. Defaults to 60.0.
+            custom_headers (dict, optional): A Dict with params to be added to the requests params. Defaults to None.
+            corporation_id (str, optional): Your Corporation ID if any. Defaults to None.
+            integrator_id (str, optional): Your Integrator ID if any. Defaults to None.
+            platform_id (str, optional): Your Platform ID if any. Defaults to None.
+            max_retries (int, optional): How many retries must be done in case of fail. Defaults to 3.
 
         Raises:
             ValueError: Param access_token must be a String
             ValueError: Param connection_timeout must be a Float
             ValueError: Param custom_headers must be a Dictionary
+            ValueError: Param corporation_id must be a String
+            ValueError: Param integrator_id must be a String
+            ValueError: Param platform_id must be a String
             ValueError: Param max_retries must be an Integer
         """
         from mercadopago.config import Config
@@ -58,34 +63,27 @@ class RequestOptions(object):
 
         self.__config = Config()
 
-    def get_idempotency_key(self):
-        idempotency_key = base64.urlsafe_b64encode(uuid.uuid4().bytes)
-        return idempotency_key
-
     def get_headers(self):
         headers = {'Authorization': 'Bearer ' + self.__access_token,
                 'x-product-id': self.__config.productId, 
                 'x-tracking-id': self.__config.trackingId,
-                'x-idempotency-key': self.get_idempotency_key(),
-                'x-corporation-id': self.corporation_id, 
-                'x-integrator-id': self.integrator_id,
-                'x-platform-id': self.platform_id, 
+                'x-idempotency-key': str(uuid.uuid4().int),
                 'User-Agent': self.__config.userAgent,
                 'Accept': self.__config.mimeJson}
 
+        if self.__corporation_id is not None:
+            headers['x-corporation-id'] = self.__corporation_id
+
+        if self.__integrator_id is not None:
+            headers['x-integrator-id'] = self.__integrator_id
+
+        if self.__platform_id is not None:
+            headers['x-platform-id'] = self.__platform_id
+        
         if self.__custom_headers is not None:
             headers.update(self.__custom_headers)
-
-        if self.corporation_id is not None:
-            headers.update(self.__corporation_id)
-
-        if self.integrator_id is not None:
-            headers.update(self.__integrator_id)
-
-        if self.platform_id is not None:
-            headers.update(self.__platform_id)        
-
-        return headers    
+        
+        return headers
 
     @property
     def access_token(self):
@@ -115,6 +113,7 @@ class RequestOptions(object):
     def corporation_id(self, value):
         if type(value) is not str:
             raise ValueError('Param corporation_id must be a String')
+        self.__corporation_id = value
 
     @property
     def custom_headers(self):
@@ -134,6 +133,7 @@ class RequestOptions(object):
     def integrator_id(self, value):
         if type(value) is not str:
             raise ValueError('Param integrator_id must be a String')
+        self.__integrator_id = value
 
     @property
     def max_retries(self):
@@ -153,3 +153,4 @@ class RequestOptions(object):
     def platform_id(self, value):
         if type(value) is not str:
             raise ValueError('Param platform_id must be a String')         
+        self.__platform_id = value

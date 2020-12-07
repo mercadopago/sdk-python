@@ -12,15 +12,49 @@ class Preference(MPBase):
         super(Preference, self).__init__(request_options, http_client)
     
     def get(self, id, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
+
+        Args:
+            id (str): Preference ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Preference find response
+        """
         return self._get(uri="/checkout/preferences/" + str(id), request_options=request_options)
 
     def update(self, id, preference_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
+
+        Args:
+            id (str): Preference ID
+            preference_object (dict): Values to be modified
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference modification response
+        """
         if type(preference_object) is not dict:
             raise ValueError("Param preference_object must be a Dictionary")
 
         return self._put(uri="/checkout/preferences/" + str(id), data=preference_object, request_options=request_options)
 
     def create(self, preference_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/)
+
+        Args:
+            preference_object (dict): Preference object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference creation response
+        """
         if type(preference_object) is not dict:
             raise ValueError("Param preference_object must be a Dictionary")
 

@@ -19,7 +19,6 @@ class Payment(MPBase):
     def get(self, id, request_options=None):
         return self._get(uri="/v1/payments/" + str(id), request_options=request_options)
 
-    #TODO LÓGICA REQUEST_OPTION IS NOT NONE INSERIR IDEMPOTENCE_KEY
     def create(self, payment_object, request_options=None):
         if type(payment_object) is not dict:
             raise ValueError("Param payment_object must be a Dictionary")
