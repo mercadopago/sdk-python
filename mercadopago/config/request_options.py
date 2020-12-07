@@ -22,7 +22,7 @@ class RequestOptions(object):
                  custom_headers=None,
                  corporation_id=None,
                  integrator_id=None,
-                 platform_id=None,
+                 platform_id=None, 
                  max_retries=3):
         """Initialize
 
@@ -152,5 +152,5 @@ class RequestOptions(object):
     @platform_id.setter
     def platform_id(self, value):
         if type(value) is not str:
-            raise ValueError('Param platform_id must be a String')         
+            raise ValueError('Param platform_id must be a String')
         self.__platform_id = value

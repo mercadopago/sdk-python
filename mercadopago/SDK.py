@@ -6,7 +6,6 @@ class SDK():
 
     """
     Generate access to all API' modules, which are:
-
     1. Advanced Payment
     2. Card Token
     3. Card
@@ -24,10 +23,11 @@ class SDK():
     def __init__(self, 
                     access_token, 
                     corporation_id=None,
+                    integrator_id=None,
+                    platform_id=None,
                     http_client=None, 
                     request_options=None):
         """Construct ur SDK Object to have access to all APIs modules.
-
         Args:
             access_token (str): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
             http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
@@ -35,6 +35,8 @@ class SDK():
         """
         self.__access_token = access_token
         self.__corporation_id = corporation_id
+        self.__integrator_id = integrator_id
+        self.__platform_id = platform_id
         self.__http_client = http_client is None and HttpClient() or http_client
         self.request_options = request_options is None and RequestOptions() or request_options
 
@@ -92,6 +94,12 @@ class SDK():
         if self.__request_options.corporation_id is None and self.corporation_id is not None:
             self.__request_options.corporation_id = self.corporation_id
         
+        if self.__request_options.integrator_id is None and self.integrator_id is not None:
+            self.__request_options.integrator_id = self.integrator_id
+
+        if self.__request_options.platform_id is None and self.platform_id is not None:
+            self.__request_options.platform_id = self.platform_id
+
         return self.__request_options
 
     @request_options.setter
@@ -117,3 +125,24 @@ class SDK():
         if type(value) is not str:
             raise ValueError('Param corporation_id must be a String')
         self.__corporation_id = value
+
+    @property
+    def integrator_id(self):
+        return self.__integrator_id
+
+    @integrator_id.setter
+    def integrator_id(self, value):
+        if type(value) is not str:
+            raise ValueError('Param corporation_id must be a String')
+        self.__integrator_id = value
+
+    @property
+    def platform_id(self):
+        return self.__platform_id
+
+    @platform_id.setter
+    def platform_id(self, value):
+        if type(value) is not str:
+            raise ValueError('Param corporation_id must be a String')
+        self.__platform_id = value
+        
