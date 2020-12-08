@@ -10,5 +10,13 @@ class IdentificationType(MPBase):
         super(IdentificationType, self).__init__(request_options, http_client)
 
     def get_list(self, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/identification_types/_identification_types/get/)
+
+        Args:
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Identification Types find response
+        """
         return self._get(uri="/v1/identification_types", request_options=request_options)
             

@@ -15,7 +15,7 @@ class Preference(MPBase):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
 
         Args:
-            id (str): Preference ID
+            id (str): The Preference ID
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
@@ -27,7 +27,7 @@ class Preference(MPBase):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
 
         Args:
-            id (str): Preference ID
+            id (str): The Preference ID
             preference_object (dict): Values to be modified
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 

@@ -16,9 +16,27 @@ class Refund(MPBase):
         super(Refund, self).__init__(request_options, http_client)
 
     def get_list(self, payment_id, request_options=None):
+        """Args:
+            payment_id (str): The Payment ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Refund find response
+        """
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds", request_options=request_options)
 
     def create(self, payment_id, refund_object, request_options=None):
+        """Args:
+            payment_id (str): The Payment ID
+            refund_object (dict): Refund to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param refund_object must be a Dictionary    
+
+        Returns:
+            dict: Refund creation response
+        """
         if type(refund_object) is not dict:
             raise ValueError("Param refund_object must be a Dictionary")
 

@@ -30,8 +30,18 @@ class SDK():
         """Construct ur SDK Object to have access to all APIs modules.
         Args:
             access_token (str): Your access token to the MercadoPago APIs. [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
+            corporation_id (str, optional): Your Corporation ID if any. Defaults to None.
+            integrator_id (str, optional): Your Integrator ID if any. Defaults to None.
+            platform_id (str, optional): Your Platform ID if any. Defaults to None.
             http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
+
+        Raises:
+            ValueError: Param access_token must be a String
+            ValueError: Param request_options must be a RequestOptions Object
+            ValueError: Param corporation_id must be a String
+            ValueError: Param integrator_id must be a String
+            ValueError: Param platform_Id must be a String
         """
         self.__access_token = access_token
         self.__corporation_id = corporation_id
@@ -133,7 +143,7 @@ class SDK():
     @integrator_id.setter
     def integrator_id(self, value):
         if type(value) is not str:
-            raise ValueError('Param corporation_id must be a String')
+            raise ValueError('Param integrator_id must be a String')
         self.__integrator_id = value
 
     @property
@@ -143,6 +153,6 @@ class SDK():
     @platform_id.setter
     def platform_id(self, value):
         if type(value) is not str:
-            raise ValueError('Param corporation_id must be a String')
+            raise ValueError('Param platform_id must be a String')
         self.__platform_id = value
         

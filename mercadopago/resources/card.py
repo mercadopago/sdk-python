@@ -19,11 +19,11 @@ class Card(MPBase):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
 
         Args:
-            customer_id (str): Customer ID owner 
+            customer_id (str): The Customer ID owner 
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
-            dict: Cards finded response
+            dict: Cards find response
         """
         return self._get(uri="/v1/customers/" + str(customer_id) + "/cards", request_options=request_options)
 
@@ -31,7 +31,7 @@ class Card(MPBase):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)
 
         Args:
-            customer_id (str): Customer ID owner 
+            customer_id (str): The Customer ID owner 
             card_id (dict): Card ID to be found
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
@@ -44,7 +44,7 @@ class Card(MPBase):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)
 
         Args:
-            customer_id (str): Customer ID owner 
+            customer_id (str): The Customer ID owner 
             card_object (dict): Card object to be created
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 

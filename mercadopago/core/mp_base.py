@@ -7,8 +7,15 @@ class MPBase(object):
 
     """
     All mercadopago.resources extends this one to call the REST services
+
+    Args: 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
+        http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
+
+    Raises: 
+        ValueError: Param request_options must be a RequestOptions Object
+        ValueError: Filters must be a Dictionary      
     """
-    
     def __init__(self, request_options, http_client):
         if type(request_options) is not RequestOptions:
             raise ValueError('Param request_options must be a RequestOptions Object')

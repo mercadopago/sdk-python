@@ -16,6 +16,7 @@ class PaymentMethods(MPBase):
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
-            dict: Payment Methods response
+            dict: Payment Methods find response
         """
         return self._get(uri="/v1/payment_methods", request_options=request_options)
+        

@@ -14,18 +14,60 @@ class Payment(MPBase):
         super(Payment, self).__init__(request_options, http_client)
 
     def search(self, filters, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)
+
+        Args:
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Payment find response
+        """
         return self._get(uri="/v1/payments/search", filters=filters, request_options=request_options)
 
     def get(self, id, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)
+
+        Args:
+            id (str): The Payment ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Payment find response
+        """
         return self._get(uri="/v1/payments/" + str(id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)
+
+        Args:
+            payment_object (dict): Payment to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param payment_object must be a Dictionary    
+
+        Returns:
+            dict: Payment creation response
+        """
         if type(payment_object) is not dict:
             raise ValueError("Param payment_object must be a Dictionary")
 
         return self._post(uri="/v1/payments", data=payment_object, request_options=request_options)
 
     def update(self, id, payment_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)
+
+        Args:
+            id (str): The Payment ID
+            payment_object (dict): Payment to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param payment_object must be a Dictionary    
+
+        Returns:
+            dict: Payment modification response
+        """
         if type(payment_object) is not dict:
             raise ValueError("Param payment_object must be a Dictionary")
 
