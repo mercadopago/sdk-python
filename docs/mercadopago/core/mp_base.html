@@ -35,8 +35,15 @@ class MPBase(object):
 
     &#34;&#34;&#34;
     All mercadopago.resources extends this one to call the REST services
+
+    Args: 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
+        http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
+
+    Raises: 
+        ValueError: Param request_options must be a RequestOptions Object
+        ValueError: Filters must be a Dictionary      
     &#34;&#34;&#34;
-    
     def __init__(self, request_options, http_client):
         if type(request_options) is not RequestOptions:
             raise ValueError(&#39;Param request_options must be a RequestOptions Object&#39;)
@@ -112,7 +119,13 @@ class MPBase(object):
 <span>(</span><span>request_options, http_client)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>All mercadopago.resources extends this one to call the REST services</p></div>
+<div class="desc"><p>All mercadopago.resources extends this one to call the REST services</p>
+<p>Args:
+request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
+http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.</p>
+<p>Raises:
+ValueError: Param request_options must be a RequestOptions Object
+ValueError: Filters must be a Dictionary</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -121,8 +134,15 @@ class MPBase(object):
 
     &#34;&#34;&#34;
     All mercadopago.resources extends this one to call the REST services
+
+    Args: 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST calls. Defaults to None.
+        http_client (mercadopago.http.http_client, optional): An implementation of HttpClient can be pass to be used to make the REST calls. Defaults to None.
+
+    Raises: 
+        ValueError: Param request_options must be a RequestOptions Object
+        ValueError: Filters must be a Dictionary      
     &#34;&#34;&#34;
-    
     def __init__(self, request_options, http_client):
         if type(request_options) is not RequestOptions:
             raise ValueError(&#39;Param request_options must be a RequestOptions Object&#39;)
@@ -192,8 +212,8 @@ class MPBase(object):
 <li><a title="mercadopago.resources.disbursement_refund.DisbursementRefund" href="../resources/disbursement_refund.html#mercadopago.resources.disbursement_refund.DisbursementRefund">DisbursementRefund</a></li>
 <li><a title="mercadopago.resources.identification_type.IdentificationType" href="../resources/identification_type.html#mercadopago.resources.identification_type.IdentificationType">IdentificationType</a></li>
 <li><a title="mercadopago.resources.merchant_order.MerchantOrder" href="../resources/merchant_order.html#mercadopago.resources.merchant_order.MerchantOrder">MerchantOrder</a></li>
-<li><a title="mercadopago.resources.o_auth.OAuth" href="../resources/o_auth.html#mercadopago.resources.o_auth.OAuth">OAuth</a></li>
 <li><a title="mercadopago.resources.payment.Payment" href="../resources/payment.html#mercadopago.resources.payment.Payment">Payment</a></li>
+<li><a title="mercadopago.resources.payment_methods.PaymentMethods" href="../resources/payment_methods.html#mercadopago.resources.payment_methods.PaymentMethods">PaymentMethods</a></li>
 <li><a title="mercadopago.resources.preference.Preference" href="../resources/preference.html#mercadopago.resources.preference.Preference">Preference</a></li>
 <li><a title="mercadopago.resources.refund.Refund" href="../resources/refund.html#mercadopago.resources.refund.Refund">Refund</a></li>
 <li><a title="mercadopago.resources.user.User" href="../resources/user.html#mercadopago.resources.user.User">User</a></li>

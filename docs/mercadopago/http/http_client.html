@@ -39,12 +39,12 @@ class HttpClient():
     
     def __init__(self):
         pass
-
+    
     def __getSession(self, maxRetries):
         retry_strategy = Retry(
             total=maxRetries,
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=[&#34;GET&#34;]
+            #allowed_methods=[&#34;GET&#34;]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
@@ -57,7 +57,7 @@ class HttpClient():
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
             }
-
+        
         return response
 
     def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
@@ -117,12 +117,12 @@ class HttpClient():
     
     def __init__(self):
         pass
-
+    
     def __getSession(self, maxRetries):
         retry_strategy = Retry(
             total=maxRetries,
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=[&#34;GET&#34;]
+            #allowed_methods=[&#34;GET&#34;]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
@@ -135,7 +135,7 @@ class HttpClient():
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
             }
-
+        
         return response
 
     def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
@@ -206,7 +206,7 @@ class HttpClient():
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
         }
-
+    
     return response</code></pre>
 </details>
 </dd>

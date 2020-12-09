@@ -39,16 +39,50 @@ class Preference(MPBase):
     def __init__(self, request_options, http_client):
         super(Preference, self).__init__(request_options, http_client)
     
-    def find_by_id(self, id, request_options=None):
+    def get(self, id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
+
+        Args:
+            id (str): The Preference ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Preference find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/checkout/preferences/&#34; + str(id), request_options=request_options)
 
     def update(self, id, preference_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
+
+        Args:
+            id (str): The Preference ID
+            preference_object (dict): Values to be modified
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference modification response
+        &#34;&#34;&#34;
         if type(preference_object) is not dict:
             raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/checkout/preferences/&#34; + str(id), data=preference_object, request_options=request_options)
 
-    def save(self, preference_object, request_options=None):
+    def create(self, preference_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/)
+
+        Args:
+            preference_object (dict): Preference object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference creation response
+        &#34;&#34;&#34;
         if type(preference_object) is not dict:
             raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
@@ -87,16 +121,50 @@ class Preference(MPBase):
     def __init__(self, request_options, http_client):
         super(Preference, self).__init__(request_options, http_client)
     
-    def find_by_id(self, id, request_options=None):
+    def get(self, id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
+
+        Args:
+            id (str): The Preference ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Preference find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/checkout/preferences/&#34; + str(id), request_options=request_options)
 
     def update(self, id, preference_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
+
+        Args:
+            id (str): The Preference ID
+            preference_object (dict): Values to be modified
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference modification response
+        &#34;&#34;&#34;
         if type(preference_object) is not dict:
             raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/checkout/preferences/&#34; + str(id), data=preference_object, request_options=request_options)
 
-    def save(self, preference_object, request_options=None):
+    def create(self, preference_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/)
+
+        Args:
+            preference_object (dict): Preference object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param preference_object must be a Dictionary
+
+        Returns:
+            dict: Preference creation response
+        &#34;&#34;&#34;
         if type(preference_object) is not dict:
             raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
@@ -108,45 +176,127 @@ class Preference(MPBase):
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="mercadopago.resources.preference.Preference.find_by_id"><code class="name flex">
-<span>def <span class="ident">find_by_id</span></span>(<span>self, id, request_options=None)</span>
+<dt id="mercadopago.resources.preference.Preference.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>self, preference_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>preference_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Preference object to be created</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param preference_object must be a Dictionary</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Preference creation response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_by_id(self, id, request_options=None):
-    return self._get(uri=&#34;/checkout/preferences/&#34; + str(id), request_options=request_options)</code></pre>
-</details>
-</dd>
-<dt id="mercadopago.resources.preference.Preference.save"><code class="name flex">
-<span>def <span class="ident">save</span></span>(<span>self, preference_object, request_options=None)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def save(self, preference_object, request_options=None):
+<pre><code class="python">def create(self, preference_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/)
+
+    Args:
+        preference_object (dict): Preference object to be created
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises:
+        ValueError: Param preference_object must be a Dictionary
+
+    Returns:
+        dict: Preference creation response
+    &#34;&#34;&#34;
     if type(preference_object) is not dict:
         raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/checkout/preferences&#34;, data=preference_object, request_options=request_options)</code></pre>
 </details>
 </dd>
+<dt id="mercadopago.resources.preference.Preference.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Preference ID</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Preference find response</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
+
+    Args:
+        id (str): The Preference ID
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Preference find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/checkout/preferences/&#34; + str(id), request_options=request_options)</code></pre>
+</details>
+</dd>
 <dt id="mercadopago.resources.preference.Preference.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, id, preference_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Preference ID</dd>
+<dt><strong><code>preference_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Values to be modified</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param preference_object must be a Dictionary</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Preference modification response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self, id, preference_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
+
+    Args:
+        id (str): The Preference ID
+        preference_object (dict): Values to be modified
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises:
+        ValueError: Param preference_object must be a Dictionary
+
+    Returns:
+        dict: Preference modification response
+    &#34;&#34;&#34;
     if type(preference_object) is not dict:
         raise ValueError(&#34;Param preference_object must be a Dictionary&#34;)
 
@@ -174,8 +324,8 @@ class Preference(MPBase):
 <li>
 <h4><code><a title="mercadopago.resources.preference.Preference" href="#mercadopago.resources.preference.Preference">Preference</a></code></h4>
 <ul class="">
-<li><code><a title="mercadopago.resources.preference.Preference.find_by_id" href="#mercadopago.resources.preference.Preference.find_by_id">find_by_id</a></code></li>
-<li><code><a title="mercadopago.resources.preference.Preference.save" href="#mercadopago.resources.preference.Preference.save">save</a></code></li>
+<li><code><a title="mercadopago.resources.preference.Preference.create" href="#mercadopago.resources.preference.Preference.create">create</a></code></li>
+<li><code><a title="mercadopago.resources.preference.Preference.get" href="#mercadopago.resources.preference.Preference.get">get</a></code></li>
 <li><code><a title="mercadopago.resources.preference.Preference.update" href="#mercadopago.resources.preference.Preference.update">update</a></code></li>
 </ul>
 </li>

@@ -36,17 +36,61 @@ class MerchantOrder(MPBase):
     
     def __init__(self, request_options, http_client):
         super(MerchantOrder, self).__init__(request_options, http_client)
-     
-    def find_by_id(self, id, request_options=None):  
+
+    def search(self, filters, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+
+        Args:
+            filters (dict): The search filters parameters
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Merchant Order find response
+        &#34;&#34;&#34;
+        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)
+
+    def get(self, id, request_options=None):  
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+        Args:
+            id (str): The Merchant Order ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Cards find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)
 
     def update(self, id, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+
+        Args:
+            id (str): Merchant Order ID 
+            merchant_order_object (dict): Merchant Order object to be updated
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param merchant_order_object must be a Dictionary     
+        Returns:
+            dict: Cards modification response
+        &#34;&#34;&#34;
         if type(merchant_order_object) is not dict:
             raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
 
-    def save(self, merchant_order_object, request_options=None):
+    def create(self, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+
+        Args:
+            merchant_order_object (dict): Merchant Order object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param merchant_order_object must be a Dictionary     
+        Returns:
+            dict: Cards creation response
+        &#34;&#34;&#34;
         if type(merchant_order_object) is not dict:
             raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
@@ -80,17 +124,61 @@ class MerchantOrder(MPBase):
     
     def __init__(self, request_options, http_client):
         super(MerchantOrder, self).__init__(request_options, http_client)
-     
-    def find_by_id(self, id, request_options=None):  
+
+    def search(self, filters, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+
+        Args:
+            filters (dict): The search filters parameters
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Merchant Order find response
+        &#34;&#34;&#34;
+        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)
+
+    def get(self, id, request_options=None):  
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+        Args:
+            id (str): The Merchant Order ID
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Cards find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)
 
     def update(self, id, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+
+        Args:
+            id (str): Merchant Order ID 
+            merchant_order_object (dict): Merchant Order object to be updated
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param merchant_order_object must be a Dictionary     
+        Returns:
+            dict: Cards modification response
+        &#34;&#34;&#34;
         if type(merchant_order_object) is not dict:
             raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
         return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
 
-    def save(self, merchant_order_object, request_options=None):
+    def create(self, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+
+        Args:
+            merchant_order_object (dict): Merchant Order object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param merchant_order_object must be a Dictionary     
+        Returns:
+            dict: Cards creation response
+        &#34;&#34;&#34;
         if type(merchant_order_object) is not dict:
             raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
@@ -102,45 +190,155 @@ class MerchantOrder(MPBase):
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="mercadopago.resources.merchant_order.MerchantOrder.find_by_id"><code class="name flex">
-<span>def <span class="ident">find_by_id</span></span>(<span>self, id, request_options=None)</span>
+<dt id="mercadopago.resources.merchant_order.MerchantOrder.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>self, merchant_order_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>merchant_order_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Merchant Order object to be created</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<p>Raises:
+ValueError: Param merchant_order_object must be a Dictionary
+</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Cards creation response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_by_id(self, id, request_options=None):  
-    return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)</code></pre>
-</details>
-</dd>
-<dt id="mercadopago.resources.merchant_order.MerchantOrder.save"><code class="name flex">
-<span>def <span class="ident">save</span></span>(<span>self, merchant_order_object, request_options=None)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def save(self, merchant_order_object, request_options=None):
+<pre><code class="python">def create(self, merchant_order_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+
+    Args:
+        merchant_order_object (dict): Merchant Order object to be created
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises: 
+        ValueError: Param merchant_order_object must be a Dictionary     
+    Returns:
+        dict: Cards creation response
+    &#34;&#34;&#34;
     if type(merchant_order_object) is not dict:
         raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
     return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
 </details>
 </dd>
+<dt id="mercadopago.resources.merchant_order.MerchantOrder.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Merchant Order ID</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Cards find response</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, id, request_options=None):  
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+    Args:
+        id (str): The Merchant Order ID
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Cards find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.merchant_order.MerchantOrder.search"><code class="name flex">
+<span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filters</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The search filters parameters</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Merchant Order find response</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search(self, filters, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+
+    Args:
+        filters (dict): The search filters parameters
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Merchant Order find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)</code></pre>
+</details>
+</dd>
 <dt id="mercadopago.resources.merchant_order.MerchantOrder.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, id, merchant_order_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Merchant Order ID </dd>
+<dt><strong><code>merchant_order_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Merchant Order object to be updated</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<p>Raises:
+ValueError: Param merchant_order_object must be a Dictionary
+</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Cards modification response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self, id, merchant_order_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+
+    Args:
+        id (str): Merchant Order ID 
+        merchant_order_object (dict): Merchant Order object to be updated
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises: 
+        ValueError: Param merchant_order_object must be a Dictionary     
+    Returns:
+        dict: Cards modification response
+    &#34;&#34;&#34;
     if type(merchant_order_object) is not dict:
         raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
 
@@ -168,8 +366,9 @@ class MerchantOrder(MPBase):
 <li>
 <h4><code><a title="mercadopago.resources.merchant_order.MerchantOrder" href="#mercadopago.resources.merchant_order.MerchantOrder">MerchantOrder</a></code></h4>
 <ul class="">
-<li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.find_by_id" href="#mercadopago.resources.merchant_order.MerchantOrder.find_by_id">find_by_id</a></code></li>
-<li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.save" href="#mercadopago.resources.merchant_order.MerchantOrder.save">save</a></code></li>
+<li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.create" href="#mercadopago.resources.merchant_order.MerchantOrder.create">create</a></code></li>
+<li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.get" href="#mercadopago.resources.merchant_order.MerchantOrder.get">get</a></code></li>
+<li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.search" href="#mercadopago.resources.merchant_order.MerchantOrder.search">search</a></code></li>
 <li><code><a title="mercadopago.resources.merchant_order.MerchantOrder.update" href="#mercadopago.resources.merchant_order.MerchantOrder.update">update</a></code></li>
 </ul>
 </li>

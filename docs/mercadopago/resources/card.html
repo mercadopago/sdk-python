@@ -37,31 +37,87 @@ class Card(MPBase):
     
     This class must be used in conjunction with the Customer class.
 
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)
+    [Click here for more infos](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
         super(Card, self).__init__(request_options, http_client)
 
-    def find_all(self, customer_id, request_options=None):
+    def get_list(self, customer_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Cards find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards&#34;, request_options=request_options)
 
-    def find_by_id(self, customer_id, card_id, request_options=None):
+    def get(self, customer_id, card_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            card_id (dict): Card ID to be found
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)
 
     def create(self, customer_id, card_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            card_object (dict): Card object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param card_object must be a Dictionary
+
+        Returns:
+            dict: Card creation response
+        &#34;&#34;&#34;
         if type(card_object) is not dict:
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)
+
+        Args:
+            customer_id (str): Customer ID owner 
+            card_id (str): Card ID to be modified 
+            card_object (dict): Values to be modified
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param card_object must be a Dictionary
+
+        Returns:
+            dict: Card modification response
+        &#34;&#34;&#34;
         if type(card_object) is not dict:
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), data=card_object, request_options=request_options)
 
     def delete(self, customer_id, card_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)
+
+        Args:
+            customer_id (str): Customer ID owner 
+            card_id (str): Card ID to be deleted
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card exclusion response
+        &#34;&#34;&#34;
         return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)
         </code></pre>
 </details>
@@ -83,7 +139,7 @@ class Card(MPBase):
 <div class="desc"><p>The cards class is the way to store card data of your customers safely to improve the shopping experience.</p>
 <p>This will allow your customers to complete their purchases much faster and easily, since they will not have to complete their card data again.</p>
 <p>This class must be used in conjunction with the Customer class.</p>
-<p><a href="https://www.mercadopago.com.br/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards">Click here for more infos</a></p></div>
+<p><a href="https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards">Click here for more infos</a></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -97,31 +153,87 @@ class Card(MPBase):
     
     This class must be used in conjunction with the Customer class.
 
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)
+    [Click here for more infos](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
         super(Card, self).__init__(request_options, http_client)
 
-    def find_all(self, customer_id, request_options=None):
+    def get_list(self, customer_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Cards find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards&#34;, request_options=request_options)
 
-    def find_by_id(self, customer_id, card_id, request_options=None):
+    def get(self, customer_id, card_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            card_id (dict): Card ID to be found
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)
 
     def create(self, customer_id, card_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)
+
+        Args:
+            customer_id (str): The Customer ID owner 
+            card_object (dict): Card object to be created
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param card_object must be a Dictionary
+
+        Returns:
+            dict: Card creation response
+        &#34;&#34;&#34;
         if type(card_object) is not dict:
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)
+
+        Args:
+            customer_id (str): Customer ID owner 
+            card_id (str): Card ID to be modified 
+            card_object (dict): Values to be modified
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises:
+            ValueError: Param card_object must be a Dictionary
+
+        Returns:
+            dict: Card modification response
+        &#34;&#34;&#34;
         if type(card_object) is not dict:
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), data=card_object, request_options=request_options)
 
     def delete(self, customer_id, card_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)
+
+        Args:
+            customer_id (str): Customer ID owner 
+            card_id (str): Card ID to be deleted
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card exclusion response
+        &#34;&#34;&#34;
         return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -134,12 +246,44 @@ class Card(MPBase):
 <span>def <span class="ident">create</span></span>(<span>self, customer_id, card_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Customer ID owner </dd>
+<dt><strong><code>card_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Card object to be created</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param card_object must be a Dictionary</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card creation response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create(self, customer_id, card_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)
+
+    Args:
+        customer_id (str): The Customer ID owner 
+        card_object (dict): Card object to be created
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises:
+        ValueError: Param card_object must be a Dictionary
+
+    Returns:
+        dict: Card creation response
+    &#34;&#34;&#34;
     if type(card_object) is not dict:
         raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
@@ -150,51 +294,155 @@ class Card(MPBase):
 <span>def <span class="ident">delete</span></span>(<span>self, customer_id, card_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Customer ID owner </dd>
+<dt><strong><code>card_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Card ID to be deleted</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card exclusion response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def delete(self, customer_id, card_id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)
+
+    Args:
+        customer_id (str): Customer ID owner 
+        card_id (str): Card ID to be deleted
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Card exclusion response
+    &#34;&#34;&#34;
     return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 </dd>
-<dt id="mercadopago.resources.card.Card.find_all"><code class="name flex">
-<span>def <span class="ident">find_all</span></span>(<span>self, customer_id, request_options=None)</span>
+<dt id="mercadopago.resources.card.Card.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, customer_id, card_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Customer ID owner </dd>
+<dt><strong><code>card_id</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Card ID to be found</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card find response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_all(self, customer_id, request_options=None):
-    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards&#34;, request_options=request_options)</code></pre>
+<pre><code class="python">def get(self, customer_id, card_id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)
+
+    Args:
+        customer_id (str): The Customer ID owner 
+        card_id (dict): Card ID to be found
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Card find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 </dd>
-<dt id="mercadopago.resources.card.Card.find_by_id"><code class="name flex">
-<span>def <span class="ident">find_by_id</span></span>(<span>self, customer_id, card_id, request_options=None)</span>
+<dt id="mercadopago.resources.card.Card.get_list"><code class="name flex">
+<span>def <span class="ident">get_list</span></span>(<span>self, customer_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Customer ID owner </dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Cards find response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_by_id(self, customer_id, card_id, request_options=None):
-    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
+<pre><code class="python">def get_list(self, customer_id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+
+    Args:
+        customer_id (str): The Customer ID owner 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Cards find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id) + &#34;/cards&#34;, request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, customer_id, card_id, card_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/">Click here for more infos</a></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Customer ID owner </dd>
+<dt><strong><code>card_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Card ID to be modified </dd>
+<dt><strong><code>card_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Values to be modified</dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param card_object must be a Dictionary</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card modification response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self, customer_id, card_id, card_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)
+
+    Args:
+        customer_id (str): Customer ID owner 
+        card_id (str): Card ID to be modified 
+        card_object (dict): Values to be modified
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises:
+        ValueError: Param card_object must be a Dictionary
+
+    Returns:
+        dict: Card modification response
+    &#34;&#34;&#34;
     if type(card_object) is not dict:
         raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
@@ -224,8 +472,8 @@ class Card(MPBase):
 <ul class="">
 <li><code><a title="mercadopago.resources.card.Card.create" href="#mercadopago.resources.card.Card.create">create</a></code></li>
 <li><code><a title="mercadopago.resources.card.Card.delete" href="#mercadopago.resources.card.Card.delete">delete</a></code></li>
-<li><code><a title="mercadopago.resources.card.Card.find_all" href="#mercadopago.resources.card.Card.find_all">find_all</a></code></li>
-<li><code><a title="mercadopago.resources.card.Card.find_by_id" href="#mercadopago.resources.card.Card.find_by_id">find_by_id</a></code></li>
+<li><code><a title="mercadopago.resources.card.Card.get" href="#mercadopago.resources.card.Card.get">get</a></code></li>
+<li><code><a title="mercadopago.resources.card.Card.get_list" href="#mercadopago.resources.card.Card.get_list">get_list</a></code></li>
 <li><code><a title="mercadopago.resources.card.Card.update" href="#mercadopago.resources.card.Card.update">update</a></code></li>
 </ul>
 </li>

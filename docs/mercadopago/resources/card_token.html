@@ -31,16 +31,33 @@
 class CardToken(MPBase):
 
     &#34;&#34;&#34;
-    This class will allow you to send your customers card data for Mercado Pagos server and receive a token to complete the payments transactions.
+    This class will allow you to send your customers card data for Mercado Pago server and receive a token to complete the payments transactions.
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
         super(CardToken, self).__init__(request_options, http_client)
 
-    def find_by_id(self, id, request_options=None):
+    def get(self, id, request_options=None):
+        &#34;&#34;&#34;Args:
+            id (str): The Card Token ID 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card Token find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/card_tokens/&#34; + str(id), request_options=request_options)
 
-    def save(self, card_token_object, request_options=None):
+    def create(self, card_token_object, request_options=None):
+        &#34;&#34;&#34;Args:
+            card_token_object (dict): Card Token to be created 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param card_token_object must be a Dictionary
+
+        Returns:
+            dict: Card Token creation response
+        &#34;&#34;&#34;
         if type(card_token_object) is not dict:
             raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
@@ -61,7 +78,7 @@ class CardToken(MPBase):
 <span>(</span><span>request_options, http_client)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This class will allow you to send your customers card data for Mercado Pagos server and receive a token to complete the payments transactions.</p></div>
+<div class="desc"><p>This class will allow you to send your customers card data for Mercado Pago server and receive a token to complete the payments transactions.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -69,16 +86,33 @@ class CardToken(MPBase):
 <pre><code class="python">class CardToken(MPBase):
 
     &#34;&#34;&#34;
-    This class will allow you to send your customers card data for Mercado Pagos server and receive a token to complete the payments transactions.
+    This class will allow you to send your customers card data for Mercado Pago server and receive a token to complete the payments transactions.
     &#34;&#34;&#34;
     
     def __init__(self, request_options, http_client):
         super(CardToken, self).__init__(request_options, http_client)
 
-    def find_by_id(self, id, request_options=None):
+    def get(self, id, request_options=None):
+        &#34;&#34;&#34;Args:
+            id (str): The Card Token ID 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Returns:
+            dict: Card Token find response
+        &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/card_tokens/&#34; + str(id), request_options=request_options)
 
-    def save(self, card_token_object, request_options=None):
+    def create(self, card_token_object, request_options=None):
+        &#34;&#34;&#34;Args:
+            card_token_object (dict): Card Token to be created 
+            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+        Raises: 
+            ValueError: Param card_token_object must be a Dictionary
+
+        Returns:
+            dict: Card Token creation response
+        &#34;&#34;&#34;
         if type(card_token_object) is not dict:
             raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
@@ -90,33 +124,74 @@ class CardToken(MPBase):
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="mercadopago.resources.card_token.CardToken.find_by_id"><code class="name flex">
-<span>def <span class="ident">find_by_id</span></span>(<span>self, id, request_options=None)</span>
+<dt id="mercadopago.resources.card_token.CardToken.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>self, card_token_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>card_token_object</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Card Token to be created </dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<p>Raises:
+ValueError: Param card_token_object must be a Dictionary</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card Token creation response</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_by_id(self, id, request_options=None):
-    return self._get(uri=&#34;/v1/card_tokens/&#34; + str(id), request_options=request_options)</code></pre>
-</details>
-</dd>
-<dt id="mercadopago.resources.card_token.CardToken.save"><code class="name flex">
-<span>def <span class="ident">save</span></span>(<span>self, card_token_object, request_options=None)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def save(self, card_token_object, request_options=None):
+<pre><code class="python">def create(self, card_token_object, request_options=None):
+    &#34;&#34;&#34;Args:
+        card_token_object (dict): Card Token to be created 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Raises: 
+        ValueError: Param card_token_object must be a Dictionary
+
+    Returns:
+        dict: Card Token creation response
+    &#34;&#34;&#34;
     if type(card_token_object) is not dict:
         raise ValueError(&#34;Param card_token_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/card_tokens&#34;, data=card_token_object, request_options=request_options)</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.resources.card_token.CardToken.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Card Token ID </dd>
+<dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
+<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Card Token find response</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, id, request_options=None):
+    &#34;&#34;&#34;Args:
+        id (str): The Card Token ID 
+        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+
+    Returns:
+        dict: Card Token find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/v1/card_tokens/&#34; + str(id), request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
@@ -140,8 +215,8 @@ class CardToken(MPBase):
 <li>
 <h4><code><a title="mercadopago.resources.card_token.CardToken" href="#mercadopago.resources.card_token.CardToken">CardToken</a></code></h4>
 <ul class="">
-<li><code><a title="mercadopago.resources.card_token.CardToken.find_by_id" href="#mercadopago.resources.card_token.CardToken.find_by_id">find_by_id</a></code></li>
-<li><code><a title="mercadopago.resources.card_token.CardToken.save" href="#mercadopago.resources.card_token.CardToken.save">save</a></code></li>
+<li><code><a title="mercadopago.resources.card_token.CardToken.create" href="#mercadopago.resources.card_token.CardToken.create">create</a></code></li>
+<li><code><a title="mercadopago.resources.card_token.CardToken.get" href="#mercadopago.resources.card_token.CardToken.get">get</a></code></li>
 </ul>
 </li>
 </ul>
