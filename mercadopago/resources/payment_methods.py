@@ -9,7 +9,7 @@ class PaymentMethods(MPBase):
     def __init__(self, request_options, http_client):
         super(PaymentMethods, self).__init__(request_options, http_client)
 
-    def get_list(self, request_options=None):
+    def search(self, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/)
 
         Args:

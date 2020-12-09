@@ -15,7 +15,7 @@ class Refund(MPBase):
     def __init__(self, request_options, http_client):
         super(Refund, self).__init__(request_options, http_client)
 
-    def get_list(self, payment_id, request_options=None):
+    def search(self, payment_id, request_options=None):
         """Args:
             payment_id (str): The Payment ID
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.

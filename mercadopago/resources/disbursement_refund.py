@@ -9,7 +9,7 @@ class DisbursementRefund(MPBase):
     def __init__(self, request_options, http_client):
         super(DisbursementRefund, self).__init__(request_options, http_client)
 
-    def get_list(self, advanced_payment_id, request_options=None):
+    def search(self, advanced_payment_id, request_options=None):
         """[Args:
             advanced_payment_id (str): The Advanced Payment ID 
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
