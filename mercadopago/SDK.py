@@ -13,7 +13,7 @@ class SDK():
     5. Disbursement Refund
     6. Identification Type
     7. Merchant Order
-    8. PaymentMethods
+    8. Payment Methods
     9. Payment
     10. Preference
     11. Refund
