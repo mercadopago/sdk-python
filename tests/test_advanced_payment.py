@@ -93,7 +93,7 @@ class TestAdvancedPayment(unittest.TestCase):
             }
         }
         
-        print(self.sdk.advanced_payment().create(advanced_payment_object))
+        #print(self.sdk.advanced_payment().create(advanced_payment_object))
 
 if __name__ == '__main__':
     unittest.main()

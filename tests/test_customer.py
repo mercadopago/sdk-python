@@ -11,7 +11,7 @@ class TestCustomer(unittest.TestCase):
 
     def test_all(self):
         customer_object = {
-            "email": "test_payer_999950@testuser.com",
+            "email": "test_payer_999940@testuser.com",
             "first_name": "Rafa",
             "last_name": "Williner",
             "phone": {
