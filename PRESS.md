@@ -1,16 +1,16 @@
 <div align="right"><font color=#4682B4 size=3>
 
 ![logo](/img/lts_logo_mini.png)
-<b>Demo SDK V2 | Q4 2020 | 23/12/2020</b></font>
+**Demo SDK V2 | Q4 2020 | 23/12/2020**</font>
 
 </div>
 
 <div align="center">
 <font color=#4169E1 size=6>
 
-<b>PY<font color=#FF8C00>THON</font> <font color=#4682B4>+</font> <font color=#800080>RUBY</b></font></font></div>
+**PY<font color=#FF8C00>THON</font> <font color=#4682B4>+</font> <font color=#800080>RUBY**</font></font></div>
 
-<b>Referências</b>
+**Referências**
 
 - PLAYERS | ideias de implementação: Stripe e Square
 - ARQUITETURA | baseada em .Net Core: Danilo Elias
@@ -67,10 +67,10 @@
 >>test_user.py
 >>test .py
 
-###Pydoc
+### Pydoc
 `/sdk-python/docs/mercadopago/index.html`
 
-###GitHub Actions
+### GitHub Actions
 >github
 >>workflows
 >>>mercado-pago-package.yml
