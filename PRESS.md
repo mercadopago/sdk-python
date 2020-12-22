@@ -1,14 +1,14 @@
 <div align="right"><font color=#4682B4 size=3>
 
 ![logo](/img/lts_logo_mini.png)
-**Demo SDK V2 | Q4 2020 | 23/12/2020**</font>
+<b>Demo SDK V2 | Q4 2020 | 23/12/2020</b></font>
 
 </div>
 
 <div align="center">
 <font color=#4169E1 size=6>
 
-**PY<font color=#FF8C00>THON</font> <font color=#4682B4>+</font> <font color=#800080>RUBY**</font></font></div>
+<b>PY<font color=#FF8C00>THON</font> <font color=#4682B4>+</font> <font color=#800080>RUBY</b></font></font></div>
 
 **Referências**
 
@@ -18,9 +18,9 @@
 >mercadopago/
 >>config/
 >>>config .py
-```[configurações estáticas]```
+`[configurações estáticas]`
 >>>request_options.py
-```[configurações de chamadas onde qualquer Dev pode sobrescrever chamadas e/ou módulos conforme a sua necessidade]```
+`[configurações de chamadas onde qualquer Dev pode sobrescrever chamadas e/ou módulos conforme a sua necessidade]`
 
 >mercadopago/
 >>core/
