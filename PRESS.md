@@ -18,9 +18,9 @@
 >mercadopago/
 >>config/
 >>>config .py
-`[configurações estáticas]`
+```[configurações estáticas]```
 >>>request_options.py
-`[configurações de chamadas onde qualquer Dev pode sobrescrever chamadas e/ou módulos conforme a sua necessidade]`
+```[configurações de chamadas onde qualquer Dev pode sobrescrever chamadas e/ou módulos conforme a sua necessidade]```
 
 >mercadopago/
 >>core/
