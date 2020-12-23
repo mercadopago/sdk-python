@@ -46,6 +46,8 @@
 `[a lista foi construída com base nas SDKs em PHP e Java]`
 
 `[módulos para chamar as APIs]`
+
+`[com regras de validação para objects]`
 >>>advanced_payment.py
 
 >>>card_token.py
@@ -73,9 +75,11 @@
 >mercadopago/
 >>SDK
 
+`[com regras básicas de validação]`
+
 >tests
 
-`[testes de integração]`
+`[testes de integração para objects e params]`
 >>test_advanced_payment.py
 
 >>test_card_token.py
@@ -107,3 +111,7 @@
 >>>mercado-pago-package.yml
 
 `[configurado para os testes na branch de desenvolvimento 'refactor']`
+
+### PyPi
+
+Package será atualizado conforme cronograma em Q1 | 2021
