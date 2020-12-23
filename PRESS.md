@@ -115,3 +115,7 @@
 ### PyPi
 
 Package será atualizado conforme cronograma em Q1 | 2021
+
+### Thank you~
+
+![thanks](/img/vanellope.gif)
