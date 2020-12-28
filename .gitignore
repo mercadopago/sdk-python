@@ -35,7 +35,3 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-
-# Press
-.PRESS
-.img
