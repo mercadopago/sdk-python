@@ -84,8 +84,8 @@ class TestPayment(unittest.TestCase):
         payment_created = self.sdk.payment().create(payment_object)
         self.assertEqual(payment_created["status"], 201)
 
-        payment_finded = self.sdk.payment().get(payment_created["response"]["id"])
-        self.assertEqual(payment_finded["status"], 200)
+        payment_found = self.sdk.payment().get(payment_created["response"]["id"])
+        self.assertEqual(payment_found["status"], 200)
 
 if __name__ == '__main__':
     unittest.main()
