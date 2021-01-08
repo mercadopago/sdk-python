@@ -1,3 +1,6 @@
+"""
+    Module: test_customer
+"""
 import sys
 sys.path.append('../')
 
@@ -5,11 +8,11 @@ import unittest
 
 import mercadopago
 
-class TestCustomer(unittest.TestCase):
+class TestCustomer(unittest.TestCase): #pylint: disable=missing-class-docstring
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
-    def test_all(self):
+    def test_all(self): #pylint: disable=missing-function-docstring
         customer_object = {
             "email": "test_payer_999940@testuser.com",
             "first_name": "Rafa",
@@ -32,7 +35,8 @@ class TestCustomer(unittest.TestCase):
         customer_saved = self.sdk.customer().create(customer_object)
         self.assertEqual(customer_saved["status"], 201)
 
-        customer_update = self.sdk.customer().update(customer_saved["response"]["id"], {"last_name": "Payer"})
+        customer_update = self.sdk.customer().update(customer_saved["response"]["id"],
+        {"last_name": "Payer"})
         self.assertEqual(customer_update["status"], 200)
 
         customer_updated = self.sdk.customer().get(customer_saved["response"]["id"])

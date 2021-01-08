@@ -1,46 +1,71 @@
+"""
+Module: config
+"""
 import platform
 
-class Config(object):
+class Config():
 
     """
     General infos of your SDK
     """
-    
-    def __init__(self):
-        self.__version = "2.0.0" 
-        self.__USER_AGENT = "MercadoPago Python SDK v" + self.__version
-        self.__PRODUCT_ID = "bc32bpftrpp001u8nhlg"
-        self.__TRACKING_ID = "platform:" + platform.python_version() + ",type:SDK" + self.__version + ",so;"
 
-    __API_BASE_URL = "https://api.mercadopago.com"
-    __MIME_JSON = "application/json"
-    __MIME_FORM = "application/x-www-form-urlencoded"
+    def __init__(self):
+        self.__version = "2.0.0"
+        self.__user_agent = "MercadoPago Python SDK v" + self.__version
+        self.__product_id = "bc32bpftrpp001u8nhlg"
+        self.__tracking_id = "platform:" + platform.python_version()
+        + ",type:SDK" + self.__version + ",so;" #pylint: disable=invalid-unary-operand-type, pointless-statement
+
+    __api_base_url = "https://api.mercadopago.com"
+    __mime_json = "application/json"
+    __mime_form = "application/x-www-form-urlencoded"
 
     @property
     def version(self):
+        """
+        Sets the attribute value of version
+        """
         return self.__version
 
     @property
-    def userAgent(self):
-        return self.__USER_AGENT
+    def user_agent(self):
+        """
+        Sets the attribute value of user agent
+        """
+        return self.__user_agent
 
     @property
-    def productId(self):
-        return self.__PRODUCT_ID
+    def product_id(self):
+        """
+        Sets the attribute value of product id
+        """
+        return self.__product_id
 
     @property
-    def trackingId(self):
-        return self.__TRACKING_ID   
+    def tracking_id(self):
+        """
+        Sets the attribute value of tracking id
+        """
+        return self.__tracking_id
 
     @property
-    def apiBaseUrl(self):
-        return self.__API_BASE_URL
+    def api_base_url(self):
+        """
+        Sets the attribute value of api base url
+        """
+        return self.__api_base_url
 
     @property
-    def mimeJson(self):
-        return self.__MIME_JSON
+    def mime_json(self):
+        """
+        Sets the attribute value of mime json
+        """
+        return self.__mime_json
 
     @property
-    def mimeForm(self):
-        return self.__MIME_FORM
+    def mime_form(self):
+        """
+        Sets the attribute value of mime form
+        """
+        return self.__mime_form
        

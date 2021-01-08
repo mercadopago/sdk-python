@@ -1,15 +1,18 @@
+"""
+    Module: test_payment
+"""
 import sys
 sys.path.append('../')
 
 import unittest
-
-import mercadopago
 from datetime import datetime
 
-class TestPayment(unittest.TestCase):
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+import mercadopago
 
-    def test_create_and_find(self):
+class TestPayment(unittest.TestCase): #pylint: disable=missing-class-docstring
+    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
+
+    def test_create_and_find(self): #pylint: disable=missing-function-docstring
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
@@ -49,7 +52,7 @@ class TestPayment(unittest.TestCase):
                     "id":"PR0001",
                     "title":"Point Mini",
                     "description": "Producto Point para cobros con tarjetas mediante bluetooth",
-                    "picture_url":"https://http2.mlstatic.com/resources/frontend/statics/growth-sellers-landings/device-mlb-point-i_medium@2x.png",
+                    "picture_url":"https://http2.mlstatic.com/resources/frontend/statics/growth-sellers-landings/device-mlb-point-i_medium@2x.png", #pylint: disable=line-too-long
                     "category_id": "electronics",
                     "quantity":1,
                     "unit_price":58.80

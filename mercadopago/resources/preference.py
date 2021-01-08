@@ -1,35 +1,43 @@
+"""
+    Module: preference
+"""
 from mercadopago.core import MPBase
 
 class Preference(MPBase):
 
     """
-    This class will allow you to charge your customers through our web form from any device in a simple, fast and secure way.
-    
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-pro/introduction)
+    This class will allow you to charge your customers through our web form
+    from any device in a simple, fast and secure way.
+
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-pro/introduction) #pylint: disable=line-too-long
     """
-    
+
     def __init__(self, request_options, http_client):
         super(Preference, self).__init__(request_options, http_client)
-    
-    def get(self, id, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)
+
+    def get(self, _id, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/) #pylint: disable=line-too-long
 
         Args:
             id (str): The Preference ID
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Preference find response
         """
         return self._get(uri="/checkout/preferences/" + str(id), request_options=request_options)
 
-    def update(self, id, preference_object, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)
+    def update(self, _id, preference_object, request_options=None):
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/) #pylint: disable=line-too-long
 
         Args:
             id (str): The Preference ID
             preference_object (dict): Values to be modified
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Raises:
             ValueError: Param preference_object must be a Dictionary
@@ -37,13 +45,14 @@ class Preference(MPBase):
         Returns:
             dict: Preference modification response
         """
-        if type(preference_object) is not dict:
+        if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
 
-        return self._put(uri="/checkout/preferences/" + str(id), data=preference_object, request_options=request_options)
+        return self._put(uri="/checkout/preferences/" + str(id), data=preference_object,
+        request_options=request_options)
 
     def create(self, preference_object, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/)
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/) #pylint: disable=line-too-long
 
         Args:
             preference_object (dict): Preference object to be created
@@ -55,8 +64,9 @@ class Preference(MPBase):
         Returns:
             dict: Preference creation response
         """
-        if type(preference_object) is not dict:
+        if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
 
-        return self._post(uri="/checkout/preferences", data=preference_object, request_options=request_options)
+        return self._post(uri="/checkout/preferences", data=preference_object,
+        request_options=request_options)
         

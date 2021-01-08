@@ -1,3 +1,6 @@
+"""
+    Module: test_advanced_payment
+"""
 import sys
 sys.path.append('../')
 
@@ -8,10 +11,10 @@ from datetime import timedelta
 
 import mercadopago
 
-class TestAdvancedPayment(unittest.TestCase):
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+class TestAdvancedPayment(unittest.TestCase): #pylint: disable=missing-class-docstring
+    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
 
-    def test_all(self):
+    def test_all(self): #pylint: disable=missing-function-docstring
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
@@ -33,7 +36,8 @@ class TestAdvancedPayment(unittest.TestCase):
                 "payment_method_id": "master",
                 "payment_type_id": "credit_card",
                 "token": card_token_created["response"]["id"],
-                "date_of_expiration": (datetime.now() + timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S.%f'), #yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+                "date_of_expiration": (datetime.now() + timedelta(days=10))
+                .strftime('%Y-%m-%d %H:%M:%S.%f'),
                 "transaction_amount": 100.0,
                 "installments": 1,
                 "processing_mode": "aggregator",
@@ -59,7 +63,7 @@ class TestAdvancedPayment(unittest.TestCase):
                     "street_number": 123
                 },
                 "identification": {
-                    "type": "CPF", 
+                    "type": "CPF",
                     "number": "19119119100"
                 }
             },
@@ -72,7 +76,8 @@ class TestAdvancedPayment(unittest.TestCase):
                 "payer": {
                     "first_name": "Test",
                     "last_name": "User",
-                    "registration_date": (datetime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S.%f')
+                    "registration_date": (datetime.now() - timedelta(days=10))
+                    .strftime('%Y-%m-%d %H:%M:%S.%f')
                 },
                 "items": [ {
                     "id": "123",
@@ -92,7 +97,7 @@ class TestAdvancedPayment(unittest.TestCase):
                 }
             }
         }
-        
+
         #print(self.sdk.advanced_payment().create(advanced_payment_object))
 
 if __name__ == '__main__':

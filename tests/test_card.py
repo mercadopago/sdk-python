@@ -1,3 +1,6 @@
+"""
+    Module: test_card
+"""
 import sys
 sys.path.append('../')
 
@@ -6,10 +9,10 @@ from datetime import datetime
 
 import mercadopago
 
-class TestCard(unittest.TestCase):
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+class TestCard(unittest.TestCase): #pylint: disable=missing-class-docstring
+    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
 
-    def test_all(self):
+    def test_all(self): #pylint: disable=missing-function-docstring
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
@@ -25,7 +28,7 @@ class TestCard(unittest.TestCase):
 
         customer_id = "685810954-vbrXmBzkHl4UJ9"
         card_token_created = self.sdk.card_token().create(card_token_object)
-        
+
         card_object = {
             "customer_id": customer_id,
             "token": card_token_created["response"]["id"]
@@ -33,7 +36,8 @@ class TestCard(unittest.TestCase):
 
         card_created = self.sdk.card().create(customer_id, card_object)
         self.assertEqual(card_created["status"], 200)
-        self.assertEqual(self.sdk.card().get(customer_id, card_created["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.card()
+        .get(customer_id, card_created["response"]["id"])["status"], 200)
 
         self.sdk.card().delete(customer_id, card_created["response"]["id"])
         self.sdk.customer().delete(customer_id)

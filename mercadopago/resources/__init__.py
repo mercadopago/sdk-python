@@ -1,3 +1,6 @@
+"""
+    Module: resources/__init__.py
+"""
 from .advanced_payment import AdvancedPayment
 from .card_token import CardToken
 from .card import Card
