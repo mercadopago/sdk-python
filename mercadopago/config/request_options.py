@@ -91,7 +91,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def access_token(self):
         """
-        Sets the attribute value and validates of access_token
+        Sets the attribute value and validates access_token
         """
         return self.__access_token
 
@@ -104,7 +104,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def connection_timeout(self):
         """
-        Sets the attribute value and validates of connection timeout
+        Sets the attribute value and validates connection timeout
         """
         return self.__connection_timeout
 
@@ -117,7 +117,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def corporation_id(self):
         """
-        Sets the attribute value and validates of corporation id
+        Sets the attribute value and validates corporation id
         """
         return self.__corporation_id
 
@@ -130,7 +130,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def custom_headers(self):
         """
-        Sets the attribute value and validates of custom headers
+        Sets the attribute value and validates custom headers
         """
         return self.__custom_headers
 
@@ -143,7 +143,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def integrator_id(self):
         """
-        Sets the attribute value and validates of integrator id
+        Sets the attribute value and validates integrator id
         """
         return self.__integrator_id
 
@@ -156,7 +156,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def max_retries(self):
         """
-        Sets the attribute value and validates of max retries
+        Sets the attribute value and validates max retries
         """
         return self.__max_retries
 
@@ -169,7 +169,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @property
     def platform_id(self):
         """
-        Sets the attribute value and validates of platform id
+        Sets the attribute value and validates platform id
         """
         return self.__platform_id
 
