@@ -3,7 +3,7 @@ Module: request_options
 """
 import uuid
 from mercadopago.config import Config
-class RequestOptions(): #pylint: disable=too-many-instance-attributes
+class RequestOptions():
 
     """This object hold all configurations that will be used in ur REST call.
 
@@ -18,7 +18,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     __integrator_id = None
     __platform_id = None
 
-    def __init__(self, #pylint: disable=too-many-arguments
+    def __init__(self,
                  access_token=None,
                  connection_timeout=60.0,
                  custom_headers=None,
@@ -66,7 +66,10 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
 
         self.__config = Config()
 
-    def get_headers(self): #pylint: disable=missing-function-docstring
+    def get_headers(self):
+        """
+        Sets the attribute values of headers
+        """
         headers = {'Authorization': 'Bearer ' + self.__access_token,
                 'x-product-id': self.__config.product_id,
                 'x-tracking-id': self.__config.tracking_id,

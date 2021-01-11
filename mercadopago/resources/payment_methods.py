@@ -10,7 +10,7 @@ class PaymentMethods(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(PaymentMethods, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/) #pylint: disable=line-too-long
@@ -24,4 +24,10 @@ class PaymentMethods(MPBase):
             dict: Payment Methods find response
         """
         return self._get(uri="/v1/payment_methods", request_options=request_options)
-        
+
+    @property
+    def request_options(self):
+        """
+        Returns the attribute value of the function
+        """
+        return self.__request_options

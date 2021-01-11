@@ -1,7 +1,18 @@
 """
 Module: sdk
 """
-from mercadopago.resources import * #pylint: disable=wildcard-import
+from mercadopago.resources.advanced_payment import AdvancedPayment
+from mercadopago.resources.card_token import CardToken
+from mercadopago.resources.card import Card
+from mercadopago.resources.customer import Customer
+from mercadopago.resources.disbursement_refund import DisbursementRefund
+from mercadopago.resources.identification_type import IdentificationType
+from mercadopago.resources.merchant_order import MerchantOrder
+from mercadopago.resources.payment_methods import PaymentMethods
+from mercadopago.resources.payment import Payment
+from mercadopago.resources.preference import Preference
+from mercadopago.resources.refund import Refund
+from mercadopago.resources.user import User
 from mercadopago.config import RequestOptions
 from mercadopago.http import HttpClient
 
@@ -22,7 +33,7 @@ class SDK():
         12. User
     """
 
-    def __init__(self, #pylint: disable=too-many-arguments
+    def __init__(self,
                  access_token,
                  corporation_id=None,
                  integrator_id=None,
@@ -59,44 +70,83 @@ class SDK():
         if self.request_options is None and RequestOptions() or request_options is not None:
             self.request_options = self.request_options
 
-    def advanced_payment(self): #pylint: disable=missing-function-docstring
+    def advanced_payment(self):
+        """
+        Returns the attribute value of the function
+        """
         return AdvancedPayment(self.request_options, self.http_client)
 
-    def card_token(self): #pylint: disable=missing-function-docstring
+    def card_token(self):
+        """
+        Returns the attribute value of the function
+        """
         return CardToken(self.request_options, self.http_client)
 
-    def card(self): #pylint: disable=missing-function-docstring
+    def card(self):
+        """
+        Returns the attribute value of the function
+        """
         return Card(self.request_options, self.http_client)
 
-    def customer(self): #pylint: disable=missing-function-docstring
+    def customer(self):
+        """
+        Returns the attribute value of the function
+        """
         return Customer(self.request_options, self.http_client)
 
-    def disbursement_refund(self): #pylint: disable=missing-function-docstring
+    def disbursement_refund(self):
+        """
+        Returns the attribute value of the function
+        """
         return DisbursementRefund(self.request_options, self.http_client)
 
-    def identification_type(self): #pylint: disable=missing-function-docstring
+    def identification_type(self):
+        """
+        Returns the attribute value of the function
+        """
         return IdentificationType(self.request_options, self.http_client)
 
-    def merchant_order(self): #pylint: disable=missing-function-docstring
+    def merchant_order(self):
+        """
+        Returns the attribute value of the function
+        """
         return MerchantOrder(self.request_options, self.http_client)
 
-    def payment(self): #pylint: disable=missing-function-docstring
+    def payment(self):
+        """
+        Returns the attribute value of the function
+        """
         return Payment(self.request_options, self.http_client)
 
-    def payment_methods(self): #pylint: disable=missing-function-docstring
+    def payment_methods(self):
+        """
+        Returns the attribute value of the function
+        """
         return PaymentMethods(self.request_options, self.http_client)
 
-    def preference(self): #pylint: disable=missing-function-docstring
+    def preference(self):
+        """
+        Returns the attribute value of the function
+        """
         return Preference(self.request_options, self.http_client)
 
-    def refund(self): #pylint: disable=missing-function-docstring
+    def refund(self):
+        """
+        Returns the attribute value of the function
+        """
         return Refund(self.request_options, self.http_client)
 
-    def user(self): #pylint: disable=missing-function-docstring
+    def user(self):
+        """
+        Returns the attribute value of the function
+        """
         return User(self.request_options, self.http_client)
 
     @property
-    def access_token(self): #pylint: disable=missing-function-docstring
+    def access_token(self):
+        """
+        Sets the attribute value and validates access_token
+        """
         return self.__access_token
 
     @access_token.setter
@@ -106,7 +156,10 @@ class SDK():
         self.__access_token = value
 
     @property
-    def request_options(self): #pylint: disable=missing-function-docstring
+    def request_options(self):
+        """
+        Sets the attribute value and validates request_options
+        """
         if self.__request_options.access_token is None:
             self.__request_options.access_token = self.access_token
 
@@ -128,7 +181,10 @@ class SDK():
         self.__request_options = value
 
     @property
-    def http_client(self): #pylint: disable=missing-function-docstring
+    def http_client(self):
+        """
+        Sets the attribute value and validates http_client
+        """
         return self.__http_client
 
     @http_client.setter
@@ -136,7 +192,10 @@ class SDK():
         self.__http_client = value
 
     @property
-    def corporation_id(self): #pylint: disable=missing-function-docstring
+    def corporation_id(self):
+        """
+        Sets the attribute value and validates corporation_id
+        """
         return self.__corporation_id
 
     @corporation_id.setter
@@ -146,7 +205,10 @@ class SDK():
         self.__corporation_id = value
 
     @property
-    def integrator_id(self): #pylint: disable=missing-function-docstring
+    def integrator_id(self):
+        """
+        Sets the attribute value and validates integrator_id
+        """
         return self.__integrator_id
 
     @integrator_id.setter
@@ -156,7 +218,10 @@ class SDK():
         self.__integrator_id = value
 
     @property
-    def platform_id(self): #pylint: disable=missing-function-docstring
+    def platform_id(self):
+        """
+        Sets the attribute value and validates platform_id
+        """
         return self.__platform_id
 
     @platform_id.setter

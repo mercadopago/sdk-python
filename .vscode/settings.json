@@ -1,5 +1,6 @@
 {
-    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3",
+    "python.pythonPath": "venv/bin/python",
+    "python.linting.pylintPath": "/venv/bin/pip3/pylint",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

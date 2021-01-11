@@ -2,7 +2,6 @@
 Module: mp_base
 """
 from json.encoder import JSONEncoder
-from mercadopago.http import http_client
 from mercadopago.config import RequestOptions
 from mercadopago.config import Config
 
@@ -30,9 +29,9 @@ class MPBase():
         self.__config = Config()
 
     def __check_request_options(self, request_options):
-        if request_options is not None and type(request_options) is not RequestOptions:
+        if request_options is not None and not isinstance(request_options, RequestOptions):
             raise ValueError('Param request_options must be a RequestOptions Object')
-        elif request_options is None:
+        if request_options is None:
             request_options = self.__request_options
 
         if request_options.access_token is None:
@@ -41,7 +40,9 @@ class MPBase():
         return request_options
 
     def __check_headers(self, request_options, extra_headers=None):
-        headers = self.__request_options.get_headers() if request_options is None else request_options.get_headers()
+        headers = self.__request_options.get_headers()
+        if request_options is not None:
+            headers = request_options.get_headers()
 
         if extra_headers is not None:
             headers.update(extra_headers)
@@ -88,3 +89,17 @@ class MPBase():
         return self.__http_client.delete(url=self.__config.api_base_url + uri, params=params,
         headers=headers, timeout=request_options.connection_timeout,
         maxretries=request_options.max_retries)
+
+    @property
+    def request_options(self):
+        """
+        Returns the attribute value of the function
+        """
+        return self.__request_options
+
+    @property
+    def config(self):
+        """
+        Returns the attribute value of the function
+        """
+        return self.__config

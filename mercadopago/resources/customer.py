@@ -15,7 +15,7 @@ class Customer(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(Customer, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, filters, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/) #pylint: disable=line-too-long
@@ -32,11 +32,11 @@ class Customer(MPBase):
         return self._get(uri="/v1/customers/search", filters=filters,
         request_options=request_options)
 
-    def get(self, _id, request_options=None):
+    def get(self, customer_id, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/customers/_customers_id/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Customer ID owner
+            customer_id (str): The Customer ID owner
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
             Defaults to None.
@@ -44,7 +44,7 @@ class Customer(MPBase):
         Returns:
             dict: Customer find response
         """
-        return self._get(uri="/v1/customers/" + str(id), request_options=request_options)
+        return self._get(uri="/v1/customers/" + str(customer_id), request_options=request_options)
 
     def create(self, customer_object, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers/post/) #pylint: disable=line-too-long
@@ -67,11 +67,11 @@ class Customer(MPBase):
         return self._post(uri="/v1/customers", data=customer_object,
         request_options=request_options)
 
-    def update(self, _id, customer_object, request_options=None):
+    def update(self, customer_id, customer_object, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Customer ID owner
+            customer_id (str): The Customer ID owner
             customer_object (dict): Customer object to be updated
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
@@ -86,18 +86,19 @@ class Customer(MPBase):
         if not isinstance(customer_object, dict):
             raise ValueError("Param customer_object must be a Dictionary")
 
-        return self._put(uri="/v1/customers/" + str(id), data=customer_object,
+        return self._put(uri="/v1/customers/" + str(customer_id), data=customer_object,
         request_options=request_options)
 
-    def delete(self, _id, request_options=None):
+    def delete(self, customer_id, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/cards/_customers_customer_id_cards_id/delete/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Customer ID owner
+            customer_id (str): The Customer ID owner
             customer_object (dict): Customer object to be updated
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
             dict: Customer exclusion response
         """
-        return self._delete(uri="/v1/customers/" + str(id), request_options=request_options)
+        return self._delete(uri="/v1/customers/" + str(customer_id),
+        request_options=request_options)

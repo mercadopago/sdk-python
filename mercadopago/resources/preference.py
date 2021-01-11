@@ -13,13 +13,13 @@ class Preference(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(Preference, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
-    def get(self, _id, request_options=None):
+    def get(self, preference_id, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Preference ID
+            preference_id (str): The Preference ID
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
             Defaults to None.
@@ -27,13 +27,14 @@ class Preference(MPBase):
         Returns:
             dict: Preference find response
         """
-        return self._get(uri="/checkout/preferences/" + str(id), request_options=request_options)
+        return self._get(uri="/checkout/preferences/" + str(preference_id),
+        request_options=request_options)
 
-    def update(self, _id, preference_object, request_options=None):
+    def update(self, preference_id, preference_object, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Preference ID
+            preference_id (str): The Preference ID
             preference_object (dict): Values to be modified
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
@@ -48,7 +49,7 @@ class Preference(MPBase):
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
 
-        return self._put(uri="/checkout/preferences/" + str(id), data=preference_object,
+        return self._put(uri="/checkout/preferences/" + str(preference_id), data=preference_object,
         request_options=request_options)
 
     def create(self, preference_object, request_options=None):

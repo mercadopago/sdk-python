@@ -10,11 +10,11 @@ class CardToken(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(CardToken, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
-    def get(self, _id, request_options=None):
+    def get(self, card_token_id, request_options=None):
         """Args:
-            id (str): The Card Token ID
+            card_token_id (str): The Card Token ID
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
             Defaults to None.
@@ -22,7 +22,8 @@ class CardToken(MPBase):
         Returns:
             dict: Card Token find response
         """
-        return self._get(uri="/v1/card_tokens/" + str(id), request_options=request_options)
+        return self._get(uri="/v1/card_tokens/" + str(card_token_id),
+        request_options=request_options)
 
     def create(self, card_token_object, request_options=None):
         """Args:

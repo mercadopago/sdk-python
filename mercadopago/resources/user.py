@@ -10,7 +10,7 @@ class User(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(User, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def get(self, request_options=None):
         """Args:
@@ -22,3 +22,10 @@ class User(MPBase):
             dict: User find response
         """
         return self._get(uri="/users/me", request_options=request_options)
+
+    @property
+    def request_options(self):
+        """
+        Returns the attribute value of the function
+        """
+        return self.__request_options

@@ -17,7 +17,7 @@ class Refund(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(Refund, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, payment_id, request_options=None):
         """Args:

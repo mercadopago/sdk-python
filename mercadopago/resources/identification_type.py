@@ -10,7 +10,7 @@ class IdentificationType(MPBase):
     """
 
     def __init__(self, request_options, http_client):
-        super(IdentificationType, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/identification_types/_identification_types/get/) #pylint: disable=line-too-long
@@ -24,3 +24,10 @@ class IdentificationType(MPBase):
             dict: Identification Types find response
         """
         return self._get(uri="/v1/identification_types", request_options=request_options)
+
+    @property
+    def request_options(self):
+        """
+        Returns the attribute value of the function
+        """
+        return self.__request_options

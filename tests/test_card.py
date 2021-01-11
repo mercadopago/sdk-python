@@ -4,15 +4,21 @@
 import sys
 sys.path.append('../')
 
-import unittest
 from datetime import datetime
+import unittest
 
 import mercadopago
 
-class TestCard(unittest.TestCase): #pylint: disable=missing-class-docstring
+class TestCard(unittest.TestCase):
+    """
+    Test Card Basic Structure
+    """
     sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
 
-    def test_all(self): #pylint: disable=missing-function-docstring
+    def test_all(self):
+        """
+        Test Card Basic Structure
+        """
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
