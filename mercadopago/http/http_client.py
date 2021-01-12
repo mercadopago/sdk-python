@@ -14,7 +14,8 @@ class HttpClient():
     def __init__(self):
         pass
 
-    def __get_session(self, max_retries):
+    @staticmethod
+    def __get_session(max_retries):
         retry_strategy = Retry(
             total=max_retries,
             status_forcelist=[429, 500, 502, 503, 504],

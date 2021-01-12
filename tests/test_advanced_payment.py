@@ -2,15 +2,14 @@
     Module: test_advanced_payment
 """
 import sys
-sys.path.append('../')
-
-import uuid
-import unittest
 from datetime import datetime
 from datetime import timedelta
-
+import uuid
+import unittest
 import mercadopago
+sys.path.insert("..", 0)
 
+@unittest
 class TestAdvancedPayment(unittest.TestCase): #pylint: disable=missing-class-docstring
     sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
 
@@ -30,7 +29,7 @@ class TestAdvancedPayment(unittest.TestCase): #pylint: disable=missing-class-doc
 
         card_token_created = self.sdk.card_token().create(card_token_object)
 
-        advanced_payment_object = {
+        advanced_payment_object = { #pylint: disable=unused-variable
             "application_id": "59441713004005",
             "payments": [ {
                 "payment_method_id": "master",

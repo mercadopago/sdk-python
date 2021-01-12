@@ -2,11 +2,9 @@
     Module: test_customer
 """
 import sys
-sys.path.append('../')
-
 import unittest
-
 import mercadopago
+sys.path.insert("..", 0)
 
 class TestCustomer(unittest.TestCase): #pylint: disable=missing-class-docstring
     sdk = mercadopago.SDK(
