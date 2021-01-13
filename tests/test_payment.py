@@ -7,10 +7,17 @@ import unittest
 import mercadopago
 sys.path.insert("..", 0)
 
-class TestPayment(unittest.TestCase): #pylint: disable=missing-class-docstring
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
+class TestPayment(unittest.TestCase):
+    """
+    Test Module: Payment
+    """
+    sdk = mercadopago.SDK(
+        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
-    def test_create_and_find(self): #pylint: disable=missing-function-docstring
+    def test_create_and_find(self):
+        """
+        Test Function: Payment
+        """
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",

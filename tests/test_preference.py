@@ -2,14 +2,22 @@
     Module: test_preference
 """
 import sys
+sys.path.append('../')
+
 import unittest
 import mercadopago
-sys.path.insert("..", 0)
 
-class TestPreference(unittest.TestCase): #pylint: disable=missing-class-docstring
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
+class TestPreference(unittest.TestCase):
+    """
+    Test Module: Preference
+    """
+    sdk = mercadopago.SDK(
+        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
-    def test_all(self): #pylint: disable=missing-function-docstring
+    def test_all(self):
+        """
+        Test Module: Preference
+        """
         preference_object = {
             "items": [
                 {

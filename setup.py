@@ -25,12 +25,12 @@ setup(
     cmdclass={"test": unittest},
     project_urls={
         "Source Code": "https://github.com/mercadopago/sdk-python",
+        "Documentation | EN": "https://www.mercadopago.com.br/developers/en/reference/",
         "Documentation | ES": "https://www.mercadopago.com.br/developers/es/reference/",
         "Documentation | PT-BR": "https://www.mercadopago.com.br/developers/pt/reference/",
-        "Documentation | EN": "https://www.mercadopago.com.br/developers/en/reference/",
     },
     classifiers=[
-        #TODO "Development Status :: 4 - Beta",
+        #TODO "Development Status :: 2 - Beta",
         "Intended Audience :: Developers",
         #TODO OSI? "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
@@ -41,6 +41,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: Freely Distributable",
     ],

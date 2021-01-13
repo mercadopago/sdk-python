@@ -9,13 +9,14 @@ sys.path.insert("..", 0)
 
 class TestCard(unittest.TestCase):
     """
-    Test Card Basic Structure
+    Test Module: Card
     """
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
+    sdk = mercadopago.SDK(
+        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
     def test_all(self):
         """
-        Test Card Basic Structure
+        Test Function: Card
         """
         card_token_object = {
             "card_number": "4074090000000004",

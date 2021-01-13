@@ -10,10 +10,17 @@ import mercadopago
 sys.path.insert("..", 0)
 
 @unittest
-class TestAdvancedPayment(unittest.TestCase): #pylint: disable=missing-class-docstring
-    sdk = mercadopago.SDK("APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966") #pylint: disable=line-too-long
+class TestAdvancedPayment(unittest.TestCase):
+    """
+    Test Module: Advanced Payment
+    """
+    sdk = mercadopago.SDK(
+        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
-    def test_all(self): #pylint: disable=missing-function-docstring
+    def test_all(self):
+        """
+        Test Function: Advanced Payment
+        """
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
@@ -97,6 +104,7 @@ class TestAdvancedPayment(unittest.TestCase): #pylint: disable=missing-class-doc
             }
         }
 
+        #TODO RESOLVER ESSE TESTE
         #print(self.sdk.advanced_payment().create(advanced_payment_object))
 
 if __name__ == '__main__':
