@@ -2,10 +2,11 @@
     Module: test_card
 """
 import sys
+sys.path.append("../")
+
 from datetime import datetime
 import unittest
 import mercadopago
-sys.path.insert("..", 0)
 
 class TestCard(unittest.TestCase):
     """

@@ -154,7 +154,6 @@ class SDK():
 
     @http_client.setter
     def http_client(self, value):
-        print(value)
         if value is not None and not isinstance(value, HttpClient):
             raise ValueError('Param http_client must be a HttpClient Object')
         self.__http_client = value

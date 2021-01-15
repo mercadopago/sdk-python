@@ -2,9 +2,10 @@
     Module: test_identification_type
 """
 import sys
+sys.path.append("../")
+
 import unittest
 import mercadopago
-sys.path.insert("..", 0)
 
 class TestIdentificationType(unittest.TestCase):
     """
@@ -18,7 +19,6 @@ class TestIdentificationType(unittest.TestCase):
         Test Function: Identification Type
         """
         identifications = self.sdk.identification_type().search()
-
         self.assertEqual(identifications["status"], 200)
 
 if __name__ == '__main__':

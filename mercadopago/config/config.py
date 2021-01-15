@@ -13,8 +13,8 @@ class Config():
         self.__version = "2.0.0"
         self.__user_agent = "MercadoPago Python SDK v" + self.__version
         self.__product_id = "bc32bpftrpp001u8nhlg"
-        self.__tracking_id = input("platform:" + platform.python_version()
-        + ",type:SDK" + self.__version + ",so;")
+        self.__tracking_id = "platform:" + platform.python_version() 
+        self.__tracking_id += ",type:SDK" + self.__version + ",so;"
 
     __api_base_url = "https://api.mercadopago.com"
     __mime_json = "application/json"
