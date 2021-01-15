@@ -2,11 +2,11 @@
     Module: test_payment
 """
 import sys
+sys.path.append("../")
+
 from datetime import datetime
 import unittest
 import mercadopago
-sys.path.insert("..", 0)
-
 class TestPayment(unittest.TestCase):
     """
     Test Module: Payment

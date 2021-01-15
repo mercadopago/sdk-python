@@ -34,6 +34,7 @@ class SDK():
     """
 
     def __init__(self,
+                 access_token,
                  http_client=None,
                  request_options=None):
 
@@ -48,10 +49,16 @@ class SDK():
         Raises:
             ValueError: Param request_options must be a RequestOptions Object
         """
-        if self.__http_client is None and HttpClient() or http_client is not None:
-            self.__http_client = self.http_client
-        if self.request_options is None and RequestOptions() or request_options is not None:
-            self.request_options = self.request_options
+
+        self.http_client = http_client #ISSO É UMA VERDADE | SE ELE MANDOU É A VERDADE
+        if http_client is None:
+            self.http_client = HttpClient()
+
+        self.request_options = request_options
+        if request_options is None:
+            self.request_options = RequestOptions()
+
+        self.request_options.access_token = access_token 
 
     def advanced_payment(self):
         """
@@ -126,15 +133,15 @@ class SDK():
         return User(self.request_options, self.http_client)
 
     @property
-    def request_options(self):
+    def request_options(self): #METODO DE ACESSO !! IMPORTANTE - E PASSA PELA VALIDAÇÃO 
         """
         Sets the attribute value and validates request_options
         """
-        return self.__request_options
+        return self.__request_options #ATRIBUTO !!
 
     @request_options.setter
     def request_options(self, value):
-        if not isinstance(value, RequestOptions):
+        if value is not None and not isinstance(value, RequestOptions):
             raise ValueError('Param request_options must be a RequestOptions Object')
         self.__request_options = value
 
@@ -147,4 +154,7 @@ class SDK():
 
     @http_client.setter
     def http_client(self, value):
+        print(value)
+        if value is not None and not isinstance(value, HttpClient):
+            raise ValueError('Param http_client must be a HttpClient Object')
         self.__http_client = value

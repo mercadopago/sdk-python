@@ -2,8 +2,8 @@
 Module: mp_base
 """
 from json.encoder import JSONEncoder
-from mercadopago.config import RequestOptions
-from mercadopago.config import Config
+from mercadopago.config.request_options import RequestOptions
+from mercadopago.config.config import Config
 
 class MPBase():
 
