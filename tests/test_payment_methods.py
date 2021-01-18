@@ -2,9 +2,10 @@
     Module: test_payment_methods
 """
 import sys
-import unittest
-import mercadopago
-sys.path.insert("..", 0)
+sys.path.append("../")
+
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestPaymentMethods(unittest.TestCase):
     """

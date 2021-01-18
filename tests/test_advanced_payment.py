@@ -2,13 +2,13 @@
     Module: test_advanced_payment
 """
 import sys
-from datetime import datetime
-from datetime import timedelta
-import uuid
-import unittest
-import mercadopago
-sys.path.insert("..", 0)
+sys.path.append("../")
 
+from datetime import datetime #pylint: disable=wrong-import-position
+from datetime import timedelta #pylint: disable=wrong-import-position
+import uuid #pylint: disable=wrong-import-position
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 @unittest
 class TestAdvancedPayment(unittest.TestCase):
     """

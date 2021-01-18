@@ -4,8 +4,8 @@
 import sys
 sys.path.append("../")
 
-import unittest
-import mercadopago
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestIdentificationType(unittest.TestCase):
     """

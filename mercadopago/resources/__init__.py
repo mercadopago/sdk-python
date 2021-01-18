@@ -1,3 +1,6 @@
+"""
+Module: resources/__init__.py
+"""
 from mercadopago.resources.advanced_payment import AdvancedPayment
 from mercadopago.resources.card_token import CardToken
 from mercadopago.resources.card import Card

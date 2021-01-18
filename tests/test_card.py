@@ -4,9 +4,9 @@
 import sys
 sys.path.append("../")
 
-from datetime import datetime
-import unittest
-import mercadopago
+from datetime import datetime #pylint: disable=wrong-import-position
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestCard(unittest.TestCase):
     """

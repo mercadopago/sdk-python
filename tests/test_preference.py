@@ -2,10 +2,10 @@
     Module: test_preference
 """
 import sys
-sys.path.append('../')
+sys.path.append("../")
 
-import unittest
-import mercadopago
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestPreference(unittest.TestCase):
     """

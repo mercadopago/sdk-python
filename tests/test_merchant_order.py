@@ -2,10 +2,11 @@
     Module: test_merchant_order
 """
 import sys
-import unittest
-import uuid
-import mercadopago
-sys.path.insert("..", 0)
+sys.path.append("../")
+
+import unittest #pylint: disable=wrong-import-position
+import uuid #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestMerchantOrder(unittest.TestCase):
     """

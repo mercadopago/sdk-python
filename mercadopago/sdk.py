@@ -1,20 +1,20 @@
 """
 Module: sdk
 """
-from mercadopago.resources.advanced_payment import AdvancedPayment
-from mercadopago.resources.card_token import CardToken
-from mercadopago.resources.card import Card
-from mercadopago.resources.customer import Customer
-from mercadopago.resources.disbursement_refund import DisbursementRefund
-from mercadopago.resources.identification_type import IdentificationType
-from mercadopago.resources.merchant_order import MerchantOrder
-from mercadopago.resources.payment_methods import PaymentMethods
-from mercadopago.resources.payment import Payment
-from mercadopago.resources.preference import Preference
-from mercadopago.resources.refund import Refund
-from mercadopago.resources.user import User
+from mercadopago.resources import AdvancedPayment
+from mercadopago.resources import CardToken
+from mercadopago.resources import Card
+from mercadopago.resources import Customer
+from mercadopago.resources import DisbursementRefund
+from mercadopago.resources import IdentificationType
+from mercadopago.resources import MerchantOrder
+from mercadopago.resources import PaymentMethods
+from mercadopago.resources import Payment
+from mercadopago.resources import Preference
+from mercadopago.resources import Refund
+from mercadopago.resources import User
 from mercadopago.config import RequestOptions
-from mercadopago.http.http_client import HttpClient
+from mercadopago.http import HttpClient
 
 class SDK():
 
@@ -58,7 +58,7 @@ class SDK():
         if request_options is None:
             self.request_options = RequestOptions()
 
-        self.request_options.access_token = access_token 
+        self.request_options.access_token = access_token
 
     def advanced_payment(self):
         """
@@ -133,11 +133,11 @@ class SDK():
         return User(self.request_options, self.http_client)
 
     @property
-    def request_options(self): #METODO DE ACESSO !! IMPORTANTE - E PASSA PELA VALIDAÇÃO 
+    def request_options(self):
         """
         Sets the attribute value and validates request_options
         """
-        return self.__request_options #ATRIBUTO !!
+        return self.__request_options
 
     @request_options.setter
     def request_options(self, value):

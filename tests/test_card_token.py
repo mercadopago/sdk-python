@@ -2,10 +2,11 @@
     Module: test_card_token
 """
 import sys
-from datetime import datetime
-import unittest
-import mercadopago
-sys.path.insert("..", 0)
+sys.path.append("../")
+
+from datetime import datetime #pylint: disable=wrong-import-position
+import unittest #pylint: disable=wrong-import-position
+import mercadopago #pylint: disable=wrong-import-position
 
 class TestCardToken(unittest.TestCase):
     """
