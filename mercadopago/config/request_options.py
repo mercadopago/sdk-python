@@ -70,21 +70,21 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         """
         Sets the attribute values of headers
         """
-        headers = {'Authorization': 'Bearer ' + self.__access_token,
-                'x-product-id': self.__config.product_id,
-                'x-tracking-id': self.__config.tracking_id,
-                'x-idempotency-key': str(uuid.uuid4().int),
-                'User-Agent': self.__config.user_agent,
-                'Accept': self.__config.mime_json}
+        headers = {"Authorization": "Bearer" + self.__access_token,
+                "x-product-id": self.__config.product_id,
+                "x-tracking-id": self.__config.tracking_id,
+                "x-idempotency-key": str(uuid.uuid4().int),
+                "User-Agent": self.__config.user_agent,
+                "Accept": self.__config.mime_json}
 
         if self.__corporation_id is not None:
-            headers['x-corporation-id'] = self.__corporation_id
+            headers["x-corporation-id"] = self.__corporation_id
 
         if self.__integrator_id is not None:
-            headers['x-integrator-id'] = self.__integrator_id
+            headers["x-integrator-id"] = self.__integrator_id
 
         if self.__platform_id is not None:
-            headers['x-platform-id'] = self.__platform_id
+            headers["x-platform-id"] = self.__platform_id
 
         if self.__custom_headers is not None:
             headers.update(self.__custom_headers)
@@ -101,7 +101,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @access_token.setter
     def access_token(self, value):
         if not isinstance(value, str):
-            raise ValueError('Param access_token must be a String')
+            raise ValueError("Param access_token must be a String")
         self.__access_token = value
 
     @property
@@ -114,7 +114,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @connection_timeout.setter
     def connection_timeout(self, value):
         if not isinstance(value, float):
-            raise ValueError('Param connection_timeout must be a Float')
+            raise ValueError("Param connection_timeout must be a Float")
         self.__connection_timeout = value
 
     @property
@@ -127,7 +127,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @corporation_id.setter
     def corporation_id(self, value):
         if not isinstance(value, str):
-            raise ValueError('Param corporation_id must be a String')
+            raise ValueError("Param corporation_id must be a String")
         self.__corporation_id = value
 
     @property
@@ -140,7 +140,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @custom_headers.setter
     def custom_headers(self, value):
         if not isinstance(value, dict):
-            raise ValueError('Param custom_headers must be a Dictionary')
+            raise ValueError("Param custom_headers must be a Dictionary")
         self.__custom_headers = value
 
     @property
@@ -153,7 +153,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @integrator_id.setter
     def integrator_id(self, value):
         if not isinstance(value, str):
-            raise ValueError('Param integrator_id must be a String')
+            raise ValueError("Param integrator_id must be a String")
         self.__integrator_id = value
 
     @property
@@ -166,7 +166,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @max_retries.setter
     def max_retries(self, value):
         if not isinstance(value, int):
-            raise ValueError('Param max_retries must be an Integer')
+            raise ValueError("Param max_retries must be an Integer")
         self.__max_retries = value
 
     @property
@@ -179,5 +179,5 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     @platform_id.setter
     def platform_id(self, value):
         if not isinstance(value, str):
-            raise ValueError('Param platform_id must be a String')
+            raise ValueError("Param platform_id must be a String")
         self.__platform_id = value

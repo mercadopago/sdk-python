@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
 <title>mercadopago.resources.merchant_order API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Module: merchant_order" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,79 +22,94 @@
 <h1 class="title">Module <code>mercadopago.resources.merchant_order</code></h1>
 </header>
 <section id="section-intro">
+<p>Module: merchant_order</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from mercadopago.core import MPBase
+<pre><code class="python">&#34;&#34;&#34;
+    Module: merchant_order
+&#34;&#34;&#34;
+from mercadopago.core import MPBase
 
 class MerchantOrder(MPBase):
 
     &#34;&#34;&#34;
-    This class will allow you to create and manage your orders. You can attach one or more payments in your merchant order.
+    This class will allow you to create and manage your orders. You can attach
+    one or more payments in your merchant order.
     &#34;&#34;&#34;
-    
+
     def __init__(self, request_options, http_client):
-        super(MerchantOrder, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, filters, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
         Args:
             filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Merchant Order find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)
+        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters,
+        request_options=request_options)
 
-    def get(self, id, request_options=None):  
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+    def get(self, merchan_order_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Merchant Order ID
+            merchan_order_id (str): The Merchant Order ID
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
             dict: Cards find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)
+        return self._get(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+        request_options=request_options)
 
-    def update(self, id, merchant_order_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+    def update(self, merchan_order_id, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): Merchant Order ID 
+            merchan_order_id (str): Merchant Order ID
             merchant_order_object (dict): Merchant Order object to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param merchant_order_object must be a Dictionary     
+        Raises:
+            ValueError: Param merchant_order_object must be a Dictionary
+
         Returns:
             dict: Cards modification response
         &#34;&#34;&#34;
-        if type(merchant_order_object) is not dict:
-            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        if not isinstance(merchant_order_object, dict):
+            raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-        return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
+        return self._put(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+        data=merchant_order_object, request_options=request_options)
 
     def create(self, merchant_order_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/) #pylint: disable=line-too-long
 
         Args:
             merchant_order_object (dict): Merchant Order object to be created
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
-        Raises: 
-            ValueError: Param merchant_order_object must be a Dictionary     
+        Raises:
+            ValueError: Param merchant_order_object must be a Dictionary
+
         Returns:
             dict: Cards creation response
         &#34;&#34;&#34;
-        if type(merchant_order_object) is not dict:
-            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        if not isinstance(merchant_order_object, dict):
+            raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
+        return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object,
+        request_options=request_options)</code></pre>
 </details>
 </section>
 <section>
@@ -111,7 +126,8 @@ class MerchantOrder(MPBase):
 <span>(</span><span>request_options, http_client)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This class will allow you to create and manage your orders. You can attach one or more payments in your merchant order.</p></div>
+<div class="desc"><p>This class will allow you to create and manage your orders. You can attach
+one or more payments in your merchant order.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -119,70 +135,81 @@ class MerchantOrder(MPBase):
 <pre><code class="python">class MerchantOrder(MPBase):
 
     &#34;&#34;&#34;
-    This class will allow you to create and manage your orders. You can attach one or more payments in your merchant order.
+    This class will allow you to create and manage your orders. You can attach
+    one or more payments in your merchant order.
     &#34;&#34;&#34;
-    
+
     def __init__(self, request_options, http_client):
-        super(MerchantOrder, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, filters, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
         Args:
             filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Merchant Order find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)
+        return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters,
+        request_options=request_options)
 
-    def get(self, id, request_options=None):  
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+    def get(self, merchan_order_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Merchant Order ID
+            merchan_order_id (str): The Merchant Order ID
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
         Returns:
             dict: Cards find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)
+        return self._get(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+        request_options=request_options)
 
-    def update(self, id, merchant_order_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+    def update(self, merchan_order_id, merchant_order_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): Merchant Order ID 
+            merchan_order_id (str): Merchant Order ID
             merchant_order_object (dict): Merchant Order object to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param merchant_order_object must be a Dictionary     
+        Raises:
+            ValueError: Param merchant_order_object must be a Dictionary
+
         Returns:
             dict: Cards modification response
         &#34;&#34;&#34;
-        if type(merchant_order_object) is not dict:
-            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        if not isinstance(merchant_order_object, dict):
+            raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-        return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)
+        return self._put(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+        data=merchant_order_object, request_options=request_options)
 
     def create(self, merchant_order_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/) #pylint: disable=line-too-long
 
         Args:
             merchant_order_object (dict): Merchant Order object to be created
             request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
-        Raises: 
-            ValueError: Param merchant_order_object must be a Dictionary     
+        Raises:
+            ValueError: Param merchant_order_object must be a Dictionary
+
         Returns:
             dict: Cards creation response
         &#34;&#34;&#34;
-        if type(merchant_order_object) is not dict:
-            raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+        if not isinstance(merchant_order_object, dict):
+            raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
+        return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object,
+        request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -194,7 +221,7 @@ class MerchantOrder(MPBase):
 <span>def <span class="ident">create</span></span>(<span>self, merchant_order_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>merchant_order_object</code></strong> :&ensp;<code>dict</code></dt>
@@ -202,9 +229,11 @@ class MerchantOrder(MPBase):
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
 <dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
 </dl>
-<p>Raises:
-ValueError: Param merchant_order_object must be a Dictionary
-</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param merchant_order_object must be a Dictionary</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -215,31 +244,33 @@ ValueError: Param merchant_order_object must be a Dictionary
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create(self, merchant_order_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/) #pylint: disable=line-too-long
 
     Args:
         merchant_order_object (dict): Merchant Order object to be created
         request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
-    Raises: 
-        ValueError: Param merchant_order_object must be a Dictionary     
+    Raises:
+        ValueError: Param merchant_order_object must be a Dictionary
+
     Returns:
         dict: Cards creation response
     &#34;&#34;&#34;
-    if type(merchant_order_object) is not dict:
-        raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+    if not isinstance(merchant_order_object, dict):
+        raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-    return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object, request_options=request_options)</code></pre>
+    return self._post(uri=&#34;/merchant_orders&#34;, data=merchant_order_object,
+    request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.merchant_order.MerchantOrder.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>self, id, request_options=None)</span>
+<span>def <span class="ident">get</span></span>(<span>self, merchan_order_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dt><strong><code>merchan_order_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The Merchant Order ID</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
 <dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
@@ -253,31 +284,34 @@ ValueError: Param merchant_order_object must be a Dictionary
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get(self, id, request_options=None):  
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)
+<pre><code class="python">def get(self, merchan_order_id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
     Args:
-        id (str): The Merchant Order ID
+        merchan_order_id (str): The Merchant Order ID
         request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
 
     Returns:
         dict: Cards find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/merchant_orders/&#34; + str(id), request_options=request_options)</code></pre>
+    return self._get(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+    request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.merchant_order.MerchantOrder.search"><code class="name flex">
 <span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>filters</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The search filters parameters</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -288,35 +322,42 @@ ValueError: Param merchant_order_object must be a Dictionary
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def search(self, filters, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
     Args:
         filters (dict): The search filters parameters
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
     Returns:
         dict: Merchant Order find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters, request_options=request_options)</code></pre>
+    return self._get(uri=&#34;/merchant_orders/search&#34;, filters=filters,
+    request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.merchant_order.MerchantOrder.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self, id, merchant_order_object, request_options=None)</span>
+<span>def <span class="ident">update</span></span>(<span>self, merchan_order_id, merchant_order_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
-<dd>Merchant Order ID </dd>
+<dt><strong><code>merchan_order_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Merchant Order ID</dd>
 <dt><strong><code>merchant_order_object</code></strong> :&ensp;<code>dict</code></dt>
 <dd>Merchant Order object to be updated</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
-<p>Raises:
-ValueError: Param merchant_order_object must be a Dictionary
-</p>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param merchant_order_object must be a Dictionary</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -326,26 +367,39 @@ ValueError: Param merchant_order_object must be a Dictionary
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self, id, merchant_order_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)
+<pre><code class="python">def update(self, merchan_order_id, merchant_order_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/) #pylint: disable=line-too-long
 
     Args:
-        id (str): Merchant Order ID 
+        merchan_order_id (str): Merchant Order ID
         merchant_order_object (dict): Merchant Order object to be updated
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
-    Raises: 
-        ValueError: Param merchant_order_object must be a Dictionary     
+    Raises:
+        ValueError: Param merchant_order_object must be a Dictionary
+
     Returns:
         dict: Cards modification response
     &#34;&#34;&#34;
-    if type(merchant_order_object) is not dict:
-        raise ValueError(&#39;Param merchant_order_object must be a Dictionary&#39;)
+    if not isinstance(merchant_order_object, dict):
+        raise ValueError(&#34;Param merchant_order_object must be a Dictionary&#34;)
 
-    return self._put(uri=&#34;/merchant_orders/&#34; + str(id), data=merchant_order_object, request_options=request_options)</code></pre>
+    return self._put(uri=&#34;/merchant_orders/&#34; + str(merchan_order_id),
+    data=merchant_order_object, request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="mercadopago.core.mp_base.MPBase" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase">MPBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="mercadopago.core.mp_base.MPBase.config" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase.config">config</a></code></li>
+<li><code><a title="mercadopago.core.mp_base.MPBase.request_options" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase.request_options">request_options</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>

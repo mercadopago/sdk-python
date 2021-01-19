@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
 <title>mercadopago.resources.payment API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Module: payment" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,84 +22,99 @@
 <h1 class="title">Module <code>mercadopago.resources.payment</code></h1>
 </header>
 <section id="section-intro">
+<p>Module: payment</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from mercadopago.core import MPBase
+<pre><code class="python">&#34;&#34;&#34;
+    Module: payment
+&#34;&#34;&#34;
+from mercadopago.core import MPBase
 
 class Payment(MPBase):
 
     &#34;&#34;&#34;
-    This class provides the methods to access the API that will allow you to create your own payment experience on your website.
-    
+    This class provides the methods to access the API that will allow you to create
+    your own payment experience on your website.
+
     From basic to advanced configurations, you control the whole experience.
-    
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)
+
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/) #pylint: disable=line-too-long
     &#34;&#34;&#34;
-    
+
     def __init__(self, request_options, http_client):
-        super(Payment, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, filters, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Payment find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters, request_options=request_options)
+        return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
+        request_options=request_options)
 
-    def get(self, id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)
+    def get(self, payment_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            payment_id (str): The Payment ID
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Payment find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/payments/&#34; + str(id), request_options=request_options)
+        return self._get(uri=&#34;/v1/payments/&#34; + str(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
 
         Args:
             payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param payment_object must be a Dictionary    
+        Raises:
+            ValueError: Param payment_object must be a Dictionary
 
         Returns:
             dict: Payment creation response
         &#34;&#34;&#34;
-        if type(payment_object) is not dict:
+        if not isinstance(payment_object, dict):
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
-    def update(self, id, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)
+    def update(self, payment_id, payment_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Payment ID
+            payment_id (str): The Payment ID
             payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param payment_object must be a Dictionary    
+        Raises:
+            ValueError: Param payment_object must be a Dictionary
 
         Returns:
             dict: Payment modification response
         &#34;&#34;&#34;
-        if type(payment_object) is not dict:
+        if not isinstance(payment_object, dict):
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
-        return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
+        return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
+        request_options=request_options)</code></pre>
 </details>
 </section>
 <section>
@@ -116,9 +131,10 @@ class Payment(MPBase):
 <span>(</span><span>request_options, http_client)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This class provides the methods to access the API that will allow you to create your own payment experience on your website.</p>
+<div class="desc"><p>This class provides the methods to access the API that will allow you to create
+your own payment experience on your website.</p>
 <p>From basic to advanced configurations, you control the whole experience.</p>
-<p><a href="https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/">Click here for more infos</a></p></div>
+<p><a href="https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/">Click here for more infos</a> #pylint: disable=line-too-long</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -126,75 +142,86 @@ class Payment(MPBase):
 <pre><code class="python">class Payment(MPBase):
 
     &#34;&#34;&#34;
-    This class provides the methods to access the API that will allow you to create your own payment experience on your website.
-    
+    This class provides the methods to access the API that will allow you to create
+    your own payment experience on your website.
+
     From basic to advanced configurations, you control the whole experience.
-    
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)
+
+    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/) #pylint: disable=line-too-long
     &#34;&#34;&#34;
-    
+
     def __init__(self, request_options, http_client):
-        super(Payment, self).__init__(request_options, http_client)
+        MPBase.__init__(self, request_options, http_client)
 
     def search(self, filters, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Payment find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters, request_options=request_options)
+        return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
+        request_options=request_options)
 
-    def get(self, id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)
+    def get(self, payment_id, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            payment_id (str): The Payment ID
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
         Returns:
             dict: Payment find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/payments/&#34; + str(id), request_options=request_options)
+        return self._get(uri=&#34;/v1/payments/&#34; + str(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
 
         Args:
             payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param payment_object must be a Dictionary    
+        Raises:
+            ValueError: Param payment_object must be a Dictionary
 
         Returns:
             dict: Payment creation response
         &#34;&#34;&#34;
-        if type(payment_object) is not dict:
+        if not isinstance(payment_object, dict):
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
-    def update(self, id, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)
+    def update(self, payment_id, payment_object, request_options=None):
+        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
 
         Args:
-            id (str): The Payment ID
+            payment_id (str): The Payment ID
             payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
 
-        Raises: 
-            ValueError: Param payment_object must be a Dictionary    
+        Raises:
+            ValueError: Param payment_object must be a Dictionary
 
         Returns:
             dict: Payment modification response
         &#34;&#34;&#34;
-        if type(payment_object) is not dict:
+        if not isinstance(payment_object, dict):
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
-        return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
+        return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
+        request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -206,17 +233,21 @@ class Payment(MPBase):
 <span>def <span class="ident">create</span></span>(<span>self, payment_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments/post/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments/post/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>payment_object</code></strong> :&ensp;<code>dict</code></dt>
 <dd>Payment to be created</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
-<p>Raises:
-ValueError: Param payment_object must be a Dictionary
-</p>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param payment_object must be a Dictionary</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -227,36 +258,40 @@ ValueError: Param payment_object must be a Dictionary
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create(self, payment_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
 
     Args:
         payment_object (dict): Payment to be created
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
-    Raises: 
-        ValueError: Param payment_object must be a Dictionary    
+    Raises:
+        ValueError: Param payment_object must be a Dictionary
 
     Returns:
         dict: Payment creation response
     &#34;&#34;&#34;
-    if type(payment_object) is not dict:
+    if not isinstance(payment_object, dict):
         raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.payment.Payment.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>self, id, request_options=None)</span>
+<span>def <span class="ident">get</span></span>(<span>self, payment_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dt><strong><code>payment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The Payment ID</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -266,29 +301,33 @@ ValueError: Param payment_object must be a Dictionary
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get(self, id, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)
+<pre><code class="python">def get(self, payment_id, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
 
     Args:
-        id (str): The Payment ID
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        payment_id (str): The Payment ID
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
     Returns:
         dict: Payment find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/payments/&#34; + str(id), request_options=request_options)</code></pre>
+    return self._get(uri=&#34;/v1/payments/&#34; + str(payment_id), request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.payment.Payment.search"><code class="name flex">
 <span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -299,34 +338,41 @@ ValueError: Param payment_object must be a Dictionary
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def search(self, filters, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
 
     Args:
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
     Returns:
         dict: Payment find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters, request_options=request_options)</code></pre>
+    return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
+    request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.payment.Payment.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self, id, payment_object, request_options=None)</span>
+<span>def <span class="ident">update</span></span>(<span>self, payment_id, payment_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/">Click here for more infos</a></p>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/">Click here for more infos</a> #pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dt><strong><code>payment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The Payment ID</dd>
 <dt><strong><code>payment_object</code></strong> :&ensp;<code>dict</code></dt>
 <dd>Payment to be created</dd>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
-<dd>An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.</dd>
+<dd>An instance of</dd>
 </dl>
-<p>Raises:
-ValueError: Param payment_object must be a Dictionary
-</p>
+<p>RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param payment_object must be a Dictionary</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -336,27 +382,39 @@ ValueError: Param payment_object must be a Dictionary
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self, id, payment_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)
+<pre><code class="python">def update(self, payment_id, payment_object, request_options=None):
+    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
 
     Args:
-        id (str): The Payment ID
+        payment_id (str): The Payment ID
         payment_object (dict): Payment to be created
-        request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
 
-    Raises: 
-        ValueError: Param payment_object must be a Dictionary    
+    Raises:
+        ValueError: Param payment_object must be a Dictionary
 
     Returns:
         dict: Payment modification response
     &#34;&#34;&#34;
-    if type(payment_object) is not dict:
+    if not isinstance(payment_object, dict):
         raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
-    return self._put(uri=&#34;/v1/payments/&#34; + str(id), data=payment_object, request_options=request_options)</code></pre>
+    return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
+    request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="mercadopago.core.mp_base.MPBase" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase">MPBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="mercadopago.core.mp_base.MPBase.config" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase.config">config</a></code></li>
+<li><code><a title="mercadopago.core.mp_base.MPBase.request_options" href="../core/mp_base.html#mercadopago.core.mp_base.MPBase.request_options">request_options</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>

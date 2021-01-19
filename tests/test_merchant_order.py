@@ -65,5 +65,5 @@ class TestMerchantOrder(unittest.TestCase):
         self.assertEqual(merchant_order_finded["status"], 200)
         self.assertEqual(merchant_order_finded["response"]["additional_info"], "Info 2")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

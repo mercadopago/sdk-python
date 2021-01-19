@@ -22,7 +22,7 @@ class MPBase():
     """
     def __init__(self, request_options, http_client):
         if not isinstance(request_options, RequestOptions):
-            raise ValueError('Param request_options must be a RequestOptions Object')
+            raise ValueError("Param request_options must be a RequestOptions Object")
 
         self.__request_options = request_options
         self.__http_client = http_client
@@ -30,7 +30,7 @@ class MPBase():
 
     def __check_request_options(self, request_options):
         if request_options is not None and not isinstance(request_options, RequestOptions):
-            raise ValueError('Param request_options must be a RequestOptions Object')
+            raise ValueError("Param request_options must be a RequestOptions Object")
         if request_options is None:
             request_options = self.__request_options
 
@@ -51,10 +51,10 @@ class MPBase():
 
     def _get(self, uri, filters=None, request_options=None):
         if isinstance(filters, dict):
-            raise ValueError('Filters must be a Dictionary')
+            raise ValueError("Filters must be a Dictionary")
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {'Content-type': self.__config.mime_json})
+        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
 
         return self.__http_client.get(url=self.__config.api_base_url
         + uri, params=filters, headers=headers, timeout=request_options.connection_timeout,
@@ -65,7 +65,7 @@ class MPBase():
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {'Content-type': self.__config.mime_json})
+        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
 
         return self.__http_client.post(url=self.__config.api_base_url + uri, data=data,
         params=params, headers=headers, timeout=request_options.connection_timeout,
@@ -76,7 +76,7 @@ class MPBase():
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {'Content-type': self.__config.mime_json})
+        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
 
         return self.__http_client.put(url=self.__config.api_base_url + uri,
         data=data, params=params, headers=headers, timeout=request_options.connection_timeout,

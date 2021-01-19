@@ -22,7 +22,7 @@ class TestCardToken(unittest.TestCase):
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime('%Y'),
+            "expiration_year": datetime.now().strftime("%Y"),
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -38,5 +38,5 @@ class TestCardToken(unittest.TestCase):
         self.assertEqual(self.sdk.card_token()
         .get(card_token_created["response"]["id"])["status"], 200)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

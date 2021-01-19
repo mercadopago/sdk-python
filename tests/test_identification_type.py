@@ -21,5 +21,5 @@ class TestIdentificationType(unittest.TestCase):
         identifications = self.sdk.identification_type().search()
         self.assertEqual(identifications["status"], 200)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

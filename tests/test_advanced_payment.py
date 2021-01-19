@@ -24,7 +24,7 @@ class TestAdvancedPayment(unittest.TestCase):
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime('%Y'),
+            "expiration_year": datetime.now().strftime("%Y"),
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -43,7 +43,7 @@ class TestAdvancedPayment(unittest.TestCase):
                 "payment_type_id": "credit_card",
                 "token": card_token_created["response"]["id"],
                 "date_of_expiration": (datetime.now() + timedelta(days=10))
-                .strftime('%Y-%m-%d %H:%M:%S.%f'),
+                .strftime("%Y-%m-%d %H:%M:%S.%f"),
                 "transaction_amount": 100.0,
                 "installments": 1,
                 "processing_mode": "aggregator",
@@ -83,7 +83,7 @@ class TestAdvancedPayment(unittest.TestCase):
                     "first_name": "Test",
                     "last_name": "User",
                     "registration_date": (datetime.now() - timedelta(days=10))
-                    .strftime('%Y-%m-%d %H:%M:%S.%f')
+                    .strftime("%Y-%m-%d %H:%M:%S.%f")
                 },
                 "items": [ {
                     "id": "123",
@@ -107,5 +107,5 @@ class TestAdvancedPayment(unittest.TestCase):
         #TODO RESOLVER ESSE TESTE
         #print(self.sdk.advanced_payment().create(advanced_payment_object))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

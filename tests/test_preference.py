@@ -46,5 +46,5 @@ class TestPreference(unittest.TestCase):
         self.assertEqual(preference_saved["response"]["items"][0]["title"],
         preference_object["items"][0]["title"])
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

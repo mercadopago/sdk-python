@@ -19,7 +19,7 @@ setup(
     packages=["mercadopago"],
     long_description=open("README.md").read(),
     tests_require=[
-        'unittest'
+        "unittes"
     ],
     #TODO python_requires="!=3.0*",
     cmdclass={"test": unittest},

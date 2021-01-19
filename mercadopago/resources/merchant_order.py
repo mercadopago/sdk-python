@@ -58,7 +58,7 @@ class MerchantOrder(MPBase):
             dict: Cards modification response
         """
         if not isinstance(merchant_order_object, dict):
-            raise ValueError('Param merchant_order_object must be a Dictionary')
+            raise ValueError("Param merchant_order_object must be a Dictionary")
 
         return self._put(uri="/merchant_orders/" + str(merchan_order_id),
         data=merchant_order_object, request_options=request_options)
@@ -77,7 +77,7 @@ class MerchantOrder(MPBase):
             dict: Cards creation response
         """
         if not isinstance(merchant_order_object, dict):
-            raise ValueError('Param merchant_order_object must be a Dictionary')
+            raise ValueError("Param merchant_order_object must be a Dictionary")
 
         return self._post(uri="/merchant_orders", data=merchant_order_object,
         request_options=request_options)

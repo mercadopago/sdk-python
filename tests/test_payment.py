@@ -22,7 +22,7 @@ class TestPayment(unittest.TestCase):
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime('%Y'),
+            "expiration_year": datetime.now().strftime("%Y"),
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -96,5 +96,5 @@ class TestPayment(unittest.TestCase):
         payment_found = self.sdk.payment().get(payment_created["response"]["id"])
         self.assertEqual(payment_found["status"], 200)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

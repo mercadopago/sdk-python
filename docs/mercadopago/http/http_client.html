@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
 <title>mercadopago.http.http_client API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Module: http_client" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,47 +22,52 @@
 <h1 class="title">Module <code>mercadopago.http.http_client</code></h1>
 </header>
 <section id="section-intro">
+<p>Module: http_client</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json.encoder import JSONEncoder
+<pre><code class="python">&#34;&#34;&#34;
+Module: http_client
+&#34;&#34;&#34;
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util import Retry
 
 class HttpClient():
 
     &#34;&#34;&#34;
     Default implementation to call all REST API`s
     &#34;&#34;&#34;
-    
+
     def __init__(self):
         pass
-    
-    def __getSession(self, maxRetries):
+
+    @staticmethod
+    def __get_session(max_retries):
         retry_strategy = Retry(
-            total=maxRetries,
+            total=max_retries,
             status_forcelist=[429, 500, 502, 503, 504],
-            #allowed_methods=[&#34;GET&#34;]
+            allowed_methods=[&#34;GET&#34;]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
         return http
 
-    def get(self, url, headers, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
+    def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
             api_result = session.get(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
             }
-        
+
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
-            api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
+            api_result = session.post(url, params=params, data=data,
+            headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -70,9 +75,10 @@ class HttpClient():
 
         return response
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
-            api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
+            api_result = session.put(url, params=params, data=data,
+            headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -80,8 +86,8 @@ class HttpClient():
 
         return response
 
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
             api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
@@ -114,33 +120,35 @@ class HttpClient():
     &#34;&#34;&#34;
     Default implementation to call all REST API`s
     &#34;&#34;&#34;
-    
+
     def __init__(self):
         pass
-    
-    def __getSession(self, maxRetries):
+
+    @staticmethod
+    def __get_session(max_retries):
         retry_strategy = Retry(
-            total=maxRetries,
+            total=max_retries,
             status_forcelist=[429, 500, 502, 503, 504],
-            #allowed_methods=[&#34;GET&#34;]
+            allowed_methods=[&#34;GET&#34;]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
         return http
 
-    def get(self, url, headers, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
+    def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
             api_result = session.get(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
             }
-        
+
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
-            api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
+            api_result = session.post(url, params=params, data=data,
+            headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -148,9 +156,10 @@ class HttpClient():
 
         return response
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
-            api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
+            api_result = session.put(url, params=params, data=data,
+            headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -158,8 +167,8 @@ class HttpClient():
 
         return response
 
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None):
-        with self.__getSession(maxretries) as session:
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+        with self.__get_session(maxretries) as session:
             api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
             response = {
                 &#34;status&#34;: api_result.status_code,
@@ -179,8 +188,8 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None):
-    with self.__getSession(maxretries) as session:
+<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+    with self.__get_session(maxretries) as session:
         api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
@@ -199,14 +208,14 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None):
-    with self.__getSession(maxretries) as session:
+<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+    with self.__get_session(maxretries) as session:
         api_result = session.get(url, params=params, headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
         }
-    
+
     return response</code></pre>
 </details>
 </dd>
@@ -219,9 +228,10 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-    with self.__getSession(maxretries) as session:
-        api_result = session.post(url, params=params, data=data, headers=headers, timeout=timeout)
+<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+    with self.__get_session(maxretries) as session:
+        api_result = session.post(url, params=params, data=data,
+        headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
@@ -239,9 +249,10 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
-    with self.__getSession(maxretries) as session:
-        api_result = session.put(url, params=params, data=data, headers=headers, timeout=timeout)
+<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
+    with self.__get_session(maxretries) as session:
+        api_result = session.put(url, params=params, data=data,
+        headers=headers, timeout=timeout)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()

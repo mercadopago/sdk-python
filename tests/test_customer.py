@@ -50,5 +50,5 @@ class TestCustomer(unittest.TestCase):
         customer_deleted = self.sdk.customer().delete(customer_saved["response"]["id"])
         self.assertEqual(customer_deleted["status"], 200)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

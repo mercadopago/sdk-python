@@ -22,7 +22,7 @@ class TestCard(unittest.TestCase):
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime('%Y'),
+            "expiration_year": datetime.now().strftime("%Y"),
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -48,5 +48,5 @@ class TestCard(unittest.TestCase):
         self.sdk.card().delete(customer_id, card_created["response"]["id"])
         self.sdk.customer().delete(customer_id)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

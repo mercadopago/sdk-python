@@ -19,6 +19,7 @@ from mercadopago.http import HttpClient
 class SDK():
 
     """Generate access to all API' modules, which are:
+    
         1. Advanced Payment
         2. Card Token
         3. Card
@@ -50,7 +51,7 @@ class SDK():
             ValueError: Param request_options must be a RequestOptions Object
         """
 
-        self.http_client = http_client #ISSO É UMA VERDADE | SE ELE MANDOU É A VERDADE
+        self.http_client = http_client
         if http_client is None:
             self.http_client = HttpClient()
 
@@ -60,73 +61,80 @@ class SDK():
 
         self.request_options.access_token = access_token
 
-    def advanced_payment(self):
+    def advanced_payment(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return AdvancedPayment(self.request_options, self.http_client)
+        return AdvancedPayment(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def card_token(self):
+    def card_token(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return CardToken(self.request_options, self.http_client)
+        return CardToken(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def card(self):
+    def card(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return Card(self.request_options, self.http_client)
+        return Card(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def customer(self):
+    def customer(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return Customer(self.request_options, self.http_client)
+        return Customer(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def disbursement_refund(self):
+    def disbursement_refund(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return DisbursementRefund(self.request_options, self.http_client)
+        return DisbursementRefund(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def identification_type(self):
+    def identification_type(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return IdentificationType(self.request_options, self.http_client)
+        return IdentificationType(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def merchant_order(self):
+    def merchant_order(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return MerchantOrder(self.request_options, self.http_client)
+        return MerchantOrder(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
-    def payment(self):
+    def payment(self, request_options=None):
         """
         Returns the attribute value of the function
         """
         return Payment(self.request_options, self.http_client)
 
-    def payment_methods(self):
+    def payment_methods(self, request_options=None):
         """
         Returns the attribute value of the function
         """
         return PaymentMethods(self.request_options, self.http_client)
 
-    def preference(self):
+    def preference(self, request_options=None):
         """
         Returns the attribute value of the function
         """
         return Preference(self.request_options, self.http_client)
 
-    def refund(self):
+    def refund(self, request_options=None):
         """
         Returns the attribute value of the function
         """
         return Refund(self.request_options, self.http_client)
 
-    def user(self):
+    def user(self, request_options=None):
         """
         Returns the attribute value of the function
         """
@@ -142,7 +150,7 @@ class SDK():
     @request_options.setter
     def request_options(self, value):
         if value is not None and not isinstance(value, RequestOptions):
-            raise ValueError('Param request_options must be a RequestOptions Object')
+            raise ValueError("Param request_options must be a RequestOptions Object")
         self.__request_options = value
 
     @property
@@ -155,5 +163,5 @@ class SDK():
     @http_client.setter
     def http_client(self, value):
         if value is not None and not isinstance(value, HttpClient):
-            raise ValueError('Param http_client must be a HttpClient Object')
+            raise ValueError("Param http_client must be a HttpClient Object")
         self.__http_client = value

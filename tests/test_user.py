@@ -14,5 +14,5 @@ class TestUser(unittest.TestCase): #pylint: disable=missing-class-docstring
     def test_find_user(self): #pylint: disable=missing-function-docstring
         self.assertEqual(self.sdk.user().get()["status"], 200)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
