@@ -11,6 +11,7 @@ from mercadopago.resources.merchant_order import MerchantOrder
 from mercadopago.resources.payment_methods import PaymentMethods
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.preference import Preference
+from mercadopago.resources.preapproval import PreApproval
 from mercadopago.resources.refund import Refund
 from mercadopago.resources.user import User
 from mercadopago.config.request_options import RequestOptions

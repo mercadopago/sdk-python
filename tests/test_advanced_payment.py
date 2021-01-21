@@ -9,8 +9,9 @@ from datetime import timedelta #pylint: disable=wrong-import-position
 import uuid #pylint: disable=wrong-import-position
 import unittest #pylint: disable=wrong-import-position
 import mercadopago #pylint: disable=wrong-import-position
-@unittest
-class TestAdvancedPayment(unittest.TestCase):
+#@unittest
+#class TestAdvancedPayment(unittest.TestCase):
+class TestAdvancedPayment():
     """
     Test Module: Advanced Payment
     """

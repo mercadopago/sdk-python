@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name="mercadopago",
-    #TODO version="2.0.4",
+    version="2.0.0",
     description="Mercadopago SDK module for Payments integration",
     author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",
@@ -21,7 +21,7 @@ setup(
     tests_require=[
         "unittes"
     ],
-    #TODO python_requires="!=3.0*",
+    python_requires="!=3.0*",
     cmdclass={"test": unittest},
     project_urls={
         "Source Code": "https://github.com/mercadopago/sdk-python",
@@ -30,9 +30,8 @@ setup(
         "Documentation | PT-BR": "https://www.mercadopago.com.br/developers/pt/reference/",
     },
     classifiers=[
-        #TODO "Development Status :: 2 - Beta",
         "Intended Audience :: Developers",
-        #TODO OSI? "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

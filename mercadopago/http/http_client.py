@@ -8,7 +8,7 @@ from urllib3.util import Retry
 class HttpClient():
 
     """
-    Default implementation to call all REST API`s
+    Default implementation to call all REST API's
     """
 
     def __init__(self):

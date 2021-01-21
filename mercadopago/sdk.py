@@ -10,6 +10,7 @@ from mercadopago.resources import IdentificationType
 from mercadopago.resources import MerchantOrder
 from mercadopago.resources import PaymentMethods
 from mercadopago.resources import Payment
+from mercadopago.resources import PreApproval
 from mercadopago.resources import Preference
 from mercadopago.resources import Refund
 from mercadopago.resources import User
@@ -19,7 +20,7 @@ from mercadopago.http import HttpClient
 class SDK():
 
     """Generate access to all API' modules, which are:
-    
+
         1. Advanced Payment
         2. Card Token
         3. Card
@@ -29,9 +30,10 @@ class SDK():
         7. Merchant Order
         8. Payment Methods
         9. Payment
-        10. Preference
-        11. Refund
-        12. User
+        10. Preapproval
+        11. Preference
+        12. Refund
+        13. User
     """
 
     def __init__(self,
@@ -114,31 +116,43 @@ class SDK():
         """
         Returns the attribute value of the function
         """
-        return Payment(self.request_options, self.http_client)
+        return Payment(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
     def payment_methods(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return PaymentMethods(self.request_options, self.http_client)
+        return PaymentMethods(request_options is not None and request_options
+        or self.request_options, self.http_client)
+
+    def preapproval(self, request_options=None):
+        """
+        Returns the attribute value of the function
+        """
+        return PreApproval(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
     def preference(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return Preference(self.request_options, self.http_client)
+        return Preference(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
     def refund(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return Refund(self.request_options, self.http_client)
+        return Refund(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
     def user(self, request_options=None):
         """
         Returns the attribute value of the function
         """
-        return User(self.request_options, self.http_client)
+        return User(request_options is not None and request_options
+        or self.request_options, self.http_client)
 
     @property
     def request_options(self):
