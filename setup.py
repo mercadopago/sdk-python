@@ -3,12 +3,14 @@ from setuptools import setup
 
 from distutils.core import Command
 
-class Tests(Command):
-    '''run tests'''
 
-    description = 'runs unittest to execute all tests'
+class Tests(Command):
+    """run tests"""
+
+    description = "runs unittest to execute all tests"
 
     user_options = []
+
     def initialize_options(self):
         pass
 
@@ -17,9 +19,10 @@ class Tests(Command):
 
     def run(self):
         import unittest
+
         runner = unittest.runner.TextTestRunner()
         test_loader = unittest.TestLoader()
-        test = test_loader.discover('tests')
+        test = test_loader.discover("tests")
         runner.run(test)
 
 
@@ -36,13 +39,13 @@ setup(
     install_requires='requests>=2.4.3',
     cmdclass = {'test': Tests},
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3.4',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'License :: Freely Distributable',
-    ]
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3.4",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "License :: Freely Distributable",
+    ],
 )

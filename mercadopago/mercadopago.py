@@ -1,38 +1,18 @@
-"""
-MercadoPago Integration Library
-Access MercadoPago for payments integration
+from .mpinvalidcredentials import MPInvalidCredentials
 
-@author hcasatti
-"""
-
-from json.encoder import JSONEncoder
-import requests
-
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.poolmanager import PoolManager
-
-import platform
-import ssl
-import sys
-
-class MPSSLAdapter(HTTPAdapter):
-    def init_poolmanager(self, connections, maxsize, block=False):
-        self.poolmanager = PoolManager(num_pools=connections,
-                                       maxsize=maxsize,
-                                       block=block)
-
-class MPException(Exception):
-    def __init__(self, value):
-        self.value = value
-
-    def __repr__(self):
-        return self.value
-
-class MPInvalidCredentials(MPException):
-    pass
+from .card import Card
+from .cardtoken import CardToken
+from .customer import Customer
+from .payment import Payment
+from .preference import Preference
+from .genericcall import GenericCall
+from .discountcampaign import DiscountCampaign
+from .identificationtype import IdentificationType
+from .merchantorder import MerchantOrder
 
 
 class MP(object):
+<<<<<<< HEAD
     version = "1.2.0"
     __access_data = None
     __ll_access_token = None
@@ -40,6 +20,22 @@ class MP(object):
     platform_id = None
     integrator_id = None
     corporation_id = None
+=======
+    version = "2.0.4"
+    __client_id = None
+    __client_secret = None
+    __ll_access_token = None
+    __sandbox = False
+    card = None
+    cardtoken = None
+    customer = None
+    payment = None
+    preference = None
+    genericcall = None
+    discountcampaign = None
+    identificationtype = None
+    merchantorder = None
+>>>>>>> 346b4c6d7c8c2cbe8dc6e9e8613816f233152ca6
 
     def __init__(self, *args):
         """
@@ -57,13 +53,22 @@ class MP(object):
         else:
             raise MPInvalidCredentials(None)
 
-        self.__rest_client = self.__RestClient(self)
+        self.card = Card(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.cardtoken = CardToken(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.customer = Customer(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.payment = Payment(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.preference = Preference(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.genericcall = GenericCall(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.discountcampaign = DiscountCampaign(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.identificationtype = IdentificationType(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.merchantorder = MerchantOrder(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
 
     def sandbox_mode(self, enable=None):
         if not enable is None:
             self.__sandbox = enable == True
 
         return self.__sandbox
+<<<<<<< HEAD
 
     def get_access_token(self):
         if not self.__ll_access_token is None:
@@ -373,3 +378,5 @@ class MP(object):
             }
 
             return response
+=======
+>>>>>>> 346b4c6d7c8c2cbe8dc6e9e8613816f233152ca6
