@@ -1,18 +1,4 @@
-from .mpinvalidcredentials import MPInvalidCredentials
-
-from .card import Card
-from .cardtoken import CardToken
-from .customer import Customer
-from .payment import Payment
-from .preference import Preference
-from .genericcall import GenericCall
-from .discountcampaign import DiscountCampaign
-from .identificationtype import IdentificationType
-from .merchantorder import MerchantOrder
-
-
 class MP(object):
-<<<<<<< HEAD
     version = "1.2.0"
     __access_data = None
     __ll_access_token = None
@@ -20,22 +6,6 @@ class MP(object):
     platform_id = None
     integrator_id = None
     corporation_id = None
-=======
-    version = "2.0.4"
-    __client_id = None
-    __client_secret = None
-    __ll_access_token = None
-    __sandbox = False
-    card = None
-    cardtoken = None
-    customer = None
-    payment = None
-    preference = None
-    genericcall = None
-    discountcampaign = None
-    identificationtype = None
-    merchantorder = None
->>>>>>> 346b4c6d7c8c2cbe8dc6e9e8613816f233152ca6
 
     def __init__(self, *args):
         """
@@ -68,7 +38,6 @@ class MP(object):
             self.__sandbox = enable == True
 
         return self.__sandbox
-<<<<<<< HEAD
 
     def get_access_token(self):
         if not self.__ll_access_token is None:
@@ -378,5 +347,3 @@ class MP(object):
             }
 
             return response
-=======
->>>>>>> 346b4c6d7c8c2cbe8dc6e9e8613816f233152ca6
