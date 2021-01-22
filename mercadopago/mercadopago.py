@@ -1,11 +1,40 @@
+"""
+MercadoPago Integration Library
+Access MercadoPago for payments integration
+"""
+
+from json.encoder import JSONEncoder
+import requests
+
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.poolmanager import PoolManager
+
+import platform
+import ssl
+import sys
+
+class MPSSLAdapter(HTTPAdapter):
+    def init_poolmanager(self, connections, maxsize, block=False):
+        self.poolmanager = PoolManager(num_pools=connections,
+                                       maxsize=maxsize,
+                                       block=block)
+
+class MPException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return self.value
+
+class MPInvalidCredentials(MPException):
+    pass
+
+
 class MP(object):
-    version = "1.2.0"
+    version = "1.1.1"
     __access_data = None
     __ll_access_token = None
     __sandbox = False
-    platform_id = None
-    integrator_id = None
-    corporation_id = None
 
     def __init__(self, *args):
         """
@@ -23,15 +52,7 @@ class MP(object):
         else:
             raise MPInvalidCredentials(None)
 
-        self.card = Card(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.cardtoken = CardToken(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.customer = Customer(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.payment = Payment(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.preference = Preference(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.genericcall = GenericCall(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.discountcampaign = DiscountCampaign(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.identificationtype = IdentificationType(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
-        self.merchantorder = MerchantOrder(self.__client_id, self.__client_secret, self.__ll_access_token, self.version)
+        self.__rest_client = self.__RestClient(self)
 
     def sandbox_mode(self, enable=None):
         if not enable is None:
@@ -57,15 +78,6 @@ class MP(object):
         else:
             raise MPInvalidCredentials(str(access_data))
 
-    def set_platform_id(self, platform_id):
-        self.platform_id = platform_id
-
-    def set_integrator_id(self, integrator_id):
-        self.integrator_id = integrator_id
-
-    def set_corporation_id(self, corporation_id):
-        self.corporation_id = corporation_id
-
     def get_payment(self, id):
         """
         Get information for specific payment
@@ -74,7 +86,11 @@ class MP(object):
         @return json
         """
 
-        payment_info = self.__rest_client.get("/v1/payments/"+id)
+        access_token = self.get_access_token()
+
+        uri_prefix = "/sandbox" if self.__sandbox else ""
+
+        payment_info = self.__rest_client.get("/v1/payments/"+id+"?access_token="+access_token)
         return payment_info
 
     def get_payment_info(self, id):
@@ -87,7 +103,8 @@ class MP(object):
         @param id
         @return json
         """
-        authorized_payment_info = self.__rest_client.get("/authorized_payments/"+id)
+        access_token = self.get_access_token()
+        authorized_payment_info = self.__rest_client.get("/authorized_payments/"+id+"?access_token="+access_token)
         return authorized_payment_info
 
 
@@ -99,8 +116,9 @@ class MP(object):
         @return json
         """
 
+        access_token = self.get_access_token()
         refund_status = {}
-        response = self.__rest_client.post("/v1/payments/"+id+"/refunds", refund_status)
+        response = self.__rest_client.post("/v1/payments/"+id+"/refunds?access_token="+access_token, refund_status)
         return response
 
 
@@ -112,8 +130,9 @@ class MP(object):
         @return json
         """
 
+        access_token = self.get_access_token()
         cancel_status = {"status":"cancelled"}
-        response = self.__rest_client.put("/v1/payments/"+id, cancel_status)
+        response = self.__rest_client.put("/v1/payments/"+id+"?access_token="+access_token, cancel_status)
         return response
 
 
@@ -125,8 +144,9 @@ class MP(object):
         @return json
         """
 
+        access_token = self.get_access_token()
         cancel_status = {"status":"cancelled"}
-        response = self.__rest_client.put("/preapproval/"+id, cancel_status)
+        response = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, cancel_status)
         return response
 
 
@@ -140,8 +160,12 @@ class MP(object):
         @return json
         """
 
+        access_token = self.get_access_token()
+        filters["access_token"] = access_token
         filters["offset"] = offset
         filters["limit"] = limit
+
+        uri_prefix = "/sandbox" if self.__sandbox else ""
 
         payment_result = self.__rest_client.get("/v1/payments/search", filters)
         return payment_result
@@ -154,7 +178,8 @@ class MP(object):
         @return json
         """
 
-        preference_result = self.__rest_client.post("/checkout/preferences", preference)
+        access_token = self.get_access_token()
+        preference_result = self.__rest_client.post("/checkout/preferences?access_token="+access_token, preference)
         return preference_result
 
 
@@ -167,7 +192,8 @@ class MP(object):
         @return json
         """
 
-        preference_result = self.__rest_client.put("/checkout/preferences/"+id, preference)
+        access_token = self.get_access_token()
+        preference_result = self.__rest_client.put("/checkout/preferences/"+id+"?access_token="+access_token, preference)
         return preference_result
 
 
@@ -179,7 +205,8 @@ class MP(object):
         @param preference
         @return json
         """
-        preference_result = self.__rest_client.get("/checkout/preferences/"+id)
+        access_token = self.get_access_token()
+        preference_result = self.__rest_client.get("/checkout/preferences/"+id+"?access_token="+access_token)
         return preference_result
 
 
@@ -190,7 +217,8 @@ class MP(object):
         @param preapproval_payment
         @return json
         """
-        preapproval_payment_result = self.__rest_client.post("/preapproval", preapproval_payment)
+        access_token = self.get_access_token()
+        preapproval_payment_result = self.__rest_client.post("/preapproval?access_token="+access_token, preapproval_payment)
         return preapproval_payment_result
 
     def get_preapproval_payment(self, id):
@@ -201,7 +229,8 @@ class MP(object):
         @return json
 
         """
-        preapproval_payment_result = self.__rest_client.get("/preapproval/"+id)
+        access_token = self.get_access_token()
+        preapproval_payment_result = self.__rest_client.get("/preapproval/"+id+"?access_token="+access_token)
         return preapproval_payment_result
 
     def update_preapproval_payment(self, id, preapproval_payment):
@@ -212,7 +241,8 @@ class MP(object):
         @return json
 
         """
-        preapproval_payment_result = self.__rest_client.put("/preapproval/"+id, preapproval_payment)
+        access_token = self.get_access_token()
+        preapproval_payment_result = self.__rest_client.put("/preapproval/"+id+"?access_token="+access_token, preapproval_payment)
         return preapproval_payment_result
 
     def get(self, uri, params=None, authenticate=True):
@@ -225,6 +255,10 @@ class MP(object):
         """
         if params is None:
             params = {}
+
+        if authenticate:
+            access_token = self.get_access_token()
+            params["access_token"] = access_token
 
         result = self.__rest_client.get(uri, params)
         return result
@@ -240,6 +274,8 @@ class MP(object):
         if params is None:
             params = {}
 
+        access_token = self.get_access_token()
+        params["access_token"] = access_token
         result = self.__rest_client.post(uri, data, params)
         return result
 
@@ -254,6 +290,8 @@ class MP(object):
         if params is None:
             params = {}
 
+        access_token = self.get_access_token()
+        params["access_token"] = access_token
         result = self.__rest_client.put(uri, data, params)
         return result
 
@@ -267,6 +305,8 @@ class MP(object):
         if params is None:
             params = {}
 
+        access_token = self.get_access_token()
+        params["access_token"] = access_token
         result = self.__rest_client.delete(uri, params)
         return result
 
@@ -275,7 +315,7 @@ class MP(object):
         __API_BASE_URL = "https://api.mercadopago.com"
         MIME_JSON = "application/json"
         MIME_FORM = "application/x-www-form-urlencoded"
-        AUTH_HEADER = "Authorization"
+
         def __init__(self, outer):
             self.__outer = outer
             self.USER_AGENT = "MercadoPago Python SDK v"+self.__outer.version
@@ -295,12 +335,9 @@ class MP(object):
                           self.get_mercadopago_transport_adapter())
             return session
 
-        def getAuthorizationHeader(self):
-            return 'Bearer ' + self.__outer.get_access_token()
-
         def get(self, uri, params=None):
             s = self.get_session()
-            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON, self.AUTH_HEADER: self.getAuthorizationHeader()})
+            api_result = s.get(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -314,7 +351,7 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON, 'x-platform-id':self.__outer.platform_id, 'x-integrator-id':self.__outer.integrator_id, 'x-corporation-id':self.__outer.corporation_id, self.AUTH_HEADER: self.getAuthorizationHeader()})
+            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -328,7 +365,7 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON, self.AUTH_HEADER: self.getAuthorizationHeader()})
+            api_result = s.put(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -339,7 +376,7 @@ class MP(object):
 
         def delete(self, uri, params=None):
             s = self.get_session()
-            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON, self.AUTH_HEADER: self.getAuthorizationHeader()})
+            api_result = s.delete(self.__API_BASE_URL+uri, params=params, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Accept':self.MIME_JSON})
 
             response = {
                 "status": api_result.status_code,
@@ -347,3 +384,4 @@ class MP(object):
             }
 
             return response
+
