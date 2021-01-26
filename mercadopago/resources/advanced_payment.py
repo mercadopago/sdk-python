@@ -123,7 +123,7 @@ class AdvancedPayment(MPBase):
 
         Args:
             advanced_payment_id (str): The Advanced Payment ID
-            release_date (dict): Advanced Payment to be canceled
+            release_date (datetime): Advanced Payment to be canceled
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
             Defaults to None.
