@@ -27,17 +27,17 @@ class Tests(Command):
 
 
 setup(
-    name="mercadopago",
-    version="2.0.4",
+    name='mercadopago',
+    version='1.2.0',
     author="MP SDK <mp_sdk@mercadopago.com>",
     author_email="mp_sdk@mercadopago.com",
     keywords="api mercadopago checkout payment ipn sdk integration",
-    packages=["mercadopago"],
-    url="https://github.com/mercadopago/sdk-python",
-    description="Mercadopago SDK module for Payments integration",
-    long_description=open("README.rst").read(),
-    install_requires="requests>=2.4.3",
-    cmdclass={"test": Tests},
+    packages=['mercadopago'],
+    url='https://github.com/mercadopago/sdk-python',
+    description='Mercadopago SDK module for Payments integration',
+    long_description=open('README.md').read(),
+    install_requires='requests>=2.4.3',
+    cmdclass = {'test': Tests},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
