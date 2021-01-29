@@ -1,9 +1,8 @@
-import os
+"""
+    Module: setup.py
+"""
+
 import unittest
-import sys
-
-
-from distutils.core import Command
 from setuptools import setup
 
 
@@ -19,7 +18,7 @@ setup(
     packages=["mercadopago"],
     long_description=open("README.md").read(),
     tests_require=[
-        "unittes"
+        "unittest"
     ],
     python_requires="!=3.0*",
     cmdclass={"test": unittest},

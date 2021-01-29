@@ -11,7 +11,7 @@ import unittest #pylint: disable=wrong-import-position
 import mercadopago #pylint: disable=wrong-import-position
 #@unittest
 #class TestAdvancedPayment(unittest.TestCase):
-class TestAdvancedPayment():
+class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
     """
     Test Module: Advanced Payment
     """
@@ -105,7 +105,6 @@ class TestAdvancedPayment():
             }
         }
 
-        #TODO RESOLVER ESSE TESTE
         #print(self.sdk.advanced_payment().create(advanced_payment_object))
 
 if __name__ == "__main__":

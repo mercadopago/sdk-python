@@ -50,3 +50,8 @@ class TestCard(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    #try:
+    #    print(["id"])
+    #except KeyError:
+    #    print("this param is unknown")

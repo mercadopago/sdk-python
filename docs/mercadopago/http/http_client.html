@@ -45,7 +45,7 @@ class HttpClient():
 
     @staticmethod
     def __get_session(max_retries):
-        retry_strategy = Retry(
+        retry_strategy = Retry( #pylint: disable=unexpected-keyword-arg
             total=max_retries,
             status_forcelist=[429, 500, 502, 503, 504],
             allowed_methods=[&#34;GET&#34;]
@@ -126,7 +126,7 @@ class HttpClient():
 
     @staticmethod
     def __get_session(max_retries):
-        retry_strategy = Retry(
+        retry_strategy = Retry( #pylint: disable=unexpected-keyword-arg
             total=max_retries,
             status_forcelist=[429, 500, 502, 503, 504],
             allowed_methods=[&#34;GET&#34;]
