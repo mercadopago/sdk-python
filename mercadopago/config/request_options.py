@@ -70,7 +70,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         """
         Sets the attribute values of headers
         """
-        headers = {"Authorization": "Bearer" + self.__access_token,
+        headers = {"Authorization": "Bearer " + self.__access_token,
                 "x-product-id": self.__config.product_id,
                 "x-tracking-id": self.__config.tracking_id,
                 "x-idempotency-key": str(uuid.uuid4().int),
