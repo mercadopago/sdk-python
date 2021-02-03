@@ -22,7 +22,7 @@ class TestPreference(unittest.TestCase):
             "items": [
                 {
                     "description": "Test Update Success",
-                    "collector_id": "456",
+                    "id": "456",
                     "picture_url": "http://product1.image.png",
                     "quantity": 1,
                     "title": "Item 1",
