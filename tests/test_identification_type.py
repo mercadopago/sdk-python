@@ -18,7 +18,7 @@ class TestIdentificationType(unittest.TestCase):
         """
         Test Function: Identification Type
         """
-        identifications = self.sdk.identification_type().search()
+        identifications = self.sdk.identification_type().list_all()
         self.assertEqual(identifications["status"], 200)
 
 if __name__ == "__main__":

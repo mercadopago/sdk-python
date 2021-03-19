@@ -12,7 +12,7 @@ class PaymentMethods(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, request_options=None):
+    def list_all(self, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/) #pylint: disable=line-too-long
 
         Args:

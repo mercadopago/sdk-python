@@ -17,7 +17,7 @@ class Customer(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/) #pylint: disable=line-too-long
 
         Args:

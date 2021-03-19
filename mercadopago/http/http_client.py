@@ -16,10 +16,9 @@ class HttpClient():
 
     @staticmethod
     def __get_session(max_retries):
-        retry_strategy = Retry( #pylint: disable=unexpected-keyword-arg
+        retry_strategy = Retry(
             total=max_retries,
-            status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["GET"]
+            status_forcelist=[429, 500, 502, 503, 504]
         )
         http = requests.Session()
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))

@@ -17,7 +17,7 @@ class PreApproval(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         """Args:
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.

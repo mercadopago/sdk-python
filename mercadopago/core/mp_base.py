@@ -50,7 +50,7 @@ class MPBase():
         return headers
 
     def _get(self, uri, filters=None, request_options=None):
-        if isinstance(filters, dict):
+        if filters is not None and not isinstance(filters, dict):
             raise ValueError("Filters must be a Dictionary")
 
         request_options = self.__check_request_options(request_options)

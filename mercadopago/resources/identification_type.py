@@ -12,7 +12,7 @@ class IdentificationType(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, request_options=None):
+    def list_all(self, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/identification_types/_identification_types/get/) #pylint: disable=line-too-long
 
         Args:

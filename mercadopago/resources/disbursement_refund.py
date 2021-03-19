@@ -12,7 +12,7 @@ class DisbursementRefund(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, advanced_payment_id, request_options=None):
+    def list_all(self, advanced_payment_id, request_options=None):
         """[Args:
             advanced_payment_id (str): The Advanced Payment ID
             request_options (mercadopago.config.request_options, optional): An instance of

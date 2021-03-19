@@ -21,7 +21,7 @@ class Card(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, customer_id, request_options=None):
+    def list_all(self, customer_id, request_options=None):
         """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
         Args:
