@@ -50,7 +50,7 @@ class Card(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, customer_id, request_options=None):
+    def list_all(self, customer_id, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
         Args:
@@ -187,7 +187,7 @@ card data again.</p>
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, customer_id, request_options=None):
+    def list_all(self, customer_id, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
         Args:
@@ -420,8 +420,8 @@ custom options to ur REST call. Defaults to None.</p>
     + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 </dd>
-<dt id="mercadopago.resources.card.Card.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>self, customer_id, request_options=None)</span>
+<dt id="mercadopago.resources.card.Card.list_all"><code class="name flex">
+<span>def <span class="ident">list_all</span></span>(<span>self, customer_id, request_options=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
@@ -442,7 +442,7 @@ custom options to ur REST call. Defaults to None.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def search(self, customer_id, request_options=None):
+<pre><code class="python">def list_all(self, customer_id, request_options=None):
     &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
 
     Args:
@@ -547,7 +547,7 @@ custom options to ur REST call. Defaults to None.</p>
 <li><code><a title="mercadopago.resources.card.Card.create" href="#mercadopago.resources.card.Card.create">create</a></code></li>
 <li><code><a title="mercadopago.resources.card.Card.delete" href="#mercadopago.resources.card.Card.delete">delete</a></code></li>
 <li><code><a title="mercadopago.resources.card.Card.get" href="#mercadopago.resources.card.Card.get">get</a></code></li>
-<li><code><a title="mercadopago.resources.card.Card.search" href="#mercadopago.resources.card.Card.search">search</a></code></li>
+<li><code><a title="mercadopago.resources.card.Card.list_all" href="#mercadopago.resources.card.Card.list_all">list_all</a></code></li>
 <li><code><a title="mercadopago.resources.card.Card.update" href="#mercadopago.resources.card.Card.update">update</a></code></li>
 </ul>
 </li>

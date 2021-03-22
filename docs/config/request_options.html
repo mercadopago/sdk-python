@@ -99,7 +99,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         &#34;&#34;&#34;
         Sets the attribute values of headers
         &#34;&#34;&#34;
-        headers = {&#34;Authorization&#34;: &#34;Bearer&#34; + self.__access_token,
+        headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
                 &#34;x-product-id&#34;: self.__config.product_id,
                 &#34;x-tracking-id&#34;: self.__config.tracking_id,
                 &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
@@ -336,7 +336,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         &#34;&#34;&#34;
         Sets the attribute values of headers
         &#34;&#34;&#34;
-        headers = {&#34;Authorization&#34;: &#34;Bearer&#34; + self.__access_token,
+        headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
                 &#34;x-product-id&#34;: self.__config.product_id,
                 &#34;x-tracking-id&#34;: self.__config.tracking_id,
                 &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
@@ -571,7 +571,7 @@ def platform_id(self):
     &#34;&#34;&#34;
     Sets the attribute values of headers
     &#34;&#34;&#34;
-    headers = {&#34;Authorization&#34;: &#34;Bearer&#34; + self.__access_token,
+    headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
             &#34;x-product-id&#34;: self.__config.product_id,
             &#34;x-tracking-id&#34;: self.__config.tracking_id,
             &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),

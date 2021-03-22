@@ -46,7 +46,7 @@ class PreApproval(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;Args:
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
@@ -148,7 +148,7 @@ your own preapproval experience on your website.</p>
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;Args:
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
@@ -305,7 +305,7 @@ Defaults to None.</p>
 </details>
 </dd>
 <dt id="mercadopago.resources.preapproval.PreApproval.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
+<span>def <span class="ident">search</span></span>(<span>self, filters=None, request_options=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><h2 id="args">Args</h2>
@@ -324,7 +324,7 @@ Defaults to None.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def search(self, filters, request_options=None):
+<pre><code class="python">def search(self, filters=None, request_options=None):
     &#34;&#34;&#34;Args:
         request_options (mercadopago.config.request_options, optional): An instance of
         RequestOptions can be pass changing or adding custom options to ur REST call.

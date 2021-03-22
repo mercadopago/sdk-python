@@ -41,7 +41,7 @@ class DisbursementRefund(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, advanced_payment_id, request_options=None):
+    def list_all(self, advanced_payment_id, request_options=None):
         &#34;&#34;&#34;[Args:
             advanced_payment_id (str): The Advanced Payment ID
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -150,7 +150,7 @@ class DisbursementRefund(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, advanced_payment_id, request_options=None):
+    def list_all(self, advanced_payment_id, request_options=None):
         &#34;&#34;&#34;[Args:
             advanced_payment_id (str): The Advanced Payment ID
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -325,6 +325,38 @@ ValueError: Param disbursement_refund_object must be a Dictionary</p>
     + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
 </details>
 </dd>
+<dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.list_all"><code class="name flex">
+<span>def <span class="ident">list_all</span></span>(<span>self, advanced_payment_id, request_options=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[Args:
+advanced_payment_id (str): The Advanced Payment ID
+request_options (mercadopago.config.request_options, optional): An instance of
+RequestOptions can be pass changing or adding custom options to ur REST call.
+Defaults to None.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Disbursement Refund find response</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def list_all(self, advanced_payment_id, request_options=None):
+    &#34;&#34;&#34;[Args:
+        advanced_payment_id (str): The Advanced Payment ID
+        request_options (mercadopago.config.request_options, optional): An instance of
+        RequestOptions can be pass changing or adding custom options to ur REST call.
+        Defaults to None.
+
+    Returns:
+        dict: Disbursement Refund find response
+    &#34;&#34;&#34;
+    return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
+    + &#34;/refunds&#34;, request_options=request_options)</code></pre>
+</details>
+</dd>
 <dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.save"><code class="name flex">
 <span>def <span class="ident">save</span></span>(<span>self, advanced_payment_id, disbursement_id, disbursement_refund_object, request_options=None)</span>
 </code></dt>
@@ -371,38 +403,6 @@ request_options=None):
     request_options=request_options)</code></pre>
 </details>
 </dd>
-<dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>self, advanced_payment_id, request_options=None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>[Args:
-advanced_payment_id (str): The Advanced Payment ID
-request_options (mercadopago.config.request_options, optional): An instance of
-RequestOptions can be pass changing or adding custom options to ur REST call.
-Defaults to None.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>Disbursement Refund find response</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def search(self, advanced_payment_id, request_options=None):
-    &#34;&#34;&#34;[Args:
-        advanced_payment_id (str): The Advanced Payment ID
-        request_options (mercadopago.config.request_options, optional): An instance of
-        RequestOptions can be pass changing or adding custom options to ur REST call.
-        Defaults to None.
-
-    Returns:
-        dict: Disbursement Refund find response
-    &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-    + &#34;/refunds&#34;, request_options=request_options)</code></pre>
-</details>
-</dd>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
@@ -435,8 +435,8 @@ Defaults to None.</p>
 <ul class="">
 <li><code><a title="mercadopago.resources.disbursement_refund.DisbursementRefund.create" href="#mercadopago.resources.disbursement_refund.DisbursementRefund.create">create</a></code></li>
 <li><code><a title="mercadopago.resources.disbursement_refund.DisbursementRefund.create_all" href="#mercadopago.resources.disbursement_refund.DisbursementRefund.create_all">create_all</a></code></li>
+<li><code><a title="mercadopago.resources.disbursement_refund.DisbursementRefund.list_all" href="#mercadopago.resources.disbursement_refund.DisbursementRefund.list_all">list_all</a></code></li>
 <li><code><a title="mercadopago.resources.disbursement_refund.DisbursementRefund.save" href="#mercadopago.resources.disbursement_refund.DisbursementRefund.save">save</a></code></li>
-<li><code><a title="mercadopago.resources.disbursement_refund.DisbursementRefund.search" href="#mercadopago.resources.disbursement_refund.DisbursementRefund.search">search</a></code></li>
 </ul>
 </li>
 </ul>

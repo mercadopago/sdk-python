@@ -46,7 +46,7 @@ class Customer(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/) #pylint: disable=line-too-long
 
         Args:
@@ -169,7 +169,7 @@ used in conjunction with the Cards class.</p>
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/) #pylint: disable=line-too-long
 
         Args:
@@ -388,7 +388,7 @@ Defaults to None.</p>
 </details>
 </dd>
 <dt id="mercadopago.resources.customer.Customer.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
+<span>def <span class="ident">search</span></span>(<span>self, filters=None, request_options=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
@@ -410,7 +410,7 @@ Defaults to None.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def search(self, filters, request_options=None):
+<pre><code class="python">def search(self, filters=None, request_options=None):
     &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/) #pylint: disable=line-too-long
 
     Args:

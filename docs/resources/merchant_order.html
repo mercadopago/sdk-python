@@ -42,7 +42,7 @@ class MerchantOrder(MPBase):
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
         Args:
@@ -142,7 +142,7 @@ one or more payments in your merchant order.</p></div>
     def __init__(self, request_options, http_client):
         MPBase.__init__(self, request_options, http_client)
 
-    def search(self, filters, request_options=None):
+    def search(self, filters=None, request_options=None):
         &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
         Args:
@@ -299,7 +299,7 @@ one or more payments in your merchant order.</p></div>
 </details>
 </dd>
 <dt id="mercadopago.resources.merchant_order.MerchantOrder.search"><code class="name flex">
-<span>def <span class="ident">search</span></span>(<span>self, filters, request_options=None)</span>
+<span>def <span class="ident">search</span></span>(<span>self, filters=None, request_options=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
@@ -321,7 +321,7 @@ Defaults to None.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def search(self, filters, request_options=None):
+<pre><code class="python">def search(self, filters=None, request_options=None):
     &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/) #pylint: disable=line-too-long
 
     Args:
