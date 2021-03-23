@@ -40,3 +40,6 @@ nosetests.xml
 # Demo
 img/
 PRESS.md
+
+# vscode
+.vscode
