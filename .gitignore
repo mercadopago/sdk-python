@@ -1,6 +1,7 @@
 *.py[cod]
 *.pyc
 .DS_Store
+venv
 
 # C extensions
 *.so
@@ -35,3 +36,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Demo
+img/
+PRESS.md
+
+# vscode
+.vscode

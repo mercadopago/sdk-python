@@ -1,51 +1,45 @@
-import os
+"""
+    Module: setup.py
+"""
+
+import unittest
 from setuptools import setup
-
-from distutils.core import Command
-
-
-class Tests(Command):
-    """run tests"""
-
-    description = "runs unittest to execute all tests"
-
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import unittest
-
-        runner = unittest.runner.TextTestRunner()
-        test_loader = unittest.TestLoader()
-        test = test_loader.discover("tests")
-        runner.run(test)
 
 
 setup(
-    name='mercadopago',
-    version='1.2.0',
-    author="MP SDK <mp_sdk@mercadopago.com>",
+    name="mercadopago",
+    version="2.0.0",
+    description="Mercadopago SDK module for Payments integration",
+    author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",
-    keywords="api mercadopago checkout payment ipn sdk integration",
-    packages=['mercadopago'],
-    url='https://github.com/mercadopago/sdk-python',
-    description='Mercadopago SDK module for Payments integration',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    install_requires='requests>=2.4.3',
-    cmdclass = {'test': Tests},
+    url="https://github.com/mercadopago/sdk-python",
+    license="MIT",
+    keywords="api mercadopago checkout payment in sdk integration lts",
+    packages=["mercadopago"],
+    long_description=open("README.md").read(),
+    tests_require=[
+        "unittest"
+    ],
+    python_requires="!=3.0*",
+    cmdclass={"test": unittest},
+    project_urls={
+        "Source Code": "https://github.com/mercadopago/sdk-python",
+        "Documentation | EN": "https://www.mercadopago.com.br/developers/en/reference/",
+        "Documentation | ES": "https://www.mercadopago.com.br/developers/es/reference/",
+        "Documentation | PT-BR": "https://www.mercadopago.com.br/developers/pt/reference/",
+    },
     classifiers=[
-        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: Freely Distributable",
     ],

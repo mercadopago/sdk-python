@@ -8,65 +8,79 @@ This library provides developers with a simple set of bindings to help you integ
 
 ## 💡 Requirements
 
-Python 2 or higher
+Python 3 or higher.
 
 ## 📲 Installation 
 
-First time using Mercado Pago? Create your [Mercado Pago account](https://www.mercadopago.com), if you don’t have one already.
-
-**On Python 2.x**
-
-`pip install mercadopago`
-
-**On Python 3.x**
-
-`pip3 install mercadopago`
-
-Copy the access_token in the [credentials](https://www.mercadopago.com/mlb/account/credentials) section of the page and replace YOUR_ACCESS_TOKEN with it.
-
-That's it! Mercado Pago SDK has been successfully installed.
+Run ```pip3 install mercadopago```
 
 ## 🌟 Getting Started
 
-  Simple usage looks like:
+First time using Mercado Pago? Create your [Mercado Pago account](https://www.mercadopago.com).
+
+Copy your `Access Token` in the [credentials panel](https://www.mercadopago.com/developers/panel/credentials) and replace the text `YOUR_ACCESS_TOKEN` with it.
+
+### Simple usage
   
 ```python
 import mercadopago
-import json
 
-mp = mercadopago.MP("YOUR_ACCESS_TOKEN")
+sdk = mercadopago.sdk("YOUR_ACCESS_TOKEN")
 
-def index(req, **kwargs):
-    preference = {
-        "items": [
-            {
-                "title": "Test",
-                "quantity": 1,
-                "currency_id": "USD",
-                "unit_price": 10.4
-            }
-        ]
+payment_data = {
+    "transaction_amount": 100,
+    "token": "CARD_TOKEN",
+    "description": "Payment description",
+    "payment_method_id": 'visa',
+    "installments": 1,
+    "payer": {
+        "email": 'test_user_123456@testuser.com'
     }
+}
+result = sdk.payment().create(payment_data)
+payment = result["response"]
 
-    mp.create_preference(preference)
+print(payment)
+```
+
+### Per-request configuration
+
+All methods that make API calls accept an optional `RequestOptions` object. This can be used to configure some special options of the request, such as changing credentials or custom headers.
+
+```python
+import mercadopago
+from mercadopago.config import RequestOptions
+
+request_options = RequestOptions(access_token='YOUR_ACCESS_TOKEN')
+# ...
+
+result = sdk.payment().create(payment_data, request_options)
+payment = result["response"]
 ```
 
 ## 📚 Documentation 
 
 Visit our Dev Site for further information regarding:
- - Payments APIs: [Spanish](https://www.mercadopago.com.ar/developers/es/guides/payments/api/introduction/) / [Portuguese](https://www.mercadopago.com.br/developers/pt/guides/payments/api/introduction/)
- - Mercado Pago checkout: [Spanish](https://www.mercadopago.com.ar/developers/es/guides/payments/web-payment-checkout/introduction/) / [Portuguese](https://www.mercadopago.com.br/developers/pt/guides/payments/web-payment-checkout/introduction/)
- - Web Tokenize checkout: [Spanish](https://www.mercadopago.com.ar/developers/es/guides/payments/web-tokenize-checkout/introduction/) / [Portuguese](https://www.mercadopago.com.br/developers/pt/guides/payments/web-tokenize-checkout/introduction/)
+ - [APIs](https://www.mercadopago.com/developers/en/reference)
+ - [Checkout Pro](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-pro/introduction)
+ - [Checkout API](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-api/introduction)
+ - [Web Tokenize Checkout](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/introduction)
 
 Check our official code reference to explore all available functionalities.
 
-## ❤️ Support 
+## 🤝 Contributing
 
-If you require technical support, please contact our support team at [developers.mercadopago.com](https://developers.mercadopago.com)
+All contributions are welcome, ranging from people wanting to triage issues, others wanting to write documentation, to people wanting to contribute code.
 
-## 🏻 License 
+Please read and follow our [contribution guidelines](CONTRIBUTING.md). Contributions not following this guidelines will be disregarded. The guidelines are in place to make all of our lives easier and make contribution a consistent process for everyone.
+
+## ❤️ Support
+
+If you require technical support, please contact our support team at [developers.mercadopago.com](https://developers.mercadopago.com).
+
+## 🏻 License
 
 ```
-MIT license. Copyright (c) 2018 - Mercado Pago / Mercado Libre 
+MIT license. Copyright (c) 2021 - Mercado Pago / Mercado Libre
 For more information, see the LICENSE file.
 ```
