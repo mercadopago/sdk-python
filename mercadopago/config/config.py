@@ -10,7 +10,7 @@ class Config():
     """
 
     def __init__(self):
-        self.__version = "2.0.0"
+        self.__version = "2.0.6"
         self.__user_agent = "MercadoPago Python SDK v" + self.__version
         self.__product_id = "bc32bpftrpp001u8nhlg"
         self.__tracking_id = "platform:" + platform.python_version()

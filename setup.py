@@ -3,20 +3,22 @@
 """
 
 import unittest
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
     name="mercadopago",
-    version="2.0.0",
+    version="2.0.6",
     description="Mercadopago SDK module for Payments integration",
     author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",
     url="https://github.com/mercadopago/sdk-python",
     license="MIT",
     keywords="api mercadopago checkout payment in sdk integration lts",
-    packages=["mercadopago"],
+    packages=find_packages(exclude=("tests",)),
+    include_package_data=True,
     long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     tests_require=[
         "unittest"
     ],
