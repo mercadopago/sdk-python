@@ -28,7 +28,7 @@ class Tests(Command):
 
 setup(
     name='mercadopago',
-    version='1.2.0',
+    version='1.2.1',
     author="MP SDK <mp_sdk@mercadopago.com>",
     author_email="mp_sdk@mercadopago.com",
     keywords="api mercadopago checkout payment ipn sdk integration",

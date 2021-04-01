@@ -33,7 +33,7 @@ class MPInvalidCredentials(MPException):
 
 
 class MP(object):
-    version = "1.2.0"
+    version = "1.2.1"
     __access_data = None
     __ll_access_token = None
     __sandbox = False
