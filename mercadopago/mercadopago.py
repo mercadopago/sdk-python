@@ -340,7 +340,10 @@ class MP(object):
                 data = JSONEncoder().encode(data)
 
             s = self.get_session()
-            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers={'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON, 'x-platform-id':self.__outer.platform_id, 'x-integrator-id':self.__outer.integrator_id, 'x-corporation-id':self.__outer.corporation_id, self.AUTH_HEADER: self.getAuthorizationHeader()})
+            headers = {'x-product-id': self.PRODUCT_ID, 'x-tracking-id': self.TRACKING_ID, 'User-Agent':self.USER_AGENT, 'Content-type':content_type, 'Accept':self.MIME_JSON, 'x-platform-id':self.__outer.platform_id, 'x-integrator-id':self.__outer.integrator_id, 'x-corporation-id':self.__outer.corporation_id}
+            if uri.find('/oauth/token') == -1:
+                headers[self.AUTH_HEADER] = self.getAuthorizationHeader()
+            api_result = s.post(self.__API_BASE_URL+uri, params=params, data=data, headers=headers)
 
             response = {
                 "status": api_result.status_code,
