@@ -25,7 +25,7 @@ Copy your `Access Token` in the [credentials panel](https://www.mercadopago.com/
 ```python
 import mercadopago
 
-sdk = mercadopago.sdk("YOUR_ACCESS_TOKEN")
+sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
 
 payment_data = {
     "transaction_amount": 100,
