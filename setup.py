@@ -25,7 +25,7 @@ setup(
     tests_require=[
         "unittest"
     ],
-    python_requires="!=3.0*",
+    python_requires=">=3",
     cmdclass={"test": unittest},
     project_urls={
         "Source Code": "https://github.com/mercadopago/sdk-python",
