@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mercadopago",
-    version="2.0.6",
+    version="2.0.7",
     description="Mercadopago SDK module for Payments integration",
     author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",
@@ -19,10 +19,13 @@ setup(
     include_package_data=True,
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
+    install_requires=[
+        "requests"
+    ],
     tests_require=[
         "unittest"
     ],
-    python_requires="!=3.0*",
+    python_requires=">=3",
     cmdclass={"test": unittest},
     project_urls={
         "Source Code": "https://github.com/mercadopago/sdk-python",
