@@ -11,19 +11,19 @@ class HttpClient():
     Default implementation to call all REST API's
     """
 
-    @staticmethod
-    def __get_session(max_retries):
+    def request(self, method, url, maxretries=None, **kwargs):
+        """Makes a call to the API.
+
+        All **kwargs are passed verbatimm to ``requests.request``.
+        """
         retry_strategy = Retry(
-            total=max_retries,
+            total=maxretries,
             status_forcelist=[429, 500, 502, 503, 504]
         )
         http = requests.Session()
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))
-        return http
-
-    def request(self, method, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.request(method, url, params=params, headers=headers, timeout=timeout)
+        with http as session:
+            api_result = session.request(method, url, **kwargs)
             response = {
                 "status": api_result.status_code,
                 "response": api_result.json()
