@@ -90,12 +90,12 @@ class Customer(MPBase):
         request_options=request_options)
 
     def delete(self, customer_id, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/cards/_customers_customer_id_cards_id/delete/) #pylint: disable=line-too-long
-
+        """ 
         Args:
             customer_id (str): The Customer ID owner
-            customer_object (dict): Customer object to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            request_options (mercadopago.config.request_options, optional): An instance of 
+            RequestOptions can be pass changing or adding custom options to ur REST call. 
+            Defaults to None.
 
         Returns:
             dict: Customer exclusion response
