@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mercadopago",
-    version="2.0.7",
+    version="2.0.8",
     description="Mercadopago SDK module for Payments integration",
     author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",
