@@ -2,10 +2,11 @@
     Module: test_customer
 """
 import sys
+import unittest
+import mercadopago
+
 sys.path.append("../")
 
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
 
 class TestCustomer(unittest.TestCase):
     """
@@ -31,8 +32,9 @@ class TestCustomer(unittest.TestCase):
                 "number": "29804555"
             },
             "address": {
-                "zip_code": "2300",
-                "street_name": "some street"
+                "zip_code": "47807078",
+                "street_name": "some street",
+                "street_number": 123
             },
             "description": "customer description"
         }
@@ -49,6 +51,7 @@ class TestCustomer(unittest.TestCase):
 
         customer_deleted = self.sdk.customer().delete(customer_saved["response"]["id"])
         self.assertEqual(customer_deleted["status"], 200)
+
 
 if __name__ == "__main__":
     unittest.main()
