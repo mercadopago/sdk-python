@@ -32,7 +32,7 @@ class TestCard(unittest.TestCase):
             }
         }
 
-        customer_id = "732515394-bphQE9s0bz0oTD"
+        customer_id = "682795964-oLEqTXAQOzu4ie"
         card_token_created = self.sdk.card_token().create(card_token_object)
 
         card_object = {
