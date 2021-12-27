@@ -32,7 +32,7 @@ class TestCard(unittest.TestCase):
             }
         }
 
-        customer_id = "685810954-vbrXmBzkHl4UJ9"
+        customer_id = "732515394-bphQE9s0bz0oTD"
         card_token_created = self.sdk.card_token().create(card_token_object)
 
         card_object = {
@@ -46,7 +46,6 @@ class TestCard(unittest.TestCase):
         .get(customer_id, card_created["response"]["id"])["status"], 200)
 
         self.sdk.card().delete(customer_id, card_created["response"]["id"])
-        self.sdk.customer().delete(customer_id)
 
 if __name__ == "__main__":
     unittest.main()

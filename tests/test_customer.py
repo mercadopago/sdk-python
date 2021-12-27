@@ -31,8 +31,9 @@ class TestCustomer(unittest.TestCase):
                 "number": "29804555"
             },
             "address": {
-                "zip_code": "2300",
-                "street_name": "some street"
+                "zip_code": "47807078",
+                "street_name": "some street",
+                "street_number": 123
             },
             "description": "customer description"
         }
