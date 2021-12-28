@@ -43,7 +43,6 @@ class TestCard(unittest.TestCase):
         }
 
         card_token_created = self.sdk.card_token().create(card_token_object)
-        print(self._customer_id)
 
         card_object = {
             "customer_id": self._customer_id,
