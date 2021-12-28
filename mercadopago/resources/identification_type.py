@@ -10,7 +10,7 @@ class IdentificationType(MPBase):
     """
 
     def list_all(self, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/identification_types/_identification_types/get/)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/identification_types/_identification_types/get/)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of

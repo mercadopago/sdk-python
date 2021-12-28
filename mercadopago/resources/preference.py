@@ -13,7 +13,7 @@ class Preference(MPBase):
     """
 
     def get(self, preference_id, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)  # pylint: disable=line-too-long
 
         Args:
             preference_id (str): The Preference ID
@@ -28,7 +28,7 @@ class Preference(MPBase):
                          request_options=request_options)
 
     def update(self, preference_id, preference_object, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)  # pylint: disable=line-too-long
 
         Args:
             preference_id (str): The Preference ID
@@ -50,7 +50,7 @@ class Preference(MPBase):
                          request_options=request_options)
 
     def create(self, preference_object, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/) # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/) # pylint: disable=line-too-long
 
         Args:
             preference_object (dict): Preference object to be created

@@ -46,7 +46,7 @@ class SDK:
     ):
         """Construct ur SDK Object to have access to all APIs modules.
         Args:
-            [Click here for more infos](https://www.mercadopago.com/mlb/account/credentials)
+            [Click here for more info](https://www.mercadopago.com/mlb/account/credentials)
             http_client (mercadopago.http.http_client, optional): An implementation of
             HttpClient can be pass to be used to make the REST calls. Defaults to None.
             request_options (mercadopago.config.request_options, optional): An instance

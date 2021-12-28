@@ -10,7 +10,7 @@ class PaymentMethods(MPBase):
     """
 
     def list_all(self, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of
