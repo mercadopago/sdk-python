@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.config.request_options API documentation</title>
 <meta name="description" content="Module: request_options" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -31,8 +31,11 @@
 Module: request_options
 &#34;&#34;&#34;
 import uuid
+
 from .config import Config
-class RequestOptions(): #pylint: disable=too-many-instance-attributes
+
+
+class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     &#34;&#34;&#34;This object hold all configurations that will be used in ur REST call.
 
@@ -47,14 +50,16 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     __integrator_id = None
     __platform_id = None
 
-    def __init__(self, #pylint: disable=too-many-arguments
-                 access_token=None,
-                 connection_timeout=60.0,
-                 custom_headers=None,
-                 corporation_id=None,
-                 integrator_id=None,
-                 platform_id=None,
-                 max_retries=3):
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        access_token=None,
+        connection_timeout=60.0,
+        custom_headers=None,
+        corporation_id=None,
+        integrator_id=None,
+        platform_id=None,
+        max_retries=3,
+    ):
         &#34;&#34;&#34;Initialize
 
         Args:
@@ -100,11 +105,11 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         Sets the attribute values of headers
         &#34;&#34;&#34;
         headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
-                &#34;x-product-id&#34;: self.__config.product_id,
-                &#34;x-tracking-id&#34;: self.__config.tracking_id,
-                &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
-                &#34;User-Agent&#34;: self.__config.user_agent,
-                &#34;Accept&#34;: self.__config.mime_json}
+                   &#34;x-product-id&#34;: self.__config.product_id,
+                   &#34;x-tracking-id&#34;: self.__config.tracking_id,
+                   &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
+                   &#34;User-Agent&#34;: self.__config.user_agent,
+                   &#34;Accept&#34;: self.__config.mime_json}
 
         if self.__corporation_id is not None:
             headers[&#34;x-corporation-id&#34;] = self.__corporation_id
@@ -269,7 +274,7 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class RequestOptions(): #pylint: disable=too-many-instance-attributes
+<pre><code class="python">class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     &#34;&#34;&#34;This object hold all configurations that will be used in ur REST call.
 
@@ -284,14 +289,16 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     __integrator_id = None
     __platform_id = None
 
-    def __init__(self, #pylint: disable=too-many-arguments
-                 access_token=None,
-                 connection_timeout=60.0,
-                 custom_headers=None,
-                 corporation_id=None,
-                 integrator_id=None,
-                 platform_id=None,
-                 max_retries=3):
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        access_token=None,
+        connection_timeout=60.0,
+        custom_headers=None,
+        corporation_id=None,
+        integrator_id=None,
+        platform_id=None,
+        max_retries=3,
+    ):
         &#34;&#34;&#34;Initialize
 
         Args:
@@ -337,11 +344,11 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         Sets the attribute values of headers
         &#34;&#34;&#34;
         headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
-                &#34;x-product-id&#34;: self.__config.product_id,
-                &#34;x-tracking-id&#34;: self.__config.tracking_id,
-                &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
-                &#34;User-Agent&#34;: self.__config.user_agent,
-                &#34;Accept&#34;: self.__config.mime_json}
+                   &#34;x-product-id&#34;: self.__config.product_id,
+                   &#34;x-tracking-id&#34;: self.__config.tracking_id,
+                   &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
+                   &#34;User-Agent&#34;: self.__config.user_agent,
+                   &#34;Accept&#34;: self.__config.mime_json}
 
         if self.__corporation_id is not None:
             headers[&#34;x-corporation-id&#34;] = self.__corporation_id
@@ -572,11 +579,11 @@ def platform_id(self):
     Sets the attribute values of headers
     &#34;&#34;&#34;
     headers = {&#34;Authorization&#34;: &#34;Bearer &#34; + self.__access_token,
-            &#34;x-product-id&#34;: self.__config.product_id,
-            &#34;x-tracking-id&#34;: self.__config.tracking_id,
-            &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
-            &#34;User-Agent&#34;: self.__config.user_agent,
-            &#34;Accept&#34;: self.__config.mime_json}
+               &#34;x-product-id&#34;: self.__config.product_id,
+               &#34;x-tracking-id&#34;: self.__config.tracking_id,
+               &#34;x-idempotency-key&#34;: str(uuid.uuid4().int),
+               &#34;User-Agent&#34;: self.__config.user_agent,
+               &#34;Accept&#34;: self.__config.mime_json}
 
     if self.__corporation_id is not None:
         headers[&#34;x-corporation-id&#34;] = self.__corporation_id
@@ -630,7 +637,7 @@ def platform_id(self):
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

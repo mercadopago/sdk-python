@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.core API documentation</title>
 <meta name="description" content="Module: core/__init__.py" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -30,7 +30,12 @@
 <pre><code class="python">&#34;&#34;&#34;
 Module: core/__init__.py
 &#34;&#34;&#34;
-from mercadopago.core.mp_base import MPBase</code></pre>
+from mercadopago.core.mp_base import MPBase
+
+
+__all__ = (
+    &#39;MPBase&#39;,
+)</code></pre>
 </details>
 </section>
 <section>
@@ -47,6 +52,207 @@ from mercadopago.core.mp_base import MPBase</code></pre>
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="mercadopago.core.MPBase"><code class="flex name class">
+<span>class <span class="ident">MPBase</span></span>
+<span>(</span><span>request_options, http_client)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>All mercadopago.resources extends this one to call the REST services</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>request_options (mercadopago.config.request_options, optional):</dt>
+<dt>An instance of RequestOptions can be pass changing or adding custom options</dt>
+<dt>to ur REST calls. Defaults to None.</dt>
+<dt><strong><code>http_client</code></strong> :&ensp;<code><a title="mercadopago.http.http_client" href="../http/http_client.html">mercadopago.http.http_client</a></code>, optional</dt>
+<dd>An implementation of</dd>
+</dl>
+<p>HttpClient can be pass to be used to make the REST calls. Defaults to None.</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Param request_options must be a RequestOptions Object</dd>
+<dt><code>ValueError</code></dt>
+<dd>Filters must be a Dictionary</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MPBase:
+    &#34;&#34;&#34;All mercadopago.resources extends this one to call the REST services
+
+    Args:
+        request_options (mercadopago.config.request_options, optional):
+        An instance of RequestOptions can be pass changing or adding custom options
+        to ur REST calls. Defaults to None.
+        http_client (mercadopago.http.http_client, optional): An implementation of
+        HttpClient can be pass to be used to make the REST calls. Defaults to None.
+
+    Raises:
+        ValueError: Param request_options must be a RequestOptions Object
+        ValueError: Filters must be a Dictionary
+    &#34;&#34;&#34;
+
+    def __init__(self, request_options, http_client):
+        if not isinstance(request_options, RequestOptions):
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
+
+        self.__request_options = request_options
+        self.__http_client = http_client
+        self.__config = Config()
+
+    def __check_request_options(self, request_options):
+        if request_options is not None and not isinstance(request_options, RequestOptions):
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
+        if request_options is None:
+            request_options = self.__request_options
+
+        if request_options.access_token is None:
+            request_options.access_token = self.__request_options.access_token
+
+        return request_options
+
+    def __check_headers(self, request_options, extra_headers=None):
+        headers = self.__request_options.get_headers()
+        if request_options is not None:
+            headers = request_options.get_headers()
+
+        if extra_headers is not None:
+            headers.update(extra_headers)
+
+        return headers
+
+    def _get(self, uri, filters=None, request_options=None):
+        if filters is not None and not isinstance(filters, dict):
+            raise ValueError(&#34;Filters must be a Dictionary&#34;)
+
+        request_options = self.__check_request_options(request_options)
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+
+        return self.__http_client.get(
+            url=self.__config.api_base_url + uri,
+            params=filters,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
+
+    def _post(self, uri, data=None, params=None, request_options=None):
+        if data is not None:
+            data = JSONEncoder().encode(data)
+
+        request_options = self.__check_request_options(request_options)
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+
+        return self.__http_client.post(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
+
+    def _put(self, uri, data=None, params=None, request_options=None):
+        if data is not None:
+            data = JSONEncoder().encode(data)
+
+        request_options = self.__check_request_options(request_options)
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+
+        return self.__http_client.put(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
+
+    def _delete(self, uri, params=None, request_options=None):
+        request_options = self.__check_request_options(request_options)
+        headers = self.__check_headers(request_options)
+
+        return self.__http_client.delete(
+            url=self.__config.api_base_url + uri,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
+
+    @property
+    def request_options(self):
+        &#34;&#34;&#34;
+        Returns the attribute value of the function
+        &#34;&#34;&#34;
+        return self.__request_options
+
+    @property
+    def config(self):
+        &#34;&#34;&#34;
+        Returns the attribute value of the function
+        &#34;&#34;&#34;
+        return self.__config</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="mercadopago.resources.advanced_payment.AdvancedPayment" href="../resources/advanced_payment.html#mercadopago.resources.advanced_payment.AdvancedPayment">AdvancedPayment</a></li>
+<li><a title="mercadopago.resources.card.Card" href="../resources/card.html#mercadopago.resources.card.Card">Card</a></li>
+<li><a title="mercadopago.resources.card_token.CardToken" href="../resources/card_token.html#mercadopago.resources.card_token.CardToken">CardToken</a></li>
+<li><a title="mercadopago.resources.customer.Customer" href="../resources/customer.html#mercadopago.resources.customer.Customer">Customer</a></li>
+<li><a title="mercadopago.resources.disbursement_refund.DisbursementRefund" href="../resources/disbursement_refund.html#mercadopago.resources.disbursement_refund.DisbursementRefund">DisbursementRefund</a></li>
+<li><a title="mercadopago.resources.identification_type.IdentificationType" href="../resources/identification_type.html#mercadopago.resources.identification_type.IdentificationType">IdentificationType</a></li>
+<li><a title="mercadopago.resources.merchant_order.MerchantOrder" href="../resources/merchant_order.html#mercadopago.resources.merchant_order.MerchantOrder">MerchantOrder</a></li>
+<li><a title="mercadopago.resources.payment.Payment" href="../resources/payment.html#mercadopago.resources.payment.Payment">Payment</a></li>
+<li><a title="mercadopago.resources.payment_methods.PaymentMethods" href="../resources/payment_methods.html#mercadopago.resources.payment_methods.PaymentMethods">PaymentMethods</a></li>
+<li><a title="mercadopago.resources.preapproval.PreApproval" href="../resources/preapproval.html#mercadopago.resources.preapproval.PreApproval">PreApproval</a></li>
+<li><a title="mercadopago.resources.preference.Preference" href="../resources/preference.html#mercadopago.resources.preference.Preference">Preference</a></li>
+<li><a title="mercadopago.resources.refund.Refund" href="../resources/refund.html#mercadopago.resources.refund.Refund">Refund</a></li>
+<li><a title="mercadopago.resources.user.User" href="../resources/user.html#mercadopago.resources.user.User">User</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="mercadopago.core.MPBase.config"><code class="name">var <span class="ident">config</span></code></dt>
+<dd>
+<div class="desc"><p>Returns the attribute value of the function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def config(self):
+    &#34;&#34;&#34;
+    Returns the attribute value of the function
+    &#34;&#34;&#34;
+    return self.__config</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.core.MPBase.request_options"><code class="name">var <span class="ident">request_options</span></code></dt>
+<dd>
+<div class="desc"><p>Returns the attribute value of the function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def request_options(self):
+    &#34;&#34;&#34;
+    Returns the attribute value of the function
+    &#34;&#34;&#34;
+    return self.__request_options</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -65,11 +271,22 @@ from mercadopago.core.mp_base import MPBase</code></pre>
 <li><code><a title="mercadopago.core.mp_base" href="mp_base.html">mercadopago.core.mp_base</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="mercadopago.core.MPBase" href="#mercadopago.core.MPBase">MPBase</a></code></h4>
+<ul class="">
+<li><code><a title="mercadopago.core.MPBase.config" href="#mercadopago.core.MPBase.config">config</a></code></li>
+<li><code><a title="mercadopago.core.MPBase.request_options" href="#mercadopago.core.MPBase.request_options">request_options</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

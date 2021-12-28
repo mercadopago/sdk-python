@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.resources.payment API documentation</title>
 <meta name="description" content="Module: payment" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -32,22 +32,19 @@
 &#34;&#34;&#34;
 from mercadopago.core import MPBase
 
-class Payment(MPBase):
 
+class Payment(MPBase):
     &#34;&#34;&#34;
     This class provides the methods to access the API that will allow you to create
     your own payment experience on your website.
 
     From basic to advanced configurations, you control the whole experience.
 
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/) #pylint: disable=line-too-long
+    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)  # pylint: disable=line-too-long
     &#34;&#34;&#34;
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def search(self, filters=None, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -58,10 +55,10 @@ class Payment(MPBase):
             dict: Payment find response
         &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
-        request_options=request_options)
+                         request_options=request_options)
 
     def get(self, payment_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)  # pylint: disable=line-too-long
 
         Args:
             payment_id (str): The Payment ID
@@ -75,7 +72,7 @@ class Payment(MPBase):
         return self._get(uri=&#34;/v1/payments/&#34; + str(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)  # pylint: disable=line-too-long
 
         Args:
             payment_object (dict): Payment to be created
@@ -95,7 +92,7 @@ class Payment(MPBase):
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
     def update(self, payment_id, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)  # pylint: disable=line-too-long
 
         Args:
             payment_id (str): The Payment ID
@@ -114,7 +111,7 @@ class Payment(MPBase):
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
-        request_options=request_options)</code></pre>
+                         request_options=request_options)</code></pre>
 </details>
 </section>
 <section>
@@ -134,27 +131,24 @@ class Payment(MPBase):
 <div class="desc"><p>This class provides the methods to access the API that will allow you to create
 your own payment experience on your website.</p>
 <p>From basic to advanced configurations, you control the whole experience.</p>
-<p><a href="https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/">Click here for more infos</a> #pylint: disable=line-too-long</p></div>
+<p><a href="https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/">Click here for more info</a>
+# pylint: disable=line-too-long</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Payment(MPBase):
-
     &#34;&#34;&#34;
     This class provides the methods to access the API that will allow you to create
     your own payment experience on your website.
 
     From basic to advanced configurations, you control the whole experience.
 
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/) #pylint: disable=line-too-long
+    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)  # pylint: disable=line-too-long
     &#34;&#34;&#34;
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def search(self, filters=None, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -165,10 +159,10 @@ your own payment experience on your website.</p>
             dict: Payment find response
         &#34;&#34;&#34;
         return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
-        request_options=request_options)
+                         request_options=request_options)
 
     def get(self, payment_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)  # pylint: disable=line-too-long
 
         Args:
             payment_id (str): The Payment ID
@@ -182,7 +176,7 @@ your own payment experience on your website.</p>
         return self._get(uri=&#34;/v1/payments/&#34; + str(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)  # pylint: disable=line-too-long
 
         Args:
             payment_object (dict): Payment to be created
@@ -202,7 +196,7 @@ your own payment experience on your website.</p>
         return self._post(uri=&#34;/v1/payments&#34;, data=payment_object, request_options=request_options)
 
     def update(self, payment_id, payment_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)  # pylint: disable=line-too-long
 
         Args:
             payment_id (str): The Payment ID
@@ -221,7 +215,7 @@ your own payment experience on your website.</p>
             raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
-        request_options=request_options)</code></pre>
+                         request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -233,7 +227,8 @@ your own payment experience on your website.</p>
 <span>def <span class="ident">create</span></span>(<span>self, payment_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments/post/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments/post/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>payment_object</code></strong> :&ensp;<code>dict</code></dt>
@@ -258,7 +253,7 @@ Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create(self, payment_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)  # pylint: disable=line-too-long
 
     Args:
         payment_object (dict): Payment to be created
@@ -282,7 +277,8 @@ Defaults to None.</p>
 <span>def <span class="ident">get</span></span>(<span>self, payment_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>payment_id</code></strong> :&ensp;<code>str</code></dt>
@@ -302,7 +298,7 @@ Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get(self, payment_id, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)  # pylint: disable=line-too-long
 
     Args:
         payment_id (str): The Payment ID
@@ -320,7 +316,8 @@ Defaults to None.</p>
 <span>def <span class="ident">search</span></span>(<span>self, filters=None, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>request_options</code></strong> :&ensp;<code><a title="mercadopago.config.request_options" href="../config/request_options.html">mercadopago.config.request_options</a></code>, optional</dt>
@@ -338,7 +335,7 @@ Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def search(self, filters=None, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)  # pylint: disable=line-too-long
 
     Args:
         request_options (mercadopago.config.request_options, optional): An instance of
@@ -349,14 +346,15 @@ Defaults to None.</p>
         dict: Payment find response
     &#34;&#34;&#34;
     return self._get(uri=&#34;/v1/payments/search&#34;, filters=filters,
-    request_options=request_options)</code></pre>
+                     request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.payment.Payment.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, payment_id, payment_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>payment_id</code></strong> :&ensp;<code>str</code></dt>
@@ -383,7 +381,7 @@ Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self, payment_id, payment_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)  # pylint: disable=line-too-long
 
     Args:
         payment_id (str): The Payment ID
@@ -402,7 +400,7 @@ Defaults to None.</p>
         raise ValueError(&#34;Param payment_object must be a Dictionary&#34;)
 
     return self._put(uri=&#34;/v1/payments/&#34; + str(payment_id), data=payment_object,
-    request_options=request_options)</code></pre>
+                     request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
@@ -447,7 +445,7 @@ Defaults to None.</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

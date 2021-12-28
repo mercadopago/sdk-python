@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.resources.card API documentation</title>
 <meta name="description" content="Module: card" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -32,8 +32,8 @@
 &#34;&#34;&#34;
 from mercadopago.core import MPBase
 
-class Card(MPBase):
 
+class Card(MPBase):
     &#34;&#34;&#34;
     The cards class is the way to store card data of your customers
     safely to improve the shopping experience.
@@ -44,14 +44,11 @@ class Card(MPBase):
 
     This class must be used in conjunction with the Customer class.
 
-    [Click here for more infos](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards) #pylint: disable=line-too-long
+    [Click here for more info](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)  # pylint: disable=line-too-long
     &#34;&#34;&#34;
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def list_all(self, customer_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -62,11 +59,13 @@ class Card(MPBase):
         Returns:
             dict: Cards find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards&#34;, request_options=request_options)
+        return self._get(
+            uri=f&#34;/v1/customers/{str(customer_id)}/cards&#34;,
+            request_options=request_options,
+        )
 
     def get(self, customer_id, card_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -78,11 +77,13 @@ class Card(MPBase):
         Returns:
             dict: Card find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), request_options=request_options)
+        return self._get(
+            uri=f&#34;/v1/customers/{str(customer_id)}/cards/{str(card_id)}&#34;,
+            request_options=request_options,
+        )
 
     def create(self, customer_id, card_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -101,10 +102,10 @@ class Card(MPBase):
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34;, data=card_object, request_options=request_options)
+                          + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): Customer ID owner
@@ -124,11 +125,11 @@ class Card(MPBase):
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), data=card_object,
-        request_options=request_options)
+                         + &#34;/cards/&#34; + str(card_id), data=card_object,
+                         request_options=request_options)
 
     def delete(self, customer_id, card_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): Customer ID owner
@@ -141,7 +142,7 @@ class Card(MPBase):
             dict: Card exclusion response
         &#34;&#34;&#34;
         return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
+                            + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 </section>
 <section>
@@ -164,13 +165,13 @@ safely to improve the shopping experience.</p>
 faster and easily, since they will not have to complete their
 card data again.</p>
 <p>This class must be used in conjunction with the Customer class.</p>
-<p><a href="https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards">Click here for more infos</a> #pylint: disable=line-too-long</p></div>
+<p><a href="https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards">Click here for more info</a>
+# pylint: disable=line-too-long</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Card(MPBase):
-
     &#34;&#34;&#34;
     The cards class is the way to store card data of your customers
     safely to improve the shopping experience.
@@ -181,14 +182,11 @@ card data again.</p>
 
     This class must be used in conjunction with the Customer class.
 
-    [Click here for more infos](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards) #pylint: disable=line-too-long
+    [Click here for more info](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)  # pylint: disable=line-too-long
     &#34;&#34;&#34;
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def list_all(self, customer_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -199,11 +197,13 @@ card data again.</p>
         Returns:
             dict: Cards find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards&#34;, request_options=request_options)
+        return self._get(
+            uri=f&#34;/v1/customers/{str(customer_id)}/cards&#34;,
+            request_options=request_options,
+        )
 
     def get(self, customer_id, card_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -215,11 +215,13 @@ card data again.</p>
         Returns:
             dict: Card find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), request_options=request_options)
+        return self._get(
+            uri=f&#34;/v1/customers/{str(customer_id)}/cards/{str(card_id)}&#34;,
+            request_options=request_options,
+        )
 
     def create(self, customer_id, card_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): The Customer ID owner
@@ -238,10 +240,10 @@ card data again.</p>
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34;, data=card_object, request_options=request_options)
+                          + &#34;/cards/&#34;, data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): Customer ID owner
@@ -261,11 +263,11 @@ card data again.</p>
             raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
         return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), data=card_object,
-        request_options=request_options)
+                         + &#34;/cards/&#34; + str(card_id), data=card_object,
+                         request_options=request_options)
 
     def delete(self, customer_id, card_id, request_options=None):
-        &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/) #pylint: disable=line-too-long
+        &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)  # pylint: disable=line-too-long
 
         Args:
             customer_id (str): Customer ID owner
@@ -278,7 +280,7 @@ card data again.</p>
             dict: Card exclusion response
         &#34;&#34;&#34;
         return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id)
-        + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
+                            + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -290,7 +292,8 @@ card data again.</p>
 <span>def <span class="ident">create</span></span>(<span>self, customer_id, card_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
@@ -316,7 +319,7 @@ custom options to ur REST call. Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def create(self, customer_id, card_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)  # pylint: disable=line-too-long
 
     Args:
         customer_id (str): The Customer ID owner
@@ -335,14 +338,15 @@ custom options to ur REST call. Defaults to None.</p>
         raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
     return self._post(uri=&#34;/v1/customers/&#34; + str(customer_id)
-    + &#34;/cards/&#34;, data=card_object, request_options=request_options)</code></pre>
+                      + &#34;/cards/&#34;, data=card_object, request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.delete"><code class="name flex">
 <span>def <span class="ident">delete</span></span>(<span>self, customer_id, card_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
@@ -363,7 +367,7 @@ custom options to ur REST call. Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def delete(self, customer_id, card_id, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)  # pylint: disable=line-too-long
 
     Args:
         customer_id (str): Customer ID owner
@@ -376,14 +380,15 @@ custom options to ur REST call. Defaults to None.</p>
         dict: Card exclusion response
     &#34;&#34;&#34;
     return self._delete(uri=&#34;/v1/customers/&#34; + str(customer_id)
-    + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
+                        + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, customer_id, card_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
@@ -404,7 +409,7 @@ custom options to ur REST call. Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get(self, customer_id, card_id, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)  # pylint: disable=line-too-long
 
     Args:
         customer_id (str): The Customer ID owner
@@ -416,15 +421,18 @@ custom options to ur REST call. Defaults to None.</p>
     Returns:
         dict: Card find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-    + &#34;/cards/&#34; + str(card_id), request_options=request_options)</code></pre>
+    return self._get(
+        uri=f&#34;/v1/customers/{str(customer_id)}/cards/{str(card_id)}&#34;,
+        request_options=request_options,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.list_all"><code class="name flex">
 <span>def <span class="ident">list_all</span></span>(<span>self, customer_id, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
@@ -443,7 +451,7 @@ custom options to ur REST call. Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def list_all(self, customer_id, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)  # pylint: disable=line-too-long
 
     Args:
         customer_id (str): The Customer ID owner
@@ -454,15 +462,18 @@ custom options to ur REST call. Defaults to None.</p>
     Returns:
         dict: Cards find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/customers/&#34; + str(customer_id)
-    + &#34;/cards&#34;, request_options=request_options)</code></pre>
+    return self._get(
+        uri=f&#34;/v1/customers/{str(customer_id)}/cards&#34;,
+        request_options=request_options,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.card.Card.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, customer_id, card_id, card_object, request_options=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/">Click here for more infos</a> #pylint: disable=line-too-long</p>
+<div class="desc"><p><a href="https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/">Click here for more info</a>
+# pylint: disable=line-too-long</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>customer_id</code></strong> :&ensp;<code>str</code></dt>
@@ -490,7 +501,7 @@ custom options to ur REST call. Defaults to None.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self, customer_id, card_id, card_object, request_options=None):
-    &#34;&#34;&#34;[Click here for more infos](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/) #pylint: disable=line-too-long
+    &#34;&#34;&#34;[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)  # pylint: disable=line-too-long
 
     Args:
         customer_id (str): Customer ID owner
@@ -510,8 +521,8 @@ custom options to ur REST call. Defaults to None.</p>
         raise ValueError(&#34;Param card_object must be a Dictionary&#34;)
 
     return self._put(uri=&#34;/v1/customers/&#34; + str(customer_id)
-    + &#34;/cards/&#34; + str(card_id), data=card_object,
-    request_options=request_options)</code></pre>
+                     + &#34;/cards/&#34; + str(card_id), data=card_object,
+                     request_options=request_options)</code></pre>
 </details>
 </dd>
 </dl>
@@ -557,7 +568,7 @@ custom options to ur REST call. Defaults to None.</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.resources.disbursement_refund API documentation</title>
 <meta name="description" content="Module: disbursement_refund" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -32,14 +32,12 @@
 &#34;&#34;&#34;
 from mercadopago.core import MPBase
 
+
 class DisbursementRefund(MPBase):
 
     &#34;&#34;&#34;
     Access to Advanced Payments Refunds
     &#34;&#34;&#34;
-
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
 
     def list_all(self, advanced_payment_id, request_options=None):
         &#34;&#34;&#34;[Args:
@@ -51,8 +49,8 @@ class DisbursementRefund(MPBase):
         Returns:
             dict: Disbursement Refund find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/refunds&#34;, request_options=request_options)
+        uri = f&#34;/v1/advanced_payments/{str(advanced_payment_id)}/refunds&#34;
+        return self._get(uri=uri, request_options=request_options)
 
     def create_all(self, advanced_payment_id, disbursement_refund_object, request_options=None):
         &#34;&#34;&#34;[Args:
@@ -69,10 +67,14 @@ class DisbursementRefund(MPBase):
             dict: Disbursement Refund creation all response
         &#34;&#34;&#34;
         if not isinstance(disbursement_refund_object, dict):
-            raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+            raise ValueError(
+                &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)
+        return self._post(
+            uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )
 
     def create(self, advanced_payment_id, disbursement_id, amount, request_options=None):
         &#34;&#34;&#34;[Args:
@@ -94,12 +96,19 @@ class DisbursementRefund(MPBase):
 
         disbursement_refund_object = {&#34;amount&#34;: amount}
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-        request_options=request_options)
+        uri = (
+            f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+            f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+        )
+
+        return self._post(
+            uri=uri,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )
 
     def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object,
-    request_options=None):
+             request_options=None):
         &#34;&#34;&#34;[Args:
             advanced_payment_id (str): The Advanced Payment ID
             disbursement_id (str): Disbursement ID
@@ -115,11 +124,19 @@ class DisbursementRefund(MPBase):
             dict: Disbursement Refund save response
         &#34;&#34;&#34;
         if not isinstance(disbursement_refund_object, dict):
-            raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+            raise ValueError(
+                &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-        request_options=request_options)</code></pre>
+        uri = (
+            f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+            f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+        )
+
+        return self._post(
+            uri=uri,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )</code></pre>
 </details>
 </section>
 <section>
@@ -147,9 +164,6 @@ class DisbursementRefund(MPBase):
     Access to Advanced Payments Refunds
     &#34;&#34;&#34;
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def list_all(self, advanced_payment_id, request_options=None):
         &#34;&#34;&#34;[Args:
             advanced_payment_id (str): The Advanced Payment ID
@@ -160,8 +174,8 @@ class DisbursementRefund(MPBase):
         Returns:
             dict: Disbursement Refund find response
         &#34;&#34;&#34;
-        return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/refunds&#34;, request_options=request_options)
+        uri = f&#34;/v1/advanced_payments/{str(advanced_payment_id)}/refunds&#34;
+        return self._get(uri=uri, request_options=request_options)
 
     def create_all(self, advanced_payment_id, disbursement_refund_object, request_options=None):
         &#34;&#34;&#34;[Args:
@@ -178,10 +192,14 @@ class DisbursementRefund(MPBase):
             dict: Disbursement Refund creation all response
         &#34;&#34;&#34;
         if not isinstance(disbursement_refund_object, dict):
-            raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+            raise ValueError(
+                &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)
+        return self._post(
+            uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )
 
     def create(self, advanced_payment_id, disbursement_id, amount, request_options=None):
         &#34;&#34;&#34;[Args:
@@ -203,12 +221,19 @@ class DisbursementRefund(MPBase):
 
         disbursement_refund_object = {&#34;amount&#34;: amount}
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-        request_options=request_options)
+        uri = (
+            f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+            f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+        )
+
+        return self._post(
+            uri=uri,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )
 
     def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object,
-    request_options=None):
+             request_options=None):
         &#34;&#34;&#34;[Args:
             advanced_payment_id (str): The Advanced Payment ID
             disbursement_id (str): Disbursement ID
@@ -224,11 +249,19 @@ class DisbursementRefund(MPBase):
             dict: Disbursement Refund save response
         &#34;&#34;&#34;
         if not isinstance(disbursement_refund_object, dict):
-            raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+            raise ValueError(
+                &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-        return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-        + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-        request_options=request_options)</code></pre>
+        uri = (
+            f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+            f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+        )
+
+        return self._post(
+            uri=uri,
+            data=disbursement_refund_object,
+            request_options=request_options,
+        )</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -278,9 +311,16 @@ ValueError: Param amount must be a Float</p>
 
     disbursement_refund_object = {&#34;amount&#34;: amount}
 
-    return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-    + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-    request_options=request_options)</code></pre>
+    uri = (
+        f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+        f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+    )
+
+    return self._post(
+        uri=uri,
+        data=disbursement_refund_object,
+        request_options=request_options,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.create_all"><code class="name flex">
@@ -319,10 +359,14 @@ ValueError: Param disbursement_refund_object must be a Dictionary</p>
         dict: Disbursement Refund creation all response
     &#34;&#34;&#34;
     if not isinstance(disbursement_refund_object, dict):
-        raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+        raise ValueError(
+            &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-    return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-    + &#34;/refunds&#34;, data=disbursement_refund_object, request_options=request_options)</code></pre>
+    return self._post(
+        uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id) + &#34;/refunds&#34;,
+        data=disbursement_refund_object,
+        request_options=request_options,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.list_all"><code class="name flex">
@@ -353,8 +397,8 @@ Defaults to None.</p>
     Returns:
         dict: Disbursement Refund find response
     &#34;&#34;&#34;
-    return self._get(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-    + &#34;/refunds&#34;, request_options=request_options)</code></pre>
+    uri = f&#34;/v1/advanced_payments/{str(advanced_payment_id)}/refunds&#34;
+    return self._get(uri=uri, request_options=request_options)</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.resources.disbursement_refund.DisbursementRefund.save"><code class="name flex">
@@ -380,7 +424,7 @@ ValueError: Param disbursement_refund_object must be a Dictionary</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def save(self, advanced_payment_id, disbursement_id, disbursement_refund_object,
-request_options=None):
+         request_options=None):
     &#34;&#34;&#34;[Args:
         advanced_payment_id (str): The Advanced Payment ID
         disbursement_id (str): Disbursement ID
@@ -396,11 +440,19 @@ request_options=None):
         dict: Disbursement Refund save response
     &#34;&#34;&#34;
     if not isinstance(disbursement_refund_object, dict):
-        raise ValueError(&#34;Param disbursement_refund_object must be a Dictionary&#34;)
+        raise ValueError(
+            &#34;Param disbursement_refund_object must be a Dictionary&#34;)
 
-    return self._post(uri=&#34;/v1/advanced_payments/&#34; + str(advanced_payment_id)
-    + &#34;/disbursements/&#34; + str(disbursement_id) + &#34;/refunds&#34;, data=disbursement_refund_object,
-    request_options=request_options)</code></pre>
+    uri = (
+        f&#34;/v1/advanced_payments/{str(advanced_payment_id)}&#34;
+        f&#34;/disbursements/{str(disbursement_id)}/refunds&#34;
+    )
+
+    return self._post(
+        uri=uri,
+        data=disbursement_refund_object,
+        request_options=request_options,
+    )</code></pre>
 </details>
 </dd>
 </dl>
@@ -445,7 +497,7 @@ request_options=None):
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.http API documentation</title>
 <meta name="description" content="Module: http/__init__.py" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -30,7 +30,12 @@
 <pre><code class="python">&#34;&#34;&#34;
 Module: http/__init__.py
 &#34;&#34;&#34;
-from mercadopago.http.http_client import HttpClient</code></pre>
+from mercadopago.http.http_client import HttpClient
+
+
+__all__ = (
+    &#39;HttpClient&#39;,
+)</code></pre>
 </details>
 </section>
 <section>
@@ -47,6 +52,210 @@ from mercadopago.http.http_client import HttpClient</code></pre>
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="mercadopago.http.HttpClient"><code class="flex name class">
+<span>class <span class="ident">HttpClient</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Default implementation to call all REST API's</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HttpClient:
+    &#34;&#34;&#34;
+    Default implementation to call all REST API&#39;s
+    &#34;&#34;&#34;
+
+    def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+        &#34;&#34;&#34;Makes a call to the API.
+
+        All **kwargs are passed verbatim to ``requests.request``.
+        &#34;&#34;&#34;
+        retry_strategy = Retry(
+            total=maxretries,
+            status_forcelist=[429, 500, 502, 503, 504]
+        )
+        http = requests.Session()
+        http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
+        with http as session:
+            api_result = session.request(method, url, **kwargs)
+            response = {
+                &#34;status&#34;: api_result.status_code,
+                &#34;response&#34;: api_result.json()
+            }
+
+        return response
+
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a GET request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;GET&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a POST request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;POST&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a PUT request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;PUT&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a DELETE request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;DELETE&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="mercadopago.http.HttpClient.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a DELETE request to the API</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a DELETE request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;DELETE&#34;,
+        url=url,
+        headers=headers,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.http.HttpClient.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a GET request to the API</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a GET request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;GET&#34;,
+        url=url,
+        headers=headers,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.http.HttpClient.post"><code class="name flex">
+<span>def <span class="ident">post</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a POST request to the API</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a POST request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;POST&#34;,
+        url=url,
+        headers=headers,
+        data=data,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.http.HttpClient.put"><code class="name flex">
+<span>def <span class="ident">put</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a PUT request to the API</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a PUT request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;PUT&#34;,
+        url=url,
+        headers=headers,
+        data=data,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.http.HttpClient.request"><code class="name flex">
+<span>def <span class="ident">request</span></span>(<span>self, method, url, maxretries=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a call to the API.</p>
+<p>All **kwargs are passed verbatim to <code>requests.request</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+    &#34;&#34;&#34;Makes a call to the API.
+
+    All **kwargs are passed verbatim to ``requests.request``.
+    &#34;&#34;&#34;
+    retry_strategy = Retry(
+        total=maxretries,
+        status_forcelist=[429, 500, 502, 503, 504]
+    )
+    http = requests.Session()
+    http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
+    with http as session:
+        api_result = session.request(method, url, **kwargs)
+        response = {
+            &#34;status&#34;: api_result.status_code,
+            &#34;response&#34;: api_result.json()
+        }
+
+    return response</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -65,11 +274,25 @@ from mercadopago.http.http_client import HttpClient</code></pre>
 <li><code><a title="mercadopago.http.http_client" href="http_client.html">mercadopago.http.http_client</a></code></li>
 </ul>
 </li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="mercadopago.http.HttpClient" href="#mercadopago.http.HttpClient">HttpClient</a></code></h4>
+<ul class="">
+<li><code><a title="mercadopago.http.HttpClient.delete" href="#mercadopago.http.HttpClient.delete">delete</a></code></li>
+<li><code><a title="mercadopago.http.HttpClient.get" href="#mercadopago.http.HttpClient.get">get</a></code></li>
+<li><code><a title="mercadopago.http.HttpClient.post" href="#mercadopago.http.HttpClient.post">post</a></code></li>
+<li><code><a title="mercadopago.http.HttpClient.put" href="#mercadopago.http.HttpClient.put">put</a></code></li>
+<li><code><a title="mercadopago.http.HttpClient.request" href="#mercadopago.http.HttpClient.request">request</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>
