@@ -2,23 +2,34 @@
     Module: test_card
 """
 import sys
+import unittest
+import mercadopago
+from datetime import datetime
+
 sys.path.append("../")
 
-from datetime import datetime #pylint: disable=wrong-import-position
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
 
 class TestCard(unittest.TestCase):
     """
     Test Module: Card
     """
+    _customer_id = None
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+
+    @classmethod
+    def setUpClass(cls):
+        cls._customer_id = cls.createCustomer()["response"]["id"]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.deleteCustomer()
 
     def test_all(self):
         """
         Test Function: Card
         """
+
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
@@ -32,26 +43,47 @@ class TestCard(unittest.TestCase):
             }
         }
 
-        customer_id = "685810954-vbrXmBzkHl4UJ9"
         card_token_created = self.sdk.card_token().create(card_token_object)
 
         card_object = {
-            "customer_id": customer_id,
+            "customer_id": self._customer_id,
             "token": card_token_created["response"]["id"]
         }
 
-        card_created = self.sdk.card().create(customer_id, card_object)
+        card_created = self.sdk.card().create(self._customer_id, card_object)
         self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card()
-        .get(customer_id, card_created["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.card().get(self._customer_id, card_created["response"]["id"])["status"], 200)
 
-        self.sdk.card().delete(customer_id, card_created["response"]["id"])
-        self.sdk.customer().delete(customer_id)
+        self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
+
+    @classmethod
+    def createCustomer(cls):
+        customer_object = {
+            "email": "test_payer_999942@testuser.com",
+            "first_name": "Rafa",
+            "last_name": "Williner",
+            "phone": {
+                "area_code": "03492",
+                "number": "432334"
+            },
+            "identification": {
+                "type": "DNI",
+                "number": "29804555"
+            },
+            "address": {
+                "zip_code": "47807078",
+                "street_name": "some street",
+                "street_number": 123
+            },
+            "description": "customer description"
+        }
+
+        return cls.sdk.customer().create(customer_object)
+
+    @classmethod
+    def deleteCustomer(cls):
+        cls.sdk.customer().delete(cls._customer_id)
+
 
 if __name__ == "__main__":
     unittest.main()
-
-    #try:
-    #    print(["id"])
-    #except KeyError:
-    #    print("this param is unknown")
