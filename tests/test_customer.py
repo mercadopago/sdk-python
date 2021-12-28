@@ -20,7 +20,7 @@ class TestCustomer(unittest.TestCase):
         Test Function: Customer
         """
         customer_object = {
-            "email": "test_payer_999940@testuser.com",
+            "email": "test_payer_999943@testuser.com",
             "first_name": "Rafa",
             "last_name": "Williner",
             "phone": {
