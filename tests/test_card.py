@@ -13,16 +13,17 @@ class TestCard(unittest.TestCase):
     """
     Test Module: Card
     """
+    _customer_id = None
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
     @classmethod
     def setUpClass(cls):
-        cls._customer_id = cls.createCustomer(cls())["response"]["id"]
+        cls._customer_id = cls.createCustomer()["response"]["id"]
 
     @classmethod
     def tearDownClass(cls):
-        cls.deleteCustomer(cls())
+        cls.deleteCustomer()
 
     def test_all(self):
         """
@@ -55,7 +56,8 @@ class TestCard(unittest.TestCase):
 
         self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
 
-    def createCustomer(self):
+    @classmethod
+    def createCustomer(cls):
         customer_object = {
             "email": "test_payer_999942@testuser.com",
             "first_name": "Rafa",
@@ -76,10 +78,11 @@ class TestCard(unittest.TestCase):
             "description": "customer description"
         }
 
-        return self.sdk.customer().create(customer_object)
+        return cls.sdk.customer().create(customer_object)
 
-    def deleteCustomer(self):
-        self.sdk.customer().delete(self._customer_id)
+    @classmethod
+    def deleteCustomer(cls):
+        cls.sdk.customer().delete(cls._customer_id)
 
 
 if __name__ == "__main__":
