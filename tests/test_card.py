@@ -16,12 +16,49 @@ class TestCard(unittest.TestCase):
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
+    @classmethod
+    def setUpClass(cls):
+        cls._customer_id = cls.createCustomer(cls())["response"]["id"]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.deleteCustomer(cls())
+
     def test_all(self):
         """
         Test Function: Card
         """
+
+        card_token_object = {
+            "card_number": "4074090000000004",
+            "security_code": "123",
+            "expiration_year": datetime.now().strftime("%Y"),
+            "expiration_month": "12",
+            "cardholder": {
+                "name": "APRO",
+                "identification": {
+                    "CPF": "19119119100"
+                }
+            }
+        }
+
+        card_token_created = self.sdk.card_token().create(card_token_object)
+        print(self._customer_id)
+
+        card_object = {
+            "customer_id": self._customer_id,
+            "token": card_token_created["response"]["id"]
+        }
+
+        card_created = self.sdk.card().create(self._customer_id, card_object)
+        self.assertIn(card_created["status"], [200, 201])
+        self.assertEqual(self.sdk.card().get(self._customer_id, card_created["response"]["id"])["status"], 200)
+
+        self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
+
+    def createCustomer(self):
         customer_object = {
-            "email": "test_payer_999940@testuser.com",
+            "email": "test_payer_999942@testuser.com",
             "first_name": "Rafa",
             "last_name": "Williner",
             "phone": {
@@ -40,35 +77,10 @@ class TestCard(unittest.TestCase):
             "description": "customer description"
         }
 
-        customer_created = self.sdk.customer().create(customer_object)
-        customer_id = customer_created["response"]["id"]
+        return self.sdk.customer().create(customer_object)
 
-        card_token_object = {
-            "card_number": "4074090000000004",
-            "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
-            "expiration_month": "12",
-            "cardholder": {
-                "name": "APRO",
-                "identification": {
-                    "CPF": "19119119100"
-                }
-            }
-        }
-
-        card_token_created = self.sdk.card_token().create(card_token_object)
-
-        card_object = {
-            "customer_id": customer_id,
-            "token": card_token_created["response"]["id"]
-        }
-
-        card_created = self.sdk.card().create(customer_id, card_object)
-        self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card().get(customer_id, card_created["response"]["id"])["status"], 200)
-
-        self.sdk.card().delete(customer_id, card_created["response"]["id"])
-        self.sdk.customer().delete(customer_id)
+    def deleteCustomer(self):
+        self.sdk.customer().delete(self._customer_id)
 
 
 if __name__ == "__main__":
