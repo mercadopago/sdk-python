@@ -1,6 +1,7 @@
 """
     Module: test_customer
 """
+import random
 import unittest
 
 import mercadopago
@@ -17,8 +18,9 @@ class TestCustomer(unittest.TestCase):
         """
         Test Function: Customer
         """
+        random_email_id = random.randint(100000, 999999)
         customer_object = {
-            "email": "test_payer_999945@testuser.com",
+            "email": f"test_payer_{random_email_id}@testuser.com",
             "first_name": "Katniss",
             "last_name": "Everdeen",
             "phone": {

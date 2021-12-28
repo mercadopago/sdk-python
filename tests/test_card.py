@@ -2,6 +2,7 @@
     Module: test_card
 """
 from datetime import datetime
+import random
 import unittest
 
 import mercadopago
@@ -18,7 +19,8 @@ class TestCard(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._customer_id = cls.create_customer()["response"]["id"]
+        customer_data = cls.create_customer()
+        cls._customer_id = customer_data["response"]["id"]
 
     @classmethod
     def tearDownClass(cls):
@@ -59,8 +61,9 @@ class TestCard(unittest.TestCase):
 
     @classmethod
     def create_customer(cls):
+        random_email_id = random.randint(100000, 999999)
         customer_object = {
-            "email": "test_payer_999942@testuser.com",
+            "email": f"test_payer_{random_email_id}@testuser.com",
             "first_name": "Rafa",
             "last_name": "Williner",
             "phone": {
