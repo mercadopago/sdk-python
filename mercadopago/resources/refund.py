@@ -3,8 +3,8 @@
 """
 from mercadopago.core import MPBase
 
-class Refund(MPBase):
 
+class Refund(MPBase):
     """
     This class will allow you to refund payments created through the Payments class.
 
@@ -13,11 +13,8 @@ class Refund(MPBase):
     You must have sufficient funds in your account in order to successfully refund
     the payment amount. Otherwise, you will get a 400 Bad Request error.
 
-    [Click here for more infos](https://www.mercadopago.com.br/developers/en/guides/manage-account/account/cancellations-and-refunds#bookmark_refunds) #pylint: disable=line-too-long
+    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/manage-account/account/cancellations-and-refunds#bookmark_refunds)  # pylint: disable=line-too-long
     """
-
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
 
     def list_all(self, payment_id, request_options=None):
         """Args:
@@ -30,7 +27,7 @@ class Refund(MPBase):
             dict: List all refunds of a payment
         """
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds",
-        request_options=request_options)
+                         request_options=request_options)
 
     def create(self, payment_id, refund_object=None, request_options=None):
         """Args:
@@ -50,4 +47,4 @@ class Refund(MPBase):
             raise ValueError("Param refund_object must be a Dictionary")
 
         return self._post(uri="/v1/payments/" + str(payment_id) + "/refunds",
-        data=refund_object, request_options=request_options)
+                          data=refund_object, request_options=request_options)

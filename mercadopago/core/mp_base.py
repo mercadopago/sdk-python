@@ -2,11 +2,12 @@
 Module: mp_base
 """
 from json.encoder import JSONEncoder
-from mercadopago.config.request_options import RequestOptions
+
 from mercadopago.config.config import Config
+from mercadopago.config.request_options import RequestOptions
 
-class MPBase():
 
+class MPBase:
     """All mercadopago.resources extends this one to call the REST services
 
     Args:
@@ -20,9 +21,11 @@ class MPBase():
         ValueError: Param request_options must be a RequestOptions Object
         ValueError: Filters must be a Dictionary
     """
+
     def __init__(self, request_options, http_client):
         if not isinstance(request_options, RequestOptions):
-            raise ValueError("Param request_options must be a RequestOptions Object")
+            raise ValueError(
+                "Param request_options must be a RequestOptions Object")
 
         self.__request_options = request_options
         self.__http_client = http_client
@@ -30,7 +33,8 @@ class MPBase():
 
     def __check_request_options(self, request_options):
         if request_options is not None and not isinstance(request_options, RequestOptions):
-            raise ValueError("Param request_options must be a RequestOptions Object")
+            raise ValueError(
+                "Param request_options must be a RequestOptions Object")
         if request_options is None:
             request_options = self.__request_options
 
@@ -54,41 +58,62 @@ class MPBase():
             raise ValueError("Filters must be a Dictionary")
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.get(url=self.__config.api_base_url
-        + uri, params=filters, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.get(
+            url=self.__config.api_base_url + uri,
+            params=filters,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.post(url=self.__config.api_base_url + uri, data=data,
-        params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.post(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {"Content-type": self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.put(url=self.__config.api_base_url + uri,
-        data=data, params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.put(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.api_base_url + uri, params=params,
-        headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.delete(
+            url=self.__config.api_base_url + uri,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     @property
     def request_options(self):

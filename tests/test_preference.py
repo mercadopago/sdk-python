@@ -1,11 +1,10 @@
 """
     Module: test_preference
 """
-import sys
-sys.path.append("../")
+import unittest
 
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
+import mercadopago
+
 
 class TestPreference(unittest.TestCase):
     """
@@ -44,7 +43,8 @@ class TestPreference(unittest.TestCase):
             preference_saved["response"]["id"])
 
         self.assertEqual(preference_saved["response"]["items"][0]["title"],
-        preference_object["items"][0]["title"])
+                         preference_object["items"][0]["title"])
+
 
 if __name__ == "__main__":
     unittest.main()

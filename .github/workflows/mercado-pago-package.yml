@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -28,8 +28,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install pylint pytest requests
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python -m pip install requests
+    - name: Lint with Pylint
+      run: |
+        pip install pylint
+        pylint mercadopago
+        pylint --rcfile=tests/.pylintrc tests
+    - name: Lint with Isort
+      run: |
+        pip install isort
+        isort .
     - name: Test with unittest
       run: |
         python -m unittest discover tests/

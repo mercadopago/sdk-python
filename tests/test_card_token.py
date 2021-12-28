@@ -1,12 +1,11 @@
 """
     Module: test_card_token
 """
-import sys
-sys.path.append("../")
+from datetime import datetime
+import unittest
 
-from datetime import datetime #pylint: disable=wrong-import-position
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
+import mercadopago
+
 
 class TestCardToken(unittest.TestCase):
     """
@@ -36,7 +35,8 @@ class TestCardToken(unittest.TestCase):
 
         self.assertEqual(card_token_created["status"], 201)
         self.assertEqual(self.sdk.card_token()
-        .get(card_token_created["response"]["id"])["status"], 200)
+                         .get(card_token_created["response"]["id"])["status"], 200)
+
 
 if __name__ == "__main__":
     unittest.main()

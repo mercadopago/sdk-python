@@ -3,14 +3,11 @@
 """
 from mercadopago.core import MPBase
 
-class User(MPBase):
 
+class User(MPBase):
     """
     Access to Users
     """
-
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
 
     def get(self, request_options=None):
         """Args:

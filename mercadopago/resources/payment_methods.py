@@ -3,17 +3,14 @@
 """
 from mercadopago.core import MPBase
 
-class PaymentMethods(MPBase):
 
+class PaymentMethods(MPBase):
     """
     Access to Payment Methods
     """
 
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
-
     def list_all(self, request_options=None):
-        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/) #pylint: disable=line-too-long
+        """[Click here for more infos](https://www.mercadopago.com/developers/en/reference/payment_methods/_payment_methods/get/)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of
