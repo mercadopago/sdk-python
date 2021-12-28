@@ -20,9 +20,9 @@ class TestCustomer(unittest.TestCase):
         Test Function: Customer
         """
         customer_object = {
-            "email": "test_payer_999943@testuser.com",
-            "first_name": "Rafa",
-            "last_name": "Williner",
+            "email": "test_payer_999945@testuser.com",
+            "first_name": "Katniss",
+            "last_name": "Everdeen",
             "phone": {
                 "area_code": "03492",
                 "number": "432334"
@@ -42,8 +42,7 @@ class TestCustomer(unittest.TestCase):
         customer_saved = self.sdk.customer().create(customer_object)
         self.assertEqual(customer_saved["status"], 201)
 
-        customer_update = self.sdk.customer().update(customer_saved["response"]["id"],
-        {"last_name": "Payer"})
+        customer_update = self.sdk.customer().update(customer_saved["response"]["id"], {"last_name": "Payer"})
         self.assertEqual(customer_update["status"], 200)
 
         customer_updated = self.sdk.customer().get(customer_saved["response"]["id"])
