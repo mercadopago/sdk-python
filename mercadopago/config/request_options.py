@@ -2,8 +2,11 @@
 Module: request_options
 """
 import uuid
+
 from .config import Config
-class RequestOptions(): #pylint: disable=too-many-instance-attributes
+
+
+class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     """This object hold all configurations that will be used in ur REST call.
 
@@ -18,14 +21,16 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
     __integrator_id = None
     __platform_id = None
 
-    def __init__(self, #pylint: disable=too-many-arguments
-                 access_token=None,
-                 connection_timeout=60.0,
-                 custom_headers=None,
-                 corporation_id=None,
-                 integrator_id=None,
-                 platform_id=None,
-                 max_retries=3):
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        access_token=None,
+        connection_timeout=60.0,
+        custom_headers=None,
+        corporation_id=None,
+        integrator_id=None,
+        platform_id=None,
+        max_retries=3,
+    ):
         """Initialize
 
         Args:
@@ -71,11 +76,11 @@ class RequestOptions(): #pylint: disable=too-many-instance-attributes
         Sets the attribute values of headers
         """
         headers = {"Authorization": "Bearer " + self.__access_token,
-                "x-product-id": self.__config.product_id,
-                "x-tracking-id": self.__config.tracking_id,
-                "x-idempotency-key": str(uuid.uuid4().int),
-                "User-Agent": self.__config.user_agent,
-                "Accept": self.__config.mime_json}
+                   "x-product-id": self.__config.product_id,
+                   "x-tracking-id": self.__config.tracking_id,
+                   "x-idempotency-key": str(uuid.uuid4().int),
+                   "User-Agent": self.__config.user_agent,
+                   "Accept": self.__config.mime_json}
 
         if self.__corporation_id is not None:
             headers["x-corporation-id"] = self.__corporation_id

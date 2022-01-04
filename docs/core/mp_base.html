@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.core.mp_base API documentation</title>
 <meta name="description" content="Module: mp_base" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -31,11 +31,12 @@
 Module: mp_base
 &#34;&#34;&#34;
 from json.encoder import JSONEncoder
-from mercadopago.config.request_options import RequestOptions
+
 from mercadopago.config.config import Config
+from mercadopago.config.request_options import RequestOptions
 
-class MPBase():
 
+class MPBase:
     &#34;&#34;&#34;All mercadopago.resources extends this one to call the REST services
 
     Args:
@@ -49,9 +50,11 @@ class MPBase():
         ValueError: Param request_options must be a RequestOptions Object
         ValueError: Filters must be a Dictionary
     &#34;&#34;&#34;
+
     def __init__(self, request_options, http_client):
         if not isinstance(request_options, RequestOptions):
-            raise ValueError(&#34;Param request_options must be a RequestOptions Object&#34;)
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
 
         self.__request_options = request_options
         self.__http_client = http_client
@@ -59,7 +62,8 @@ class MPBase():
 
     def __check_request_options(self, request_options):
         if request_options is not None and not isinstance(request_options, RequestOptions):
-            raise ValueError(&#34;Param request_options must be a RequestOptions Object&#34;)
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
         if request_options is None:
             request_options = self.__request_options
 
@@ -83,41 +87,62 @@ class MPBase():
             raise ValueError(&#34;Filters must be a Dictionary&#34;)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.get(url=self.__config.api_base_url
-        + uri, params=filters, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.get(
+            url=self.__config.api_base_url + uri,
+            params=filters,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.post(url=self.__config.api_base_url + uri, data=data,
-        params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.post(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.put(url=self.__config.api_base_url + uri,
-        data=data, params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.put(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.api_base_url + uri, params=params,
-        headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.delete(
+            url=self.__config.api_base_url + uri,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     @property
     def request_options(self):
@@ -169,8 +194,7 @@ class MPBase():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class MPBase():
-
+<pre><code class="python">class MPBase:
     &#34;&#34;&#34;All mercadopago.resources extends this one to call the REST services
 
     Args:
@@ -184,9 +208,11 @@ class MPBase():
         ValueError: Param request_options must be a RequestOptions Object
         ValueError: Filters must be a Dictionary
     &#34;&#34;&#34;
+
     def __init__(self, request_options, http_client):
         if not isinstance(request_options, RequestOptions):
-            raise ValueError(&#34;Param request_options must be a RequestOptions Object&#34;)
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
 
         self.__request_options = request_options
         self.__http_client = http_client
@@ -194,7 +220,8 @@ class MPBase():
 
     def __check_request_options(self, request_options):
         if request_options is not None and not isinstance(request_options, RequestOptions):
-            raise ValueError(&#34;Param request_options must be a RequestOptions Object&#34;)
+            raise ValueError(
+                &#34;Param request_options must be a RequestOptions Object&#34;)
         if request_options is None:
             request_options = self.__request_options
 
@@ -218,41 +245,62 @@ class MPBase():
             raise ValueError(&#34;Filters must be a Dictionary&#34;)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.get(url=self.__config.api_base_url
-        + uri, params=filters, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.get(
+            url=self.__config.api_base_url + uri,
+            params=filters,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _post(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.post(url=self.__config.api_base_url + uri, data=data,
-        params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.post(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _put(self, uri, data=None, params=None, request_options=None):
         if data is not None:
             data = JSONEncoder().encode(data)
 
         request_options = self.__check_request_options(request_options)
-        headers = self.__check_headers(request_options, {&#34;Content-type&#34;: self.__config.mime_json})
+        headers = self.__check_headers(
+            request_options, {&#34;Content-type&#34;: self.__config.mime_json})
 
-        return self.__http_client.put(url=self.__config.api_base_url + uri,
-        data=data, params=params, headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.put(
+            url=self.__config.api_base_url + uri,
+            data=data,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     def _delete(self, uri, params=None, request_options=None):
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(url=self.__config.api_base_url + uri, params=params,
-        headers=headers, timeout=request_options.connection_timeout,
-        maxretries=request_options.max_retries)
+        return self.__http_client.delete(
+            url=self.__config.api_base_url + uri,
+            params=params,
+            headers=headers,
+            timeout=request_options.connection_timeout,
+            maxretries=request_options.max_retries,
+        )
 
     @property
     def request_options(self):
@@ -347,7 +395,7 @@ def request_options(self):
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>

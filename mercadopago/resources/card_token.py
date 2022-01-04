@@ -3,14 +3,12 @@
 """
 from mercadopago.core import MPBase
 
+
 class CardToken(MPBase):
-
     """
-    This class will allow you to send your customers card data for Mercado Pago server and receive a token to complete the payments transactions. #pylint: disable=line-too-long
+    This class will allow you to send your customers card data for Mercado Pago
+    server and receive a token to complete the payments transactions.
     """
-
-    def __init__(self, request_options, http_client):
-        MPBase.__init__(self, request_options, http_client)
 
     def get(self, card_token_id, request_options=None):
         """Args:
@@ -23,7 +21,7 @@ class CardToken(MPBase):
             dict: Card Token find response
         """
         return self._get(uri="/v1/card_tokens/" + str(card_token_id),
-        request_options=request_options)
+                         request_options=request_options)
 
     def create(self, card_token_object, request_options=None):
         """Args:
@@ -42,4 +40,4 @@ class CardToken(MPBase):
             raise ValueError("Param card_token_object must be a Dictionary")
 
         return self._post(uri="/v1/card_tokens", data=card_token_object,
-        request_options=request_options)
+                          request_options=request_options)

@@ -1,12 +1,11 @@
 """
     Module: test_merchant_order
 """
-import sys
-sys.path.append("../")
+import unittest
+import uuid
 
-import unittest #pylint: disable=wrong-import-position
-import uuid #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
+import mercadopago
+
 
 class TestMerchantOrder(unittest.TestCase):
     """
@@ -42,7 +41,7 @@ class TestMerchantOrder(unittest.TestCase):
             "additional_info": "Aditional info",
             "external_reference": str(uuid.uuid4().int),
             "marketplace": "NONE",
-            "items": [ {
+            "items": [{
                 "description": "Test Update Success",
                 "id": "5678",
                 "picture_url": "http://product1.image.png",
@@ -50,7 +49,7 @@ class TestMerchantOrder(unittest.TestCase):
                 "title": "Item 1",
                 "currency_id": "BRL",
                 "unit_price": 20.5
-            } ]
+            }]
         }
 
         merchant_order_created = self.sdk.merchant_order().create(merchant_order_object)
@@ -63,7 +62,9 @@ class TestMerchantOrder(unittest.TestCase):
         merchant_order_finded = self.sdk.merchant_order().get(
             merchant_order_created["response"]["id"])
         self.assertEqual(merchant_order_finded["status"], 200)
-        self.assertEqual(merchant_order_finded["response"]["additional_info"], "Info 2")
+        self.assertEqual(
+            merchant_order_finded["response"]["additional_info"], "Info 2")
+
 
 if __name__ == "__main__":
     unittest.main()

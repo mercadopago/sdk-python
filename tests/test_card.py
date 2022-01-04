@@ -1,29 +1,30 @@
 """
     Module: test_card
 """
-import sys
-import unittest
-import mercadopago
 from datetime import datetime
+import random
+import unittest
 
-sys.path.append("../")
+import mercadopago
 
 
 class TestCard(unittest.TestCase):
     """
     Test Module: Card
     """
+
     _customer_id = None
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
     @classmethod
     def setUpClass(cls):
-        cls._customer_id = cls.createCustomer()["response"]["id"]
+        customer_data = cls.create_customer()
+        cls._customer_id = customer_data["response"]["id"]
 
     @classmethod
     def tearDownClass(cls):
-        cls.deleteCustomer()
+        cls.delete_customer()
 
     def test_all(self):
         """
@@ -52,14 +53,17 @@ class TestCard(unittest.TestCase):
 
         card_created = self.sdk.card().create(self._customer_id, card_object)
         self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card().get(self._customer_id, card_created["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.card().get(
+            self._customer_id, card_created["response"]["id"])["status"], 200)
 
-        self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
+        self.sdk.card().delete(self._customer_id,
+                               card_created["response"]["id"])
 
     @classmethod
-    def createCustomer(cls):
+    def create_customer(cls):
+        random_email_id = random.randint(100000, 999999)
         customer_object = {
-            "email": "test_payer_999942@testuser.com",
+            "email": f"test_payer_{random_email_id}@testuser.com",
             "first_name": "Rafa",
             "last_name": "Williner",
             "phone": {
@@ -81,7 +85,7 @@ class TestCard(unittest.TestCase):
         return cls.sdk.customer().create(customer_object)
 
     @classmethod
-    def deleteCustomer(cls):
+    def delete_customer(cls):
         cls.sdk.customer().delete(cls._customer_id)
 
 

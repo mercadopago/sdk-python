@@ -3,8 +3,8 @@ Module: config
 """
 import platform
 
-class Config():
 
+class Config:
     """
     General infos of your SDK
     """

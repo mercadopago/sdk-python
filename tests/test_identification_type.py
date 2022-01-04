@@ -1,11 +1,10 @@
 """
     Module: test_identification_type
 """
-import sys
-sys.path.append("../")
+import unittest
 
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
+import mercadopago
+
 
 class TestIdentificationType(unittest.TestCase):
     """
@@ -20,6 +19,7 @@ class TestIdentificationType(unittest.TestCase):
         """
         identifications = self.sdk.identification_type().list_all()
         self.assertEqual(identifications["status"], 200)
+
 
 if __name__ == "__main__":
     unittest.main()

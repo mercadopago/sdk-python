@@ -1,0 +1,5 @@
+[FORMAT]
+max-line-length = 100
+
+[MESSAGES CONTROL]
+disable = missing-docstring,duplicate-code

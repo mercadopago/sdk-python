@@ -1,23 +1,24 @@
 """
     Module: test_advanced_payment
 """
-import sys
-sys.path.append("../")
+from datetime import (
+    datetime,
+    timedelta,
+)
+import unittest
+import uuid
 
-from datetime import datetime #pylint: disable=wrong-import-position
-from datetime import timedelta #pylint: disable=wrong-import-position
-import uuid #pylint: disable=wrong-import-position
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
-#@unittest
-#class TestAdvancedPayment(unittest.TestCase):
-class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
+import mercadopago
+
+
+class TestAdvancedPayment(unittest.TestCase):
     """
     Test Module: Advanced Payment
     """
     sdk = mercadopago.SDK(
         "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
 
+    @unittest.skip(reason="Outdated API usage")
     def test_all(self):
         """
         Test Function: Advanced Payment
@@ -37,9 +38,9 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
 
         card_token_created = self.sdk.card_token().create(card_token_object)
 
-        advanced_payment_object = { #pylint: disable=unused-variable
+        advanced_payment_object = {
             "application_id": "59441713004005",
-            "payments": [ {
+            "payments": [{
                 "payment_method_id": "master",
                 "payment_type_id": "credit_card",
                 "token": card_token_created["response"]["id"],
@@ -52,12 +53,12 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
                 "external_reference": str(uuid.uuid4().int),
                 "statement_descriptor": "ADVPAY"
             }],
-            "disbursements": [ {
+            "disbursements": [{
                 "collector_id": "488656838",
                 "amount": 60.0,
                 "external_reference": "Seller2" + str(uuid.uuid4().int),
                 "application_fee": 0.5
-            } ],
+            }],
             "payer": {
                 "id": "649457098-FybpOkG6zH8QRm",
                 "type": "customer",
@@ -74,7 +75,7 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
                     "number": "19119119100"
                 }
             },
-            "external_reference": "Adv" +  str(uuid.uuid4().int),
+            "external_reference": "Adv" + str(uuid.uuid4().int),
             "description": "description",
             "binary_mode": False,
             "capture": False,
@@ -86,7 +87,7 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
                     "registration_date": (datetime.now() - timedelta(days=10))
                     .strftime("%Y-%m-%d %H:%M:%S.%f")
                 },
-                "items": [ {
+                "items": [{
                     "id": "123",
                     "title": "title",
                     "picture_url": "https://www.mercadopago.com/logomp3.gif",
@@ -94,7 +95,7 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
                     "category_id": "category",
                     "quantity": 1,
                     "unit_price": 100.0
-                } ],
+                }],
                 "shipments": {
                     "receiver_address": {
                         "zip_code": "06233200",
@@ -105,7 +106,8 @@ class TestAdvancedPayment(): #pylint: disable=too-few-public-methods
             }
         }
 
-        #print(self.sdk.advanced_payment().create(advanced_payment_object))
+        print(self.sdk.advanced_payment().create(advanced_payment_object))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,11 +1,10 @@
 """
     Module: test_preapproval
 """
-import sys
-sys.path.append("../")
+import unittest
 
-import unittest #pylint: disable=wrong-import-position
-import mercadopago #pylint: disable=wrong-import-position
+import mercadopago
+
 
 class TestPreApproval(unittest.TestCase):
     """
@@ -18,6 +17,7 @@ class TestPreApproval(unittest.TestCase):
         """
             Function: xoxoxoxo
         """
+
 
 if __name__ == "__main__":
     unittest.main()

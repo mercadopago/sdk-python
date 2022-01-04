@@ -1,11 +1,10 @@
 """
     Module: test_customer
 """
-import sys
+import random
 import unittest
-import mercadopago
 
-sys.path.append("../")
+import mercadopago
 
 
 class TestCustomer(unittest.TestCase):
@@ -19,8 +18,9 @@ class TestCustomer(unittest.TestCase):
         """
         Test Function: Customer
         """
+        random_email_id = random.randint(100000, 999999)
         customer_object = {
-            "email": "test_payer_999945@testuser.com",
+            "email": f"test_payer_{random_email_id}@testuser.com",
             "first_name": "Katniss",
             "last_name": "Everdeen",
             "phone": {
@@ -42,13 +42,16 @@ class TestCustomer(unittest.TestCase):
         customer_saved = self.sdk.customer().create(customer_object)
         self.assertEqual(customer_saved["status"], 201)
 
-        customer_update = self.sdk.customer().update(customer_saved["response"]["id"], {"last_name": "Payer"})
+        customer_update = self.sdk.customer().update(
+            customer_saved["response"]["id"], {"last_name": "Payer"})
         self.assertEqual(customer_update["status"], 200)
 
-        customer_updated = self.sdk.customer().get(customer_saved["response"]["id"])
+        customer_updated = self.sdk.customer().get(
+            customer_saved["response"]["id"])
         self.assertEqual(customer_updated["response"]["last_name"], "Payer")
 
-        customer_deleted = self.sdk.customer().delete(customer_saved["response"]["id"])
+        customer_deleted = self.sdk.customer().delete(
+            customer_saved["response"]["id"])
         self.assertEqual(customer_deleted["status"], 200)
 
 

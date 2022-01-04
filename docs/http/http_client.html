@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>mercadopago.http.http_client API documentation</title>
 <meta name="description" content="Module: http_client" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -34,28 +34,25 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-class HttpClient():
 
+class HttpClient:
     &#34;&#34;&#34;
     Default implementation to call all REST API&#39;s
     &#34;&#34;&#34;
 
-    def __init__(self):
-        pass
+    def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+        &#34;&#34;&#34;Makes a call to the API.
 
-    @staticmethod
-    def __get_session(max_retries):
+        All **kwargs are passed verbatim to ``requests.request``.
+        &#34;&#34;&#34;
         retry_strategy = Retry(
-            total=max_retries,
+            total=maxretries,
             status_forcelist=[429, 500, 502, 503, 504]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
-        return http
-
-    def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.get(url, params=params, headers=headers, timeout=timeout)
+        with http as session:
+            api_result = session.request(method, url, **kwargs)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -63,37 +60,51 @@ class HttpClient():
 
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.post(url, params=params, data=data,
-            headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a GET request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;GET&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-        return response
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a POST request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;POST&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.put(url, params=params, data=data,
-            headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a PUT request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;PUT&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-        return response
-
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
-
-        return response</code></pre>
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a DELETE request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;DELETE&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )</code></pre>
 </details>
 </section>
 <section>
@@ -114,28 +125,24 @@ class HttpClient():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class HttpClient():
-
+<pre><code class="python">class HttpClient:
     &#34;&#34;&#34;
     Default implementation to call all REST API&#39;s
     &#34;&#34;&#34;
 
-    def __init__(self):
-        pass
+    def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+        &#34;&#34;&#34;Makes a call to the API.
 
-    @staticmethod
-    def __get_session(max_retries):
+        All **kwargs are passed verbatim to ``requests.request``.
+        &#34;&#34;&#34;
         retry_strategy = Retry(
-            total=max_retries,
+            total=maxretries,
             status_forcelist=[429, 500, 502, 503, 504]
         )
         http = requests.Session()
         http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
-        return http
-
-    def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.get(url, params=params, headers=headers, timeout=timeout)
+        with http as session:
+            api_result = session.request(method, url, **kwargs)
             response = {
                 &#34;status&#34;: api_result.status_code,
                 &#34;response&#34;: api_result.json()
@@ -143,37 +150,51 @@ class HttpClient():
 
         return response
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.post(url, params=params, data=data,
-            headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a GET request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;GET&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-        return response
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a POST request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;POST&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.put(url, params=params, data=data,
-            headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a PUT request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;PUT&#34;,
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
 
-        return response
-
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-        with self.__get_session(maxretries) as session:
-            api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
-            response = {
-                &#34;status&#34;: api_result.status_code,
-                &#34;response&#34;: api_result.json()
-            }
-
-        return response</code></pre>
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+        &#34;&#34;&#34;Makes a DELETE request to the API&#34;&#34;&#34;
+        return self.request(
+            &#34;DELETE&#34;,
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -181,76 +202,111 @@ class HttpClient():
 <span>def <span class="ident">delete</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Makes a DELETE request to the API</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-    with self.__get_session(maxretries) as session:
-        api_result = session.delete(url, params=params, headers=headers, timeout=timeout)
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
-
-    return response</code></pre>
+<pre><code class="python">def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a DELETE request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;DELETE&#34;,
+        url=url,
+        headers=headers,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, url, headers, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Makes a GET request to the API</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-    with self.__get_session(maxretries) as session:
-        api_result = session.get(url, params=params, headers=headers, timeout=timeout)
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
-
-    return response</code></pre>
+<pre><code class="python">def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a GET request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;GET&#34;,
+        url=url,
+        headers=headers,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.post"><code class="name flex">
 <span>def <span class="ident">post</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Makes a POST request to the API</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-    with self.__get_session(maxretries) as session:
-        api_result = session.post(url, params=params, data=data,
-        headers=headers, timeout=timeout)
-        response = {
-            &#34;status&#34;: api_result.status_code,
-            &#34;response&#34;: api_result.json()
-        }
-
-    return response</code></pre>
+<pre><code class="python">def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a POST request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;POST&#34;,
+        url=url,
+        headers=headers,
+        data=data,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
 </details>
 </dd>
 <dt id="mercadopago.http.http_client.HttpClient.put"><code class="name flex">
 <span>def <span class="ident">put</span></span>(<span>self, url, headers, data=None, params=None, timeout=None, maxretries=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Makes a PUT request to the API</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None): #pylint: disable=missing-function-docstring, too-many-arguments
-    with self.__get_session(maxretries) as session:
-        api_result = session.put(url, params=params, data=data,
-        headers=headers, timeout=timeout)
+<pre><code class="python">def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    &#34;&#34;&#34;Makes a PUT request to the API&#34;&#34;&#34;
+    return self.request(
+        &#34;PUT&#34;,
+        url=url,
+        headers=headers,
+        data=data,
+        params=params,
+        timeout=timeout,
+        maxretries=maxretries,
+    )</code></pre>
+</details>
+</dd>
+<dt id="mercadopago.http.http_client.HttpClient.request"><code class="name flex">
+<span>def <span class="ident">request</span></span>(<span>self, method, url, maxretries=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a call to the API.</p>
+<p>All **kwargs are passed verbatim to <code>requests.request</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+    &#34;&#34;&#34;Makes a call to the API.
+
+    All **kwargs are passed verbatim to ``requests.request``.
+    &#34;&#34;&#34;
+    retry_strategy = Retry(
+        total=maxretries,
+        status_forcelist=[429, 500, 502, 503, 504]
+    )
+    http = requests.Session()
+    http.mount(&#34;https://&#34;, HTTPAdapter(max_retries=retry_strategy))
+    with http as session:
+        api_result = session.request(method, url, **kwargs)
         response = {
             &#34;status&#34;: api_result.status_code,
             &#34;response&#34;: api_result.json()
@@ -284,6 +340,7 @@ class HttpClient():
 <li><code><a title="mercadopago.http.http_client.HttpClient.get" href="#mercadopago.http.http_client.HttpClient.get">get</a></code></li>
 <li><code><a title="mercadopago.http.http_client.HttpClient.post" href="#mercadopago.http.http_client.HttpClient.post">post</a></code></li>
 <li><code><a title="mercadopago.http.http_client.HttpClient.put" href="#mercadopago.http.http_client.HttpClient.put">put</a></code></li>
+<li><code><a title="mercadopago.http.http_client.HttpClient.request" href="#mercadopago.http.http_client.HttpClient.request">request</a></code></li>
 </ul>
 </li>
 </ul>
@@ -292,7 +349,7 @@ class HttpClient():
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>
