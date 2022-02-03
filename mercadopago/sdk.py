@@ -17,6 +17,7 @@ from mercadopago.resources import (
     Preference,
     Refund,
     User,
+    Chargeback,
 )
 
 
@@ -36,6 +37,7 @@ class SDK:
         11. Preference
         12. Refund
         13. User
+        14. Chargeback
     """
 
     def __init__(
@@ -156,6 +158,13 @@ class SDK:
         """
         return User(request_options is not None and request_options
                     or self.request_options, self.http_client)
+
+    def chargeback(self, request_options=None):
+        """
+        Returns the attribute value of the function
+        """
+        return Chargeback(request_options is not None and request_options
+                          or self.request_options, self.http_client)
 
     @property
     def request_options(self):
