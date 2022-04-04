@@ -31,20 +31,15 @@ class TestCustomer(unittest.TestCase):
                 "type": "DNI",
                 "number": "29804555"
             },
-            "address": {
-                "zip_code": "47807078",
-                "street_name": "some street",
-                "street_number": 123
-            },
             "description": "customer description"
         }
 
         customer_saved = self.sdk.customer().create(customer_object)
-        self.assertEqual(customer_saved["status"], 201)
+        self.assertEqual(201, customer_saved["status"])
 
         customer_update = self.sdk.customer().update(
             customer_saved["response"]["id"], {"last_name": "Payer"})
-        self.assertEqual(customer_update["status"], 200)
+        self.assertEqual(200, customer_update["status"])
 
         customer_updated = self.sdk.customer().get(
             customer_saved["response"]["id"])
@@ -52,7 +47,7 @@ class TestCustomer(unittest.TestCase):
 
         customer_deleted = self.sdk.customer().delete(
             customer_saved["response"]["id"])
-        self.assertEqual(customer_deleted["status"], 200)
+        self.assertEqual(200, customer_deleted["status"])
 
 
 if __name__ == "__main__":
