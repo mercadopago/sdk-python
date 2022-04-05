@@ -20,6 +20,7 @@ class TestCard(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         customer_data = cls.create_customer()
+        print(customer_data)
         cls._customer_id = customer_data["response"]["id"]
 
     @classmethod
@@ -45,6 +46,7 @@ class TestCard(unittest.TestCase):
         }
 
         card_token_created = self.sdk.card_token().create(card_token_object)
+        print(card_token_created)
 
         card_object = {
             "customer_id": self._customer_id,
@@ -73,11 +75,6 @@ class TestCard(unittest.TestCase):
             "identification": {
                 "type": "DNI",
                 "number": "29804555"
-            },
-            "address": {
-                "zip_code": "47807078",
-                "street_name": "some street",
-                "street_number": 123
             },
             "description": "customer description"
         }

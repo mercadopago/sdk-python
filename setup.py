@@ -12,7 +12,7 @@ from setuptools import (
 
 setup(
     name="mercadopago",
-    version="2.0.10",
+    version="2.1.0",
     description="Mercadopago SDK module for Payments integration",
     author="Mercado Pago SDK",
     author_email="mp_sdk@mercadopago.com",

@@ -16,6 +16,7 @@ from mercadopago.resources.preapproval import PreApproval
 from mercadopago.resources.preference import Preference
 from mercadopago.resources.refund import Refund
 from mercadopago.resources.user import User
+from mercadopago.resources.chargeback import Chargeback
 
 
 __all__ = (
@@ -34,4 +35,5 @@ __all__ = (
     'Refund',
     'RequestOptions',
     'User',
+    'Chargeback',
 )

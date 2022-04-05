@@ -106,7 +106,12 @@ class TestAdvancedPayment(unittest.TestCase):
             }
         }
 
-        print(self.sdk.advanced_payment().create(advanced_payment_object))
+        advanced_payment_created = self.sdk.advanced_payment().create(advanced_payment_object)
+        self.assertEqual(advanced_payment_created["status"], 201)
+
+        advanced_payment_found = self.sdk.advanced_payment().get(
+            advanced_payment_created["response"]["id"])
+        self.assertEqual(advanced_payment_found["status"], 200)
 
 
 if __name__ == "__main__":
