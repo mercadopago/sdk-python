@@ -13,7 +13,7 @@ class Plan(MPBase):
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_plan_search/get)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_search/get)  # pylint: disable=line-too-long
 
         Args:
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -23,11 +23,13 @@ class Plan(MPBase):
         Returns:
             dict: Plans found
         """
-        return self._get(uri="/preapproval_plan/search", filters=filters,
-                         request_options=request_options)
+        return self._get(
+            uri="/preapproval_plan/search",
+            filters=filters,
+            request_options=request_options)
 
     def get(self, plan_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_plan_id/get)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_id/get)  # pylint: disable=line-too-long
 
         Args:
             plan_id (str): The plan ID
@@ -38,10 +40,12 @@ class Plan(MPBase):
         Returns:
             dict: Plan found
         """
-        return self._get(uri="/preapproval_plan/" + str(plan_id), request_options=request_options)
+        return self._get(
+            uri="/preapproval_plan/" + str(plan_id),
+            request_options=request_options)
 
     def create(self, plan_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_plan/post)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan/post)  # pylint: disable=line-too-long
 
         Args:
             plan_object (dict): Plan to be created
@@ -58,11 +62,13 @@ class Plan(MPBase):
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")
 
-        return self._post(uri="/preapproval_plan", data=plan_object,
-                          request_options=request_options)
+        return self._post(
+            uri="/preapproval_plan",
+            data=plan_object,
+            request_options=request_options)
 
     def update(self, plan_id, plan_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_plan_id/put)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_id/put)  # pylint: disable=line-too-long
 
         Args:
             plan_id (str): The plan ID to be updated
@@ -80,5 +86,7 @@ class Plan(MPBase):
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")
 
-        return self._put(uri="/preapproval_plan/" + str(plan_id),
-                         data=plan_object, request_options=request_options)
+        return self._put(
+            uri="/preapproval_plan/" + str(plan_id),
+            data=plan_object,
+            request_options=request_options)

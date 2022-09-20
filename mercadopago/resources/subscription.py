@@ -23,10 +23,13 @@ class Subscription(MPBase):
         Returns:
             dict: Subscriptions found
         """
-        return self._get(uri="/preapproval/search", filters=filters, request_options=request_options)
+        return self._get(
+            uri="/preapproval/search",
+            filters=filters,
+            request_options=request_options)
 
     def get(self, subscription_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_id/get)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_id/get)  # pylint: disable=line-too-long
 
         Args:
             subscription_id (str): The subscription ID
@@ -37,7 +40,9 @@ class Subscription(MPBase):
         Returns:
             dict: Subscription found
         """
-        return self._get(uri="/preapproval/" + str(subscription_id), request_options=request_options)
+        return self._get(
+            uri="/preapproval/" + str(subscription_id),
+            request_options=request_options)
 
     def create(self, subscription_object, request_options=None):
         """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval/post)  # pylint: disable=line-too-long
@@ -57,10 +62,13 @@ class Subscription(MPBase):
         if not isinstance(subscription_object, dict):
             raise ValueError("Param subscription_object must be a Dictionary")
 
-        return self._post(uri="/preapproval", data=subscription_object, request_options=request_options)
+        return self._post(
+            uri="/preapproval",
+            data=subscription_object,
+            request_options=request_options)
 
     def update(self, subscription_id, subscription_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/es/reference/subscriptions/_preapproval_id/put)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_id/put)  # pylint: disable=line-too-long
 
         Args:
             subscription_id (str): The subscription ID to be updated
@@ -79,5 +87,6 @@ class Subscription(MPBase):
             raise ValueError("Param subscription_object must be a Dictionary")
 
         return self._put(
-            uri="/preapproval_plan/" + str(subscription_id), data=subscription_object, request_options=request_options
-        )
+            uri="/preapproval/" + str(subscription_id),
+            data=subscription_object,
+            request_options=request_options)

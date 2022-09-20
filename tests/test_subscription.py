@@ -57,15 +57,14 @@ class TestSubscription(unittest.TestCase):
             subscription_object["external_reference"], subscription_payload["external_reference"])
         self.assertEqual(subscription_object["status"], "authorized")
 
-        # TODO: WHENEVER I TRY TO UPDATE A SUBSCRIPTION THE API TRHOWS 404.
-        # update_payload = {
-        #     "reason": f"MercadoPago API Subscription A #{random_reason_number}",
-        # }
-        # update_response = self.sdk.subscription().update(
-        #     subscription_object["id"], update_payload)
-        # self.assertEqual(update_response["status"], 200)
-        # update_object = update_response["response"]
-        # self.assertEqual(update_object["reason"], update_payload["reason"])
+        update_payload = {
+            "reason": f"MercadoPago API Subscription A #{random_reason_number}",
+        }
+        update_response = self.sdk.subscription().update(
+            subscription_object["id"], update_payload)
+        self.assertEqual(update_response["status"], 200)
+        update_object = update_response["response"]
+        self.assertEqual(update_object["reason"], update_payload["reason"])
 
         get_response = self.sdk.subscription().get(subscription_object["id"])
         self.assertEqual(get_response["status"], 200)
