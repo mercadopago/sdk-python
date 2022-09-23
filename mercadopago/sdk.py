@@ -7,17 +7,19 @@ from mercadopago.resources import (
     AdvancedPayment,
     Card,
     CardToken,
+    Chargeback,
     Customer,
     DisbursementRefund,
     IdentificationType,
     MerchantOrder,
     Payment,
     PaymentMethods,
+    Plan,
     PreApproval,
     Preference,
     Refund,
+    Subscription,
     User,
-    Chargeback,
 )
 
 
@@ -38,6 +40,8 @@ class SDK:
         12. Refund
         13. User
         14. Chargeback
+        15. Subscription
+        16. Plan
     """
 
     def __init__(
@@ -165,6 +169,20 @@ class SDK:
         """
         return Chargeback(request_options is not None and request_options
                           or self.request_options, self.http_client)
+
+    def subscription(self, request_options=None):
+        """
+        Returns the attribute value of the function
+        """
+        return Subscription(request_options is not None and request_options
+                            or self.request_options, self.http_client)
+
+    def plan(self, request_options=None):
+        """
+        Returns the attribute value of the function
+        """
+        return Plan(request_options is not None and request_options
+                    or self.request_options, self.http_client)
 
     @property
     def request_options(self):
