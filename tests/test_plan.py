@@ -3,8 +3,8 @@
 """
 import unittest
 
-import mercadopago
 import random
+import mercadopago
 
 
 class TestPlan(unittest.TestCase):

@@ -4,8 +4,8 @@
 from datetime import datetime
 import unittest
 
-import mercadopago
 import random
+import mercadopago
 
 
 class TestSubscription(unittest.TestCase):
