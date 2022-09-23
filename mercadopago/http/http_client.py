@@ -11,7 +11,7 @@ class HttpClient:
     Default implementation to call all REST API's
     """
 
-    def request(self, method, url, maxretries=None, **kwargs):  # pylint: disable=no-self-use
+    def request(self, method, url, maxretries=None, **kwargs):
         """Makes a call to the API.
 
         All **kwargs are passed verbatim to ``requests.request``.
