@@ -1,0 +1,34 @@
+# This workflow will install Python dependencies and upload a version in the PyPI
+name: CD
+
+on:
+  release:
+    types: [ released ]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Sets up python
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      # Install dependencies
+      - name: "Installs dependencies"
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install setuptools wheel twine
+
+      # Build and upload to PyPI
+      - name: "Builds and uploads to PyPI"
+        run: |
+          python3 setup.py sdist bdist_wheel
+          python3 -m twine check dist/*
+          python3 -m twine upload dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
