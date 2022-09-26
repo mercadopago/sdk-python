@@ -1,5 +1,5 @@
 # This workflow will install Python dependencies and upload a version in the PyPI
-name: CD
+name: CD - Upload PyPI
 
 on:
   release:
