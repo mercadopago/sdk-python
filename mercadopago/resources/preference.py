@@ -68,3 +68,19 @@ class Preference(MPBase):
 
         return self._post(uri="/checkout/preferences", data=preference_object,
                           request_options=request_options)
+
+    def search(self, filters=None, request_options=None):
+        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/preferences/_checkout_preferences_search/get)  # pylint: disable=line-too-long
+
+        Args:
+            filters (dict): The search filters parameters
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to ur REST call.
+            Defaults to None.
+
+        Returns:
+            dict: Preference find response
+        """
+
+        return self._get(uri="/checkout/preferences/search", filters=filters,
+                         request_options=request_options)
