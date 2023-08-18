@@ -3,8 +3,8 @@
 """
 import unittest
 
-import mercadopago
 import time
+import mercadopago
 
 
 class TestPreference(unittest.TestCase):
