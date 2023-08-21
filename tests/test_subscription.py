@@ -114,7 +114,7 @@ class TestSubscription(unittest.TestCase):
     @classmethod
     def create_card_token(cls):
         card_token_object = {
-            "card_number": "4074090000000004",
+            "card_number": "5031433215406351",
             "security_code": "123",
             "expiration_year": datetime.now().strftime("%Y"),
             "expiration_month": "12",
