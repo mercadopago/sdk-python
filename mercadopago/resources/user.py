@@ -9,7 +9,7 @@ class User(MPBase):
     Access to Users
     """
 
-    def get(self, request_options=None):
+    def get(self, user_id="me", request_options=None):
         """Args:
             request_options (mercadopago.config.request_options, optional): An instance of
             RequestOptions can be pass changing or adding custom options to ur REST call.
@@ -18,7 +18,7 @@ class User(MPBase):
         Returns:
             dict: User find response
         """
-        return self._get(uri="/users/me", request_options=request_options)
+        return self._get(uri=f"/users/{user_id}", request_options=request_options)
 
     @property
     def request_options(self):
