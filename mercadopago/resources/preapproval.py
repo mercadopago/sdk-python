@@ -79,5 +79,5 @@ class PreApproval(MPBase):
         if not isinstance(preapproval_object, dict):
             raise ValueError("Param preapproval_object must be a Dictionary")
 
-        return self._put(uri="/preapproval" + str(preapproval_id),
+        return self._put(uri="/preapproval/" + str(preapproval_id),
                          data=preapproval_object, request_options=request_options)
