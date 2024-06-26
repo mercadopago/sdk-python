@@ -52,7 +52,8 @@ class TestCard(unittest.TestCase):
 
         card_created = self.sdk.card().create(self._customer_id, card_object)
         self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card().get(self._customer_id, card_created["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.card().get(
+            self._customer_id, card_created["response"]["id"])["status"], 200)
 
         self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
 

@@ -36,7 +36,8 @@ class TestCustomer(unittest.TestCase):
         customer_saved = self.sdk.customer().create(customer_object)
         self.assertEqual(201, customer_saved["status"])
 
-        customer_update = self.sdk.customer().update(customer_saved["response"]["id"], {"last_name": "Payer"})
+        customer_update = self.sdk.customer().update(
+            customer_saved["response"]["id"], {"last_name": "Payer"})
         self.assertEqual(200, customer_update["status"])
 
         customer_updated = self.sdk.customer().get(customer_saved["response"]["id"])
