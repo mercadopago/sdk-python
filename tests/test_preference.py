@@ -32,26 +32,24 @@ class TestPreference(unittest.TestCase):
         }
         preference_saved = self.sdk.preference().create(preference_object)
         self.assertEqual(preference_saved["status"], 201)
-
         time.sleep(1)
 
         preference_object["items"][0]["title"] = "Testando 1 2 3"
 
-        preference_update = self.sdk.preference().update(
-            preference_saved["response"]["id"], preference_object)
+        preference_id = preference_saved["response"]["id"]
+        preference_update = self.sdk.preference().update(preference_id, preference_object)
         self.assertEqual(preference_update["status"], 200)
 
         time.sleep(1)
-        preference_saved = self.sdk.preference().get(
-            preference_saved["response"]["id"])
-
+        preference_saved = self.sdk.preference().get(preference_id)
+        self.assertEqual(preference_saved["status"], 200)
         self.assertEqual(preference_saved["response"]["items"][0]["title"],
-                         preference_object["items"][0]["title"])
+                         preference_object["items"][0]["title"],
+                         "Validate title")
 
-        time.sleep(1)
-        preference_saved = self.sdk.preference().search()
-
-        self.assertEqual(preference_saved["response"]["elements"][0]["items"][0],
+        time.sleep(3)
+        preference_search = self.sdk.preference().search()
+        self.assertEqual(preference_search["response"]["elements"][0]["items"][0],
                          preference_object["items"][0]["title"])
 
 
