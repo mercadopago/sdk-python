@@ -1,9 +1,9 @@
 """
     Module: test_customer
 """
+import os
 import random
 import unittest
-
 import mercadopago
 
 
@@ -11,8 +11,7 @@ class TestCustomer(unittest.TestCase):
     """
     Test Module: Customer
     """
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     def test_all(self):
         """
@@ -41,12 +40,10 @@ class TestCustomer(unittest.TestCase):
             customer_saved["response"]["id"], {"last_name": "Payer"})
         self.assertEqual(200, customer_update["status"])
 
-        customer_updated = self.sdk.customer().get(
-            customer_saved["response"]["id"])
+        customer_updated = self.sdk.customer().get(customer_saved["response"]["id"])
         self.assertEqual(customer_updated["response"]["last_name"], "Payer")
 
-        customer_deleted = self.sdk.customer().delete(
-            customer_saved["response"]["id"])
+        customer_deleted = self.sdk.customer().delete(customer_saved["response"]["id"])
         self.assertEqual(200, customer_deleted["status"])
 
 

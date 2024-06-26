@@ -5,9 +5,9 @@ from datetime import (
     datetime,
     timedelta,
 )
+import os
 import unittest
 import uuid
-
 import mercadopago
 
 
@@ -15,8 +15,7 @@ class TestAdvancedPayment(unittest.TestCase):
     """
     Test Module: Advanced Payment
     """
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     @unittest.skip(reason="Outdated API usage")
     def test_all(self):
