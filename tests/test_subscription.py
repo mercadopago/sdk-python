@@ -2,8 +2,8 @@
     Module: test_plan
 """
 from datetime import datetime
+import os
 import unittest
-
 import random
 import mercadopago
 
@@ -15,8 +15,7 @@ class TestSubscription(unittest.TestCase):
     _customer_id = None
     _customer_email = None
     _plan_id = None
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     @classmethod
     def setUpClass(cls):

@@ -1,8 +1,8 @@
 """
     Module: test_identification_type
 """
+import os
 import unittest
-
 import mercadopago
 
 
@@ -10,8 +10,7 @@ class TestIdentificationType(unittest.TestCase):
     """
     Test Module: Identification Type
     """
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     def test_find_all(self):
         """

@@ -1,9 +1,9 @@
 """
     Module: test_merchant_order
 """
+import os
 import unittest
 import uuid
-
 import mercadopago
 
 
@@ -11,8 +11,7 @@ class TestMerchantOrder(unittest.TestCase):
     """
     Test Module: Merchant Order
     """
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     def test_all(self):
         """

@@ -2,9 +2,9 @@
     Module: test_card
 """
 from datetime import datetime
+import os
 import random
 import unittest
-
 import mercadopago
 
 
@@ -14,13 +14,11 @@ class TestCard(unittest.TestCase):
     """
 
     _customer_id = None
-    sdk = mercadopago.SDK(
-        "APP_USR-558881221729581-091712-44fdc612e60e3e638775d8b4003edd51-471763966")
+    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
     @classmethod
     def setUpClass(cls):
         customer_data = cls.create_customer()
-        print(customer_data)
         cls._customer_id = customer_data["response"]["id"]
 
     @classmethod
@@ -46,7 +44,6 @@ class TestCard(unittest.TestCase):
         }
 
         card_token_created = self.sdk.card_token().create(card_token_object)
-        print(card_token_created)
 
         card_object = {
             "customer_id": self._customer_id,
@@ -55,11 +52,9 @@ class TestCard(unittest.TestCase):
 
         card_created = self.sdk.card().create(self._customer_id, card_object)
         self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card().get(
-            self._customer_id, card_created["response"]["id"])["status"], 200)
+        self.assertEqual(self.sdk.card().get(self._customer_id, card_created["response"]["id"])["status"], 200)
 
-        self.sdk.card().delete(self._customer_id,
-                               card_created["response"]["id"])
+        self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
 
     @classmethod
     def create_customer(cls):
