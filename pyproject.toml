@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools >= 61.0", "requests"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mercadopago"
+version = "2.2.2"
+authors = [
+    {name = "Mercado Pago", email = "mp_sdk@mercadopago.com"}
+]
+description = "Mercadopago SDK module for Payments integration"
+readme = {file = "README.md", content-type = "text/markdown"}
+keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", lts"]
+license = {text = "MIT"}
+requires-python = ">=3.7"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+Homepage = "https://mercadopago.com"
+Repository = "https://github.com/mercadopago/sdk-python"
