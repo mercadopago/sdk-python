@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools >= 61.0", "requests"]
+requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,10 +9,13 @@ authors = [
     {name = "Mercado Pago", email = "mp_sdk@mercadopago.com"}
 ]
 description = "Mercadopago SDK module for Payments integration"
-readme = {file = "README.md", content-type = "text/markdown"}
+readme = "README.md"
 keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", lts"]
-license = {text = "MIT"}
+license = {file = "LICENSE}
 requires-python = ">=3.7"
+dependencies = [
+    "requests"
+]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -26,6 +29,11 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+]
+
+[project.optional-dependencies]
+testing = [
+   "unittest"
 ]
 
 [project.urls]
