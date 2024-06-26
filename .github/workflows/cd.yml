@@ -27,7 +27,7 @@ jobs:
       # Build and upload to PyPI
       - name: "Builds and uploads to PyPI"
         run: |
-          python3 setup.py sdist bdist_wheel
+          python3 -m build
           python3 -m twine check dist/*
           python3 -m twine upload dist/*
         env:
