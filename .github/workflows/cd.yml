@@ -22,6 +22,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install setuptools twine
+          python3 -m pip install build
           python3 -m pip install .
 
       # Build and upload to PyPI
