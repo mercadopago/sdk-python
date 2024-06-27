@@ -10,8 +10,8 @@ authors = [
 ]
 description = "Mercadopago SDK module for Payments integration"
 readme = "README.md"
-keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", lts"]
-license = {file = "LICENSE}
+keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", "lts"]
+license = {file = "LICENSE"}
 requires-python = ">=3.7"
 dependencies = [
     "requests"
