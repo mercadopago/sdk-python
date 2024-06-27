@@ -15,13 +15,13 @@ jobs:
       # Sets up python
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 3.12
 
       # Install dependencies
       - name: "Installs dependencies"
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install setuptools wheel twine
+          python3 -m pip install setuptools twine
           python3 -m pip install .
 
       # Build and upload to PyPI
