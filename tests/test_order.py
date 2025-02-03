@@ -56,8 +56,6 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order_created["status"], 201)
         self.assertEqual(order_created["response"]["status"], "processed")
 
-if __name__ == "__main__":
-    unittest.main()
 
 class TestOrderCancelAndCapture(unittest.TestCase):
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
@@ -78,13 +76,14 @@ class TestOrderCancelAndCapture(unittest.TestCase):
         return card_token_created["response"]["id"]
 
     def create_order_canceled_or_captured(self, card_token_id):
+        random_email_id = random.randint(100000, 999999)
         order_object_cc = {
             "type": "online",
             "processing_mode": "automatic",
             "total_amount": "200.00",
             "external_reference": "ext_ref_1234",
             "payer": {
-                "email": "test_1731350184@testuser.com"
+                "email": f"test_payer_{random_email_id}@testuser.com"
             },
             "capture_mode": "manual",
             "transactions": {
