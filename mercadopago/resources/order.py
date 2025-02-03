@@ -72,4 +72,4 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._get(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options)
+        return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options)
