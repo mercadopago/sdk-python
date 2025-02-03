@@ -60,9 +60,6 @@ class TestOrder(unittest.TestCase):
             order_created["response"]["id"])
         self.assertEqual(order_get["status"], 200)
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class TestOrderProcess(unittest.TestCase):
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
@@ -79,7 +76,7 @@ class TestOrderProcess(unittest.TestCase):
         }
         card_token_created = self.sdk.card_token().create(card_token_object)
         if card_token_created.get("status") != 201 or not card_token_created.get("response"):
-            self.fail(f"Falha ao criar card token: {card_token_created}")
+            self.fail(f"Failed to create card token: {card_token_created}")
 
         card_token_id = card_token_created["response"]["id"]
         random_email_id = random.randint(100000, 999999)
@@ -108,17 +105,15 @@ class TestOrderProcess(unittest.TestCase):
 
         order_created = self.sdk.order().create(order_object)
         if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Falha ao criar pedido: {order_created}")
-
+            self.fail(f"Failed to create an order: {order_created}")
         order_id = order_created["response"]["id"]
-        print("Pedido criado com ID:", order_id)
 
         process_response = self.sdk.order().process(order_id)
         if process_response.get("status") != 200 or not process_response.get("response"):
-            self.fail(f"Falha ao processar pedido: {process_response}")
+            self.fail(f"Failed to create an order: {process_response}")
 
         self.assertEqual(process_response["status"], 200, "Status HTTP inválido ao processar o pedido")
-        print("Pedido processado com sucesso.")
+        print("Order processed successfully.")
 
-    if __name__ == "__main__":
-        unittest.main()
+if __name__ == "__main__":
+    unittest.main()

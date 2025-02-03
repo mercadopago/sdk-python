@@ -35,7 +35,7 @@ class Order(MPBase):
         return self._post(uri="/v1/orders", data=order_object, request_options=request_options)
 
     def get(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/in-person-payments/point/get-order/get) # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/online-payments/get-order/get ) # pylint: disable=line-too-long
 
         Args:
             order_id (str): The Order ID
