@@ -14,7 +14,7 @@ class TestOrder(unittest.TestCase):
     """
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
-    def test_create(self):
+    def test_create_get(self):
         """
         Test Function: Order
         """
@@ -55,6 +55,11 @@ class TestOrder(unittest.TestCase):
         order_created = self.sdk.order().create(order_object)
         self.assertEqual(order_created["status"], 201)
         self.assertEqual(order_created["response"]["status"], "processed")
+
+        order_get =  self.sdk.order().get(
+            order_created["response"]["id"])
+        self.assertEqual(order_get["status"], 200)
+
 
 if __name__ == "__main__":
     unittest.main()
