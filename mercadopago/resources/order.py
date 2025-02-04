@@ -36,7 +36,6 @@ class Order(MPBase):
 
     def cancel(self, order_id, request_options=None):
         """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/in-person-payments/point/cancel-order/post) # pylint: disable=line-too-long
-        // esperando confirmação do link com a Paloma
         Args:
             order_id (str): Order ID
             request_options (mercadopago.config.request_options, optional): An instance of
@@ -55,8 +54,7 @@ class Order(MPBase):
         return self._post(uri="/v1/orders/" + str(order_id) + "/cancel", request_options=request_options)
 
     def capture(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online/capture-order/post)  # pylint: disable=line-too-long
-        // esperando confirmação do link com a Paloma
+        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/capture/post)  # pylint: disable=line-too-long
         Args:
             order_id (str): ID of the order to be captured. This value is returned in the response to the Create order request.
             request_options (mercadopago.config.request_options, optional): An instance of
