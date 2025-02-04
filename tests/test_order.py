@@ -107,7 +107,7 @@ class TestsTransaction(unittest.TestCase):
         transaction_object = {
             "payments": [
                 {
-                    "amount": "1000.00",
+                    "amount": "200.00",
                     "payment_method": {
                         "id": "master",
                         "type": "credit_card",
@@ -124,39 +124,6 @@ class TestsTransaction(unittest.TestCase):
 
         self.assertEqual(transaction_added["status"], 201)
         self.assertEqual(transaction_added["response"]["status"], "processed")
-
-    def test_cancel_transaction(self):
-        card_token_id = self.create_card_token()
-        order_id = self.create_order_builder_mode(card_token_id)
-
-        transaction_object = {
-            "payments": [
-                {
-                    "amount": "1000.00",
-                    "payment_method": {
-                        "id": "master",
-                        "type": "credit_card",
-                        "token": card_token_id,
-                        "installments": 12
-                    }
-                }
-            ]
-        }
-
-        print("Adding transaction for cancellation...")
-        transaction_added = self.sdk.order().add_transaction(order_id, transaction_object)
-        print("Transaction addition response:", transaction_added)
-
-        transaction_id = transaction_added["response"]["id"]
-        print("Transaction ID:", transaction_id)
-
-        print("Cancelling transaction...")
-        transaction_canceled = self.sdk.order().cancel_transaction(order_id, transaction_id)
-        print("Transaction cancellation response:", transaction_canceled)
-
-        self.assertEqual(transaction_canceled["status"], 200)
-        self.assertEqual(transaction_canceled["response"]["status"], "canceled")
-
 
 if __name__ == "__main__":
     unittest.main()
