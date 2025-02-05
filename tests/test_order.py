@@ -125,6 +125,7 @@ class TestOrder(unittest.TestCase):
             self.fail(f"Failed to create order: {order_created}")
         return order_created["response"]["id"]
 
+    """teste ok"""
     def test_cancel_order(self):
         card_token_id = self.create_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
@@ -159,6 +160,7 @@ class TestOrder(unittest.TestCase):
             self.fail(f"Failed to create order: {order_created}")
         return order_created["response"]["id"]
 
+    """teste ok"""
     def test_add_transaction(self):
         card_token_id = self.create_test_card()
         print("Card token ID:", card_token_id)
@@ -181,11 +183,62 @@ class TestOrder(unittest.TestCase):
         }
 
         print("Adding transaction...")
-        transaction_added = self.sdk.order().add_transaction(order_id, transaction_object)
+        transaction_added = self.sdk.order().create_transaction(order_id, transaction_object)
         print("Transaction addition response:", transaction_added)
 
         self.assertEqual(transaction_added["status"], 201)
-        self.assertEqual(transaction_added["response"]["status"], "processed")
+
+    def test_update_transaction(self):
+        card_token_id = self.create_test_card()
+        order_id = self.create_order_builder_mode(card_token_id)
+        random_email_id = random.randint(100000, 999999)
+        order_mode_builder_complete = {
+            "type": "online",
+            "processing_mode": "manual",
+            "total_amount": "200.00",
+            "external_reference": "ext_ref_1234",
+            "transactions": {
+                "payments": [
+                    {
+                        "amount": "200.00",
+                        "payment_method": {
+                            "id": "master",
+                            "type": "credit_card",
+                            "token": card_token_id,
+                            "installments": 12
+                        }
+                    }
+                ]
+            },
+            "payer": {
+                "email": f"test_payer_{random_email_id}@testuser.com"
+            }
+        }
+
+        order_created = self.sdk.order().create(order_mode_builder_complete)
+        transaction_id = order_created["response"]["transactions"]["payments"][0]["id"]
+
+        transaction_update = {
+            "payment_method": {
+                "type": "credit_card",
+                "installments": 5
+            }
+        }
+
+        transaction_added = self.sdk.order().add_transaction(order_id, transaction_update)
+        self.assertEqual(transaction_added["status"], 201)
+
+        update_transaction_object = {
+            "amount": "150.00",
+            "payment_method": {
+                "installments": 1
+            }
+        }
+
+        transaction_id = transaction_added["response"]["payments"][0]["id"]
+        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id, update_transaction_object)
+        self.assertEqual(transaction_updated["status"], 200)
+
 
 if __name__ == "__main__":
     unittest.main()

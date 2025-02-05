@@ -110,7 +110,7 @@ class Order(MPBase):
 
         return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options)
 
-    def add_transaction(self, order_id, transaction_object, request_options=None):
+    def create_transaction(self, order_id, transaction_object, request_options=None):
         """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/add-transaction/post)  # pylint: disable=line-too-long
 
         Args:
