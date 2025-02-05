@@ -1,6 +1,7 @@
 """
     Module: test_order
 """
+import json
 import os
 import unittest
 import random
@@ -188,9 +189,7 @@ class TestOrder(unittest.TestCase):
 
         self.assertEqual(transaction_added["status"], 201)
 
-    def test_update_transaction(self):
-        card_token_id = self.create_test_card()
-        order_id = self.create_order_builder_mode(card_token_id)
+    def create_order_builder_mode_complete(self, card_token_id):
         random_email_id = random.randint(100000, 999999)
         order_mode_builder_complete = {
             "type": "online",
@@ -216,7 +215,20 @@ class TestOrder(unittest.TestCase):
         }
 
         order_created = self.sdk.order().create(order_mode_builder_complete)
-        transaction_id = order_created["response"]["transactions"]["payments"][0]["id"]
+
+
+        if order_created.get("status") != 201 or not order_created.get("response"):
+            self.fail(f"Failed to create order: {order_created}")
+        return order_created["response"]
+
+    def test_update_transaction(self):
+        card_token_id = self.create_test_card()
+        order_created = self.create_order_builder_mode_complete(card_token_id)
+        order_id = order_created["id"]
+        print("orderID :", order_id)
+        transaction_id = order_created["transactions"]["payments"][0]["id"]
+        print("transactionID :" ,transaction_id)
+
 
         transaction_update = {
             "payment_method": {
@@ -225,18 +237,7 @@ class TestOrder(unittest.TestCase):
             }
         }
 
-        transaction_added = self.sdk.order().add_transaction(order_id, transaction_update)
-        self.assertEqual(transaction_added["status"], 201)
-
-        update_transaction_object = {
-            "amount": "150.00",
-            "payment_method": {
-                "installments": 1
-            }
-        }
-
-        transaction_id = transaction_added["response"]["payments"][0]["id"]
-        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id, update_transaction_object)
+        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id, transaction_update)
         self.assertEqual(transaction_updated["status"], 200)
 
 
