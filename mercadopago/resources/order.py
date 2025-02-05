@@ -3,7 +3,6 @@
 """
 from mercadopago.core import MPBase
 
-
 class Order(MPBase):
     """
     This class provides the methods to access the API that will allow you to create
@@ -74,7 +73,7 @@ class Order(MPBase):
 
         return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options)
 
- def cancel(self, order_id, request_options=None):
+    def cancel(self, order_id, request_options=None):
         """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/in-person-payments/point/cancel-order/post) # pylint: disable=line-too-long
         Args:
             order_id (str): Order ID
@@ -111,7 +110,7 @@ class Order(MPBase):
 
         return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options)
 
- def add_transaction(self, order_id, transaction_object, request_options=None):
+    def add_transaction(self, order_id, transaction_object, request_options=None):
         """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/add-transaction/post)  # pylint: disable=line-too-long
 
         Args:
