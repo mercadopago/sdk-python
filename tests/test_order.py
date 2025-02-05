@@ -1,7 +1,6 @@
 """
     Module: test_order
 """
-from datetime import datetime
 import os
 import unittest
 import random
@@ -14,21 +13,23 @@ class TestOrder(unittest.TestCase):
     """
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
-    def test_create_order_and_get_by_id(self):
-        """
-        Test Function: Order
-        """
+    def create_test_card(self, status="APRO"):
         card_token_object = {
             "card_number": "5031433215406351",
             "security_code": "123",
-            "expiration_year": "2055",
+            "expiration_year": "2030",
             "expiration_month": "11",
-            "cardholder": {
-                "name": "APRO"
-            }
+            "cardholder": {"name": status}
         }
-
         card_token_created = self.sdk.card_token().create(card_token_object)
+        return card_token_created["response"]["id"]
+
+    """teste ok"""
+    def test_create_order_and_get_by_id(self):
+        """
+        Test Function: Create an Order and Get an Order by ID
+        """
+        card_token_id = self.create_test_card()
         random_email_id = random.randint(100000, 999999)
         order_object = {
             "type": "online",
@@ -41,7 +42,7 @@ class TestOrder(unittest.TestCase):
                 "payment_method": {
                     "id": "master",
                     "type": "credit_card",
-                    "token": card_token_created["response"]["id"],
+                    "token": card_token_id,
                     "installments": 12
                 }
                 }
@@ -51,34 +52,17 @@ class TestOrder(unittest.TestCase):
             "email": f"test_payer_{random_email_id}@testuser.com"
             }
         }
-        
+
         order_created = self.sdk.order().create(order_object)
         self.assertEqual(order_created["status"], 201)
         self.assertEqual(order_created["response"]["status"], "processed")
 
-        order_get =  self.sdk.order().get(
-            order_created["response"]["id"])
+        order_get =  self.sdk.order().get(order_created["response"]["id"])
         self.assertEqual(order_get["status"], 200)
 
-
-class TestOrderProcess(unittest.TestCase):
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
-
+    """teste ok"""
     def test_process_order(self):
-        card_token_object = {
-            "card_number": "5031433215406351",
-            "security_code": "123",
-            "expiration_year": "2055",
-            "expiration_month": "11",
-            "cardholder": {
-                "name": "APRO"
-            }
-        }
-        card_token_created = self.sdk.card_token().create(card_token_object)
-        if card_token_created.get("status") != 201 or not card_token_created.get("response"):
-            self.fail(f"Failed to create card token: {card_token_created}")
-
-        card_token_id = card_token_created["response"]["id"]
+        card_token_id = self.create_test_card()
         random_email_id = random.randint(100000, 999999)
         order_object = {
             "type": "online",
@@ -104,35 +88,12 @@ class TestOrderProcess(unittest.TestCase):
         }
 
         order_created = self.sdk.order().create(order_object)
-        if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Failed to create an order: {order_created}")
         order_id = order_created["response"]["id"]
-
         process_response = self.sdk.order().process(order_id)
         if process_response.get("status") != 200 or not process_response.get("response"):
             self.fail(f"Failed to create an order: {process_response}")
-
         self.assertEqual(process_response["status"], 200, "Status HTTP inválido ao processar o pedido")
         print("Order processed successfully.")
-
-
-class TestOrderCancelAndCapture(unittest.TestCase):
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
-
-    def create_card_token(self):
-        card_token_object = {
-            "card_number": "5031433215406351",
-            "security_code": "123",
-            "expiration_year": "2025",
-            "expiration_month": "11",
-            "cardholder": {
-                "name": "APRO"
-            }
-        }
-        card_token_created = self.sdk.card_token().create(card_token_object)
-        if card_token_created.get("status") != 201 or not card_token_created.get("response"):
-            self.fail(f"Failed to create card token: {card_token_created}")
-        return card_token_created["response"]["id"]
 
     def create_order_canceled_or_captured(self, card_token_id):
         random_email_id = random.randint(100000, 999999)
@@ -165,40 +126,19 @@ class TestOrderCancelAndCapture(unittest.TestCase):
         return order_created["response"]["id"]
 
     def test_cancel_order(self):
-        card_token_id = self.create_card_token()
+        card_token_id = self.create_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
         order_canceled = self.sdk.order().cancel(order_id)
         self.assertEqual(order_canceled["status"], 200)
         self.assertEqual(order_canceled["response"]["status"], "canceled")
 
+    """teste ok"""
     def test_capture_order(self):
-        card_token_id = self.create_card_token()
+        card_token_id = self.create_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
         order_captured = self.sdk.order().capture(order_id)
         self.assertEqual(order_captured["status"], 200)
         self.assertEqual(order_captured["response"]["status"], "processed")
-
-
-class TestsTransaction(unittest.TestCase):
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
-
-    def create_card_token(self):
-        card_token_object = {
-            "card_number": "5031433215406351",
-            "security_code": "123",
-            "expiration_year": "2025",
-            "expiration_month": "11",
-            "cardholder": {
-                "name": "APRO"
-            }
-        }
-        print("Creating card token...")
-        card_token_created = self.sdk.card_token().create(card_token_object)
-        print("Card token creation response:", card_token_created)
-
-        if card_token_created.get("status") != 201 or not card_token_created.get("response"):
-            self.fail(f"Failed to create card token: {card_token_created}")
-        return card_token_created["response"]["id"]
 
     def create_order_builder_mode(self, card_token_id):
         random_email_id = random.randint(100000, 999999)
@@ -220,7 +160,7 @@ class TestsTransaction(unittest.TestCase):
         return order_created["response"]["id"]
 
     def test_add_transaction(self):
-        card_token_id = self.create_card_token()
+        card_token_id = self.create_test_card()
         print("Card token ID:", card_token_id)
 
         order_id = self.create_order_builder_mode(card_token_id)
