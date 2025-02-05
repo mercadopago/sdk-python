@@ -3,6 +3,7 @@
 """
 import json
 import os
+import time
 import unittest
 import random
 import mercadopago
@@ -25,7 +26,6 @@ class TestOrder(unittest.TestCase):
         card_token_created = self.sdk.card_token().create(card_token_object)
         return card_token_created["response"]["id"]
 
-    """teste ok"""
     def test_create_order_and_get_by_id(self):
         """
         Test Function: Create an Order and Get an Order by ID
@@ -61,7 +61,6 @@ class TestOrder(unittest.TestCase):
         order_get =  self.sdk.order().get(order_created["response"]["id"])
         self.assertEqual(order_get["status"], 200)
 
-    """teste ok"""
     def test_process_order(self):
         card_token_id = self.create_test_card()
         random_email_id = random.randint(100000, 999999)
@@ -126,15 +125,14 @@ class TestOrder(unittest.TestCase):
             self.fail(f"Failed to create order: {order_created}")
         return order_created["response"]["id"]
 
-    """teste ok"""
     def test_cancel_order(self):
         card_token_id = self.create_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
+        time.sleep(4)
         order_canceled = self.sdk.order().cancel(order_id)
         self.assertEqual(order_canceled["status"], 200)
         self.assertEqual(order_canceled["response"]["status"], "canceled")
 
-    """teste ok"""
     def test_capture_order(self):
         card_token_id = self.create_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
@@ -161,7 +159,6 @@ class TestOrder(unittest.TestCase):
             self.fail(f"Failed to create order: {order_created}")
         return order_created["response"]["id"]
 
-    """teste ok"""
     def test_add_transaction(self):
         card_token_id = self.create_test_card()
         print("Card token ID:", card_token_id)
@@ -228,7 +225,6 @@ class TestOrder(unittest.TestCase):
         print("orderID :", order_id)
         transaction_id = order_created["transactions"]["payments"][0]["id"]
         print("transactionID :" ,transaction_id)
-
 
         transaction_update = {
             "payment_method": {
