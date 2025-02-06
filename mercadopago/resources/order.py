@@ -161,23 +161,20 @@ class Order(MPBase):
             raise Exception(f"Failed to update transaction: {response}")
         return response
 
-    def refund_transaction(self, order_id, transaction_object, request_options=None):
+    def refund_transaction(self, order_id, transaction_object=None, request_options=None):
         """[Click here for more info](https://www.mercadopago.com/developers/pt/reference/order/online-payments/refund/post)  # pylint: disable=line-too-long
-
         Args:
             order_id (str): The ID of the order to which the transaction belongs
-            transaction_object (dict): Transaction details to be updated
+            transaction_object (dict, optional): Transaction details to be updated
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
-
         Raises:
             ValueError: Param transaction_object must be a Dictionary
-
         Returns:
             dict: Transaction update response
         """
-        if not isinstance(transaction_object, dict):
+        if transaction_object is not None and not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
         response = self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
@@ -187,24 +184,19 @@ class Order(MPBase):
         return response
 
     def delete_transaction(self, order_id, transaction_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/pt/reference/order/online-payments/delete-transaction/delete)  # pylint: disable=line-too-long
-        Args:
-            order_id (str): The ID of the order to which the transaction belongs
-            transaction_id (str): The ID of the transaction to be deleted
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to the REST call.
-            Defaults to None.
-        Raises:
-            ValueError: Param transaction_id must be a string
-        Returns:
-            dict: Transaction deletion response
-        """
-
-        if not isinstance(transaction_id, str):
-            raise ValueError("Param transaction_id must be a string")
+        if not isinstance(order_id, str) or not isinstance(transaction_id, str):
+            raise ValueError("Params order_id and transaction_id must be strings")
 
         response = self._delete(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
                                 request_options=request_options)
-        if response.get("status") != 204:
-            raise Exception(f"Failed to delete transaction: {response}")
-        return response
+
+        print(f"HTTP Status: {response.status_code}")
+        print(f"HTTP Response Text: {response.text}")  # Log da resposta para depuração
+
+        if response.status_code == 204:
+            return None  # Retornar None para indicar sucesso sem conteúdo
+
+        try:
+            return response.json()  # Tentar retornar JSON se não for 204
+        except ValueError:
+            raise Exception(f"Invalid JSON response: {response.text}")
