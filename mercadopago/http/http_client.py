@@ -24,12 +24,16 @@ class HttpClient:
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))
         with http as session:
             api_result = session.request(method, url, **kwargs)
-            response = {
-                "status": api_result.status_code,
-                "response": api_result.json()
-            }
+            response = {"status": api_result.status_code, "response": None}
 
-        return response
+            if api_result.status_code != 204 and api_result.content:
+                try:
+                    response["response"] = api_result.json()
+                except ValueError as e:
+                    print(f"Failed to parse JSON: {str(e)}")
+                    response["response"] = None
+
+            return response
 
     def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
         """Makes a GET request to the API"""

@@ -290,23 +290,16 @@ class TestOrder(unittest.TestCase):
                       f"Unexpected status code for refund: {transaction_refunded['status']}. Response: {transaction_refunded}")
 
     def test_delete_transaction(self):
-        print( "TESTE DO DELETE TRANSACTION")
         card_token_id = self.create_test_card()
         order_created = self.create_order_builder_mode_complete(card_token_id)
         order_id = order_created["id"]
-        print("Order ID:", order_id)
-
         transaction_id = order_created["transactions"]["payments"][0]["id"]
-        print("Transaction ID:", transaction_id)
         sleep(3)
 
-        try:
-            transaction_deleted = self.sdk.order().delete_transaction(order_id, transaction_id)
-            print("Transaction delete response:", transaction_deleted)  # Log do retorno
-            self.assertIsNone(transaction_deleted, "Expected no response body, method might have failed.")
-        except Exception as e:
-            print(f"Error occurred during transaction deletion: {str(e)}")
-            self.fail(f"Transaction deletion failed: {str(e)}")
+        transaction_deleted = self.sdk.order().delete_transaction(order_id, transaction_id)
+        print("Transaction Deleted:", transaction_deleted)
+        self.assertEqual(transaction_deleted["status"], 204)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -190,13 +190,6 @@ class Order(MPBase):
         response = self._delete(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
                                 request_options=request_options)
 
-        print(f"HTTP Status: {response.status_code}")
-        print(f"HTTP Response Text: {response.text}")  # Log da resposta para depuração
-
-        if response.status_code == 204:
-            return None  # Retornar None para indicar sucesso sem conteúdo
-
-        try:
-            return response.json()  # Tentar retornar JSON se não for 204
-        except ValueError:
-            raise Exception(f"Invalid JSON response: {response.text}")
+        if response.get("status") != 204:
+            raise Exception(f"Failed to delete transaction: {response}")
+        return response
