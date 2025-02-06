@@ -19,7 +19,7 @@ class Order(MPBase):
         Args:
             order_object (dict): Order to be created
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
@@ -34,19 +34,19 @@ class Order(MPBase):
         return self._post(uri="/v1/orders", data=order_object, request_options=request_options)
 
     def get(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/online-payments/get-order/get ) # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/get-order/get ) # pylint: disable=line-too-long
 
         Args:
             order_id (str): The Order ID
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
         ValueError: Param order_id must be a string
 
         Returns:
-            dict: Order ID returned in the response to the request made for its creation.
+            dict: Order returned in the response to the request made for its creation.
         """
 
         if not isinstance(order_id, str):
@@ -55,17 +55,17 @@ class Order(MPBase):
         return self._get(uri="/v1/orders/" + str(order_id), request_options=request_options)
 
     def process(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online/process-order/post # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online/process-order/post) # pylint: disable=line-too-long
         Args:
             order_id (str): ID of the order to be processed. This value is returned in the response to the Create order request.
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
             ValueError: Param order_id must be a string
         Returns:
-            dict: Order ID returned in the response to the request made for its creation.
+            dict: Order returned in the response to the request made for its creation.
         """
 
         if not isinstance(order_id, str):
@@ -74,11 +74,11 @@ class Order(MPBase):
         return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options)
 
     def cancel(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/order/in-person-payments/point/cancel-order/post) # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/in-person-payments/point/cancel-order/post) # pylint: disable=line-too-long
         Args:
             order_id (str): Order ID
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
@@ -93,16 +93,16 @@ class Order(MPBase):
         return self._post(uri="/v1/orders/" + str(order_id) + "/cancel", request_options=request_options)
 
     def capture(self, order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/capture/post)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/capture/post)  # pylint: disable=line-too-long
         Args:
             order_id (str): ID of the order to be captured. This value is returned in the response to the Create order request.
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
         Raises:
             ValueError: Param order_id must be a string
         Returns:
-            dict: Order ID returned in the response to the request made for its creation.
+            dict: Order returned in the response to the request made for its creation.
         """
 
         if not isinstance(order_id, str):
@@ -111,20 +111,20 @@ class Order(MPBase):
         return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options)
 
     def create_transaction(self, order_id, transaction_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/add-transaction/post)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/add-transaction/post)  # pylint: disable=line-too-long
 
         Args:
             order_id (str): The ID of the order to which the transaction will be added
             transaction_object (dict): Transaction to be added
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
             ValueError: Param transaction_object must be a Dictionary
 
         Returns:
-            dict: Transaction addition response
+            dict: Transaction created response
         """
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
@@ -136,14 +136,14 @@ class Order(MPBase):
         return response
 
     def update_transaction(self, order_id, transaction_id, transaction_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/order/online-payments/update-transaction/put)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/update-transaction/put)  # pylint: disable=line-too-long
 
         Args:
             order_id (str): The ID of the order to which the transaction belongs
             transaction_id (str): The ID of the transaction to be updated
             transaction_object (dict): Transaction details to be updated
             request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
+            RequestOptions can be pass changing or adding custom options to the REST call.
             Defaults to None.
 
         Raises:
@@ -162,7 +162,7 @@ class Order(MPBase):
         return response
 
     def refund_transaction(self, order_id, transaction_object=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/pt/reference/order/online-payments/refund/post)  # pylint: disable=line-too-long
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/refund/post)  # pylint: disable=line-too-long
         Args:
             order_id (str): The ID of the order to which the transaction belongs
             transaction_object (dict, optional): Transaction details to be updated
@@ -172,7 +172,7 @@ class Order(MPBase):
         Raises:
             ValueError: Param transaction_object must be a Dictionary
         Returns:
-            dict: Transaction update response
+            dict: Order refunded response
         """
         if transaction_object is not None and not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
@@ -184,6 +184,18 @@ class Order(MPBase):
         return response
 
     def delete_transaction(self, order_id, transaction_id, request_options=None):
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/delete-transaction/delete)  # pylint: disable=line-too-long
+                Args:
+                    order_id (str): The ID of the order to which the transaction belongs
+                    transaction_id (str): The ID of the transaction to be deleted
+                    request_options (mercadopago.config.request_options, optional): An instance of
+                    RequestOptions can be pass changing or adding custom options to the REST call.
+                    Defaults to None.
+                Raises:
+                    ValueError: Params order_id and transaction_id must be strings
+                Returns:
+                    Status 204 - No Content - if deleted successfully
+                """
         if not isinstance(order_id, str) or not isinstance(transaction_id, str):
             raise ValueError("Params order_id and transaction_id must be strings")
 

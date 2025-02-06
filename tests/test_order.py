@@ -204,7 +204,7 @@ class TestOrder(unittest.TestCase):
         process_response = self.sdk.order().process(order_id)
         if process_response.get("status") != 200 or not process_response.get("response"):
             self.fail(f"Failed to create an order: {process_response}")
-        self.assertEqual(process_response["status"], 200, "Status HTTP inválido ao processar o pedido")
+        self.assertEqual(process_response["status"], 200, "Invalid HTTP status when processing the order")
 
     def test_cancel_order(self):
         card_token_id = self.create_test_card()
