@@ -40,14 +40,14 @@ def main():
             ]
         },
         "payer": {
-            "email": "<EMAIL>"
+            "email": "<YOUR_EMAIL_TEST>"
         }
     }
 
     try:
         # Call the method to create the order
         response = sdk.order().create(order_object)
-        print("Order created successfully:", response["response"])
+        print("Order created successfully!")
 
         # Get the order ID from the response
         order_id = response["response"]["id"]
