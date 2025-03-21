@@ -71,7 +71,7 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options)
+        return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options) # pylint: disable=line-too-long
 
     def cancel(self, order_id, request_options=None):
         """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/cancel-order/post) # pylint: disable=line-too-long
@@ -90,7 +90,7 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/cancel", request_options=request_options)
+        return self._post(uri="/v1/orders/" + str(order_id) + "/cancel", request_options=request_options) # pylint: disable=line-too-long
 
     def capture(self, order_id, request_options=None):
         """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/capture/post)  # pylint: disable=line-too-long
@@ -108,7 +108,7 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options)
+        return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options) # pylint: disable=line-too-long
 
     def create_transaction(self, order_id, transaction_object, request_options=None):
         """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/add-transaction/post)  # pylint: disable=line-too-long
@@ -132,10 +132,10 @@ class Order(MPBase):
         response = self._post(uri=f"/v1/orders/{order_id}/transactions", data=transaction_object,
                               request_options=request_options)
         if response.get("status") != 201:
-            raise Exception(f"Failed to add transaction: {response}")
+            raise Exception(f"Failed to add transaction: {response}")  # pylint: disable=broad-exception-raised
         return response
 
-    def update_transaction(self, order_id, transaction_id, transaction_object, request_options=None):
+    def update_transaction(self, order_id, transaction_id, transaction_object, request_options=None): # pylint: disable=line-too-long
         """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/update-transaction/put)  # pylint: disable=line-too-long
 
         Args:
@@ -155,10 +155,10 @@ class Order(MPBase):
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        response = self._put(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}", data=transaction_object,
-                             request_options=request_options)
+        response = self._put(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
+                             data=transaction_object, request_options=request_options)
         if response.get("status") != 200:
-            raise Exception(f"Failed to update transaction: {response}")
+            raise Exception(f"Failed to update transaction: {response}")  # pylint: disable=broad-exception-raised
         return response
 
     def refund_transaction(self, order_id, transaction_object=None, request_options=None):
@@ -180,7 +180,7 @@ class Order(MPBase):
         response = self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
                               request_options=request_options)
         if response.get("status") != 201:
-            raise Exception(f"Failed to refund transaction: {response}")
+            raise Exception(f"Failed to refund transaction: {response}")  # pylint: disable=broad-exception-raised
         return response
 
     def delete_transaction(self, order_id, transaction_id, request_options=None):
@@ -203,5 +203,5 @@ class Order(MPBase):
                                 request_options=request_options)
 
         if response.get("status") != 204:
-            raise Exception(f"Failed to delete transaction: {response}")
+            raise Exception(f"Failed to delete transaction: {response}")  # pylint: disable=broad-exception-raised
         return response
