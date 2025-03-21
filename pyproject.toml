@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mercadopago"
-version = "2.2.3"
+version = "2.3.0"
 authors = [
     {name = "Mercado Pago", email = "mp_sdk@mercadopago.com"}
 ]
