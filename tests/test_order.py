@@ -276,7 +276,6 @@ class TestOrder(unittest.TestCase):
         sleep(3)
 
         transaction_refunded = self.sdk.order().refund_transaction(order_id, transaction_refund)
-        print("Refund Transaction Response:", transaction_refunded)
         self.assertIn(transaction_refunded["status"], [ 201],
                       f"Unexpected status code for refund: {transaction_refunded['status']}."
                       " Response: {transaction_refunded}")
@@ -287,7 +286,6 @@ class TestOrder(unittest.TestCase):
         order_id = order_created["id"]
         sleep(3)
         transaction_refunded = self.sdk.order().refund_transaction(order_id)
-        print("Refund Transaction Response:", transaction_refunded)
         self.assertIn(transaction_refunded["status"], [ 201],
                       f"Unexpected status code for refund: {transaction_refunded['status']}."
                       " Response: {transaction_refunded}")
@@ -300,7 +298,6 @@ class TestOrder(unittest.TestCase):
         sleep(3)
 
         transaction_deleted = self.sdk.order().delete_transaction(order_id, transaction_id)
-        print("Transaction Deleted:", transaction_deleted)
         self.assertEqual(transaction_deleted["status"], 204)
 
 

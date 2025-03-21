@@ -6,6 +6,7 @@ import os
 import unittest
 import random
 import mercadopago
+import time
 
 
 class TestSubscription(unittest.TestCase):
@@ -96,7 +97,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "BRL",
+                "currency_id": "ARS",
             },
             "status": "authorized"
         }
@@ -157,7 +158,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "BRL",
+                "currency_id": "ARS",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan #{random.randint(100000, 999999)}",

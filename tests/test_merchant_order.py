@@ -25,14 +25,13 @@ class TestMerchantOrder(unittest.TestCase):
                     "picture_url": "http://product1.image.png",
                     "quantity": 1,
                     "title": "Item 1",
-                    "currency_id": "R$",
+                    "currency_id": "BRL",
                     "unit_price": 20.5
                 }
             ]
         }
 
         preference_saved = self.sdk.preference().create(preference_object)
-
         merchant_order_object = {
             "preference_id": preference_saved["response"]["id"],
             "site_id": "MLB",

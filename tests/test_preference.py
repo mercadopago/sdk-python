@@ -32,7 +32,7 @@ class TestPreference(unittest.TestCase):
         }
         preference_saved = self.sdk.preference().create(preference_object)
         self.assertEqual(preference_saved["status"], 201)
-        time.sleep(1)
+        time.sleep(3)
 
         preference_object["items"][0]["title"] = "Testando 1 2 3"
 
@@ -40,7 +40,7 @@ class TestPreference(unittest.TestCase):
         preference_update = self.sdk.preference().update(preference_id, preference_object)
         self.assertEqual(preference_update["status"], 200)
 
-        time.sleep(1)
+        time.sleep(3)
         preference_saved = self.sdk.preference().get(preference_id)
         self.assertEqual(preference_saved["status"], 200)
         self.assertEqual(preference_saved["response"]["items"][0]["title"],
