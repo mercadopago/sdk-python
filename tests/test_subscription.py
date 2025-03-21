@@ -6,7 +6,6 @@ import os
 import unittest
 import random
 import mercadopago
-import time
 
 
 class TestSubscription(unittest.TestCase):
