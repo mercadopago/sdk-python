@@ -1,7 +1,6 @@
 """
     Module: test_order
 """
-import json
 import os
 import time
 import unittest
@@ -58,7 +57,7 @@ class TestOrder(unittest.TestCase):
             self.fail(f"Failed to create order: {order_created}")
         return order_created["response"]["id"]
 
-    def create_order_builder_mode(self, card_token_id):
+    def create_order_builder_mode(self):
         random_email_id = random.randint(100000, 999999)
         order_object_cc = {
             "type": "online",
@@ -204,7 +203,8 @@ class TestOrder(unittest.TestCase):
         process_response = self.sdk.order().process(order_id)
         if process_response.get("status") != 200 or not process_response.get("response"):
             self.fail(f"Failed to create an order: {process_response}")
-        self.assertEqual(process_response["status"], 200, "Invalid HTTP status when processing the order")
+        self.assertEqual(process_response["status"], 200,
+        "Invalid HTTP status when processing the order")
 
     def test_cancel_order(self):
         card_token_id = self.create_test_card()
@@ -223,7 +223,7 @@ class TestOrder(unittest.TestCase):
 
     def test_create_transaction(self):
         card_token_id = self.create_test_card()
-        order_id = self.create_order_builder_mode(card_token_id)
+        order_id = self.create_order_builder_mode()
         transaction_object = {
             "payments": [
                 {
@@ -254,7 +254,8 @@ class TestOrder(unittest.TestCase):
             }
         }
 
-        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id, transaction_update)
+        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id,
+         transaction_update)
         self.assertEqual(transaction_updated["status"], 200)
 
     def test_partial_refund_transaction(self):
@@ -277,7 +278,8 @@ class TestOrder(unittest.TestCase):
         transaction_refunded = self.sdk.order().refund_transaction(order_id, transaction_refund)
         print("Refund Transaction Response:", transaction_refunded)
         self.assertIn(transaction_refunded["status"], [ 201],
-                      f"Unexpected status code for refund: {transaction_refunded['status']}. Response: {transaction_refunded}")
+                      f"Unexpected status code for refund: {transaction_refunded['status']}."
+                      " Response: {transaction_refunded}")
 
     def test_refund_transaction(self):
         card_token_id = self.create_test_card()
@@ -287,7 +289,8 @@ class TestOrder(unittest.TestCase):
         transaction_refunded = self.sdk.order().refund_transaction(order_id)
         print("Refund Transaction Response:", transaction_refunded)
         self.assertIn(transaction_refunded["status"], [ 201],
-                      f"Unexpected status code for refund: {transaction_refunded['status']}. Response: {transaction_refunded}")
+                      f"Unexpected status code for refund: {transaction_refunded['status']}."
+                      " Response: {transaction_refunded}")
 
     def test_delete_transaction(self):
         card_token_id = self.create_test_card()

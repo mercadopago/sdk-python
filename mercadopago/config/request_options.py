@@ -21,7 +21,8 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
     __integrator_id = None
     __platform_id = None
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(  # pylint: disable=too-many-positional-arguments
+    # pylint: disable=too-many-arguments
         self,
         access_token=None,
         connection_timeout=60.0,

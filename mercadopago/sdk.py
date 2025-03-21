@@ -122,7 +122,7 @@ class SDK:
         """
         return MerchantOrder(request_options is not None and request_options
                              or self.request_options, self.http_client)
-    
+
     def order(self, request_options=None):
         """
         Returns the attribute value of the function

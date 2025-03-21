@@ -37,6 +37,7 @@ class HttpClient:
             return response
 
     def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a GET request to the API"""
         return self.request(
             "GET",
@@ -48,6 +49,7 @@ class HttpClient:
         )
 
     def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a POST request to the API"""
         return self.request(
             "POST",
@@ -60,6 +62,7 @@ class HttpClient:
         )
 
     def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a PUT request to the API"""
         return self.request(
             "PUT",
@@ -72,6 +75,7 @@ class HttpClient:
         )
 
     def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a DELETE request to the API"""
         return self.request(
             "DELETE",
