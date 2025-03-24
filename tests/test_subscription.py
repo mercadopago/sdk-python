@@ -44,7 +44,13 @@ class TestSubscription(unittest.TestCase):
             "payer_email": self._customer_email,
             "preapproval_plan_id": self._plan_id,
             "card_token_id": card_token_id,
-            "status": "authorized"
+            "status": "authorized",
+            "auto_recurring": {
+                "frequency": 1,
+                "frequency_type": "months",
+                "transaction_amount": 60,
+                "currency_id": "ARS"
+            }
         }
 
         subscription_response = self.sdk.subscription().create(subscription_payload)
