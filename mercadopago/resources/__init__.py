@@ -11,6 +11,7 @@ from mercadopago.resources.customer import Customer
 from mercadopago.resources.disbursement_refund import DisbursementRefund
 from mercadopago.resources.identification_type import IdentificationType
 from mercadopago.resources.merchant_order import MerchantOrder
+from mercadopago.resources.order import Order
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
 from mercadopago.resources.plan import Plan
@@ -31,6 +32,7 @@ __all__ = (
     'HttpClient',
     'IdentificationType',
     'MerchantOrder',
+    'Order',
     'Payment',
     'PaymentMethods',
     'Plan',

@@ -44,7 +44,13 @@ class TestSubscription(unittest.TestCase):
             "payer_email": self._customer_email,
             "preapproval_plan_id": self._plan_id,
             "card_token_id": card_token_id,
-            "status": "authorized"
+            "status": "authorized",
+            "auto_recurring": {
+                "frequency": 1,
+                "frequency_type": "months",
+                "transaction_amount": 60,
+                "currency_id": "ARS"
+            }
         }
 
         subscription_response = self.sdk.subscription().create(subscription_payload)
@@ -96,7 +102,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "BRL",
+                "currency_id": "ARS",
             },
             "status": "authorized"
         }
@@ -157,7 +163,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "BRL",
+                "currency_id": "ARS",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan #{random.randint(100000, 999999)}",

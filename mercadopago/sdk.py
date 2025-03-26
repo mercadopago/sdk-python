@@ -12,6 +12,7 @@ from mercadopago.resources import (
     DisbursementRefund,
     IdentificationType,
     MerchantOrder,
+    Order,
     Payment,
     PaymentMethods,
     Plan,
@@ -33,15 +34,16 @@ class SDK:
         5. Disbursement Refund
         6. Identification Type
         7. Merchant Order
-        8. Payment Methods
-        9. Payment
-        10. Preapproval
-        11. Preference
-        12. Refund
-        13. User
-        14. Chargeback
-        15. Subscription
-        16. Plan
+        8. Order
+        9. Payment Methods
+        10. Payment
+        11. Preapproval
+        12. Preference
+        13. Refund
+        14. User
+        15. Chargeback
+        16. Subscription
+        17. Plan
     """
 
     def __init__(
@@ -120,6 +122,13 @@ class SDK:
         """
         return MerchantOrder(request_options is not None and request_options
                              or self.request_options, self.http_client)
+
+    def order(self, request_options=None):
+        """
+        Returns the attribute value of the function
+        """
+        return Order(request_options is not None and request_options
+                       or self.request_options, self.http_client)
 
     def payment(self, request_options=None):
         """

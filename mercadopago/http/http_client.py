@@ -1,6 +1,7 @@
 """
 Module: http_client
 """
+# pylint: disable=too-many-arguments
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
@@ -24,14 +25,19 @@ class HttpClient:
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))
         with http as session:
             api_result = session.request(method, url, **kwargs)
-            response = {
-                "status": api_result.status_code,
-                "response": api_result.json()
-            }
+            response = {"status": api_result.status_code, "response": None}
 
-        return response
+            if api_result.status_code != 204 and api_result.content:
+                try:
+                    response["response"] = api_result.json()
+                except ValueError as e:
+                    print(f"Failed to parse JSON: {str(e)}")
+                    response["response"] = None
+
+            return response
 
     def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a GET request to the API"""
         return self.request(
             "GET",
@@ -43,6 +49,7 @@ class HttpClient:
         )
 
     def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a POST request to the API"""
         return self.request(
             "POST",
@@ -55,6 +62,7 @@ class HttpClient:
         )
 
     def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a PUT request to the API"""
         return self.request(
             "PUT",
@@ -67,6 +75,7 @@ class HttpClient:
         )
 
     def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
         """Makes a DELETE request to the API"""
         return self.request(
             "DELETE",
