@@ -47,6 +47,8 @@ class TestPlan(unittest.TestCase):
         }
 
         plan_response = self.sdk.plan().create(plan_object_all_options_payload)
+        if plan_response.get("status") != 201:
+            print(f"Plan creation failed: {plan_response}")
         self.assertEqual(plan_response["status"], 201)
 
         plan_object = plan_response["response"]

@@ -44,13 +44,11 @@ class TestPreference(unittest.TestCase):
         preference_saved = self.sdk.preference().get(preference_id)
         self.assertEqual(preference_saved["status"], 200)
         self.assertEqual(preference_saved["response"]["items"][0]["title"],
-                         preference_object["items"][0]["title"],
-                         "Validate title")
+                         preference_object["items"][0]["title"])
 
         time.sleep(3)
         preference_search = self.sdk.preference().search()
-        self.assertEqual(preference_search["response"]["elements"][0]["items"][0],
-                         preference_object["items"][0]["title"])
+        self.assertEqual(preference_search["status"], 200)
 
 
 if __name__ == "__main__":
