@@ -24,7 +24,7 @@ class TestSubscription(unittest.TestCase):
         cls._customer_email = customer_data["response"]["email"]
         plan_data = cls.create_plan()
         if plan_data.get("status") != 201 or "id" not in plan_data.get("response", {}):
-            raise Exception(f"Failed to create plan: {plan_data}")
+            raise RuntimeError(f"Failed to create plan: {plan_data}")
         cls._plan_id = plan_data["response"]["id"]
 
     @classmethod
