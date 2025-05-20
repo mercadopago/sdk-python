@@ -111,6 +111,8 @@ class TestSubscription(unittest.TestCase):
 
         subscription_response = self.sdk.subscription().create(subscription_payload)
         self.assertEqual(subscription_response["status"], 201)
+        if subscription_response.get("status") != 201:
+            raise RuntimeError(f"Failed to to create subscription: {subscription_response}")
 
         subscription_object = subscription_response['response']
         self.assertIn('init_point', subscription_object)
