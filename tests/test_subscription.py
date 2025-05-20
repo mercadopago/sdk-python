@@ -104,15 +104,15 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "status": "authorized"
         }
 
         subscription_response = self.sdk.subscription().create(subscription_payload)
-        self.assertEqual(subscription_response["status"], 201)
         if subscription_response.get("status") != 201:
             raise RuntimeError(f"Failed to to create subscription: {subscription_response}")
+        self.assertEqual(subscription_response["status"], 201)
 
         subscription_object = subscription_response['response']
         self.assertIn('init_point', subscription_object)
