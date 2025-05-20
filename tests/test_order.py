@@ -26,7 +26,7 @@ class TestOrder(unittest.TestCase):
         }
         card_token_created = self.sdk.card_token().create(card_token_object)
         return card_token_created["response"]["id"]
-    
+
     def create_visa_test_card(self, status="APRO"):
         card_token_object = {
             "card_number": "4235647728025682",
