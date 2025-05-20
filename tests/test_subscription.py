@@ -165,7 +165,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan #{random.randint(100000, 999999)}",
