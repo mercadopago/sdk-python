@@ -30,7 +30,7 @@ class TestPlan(unittest.TestCase):
                     "frequency_type": "days"
                 },
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan #{random_reason_number}",
@@ -40,13 +40,15 @@ class TestPlan(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan (mandatory) #{random_reason_number}",
         }
 
         plan_response = self.sdk.plan().create(plan_object_all_options_payload)
+        if plan_response.get("status") != 201:
+            print(f"Plan creation failed: {plan_response}")
         self.assertEqual(plan_response["status"], 201)
 
         plan_object = plan_response["response"]

@@ -23,6 +23,8 @@ class TestSubscription(unittest.TestCase):
         cls._customer_id = customer_data["response"]["id"]
         cls._customer_email = customer_data["response"]["email"]
         plan_data = cls.create_plan()
+        if plan_data.get("status") != 201 or "id" not in plan_data.get("response", {}):
+            raise RuntimeError(f"Failed to create plan: {plan_data}")
         cls._plan_id = plan_data["response"]["id"]
 
     @classmethod
@@ -102,12 +104,14 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "status": "authorized"
         }
 
         subscription_response = self.sdk.subscription().create(subscription_payload)
+        if subscription_response.get("status") != 201:
+            raise RuntimeError(f"Failed to to create subscription: {subscription_response}")
         self.assertEqual(subscription_response["status"], 201)
 
         subscription_object = subscription_response['response']
@@ -163,7 +167,7 @@ class TestSubscription(unittest.TestCase):
                 "frequency": 1,
                 "frequency_type": "months",
                 "transaction_amount": 60,
-                "currency_id": "ARS",
+                "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
             "reason": f"Test Plan #{random.randint(100000, 999999)}",

@@ -16,9 +16,20 @@ class TestOrder(unittest.TestCase):
     """
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
-    def create_test_card(self, status="APRO"):
+    def create_master_test_card(self, status="APRO"):
         card_token_object = {
             "card_number": "5031433215406351",
+            "security_code": "123",
+            "expiration_year": "2030",
+            "expiration_month": "11",
+            "cardholder": {"name": status}
+        }
+        card_token_created = self.sdk.card_token().create(card_token_object)
+        return card_token_created["response"]["id"]
+
+    def create_visa_test_card(self, status="APRO"):
+        card_token_object = {
+            "card_number": "4235647728025682",
             "security_code": "123",
             "expiration_year": "2030",
             "expiration_month": "11",
@@ -141,7 +152,7 @@ class TestOrder(unittest.TestCase):
         """
         Test Function: Create an Order and Get an Order by ID
         """
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         random_email_id = random.randint(100000, 999999)
         order_object = {
             "type": "online",
@@ -173,7 +184,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order_get["status"], 200)
 
     def test_process_order(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         random_email_id = random.randint(100000, 999999)
         order_object = {
             "type": "online",
@@ -207,7 +218,7 @@ class TestOrder(unittest.TestCase):
         "Invalid HTTP status when processing the order")
 
     def test_cancel_order(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
         time.sleep(4)
         order_canceled = self.sdk.order().cancel(order_id)
@@ -215,14 +226,14 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order_canceled["response"]["status"], "canceled")
 
     def test_capture_order(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
         order_captured = self.sdk.order().capture(order_id)
         self.assertEqual(order_captured["status"], 200)
         self.assertEqual(order_captured["response"]["status"], "processed")
 
     def test_create_transaction(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_id = self.create_order_builder_mode()
         transaction_object = {
             "payments": [
@@ -242,14 +253,17 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(transaction_created["status"], 201)
 
     def test_update_transaction(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_created = self.create_order_builder_mode_complete(card_token_id)
         order_id = order_created["id"]
         transaction_id = order_created["transactions"]["payments"][0]["id"]
+        new_card_token_id = self.create_visa_test_card()
 
         transaction_update = {
             "payment_method": {
+                "id": "visa",
                 "type": "credit_card",
+                "token": new_card_token_id,
                 "installments": 5
             }
         }
@@ -259,7 +273,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(transaction_updated["status"], 200)
 
     def test_partial_refund_transaction(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_created = self.create_order_oneshot_mode_complete(card_token_id)
         order_id = order_created["id"]
         transaction_id = order_created["transactions"]["payments"][0]["id"]
@@ -281,7 +295,7 @@ class TestOrder(unittest.TestCase):
                       " Response: {transaction_refunded}")
 
     def test_refund_transaction(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_created = self.create_order_oneshot_mode_complete(card_token_id)
         order_id = order_created["id"]
         sleep(3)
@@ -291,7 +305,7 @@ class TestOrder(unittest.TestCase):
                       " Response: {transaction_refunded}")
 
     def test_delete_transaction(self):
-        card_token_id = self.create_test_card()
+        card_token_id = self.create_master_test_card()
         order_created = self.create_order_builder_mode_complete(card_token_id)
         order_id = order_created["id"]
         transaction_id = order_created["transactions"]["payments"][0]["id"]
