@@ -1,0 +1,333 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Mercado Pago Python SDK - Cursor Rules
+
+## Visão Geral do Projeto
+Este é o SDK oficial do Mercado Pago para Python, uma biblioteca de processamento de pagamentos que segue as melhores práticas Python (PEP 8, PEP 257) e convenções da comunidade. O SDK é distribuído como um pacote Python e segue uma arquitetura modular com clara separação de responsabilidades.
+
+## Estrutura e Organização do Projeto
+
+### Estrutura de Diretórios Principal
+```
+mercadopago/                      # Pacote principal
+├── __init__.py                   # Inicialização do pacote
+├── sdk.py                        # Classe principal do SDK
+├── core/                         # Funcionalidades principais
+│   ├── __init__.py
+│   ├── base_client.py           # Cliente base abstrato
+│   └── base_resource.py         # Recurso base abstrato
+├── resources/                    # Recursos da API
+│   ├── __init__.py
+│   ├── payment.py
+│   └── order.py
+├── http/                        # Manipulação HTTP
+│   ├── __init__.py
+│   ├── http_client.py
+│   └── response.py
+├── config/                      # Configurações
+│   ├── __init__.py
+│   └── config.py
+└── examples/                    # Exemplos de uso
+tests/                          # Testes automatizados
+docs/                          # Documentação
+```
+
+## Convenções de Nomenclatura
+
+### Classes e Módulos
+- **Clientes**: `{Resource}Client` (ex: `PaymentClient`, `OrderClient`)
+- **Recursos**: `{Resource}` (ex: `Payment`, `Order`)
+- **Configuração**: `Config`, `Settings`
+- **Exceções**: `{Type}Error` (ex: `ValidationError`, `APIError`)
+
+### Métodos e Variáveis
+- Usar **snake_case** para nomes de métodos e variáveis
+- Métodos privados começam com underscore
+- Constantes em **SCREAMING_SNAKE_CASE**
+- Variáveis de instância sem prefixo especial
+
+### Arquivos e Diretórios
+- Arquivos em **snake_case.py**
+- Um módulo por arquivo
+- Nomes de arquivo devem corresponder ao módulo principal
+- Testes em `test_*.py`
+
+## Padrões de Código
+
+### Estilo Python
+- Seguir PEP 8 (Guia de Estilo)
+- Seguir PEP 257 (Docstrings)
+- Usar Black para formatação
+- Usar isort para imports
+- Usar pylint/flake8 para linting
+- Linhas com máximo de 88 caracteres (Black default)
+
+### Padrões de Cliente
+```python
+from typing import Dict, Optional
+
+class PaymentClient(BaseClient):
+    """Cliente para operações de pagamento."""
+    
+    def create(self, payment_data: Dict, options: Optional[Dict] = None) -> Payment:
+        """Cria um novo pagamento.
+        
+        Args:
+            payment_data: Dados do pagamento
+            options: Opções adicionais
+            
+        Returns:
+            Payment: O pagamento criado
+            
+        Raises:
+            ValidationError: Se os dados forem inválidos
+            APIError: Se houver erro na API
+        """
+        return self.post('/v1/payments', data=payment_data, options=options)
+```
+
+### Padrões de Recurso
+```python
+from dataclasses import dataclass
+from typing import Optional
+
+@dataclass
+class Payment:
+    """Representa um pagamento."""
+    
+    id: int
+    status: str
+    description: Optional[str] = None
+    
+    @property
+    def is_approved(self) -> bool:
+        """Verifica se o pagamento foi aprovado."""
+        return self.status == 'approved'
+```
+
+## Práticas de Desenvolvimento
+
+### Geral
+- Usar type hints (PEP 484)
+- Preferir dataclasses para modelos
+- Usar async/await para operações I/O
+- Seguir princípios SOLID
+- Documentar com docstrings
+
+### Tratamento de Erros
+```python
+class APIError(Exception):
+    """Erro retornado pela API."""
+    
+    def __init__(self, message: str, status_code: int, details: Dict):
+        super().__init__(message)
+        self.status_code = status_code
+        self.details = details
+```
+
+### Logging
+```python
+import logging
+from typing import Any
+
+logger = logging.getLogger(__name__)
+
+def process_payment(payment_data: Dict[str, Any]) -> None:
+    """Processa um pagamento com logging apropriado."""
+    try:
+        logger.info("Iniciando processamento de pagamento", extra={"payment_id": payment_data.get("id")})
+        # Processamento
+        logger.info("Pagamento processado com sucesso")
+    except Exception as e:
+        logger.error("Erro no processamento do pagamento", exc_info=True)
+        raise
+```
+
+## Testes
+
+### Estrutura de Testes
+- Usar pytest como framework
+- Organizar testes espelhando a estrutura do código
+- Usar fixtures para setup comum
+- Implementar testes unitários e de integração
+
+### Padrões de Teste
+```python
+import pytest
+from unittest.mock import Mock
+
+def test_payment_creation():
+    """Testa a criação de um pagamento."""
+    client = PaymentClient(Mock())
+    payment_data = {"amount": 100}
+    
+    result = client.create(payment_data)
+    
+    assert result.id is not None
+    assert result.status == "pending"
+
+@pytest.mark.asyncio
+async def test_async_payment_creation():
+    """Testa a criação assíncrona de um pagamento."""
+    client = AsyncPaymentClient(Mock())
+    payment_data = {"amount": 100}
+    
+    result = await client.create(payment_data)
+    
+    assert result.id is not None
+```
+
+## Documentação
+
+### Docstrings
+- Usar formato Google para docstrings
+- Documentar todos os módulos, classes e métodos públicos
+- Incluir exemplos de uso
+- Documentar tipos com type hints
+
+```python
+def create_payment(amount: float, currency: str = "BRL") -> Payment:
+    """Cria um novo pagamento.
+    
+    Args:
+        amount: O valor do pagamento
+        currency: A moeda do pagamento (default: BRL)
+        
+    Returns:
+        Payment: O pagamento criado
+        
+    Raises:
+        ValidationError: Se o valor for negativo
+    
+    Example:
+        >>> payment = create_payment(100.0)
+        >>> print(payment.status)
+        'pending'
+    """
+```
+
+## Gerenciamento de Dependências
+
+### pyproject.toml
+```toml
+[tool.poetry]
+name = "mercadopago"
+version = "2.0.0"
+description = "Mercado Pago Python SDK"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.25.0"
+pydantic = "^1.8.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.0"
+black = "^21.5b2"
+pylint = "^2.8.0"
+```
+
+### Compatibilidade
+- Suportar Python 3.7+
+- Especificar versões de dependências
+- Usar Poetry para gerenciamento
+- Testar com diferentes versões Python
+
+## Segurança
+
+### Práticas
+- Validar todas as entradas
+- Sanitizar dados sensíveis
+- Usar HTTPS
+- Implementar rate limiting
+- Seguir OWASP guidelines
+
+### Dados Sensíveis
+```python
+import os
+from typing import Optional
+
+class Credentials:
+    """Gerencia credenciais de forma segura."""
+    
+    def __init__(self):
+        self._access_token: Optional[str] = None
+    
+    @property
+    def access_token(self) -> str:
+        """Obtém o token de acesso de forma segura."""
+        if not self._access_token:
+            self._access_token = os.environ.get("MP_ACCESS_TOKEN")
+        return self._access_token
+```
+
+## Performance
+
+### Otimizações
+- Usar connection pooling
+- Implementar caching
+- Otimizar imports
+- Usar async/await para I/O
+
+### Concorrência
+```python
+import asyncio
+from typing import List
+
+async def process_payments(payments: List[Dict]) -> List[Payment]:
+    """Processa múltiplos pagamentos concorrentemente."""
+    tasks = [process_payment(p) for p in payments]
+    return await asyncio.gather(*tasks)
+```
+
+## Controle de Versão
+
+### Git
+- Commits atômicos
+- Mensagens descritivas
+- Feature branches
+- Pull requests
+
+### Releases
+- Semantic Versioning
+- CHANGELOG.md
+- Release tags
+- Documentação de breaking changes
+
+## Qualidade de Código
+
+### Ferramentas
+- Black para formatação
+- Pylint para linting
+- Mypy para type checking
+- Coverage.py para cobertura
+
+### CI/CD
+- Testes automatizados
+- Verificação de tipos
+- Análise de código
+- Deploy automático
+
+## Internacionalização
+
+### i18n
+- Usar gettext
+- Strings externalizadas
+- Suporte a múltiplos idiomas
+- Formatação local-aware
+
+## Manutenção
+
+### Práticas
+- Refatoração contínua
+- Remoção de código morto
+- Atualização de dependências
+- Documentação atualizada
+
+### Monitoramento
+- Logging estruturado
+- Métricas de performance
+- Rastreamento de erros
+- Health checks 
