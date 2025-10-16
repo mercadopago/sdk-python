@@ -3,6 +3,8 @@ Module: http_client
 """
 # pylint: disable=too-many-arguments
 import requests
+import httpx
+from httpx_retries import Retry as AsyncRetry, RetryTransport
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
@@ -78,6 +80,83 @@ class HttpClient:
     # pylint: disable=too-many-positional-arguments
         """Makes a DELETE request to the API"""
         return self.request(
+            "DELETE",
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+class AsyncHttpClient:
+    """
+    Async implementation to call all REST API's
+    """
+
+    async def request(self, method: str, url, maxretries=None, **kwargs):
+        """Makes a call to the API.
+
+        All **kwargs are passed verbatim to ``httpx.request``.
+        """
+        retry_strategy = AsyncRetry(
+            total=maxretries,
+            status_forcelist=[429, 500, 502, 503, 504]
+        )
+        async with httpx.AsyncClient(transport=RetryTransport(retry=retry_strategy)) as session:
+            api_result = await session.request(method, url, **kwargs)
+            response = {"status": api_result.status_code, "response": None}
+
+            if api_result.status_code != 204 and api_result.content:
+                try:
+                    response["response"] = api_result.json()
+                except ValueError as e:
+                    print(f"Failed to parse JSON: {str(e)}")
+                    response["response"] = None
+
+            return response
+
+    async def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
+        """Makes a GET request to the API"""
+        return await self.request(
+            "GET",
+            url=url,
+            headers=headers,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    async def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
+        """Makes a POST request to the API"""
+        return await self.request(
+            "POST",
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    async def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
+        """Makes a PUT request to the API"""
+        return await self.request(
+            "PUT",
+            url=url,
+            headers=headers,
+            data=data,
+            params=params,
+            timeout=timeout,
+            maxretries=maxretries,
+        )
+
+    async def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
+        """Makes a DELETE request to the API"""
+        return await self.request(
             "DELETE",
             url=url,
             headers=headers,

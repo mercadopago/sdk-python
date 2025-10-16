@@ -14,7 +14,9 @@ keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", "lts
 license = {file = "LICENSE"}
 requires-python = ">=3.7"
 dependencies = [
-    "requests"
+    "requests",
+    "httpx",
+    "httpx-retries"
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",

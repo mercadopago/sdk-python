@@ -1,11 +1,13 @@
 """
 Module: mp_base
 """
+from typing import Union, Coroutine, Any
+
 from json.encoder import JSONEncoder
 
 from mercadopago.config.config import Config
 from mercadopago.config.request_options import RequestOptions
-
+from mercadopago.http import HttpClient, AsyncHttpClient
 
 class MPBase:
     """All mercadopago.resources extends this one to call the REST services
@@ -15,14 +17,15 @@ class MPBase:
         An instance of RequestOptions can be pass changing or adding custom options
         to ur REST calls. Defaults to None.
         http_client (mercadopago.http.http_client, optional): An implementation of
-        HttpClient can be pass to be used to make the REST calls. Defaults to None.
+        HttpClient or AsyncHttpClient can be pass to be used to make the REST calls.
+        Defaults to None.
 
     Raises:
         ValueError: Param request_options must be a RequestOptions Object
         ValueError: Filters must be a Dictionary
     """
 
-    def __init__(self, request_options, http_client):
+    def __init__(self, request_options, http_client: Union[HttpClient, AsyncHttpClient]):
         if not isinstance(request_options, RequestOptions):
             raise ValueError(
                 "Param request_options must be a RequestOptions Object")
@@ -53,7 +56,7 @@ class MPBase:
 
         return headers
 
-    def _get(self, uri, filters=None, request_options=None):
+    def _get(self, uri, filters=None, request_options=None) -> Union[dict[str, int | None], Coroutine[Any, Any, dict[str, int | None]]]:
         if filters is not None and not isinstance(filters, dict):
             raise ValueError("Filters must be a Dictionary")
 
@@ -69,7 +72,7 @@ class MPBase:
             maxretries=request_options.max_retries,
         )
 
-    def _post(self, uri, data=None, params=None, request_options=None):
+    def _post(self, uri, data=None, params=None, request_options=None) -> Union[dict[str, int | None], Coroutine[Any, Any, dict[str, int | None]]]:
         if data is not None:
             data = JSONEncoder().encode(data)
 
@@ -86,7 +89,7 @@ class MPBase:
             maxretries=request_options.max_retries,
         )
 
-    def _put(self, uri, data=None, params=None, request_options=None):
+    def _put(self, uri, data=None, params=None, request_options=None) -> Union[dict[str, int | None], Coroutine[Any, Any, dict[str, int | None]]]:
         if data is not None:
             data = JSONEncoder().encode(data)
 
@@ -103,7 +106,7 @@ class MPBase:
             maxretries=request_options.max_retries,
         )
 
-    def _delete(self, uri, params=None, request_options=None):
+    def _delete(self, uri, params=None, request_options=None) -> Union[dict[str, int | None], Coroutine[Any, Any, dict[str, int | None]]]:
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
