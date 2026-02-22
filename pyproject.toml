@@ -12,7 +12,7 @@ description = "Mercadopago SDK module for Payments integration"
 readme = "README.md"
 keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", "lts"]
 license = {file = "LICENSE"}
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 dependencies = [
     "requests"
 ]
@@ -21,14 +21,11 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 
 [project.optional-dependencies]

@@ -8,7 +8,7 @@ This library provides developers with a simple set of bindings to help you integ
 
 ## 💡 Requirements
 
-Python 3 or higher.
+Python 3.10 or higher.
 
 ## 📲 Installation 
 
