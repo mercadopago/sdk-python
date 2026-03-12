@@ -13,6 +13,21 @@ class Order(MPBase):
     [Click here for more info](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-api/introduction/)  # pylint: disable=line-too-long
     """
 
+    def search(self, filters=None, request_options=None):
+        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/search-order/get)  # pylint: disable=line-too-long
+
+        Args:
+            filters (dict): The search filters parameters
+            request_options (mercadopago.config.request_options, optional): An instance of
+            RequestOptions can be pass changing or adding custom options to the REST call.
+            Defaults to None.
+
+        Returns:
+            dict: Order search response
+        """
+        return self._get(uri="/v1/orders", filters=filters,
+                         request_options=request_options)
+
     def create(self, order_object, request_options=None):
         """[Click here for more info](https://www.mercadopago.com/developers/en/reference/order/online-payments/create/post/)  # pylint: disable=line-too-long
 
