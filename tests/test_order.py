@@ -314,6 +314,15 @@ class TestOrder(unittest.TestCase):
         transaction_deleted = self.sdk.order().delete_transaction(order_id, transaction_id)
         self.assertEqual(transaction_deleted["status"], 204)
 
+    def test_search_order(self):
+        """
+        Test Function: Search Orders
+        """
+        search_response = self.sdk.order().search(filters={"limit": 5, "offset": 0})
+        self.assertEqual(search_response["status"], 200)
+        self.assertIn("data", search_response["response"])
+        self.assertIn("paging", search_response["response"])
+
 
 if __name__ == "__main__":
     unittest.main()
