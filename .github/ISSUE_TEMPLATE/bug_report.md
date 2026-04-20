@@ -21,7 +21,7 @@ A clear and concise description of what you expected to happen.
 **Environment (please complete the following information):**
 
 - OS: [e.g. Linux/Mac/Windows]
-- Python version: [e.g. 3.7]
+- Python version: [e.g. 3.10]
 - SDK version: [e.g. 2.0.0]
 
 **Additional context**
