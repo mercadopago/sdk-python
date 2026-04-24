@@ -1,15 +1,31 @@
-"""
-Module: config
+"""SDK-level configuration constants.
+
+Centralises version information, API base URL, MIME types, and tracking
+identifiers used by every HTTP request the SDK makes.  All values are
+read-only after initialisation.
 """
 import platform
 
 
 class Config:
-    """
-    General infos of your SDK
+    """Read-only container for SDK-wide constants and tracking metadata.
+
+    An instance is created internally by :class:`~mercadopago.core.mp_base.MPBase`
+    and should not need to be instantiated by end-users.
+
+    Attributes:
+        version: Semantic version string of this SDK release.
+        user_agent: User-Agent header value sent with every request.
+        product_id: MercadoPago-assigned product identifier for this SDK.
+        tracking_id: Composite string with Python version and SDK version
+            used by MercadoPago for telemetry.
+        api_base_url: Root URL for all MercadoPago REST API calls.
+        mime_json: MIME type for JSON payloads.
+        mime_form: MIME type for form-encoded payloads.
     """
 
     def __init__(self):
+        """Builds version-dependent values (user_agent, tracking_id)."""
         self.__version = "2.4.0"
         self.__user_agent = "MercadoPago Python SDK v" + self.__version
         self.__product_id = "bc32bpftrpp001u8nhlg"
@@ -22,49 +38,35 @@ class Config:
 
     @property
     def version(self):
-        """
-        Sets the attribute value of version
-        """
+        """Semantic version of the SDK (e.g. ``'2.4.0'``)."""
         return self.__version
 
     @property
     def user_agent(self):
-        """
-        Sets the attribute value of user agent
-        """
+        """User-Agent header value identifying this SDK."""
         return self.__user_agent
 
     @property
     def product_id(self):
-        """
-        Sets the attribute value of product id
-        """
+        """MercadoPago-assigned product identifier for SDK tracking."""
         return self.__product_id
 
     @property
     def tracking_id(self):
-        """
-        Sets the attribute value of tracking id
-        """
+        """Composite tracking string with Python and SDK versions."""
         return self.__tracking_id
 
     @property
     def api_base_url(self):
-        """
-        Sets the attribute value of api base url
-        """
+        """Root URL for MercadoPago REST API calls."""
         return self.__api_base_url
 
     @property
     def mime_json(self):
-        """
-        Sets the attribute value of mime json
-        """
+        """MIME type for JSON request/response bodies."""
         return self.__mime_json
 
     @property
     def mime_form(self):
-        """
-        Sets the attribute value of mime form
-        """
+        """MIME type for form-encoded request bodies."""
         return self.__mime_form

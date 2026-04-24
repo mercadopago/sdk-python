@@ -1,27 +1,33 @@
-"""
-    Module: subscriptions
+"""Subscription resource for the MercadoPago Subscriptions API.
+
+Wraps ``/preapproval`` endpoints to search, retrieve, create, and update
+plan-based subscriptions.  A subscription links a payer to a
+:class:`~mercadopago.resources.plan.Plan` template for recurring billing.
+
+`API reference
+<https://www.mercadopago.com/developers/en/reference/subscriptions/>`_
 """
 from mercadopago.core import MPBase
 
 
 class Subscription(MPBase):
-    """
-    This class provides the methods to access the API that will allow you to create, search, get and update
-    Subscriptions.
+    """Manages plan-based recurring subscriptions.
 
-    [Click here for more info](https://www.mercadopago.com.br/developers/en/docs/subscriptions/landing)  # pylint: disable=line-too-long
+    Each subscription is associated with a :class:`Plan` that defines
+    billing frequency and amount.  Use :meth:`create` with a
+    ``preapproval_plan_id`` to subscribe a payer to an existing plan.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_search/get)  # pylint: disable=line-too-long
+        """Searches subscriptions matching the given filters.
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters (e.g. ``status``,
+                ``preapproval_plan_id``).
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Subscriptions found
+            dict: Paginated list of matching subscriptions.
         """
         return self._get(
             uri="/preapproval/search",
@@ -29,35 +35,32 @@ class Subscription(MPBase):
             request_options=request_options)
 
     def get(self, subscription_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_id/get)  # pylint: disable=line-too-long
+        """Retrieves a subscription by its ID.
 
         Args:
-            subscription_id (str): The subscription ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            subscription_id: Unique subscription identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Subscription found
+            dict: Full subscription object.
         """
         return self._get(
             uri="/preapproval/" + str(subscription_id),
             request_options=request_options)
 
     def create(self, subscription_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval/post)  # pylint: disable=line-too-long
+        """Creates a new subscription.
 
         Args:
-            subscription_object (dict): Subscription to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            subscription_object: Dict defining the subscription
+                (preapproval_plan_id, payer_email, card_token_id, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param payment_object must be a Dictionary
+            ValueError: If *subscription_object* is not a ``dict``.
 
         Returns:
-            dict: Subscription creation response
+            dict: Created subscription including its ``id`` and ``status``.
         """
         if not isinstance(subscription_object, dict):
             raise ValueError("Param subscription_object must be a Dictionary")
@@ -68,20 +71,21 @@ class Subscription(MPBase):
             request_options=request_options)
 
     def update(self, subscription_id, subscription_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_id/put)  # pylint: disable=line-too-long
+        """Updates an existing subscription.
+
+        Commonly used to pause, reactivate, or change the card token
+        on a subscription.
 
         Args:
-            subscription_id (str): The subscription ID to be updated
-            subscription_object (dict): Subscription information to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            subscription_id: Identifier of the subscription to update.
+            subscription_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param subscription_object must be a Dictionary
+            ValueError: If *subscription_object* is not a ``dict``.
 
         Returns:
-            dict: Subscription modification response
+            dict: Updated subscription object.
         """
         if not isinstance(subscription_object, dict):
             raise ValueError("Param subscription_object must be a Dictionary")

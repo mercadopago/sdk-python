@@ -1,40 +1,46 @@
-"""
-    Module: card_token
+"""Card Token resource for the MercadoPago API.
+
+Wraps ``/v1/card_tokens`` endpoints to tokenise raw card data
+server-side before creating a payment.  The returned token is
+single-use and short-lived.
 """
 from mercadopago.core import MPBase
 
 
 class CardToken(MPBase):
-    """
-    This class will allow you to send your customers card data for Mercado Pago
-    server and receive a token to complete the payments transactions.
+    """Tokenises card data for secure payment creation.
+
+    Send raw card details (number, expiry, CVV) to obtain a one-time
+    token that can be passed to :meth:`Payment.create` without
+    exposing sensitive data in your own backend.
     """
 
     def get(self, card_token_id, request_options=None):
-        """Args:
-            card_token_id (str): The Card Token ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+        """Retrieves a card token by its ID.
+
+        Args:
+            card_token_id: Unique token identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Card Token find response
+            dict: Token metadata (last four digits, expiry, etc.).
         """
         return self._get(uri="/v1/card_tokens/" + str(card_token_id),
                          request_options=request_options)
 
     def create(self, card_token_object, request_options=None):
-        """Args:
-            card_token_object (dict): Card Token to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+        """Creates a new card token from raw card data.
+
+        Args:
+            card_token_object: Dict with card details (card_number,
+                expiration_month, expiration_year, security_code, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param card_token_object must be a Dictionary
+            ValueError: If *card_token_object* is not a ``dict``.
 
         Returns:
-            dict: Card Token creation response
+            dict: Created token including its ``id``.
         """
         if not isinstance(card_token_object, dict):
             raise ValueError("Param card_token_object must be a Dictionary")

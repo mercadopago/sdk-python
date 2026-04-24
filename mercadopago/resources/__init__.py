@@ -1,5 +1,8 @@
-"""
-Module: resources/__init__.py
+"""MercadoPago API resource classes.
+
+Each class maps to a MercadoPago REST API domain (payments, orders,
+customers, etc.) and exposes CRUD and action methods.  All resources
+extend :class:`~mercadopago.core.mp_base.MPBase`.
 """
 from mercadopago.config.request_options import RequestOptions
 from mercadopago.http.http_client import HttpClient

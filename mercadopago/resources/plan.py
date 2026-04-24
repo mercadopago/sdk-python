@@ -1,27 +1,32 @@
-"""
-    Module: plan
+"""Plan resource for the MercadoPago Subscriptions API.
+
+Wraps ``/preapproval_plan`` endpoints to search, retrieve, create, and
+update subscription plans.  Plans serve as reusable templates that
+define billing frequency, amount, and duration for subscriptions.
+
+`API reference
+<https://www.mercadopago.com/developers/en/reference/subscriptions/>`_
 """
 from mercadopago.core import MPBase
 
 
 class Plan(MPBase):
-    """
-    This class provides the methods to access the API that will allow you to create, search, get and update Plans to be
-    used as templates for Subscriptions.
+    """Manages subscription plan templates.
 
-    [Click here for more info](https://www.mercadopago.com.br/developers/en/docs/subscriptions/integration-configuration/subscriptions-associated-plan)  # pylint: disable=line-too-long
+    Create a plan once and then attach multiple
+    :class:`~mercadopago.resources.subscription.Subscription` instances
+    to it so that all subscribers share the same billing terms.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_search/get)  # pylint: disable=line-too-long
+        """Searches plans matching the given filters.
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Plans found
+            dict: Paginated list of matching plans.
         """
         return self._get(
             uri="/preapproval_plan/search",
@@ -29,35 +34,32 @@ class Plan(MPBase):
             request_options=request_options)
 
     def get(self, plan_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_id/get)  # pylint: disable=line-too-long
+        """Retrieves a plan by its ID.
 
         Args:
-            plan_id (str): The plan ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            plan_id: Unique plan identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Plan found
+            dict: Full plan object.
         """
         return self._get(
             uri="/preapproval_plan/" + str(plan_id),
             request_options=request_options)
 
     def create(self, plan_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan/post)  # pylint: disable=line-too-long
+        """Creates a new subscription plan.
 
         Args:
-            plan_object (dict): Plan to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            plan_object: Dict defining the plan (reason,
+                auto_recurring frequency/amount, back_url, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param plan_object must be a Dictionary
+            ValueError: If *plan_object* is not a ``dict``.
 
         Returns:
-            dict: Plan creation response
+            dict: Created plan including its ``id`` and ``init_point``.
         """
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")
@@ -68,20 +70,18 @@ class Plan(MPBase):
             request_options=request_options)
 
     def update(self, plan_id, plan_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.co/developers/en/reference/subscriptions/_preapproval_plan_id/put)  # pylint: disable=line-too-long
+        """Updates an existing plan.
 
         Args:
-            plan_id (str): The plan ID to be updated
-            plan_object (dict): Plan information to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            plan_id: Identifier of the plan to update.
+            plan_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param plan_object must be a Dictionary
+            ValueError: If *plan_object* is not a ``dict``.
 
         Returns:
-            dict: Plan modification response
+            dict: Updated plan object.
         """
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")

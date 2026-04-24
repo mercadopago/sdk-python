@@ -1,34 +1,30 @@
-"""
-    Module: card
+"""Saved-card resource for the MercadoPago API.
+
+Wraps ``/v1/customers/{customer_id}/cards`` endpoints to list, retrieve,
+create, update, and delete cards stored against a customer profile.
+
+`API reference <https://www.mercadopago.com/developers/en/reference/cards/>`_
 """
 from mercadopago.core import MPBase
 
 
 class Card(MPBase):
-    """
-    The cards class is the way to store card data of your customers
-    safely to improve the shopping experience.
+    """Manages saved payment cards linked to a :class:`Customer`.
 
-    This will allow your customers to complete their purchases much
-    faster and easily, since they will not have to complete their
-    card data again.
-
-    This class must be used in conjunction with the Customer class.
-
-    [Click here for more info](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)  # pylint: disable=line-too-long
+    Storing cards lets returning buyers complete checkout without
+    re-entering card details.  Every method requires the owning
+    *customer_id*.
     """
 
     def list_all(self, customer_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)  # pylint: disable=line-too-long
+        """Lists all cards saved for a customer.
 
         Args:
-            customer_id (str): The Customer ID owner
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding
-            custom options to ur REST call. Defaults to None.
+            customer_id: Owner customer identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Cards find response
+            dict: List of saved card objects.
         """
         return self._get(
             uri=f"/v1/customers/{str(customer_id)}/cards",
@@ -36,17 +32,15 @@ class Card(MPBase):
         )
 
     def get(self, customer_id, card_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/get/)  # pylint: disable=line-too-long
+        """Retrieves a single saved card.
 
         Args:
-            customer_id (str): The Customer ID owner
-            card_id (dict): Card ID to be found
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding
-            custom options to ur REST call. Defaults to None.
+            customer_id: Owner customer identifier.
+            card_id: Identifier of the card to retrieve.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Card find response
+            dict: Full card object.
         """
         return self._get(
             uri=f"/v1/customers/{str(customer_id)}/cards/{str(card_id)}",
@@ -54,20 +48,21 @@ class Card(MPBase):
         )
 
     def create(self, customer_id, card_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/post/)  # pylint: disable=line-too-long
+        """Saves a new card for a customer.
+
+        The *card_object* typically contains a ``token`` obtained via
+        the MercadoPago JS SDK or Card Token API.
 
         Args:
-            customer_id (str): The Customer ID owner
-            card_object (dict): Card object to be created
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding
-            custom options to ur REST call. Defaults to None.
+            customer_id: Owner customer identifier.
+            card_object: Dict with card data (``token`` is required).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param card_object must be a Dictionary
+            ValueError: If *card_object* is not a ``dict``.
 
         Returns:
-            dict: Card creation response
+            dict: Created card including its ``id``.
         """
         if not isinstance(card_object, dict):
             raise ValueError("Param card_object must be a Dictionary")
@@ -76,21 +71,19 @@ class Card(MPBase):
                           + "/cards/", data=card_object, request_options=request_options)
 
     def update(self, customer_id, card_id, card_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/put/)  # pylint: disable=line-too-long
+        """Updates a saved card's details.
 
         Args:
-            customer_id (str): Customer ID owner
-            card_id (str): Card ID to be modified
-            card_object (dict): Values to be modified
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding
-            custom options to ur REST call. Defaults to None.
+            customer_id: Owner customer identifier.
+            card_id: Identifier of the card to update.
+            card_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param card_object must be a Dictionary
+            ValueError: If *card_object* is not a ``dict``.
 
         Returns:
-            dict: Card modification response
+            dict: Updated card object.
         """
         if not isinstance(card_object, dict):
             raise ValueError("Param card_object must be a Dictionary")
@@ -100,17 +93,15 @@ class Card(MPBase):
                          request_options=request_options)
 
     def delete(self, customer_id, card_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards_id/delete/)  # pylint: disable=line-too-long
+        """Deletes a saved card from a customer profile.
 
         Args:
-            customer_id (str): Customer ID owner
-            card_id (str): Card ID to be deleted
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding
-            custom options to ur REST call. Defaults to None.
+            customer_id: Owner customer identifier.
+            card_id: Identifier of the card to delete.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Card exclusion response
+            dict: Deletion confirmation response.
         """
         return self._delete(uri="/v1/customers/" + str(customer_id)
                             + "/cards/" + str(card_id), request_options=request_options)

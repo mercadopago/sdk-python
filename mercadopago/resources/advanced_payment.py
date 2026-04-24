@@ -1,5 +1,10 @@
-"""
-    Module: advanced_payment
+"""Advanced Payment resource for the MercadoPago Marketplace API.
+
+Wraps ``/v1/advanced_payments`` endpoints used in marketplace split-payment
+scenarios where funds are distributed among multiple receivers.
+
+`API reference
+<https://www.mercadopago.com/developers/en/reference/advanced_payments/>`_
 """
 from datetime import datetime
 
@@ -7,54 +12,53 @@ from mercadopago.core import MPBase
 
 
 class AdvancedPayment(MPBase):
-    """
-    Access to Advanced Payments
+    """Manages split payments in marketplace integrations.
+
+    Advanced payments allow a marketplace to collect a payment and split
+    it among multiple sellers in a single transaction.  Supports
+    two-step flows (authorise then capture) and individual disbursement
+    release-date control.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/advanced_payments/_advanced_payments_id_search/get/)  # pylint: disable=line-too-long
+        """Searches advanced payments matching the given filters.
 
         Args:
-            filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional):
-            An instance of RequestOptions can be pass changing or adding custom options
-            to ur REST call. Defaults to None.
+            filters: Query-string parameters.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Advanced Payment search response
+            dict: Paginated list of matching advanced payments.
         """
         return self._get(uri="/v1/advanced_payments/search", filters=filters,
                          request_options=request_options)
 
     def get(self, advanced_payment_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/advanced_payments/_advanced_payments_id/get/)  # pylint: disable=line-too-long
+        """Retrieves an advanced payment by its ID.
 
         Args:
-            advanced_payment_id (str): The Advanced Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance
-            of RequestOptions can be pass changing or adding custom options to ur REST
-            call. Defaults to None.
+            advanced_payment_id: Unique advanced payment identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Advanced Payment find response
+            dict: Full advanced payment object.
         """
         return self._get(uri="/v1/advanced_payments/" + str(advanced_payment_id),
                          request_options=request_options)
 
     def create(self, advanced_payment_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/advanced_payments/_advanced_payments/post/)  # pylint: disable=line-too-long
+        """Creates a new advanced (split) payment.
 
         Args:
-            advanced_payment_object (dict): Advanced Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance
-            of RequestOptions can be pass changing or adding custom options to ur REST
-            call. Defaults to None.
+            advanced_payment_object: Dict describing the payment including
+                ``disbursements`` (list of receiver/amount pairs).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param advanced_payment_object must be a Dictionary
+            ValueError: If *advanced_payment_object* is not a ``dict``.
 
         Returns:
-            dict: Advanced Payment creation response
+            dict: Created advanced payment including its ``id``.
         """
         if not isinstance(advanced_payment_object, dict):
             raise ValueError(
@@ -64,36 +68,34 @@ class AdvancedPayment(MPBase):
                           request_options=request_options)
 
     def capture(self, advanced_payment_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/advanced_payments/_advanced_payments_id/put/)  # pylint: disable=line-too-long
+        """Captures a previously authorised advanced payment.
+
+        Sends ``{"capture": true}`` to finalise a two-step payment flow.
 
         Args:
-            advanced_payment_id (str): The Advanced Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance
-            of RequestOptions can be pass changing or adding custom options to ur REST
-            call. Defaults to None.
+            advanced_payment_id: Identifier of the payment to capture.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Advanced Payment capture response
+            dict: Captured advanced payment with updated status.
         """
         capture_object = {"capture": True}
         return self._put(uri="/v1/advanced_payments/" + str(advanced_payment_id),
                          data=capture_object, request_options=request_options)
 
     def update(self, advanced_payment_id, advanced_payment_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/advanced_payments/_advanced_payments_id/put/)  # pylint: disable=line-too-long
+        """Updates an existing advanced payment.
 
         Args:
-            advanced_payment_id (str): The Advanced Payment ID
-            advanced_payment_object (dict): Advanced Payment to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            advanced_payment_id: Identifier of the payment to update.
+            advanced_payment_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param advanced_payment_object must be a Dictionary
+            ValueError: If *advanced_payment_object* is not a ``dict``.
 
         Returns:
-            dict: Advanced Payment modification response
+            dict: Updated advanced payment object.
         """
         if not isinstance(advanced_payment_object, dict):
             raise ValueError(
@@ -103,36 +105,38 @@ class AdvancedPayment(MPBase):
                          data=advanced_payment_object, request_options=request_options)
 
     def cancel(self, advanced_payment_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/advanced_payments/_advanced_payments_id/put/)  # pylint: disable=line-too-long
+        """Cancels an advanced payment.
+
+        Sets the payment status to ``cancelled``.  Only payments that
+        have not yet been captured can be cancelled.
 
         Args:
-            advanced_payment_id (str): The Advanced Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            advanced_payment_id: Identifier of the payment to cancel.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Advanced Payment cancelation response
+            dict: Cancelled advanced payment with updated status.
         """
         cancel_object = {"status": "cancelled"}
         return self._put(uri="/v1/advanced_payments/" + str(advanced_payment_id),
                          data=cancel_object, request_options=request_options)
 
     def update_release_date(self, advanced_payment_id, release_date, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/advanced_payments/_advanced_payments_id_disbursements_disbursement_id_disburses/post/)  # pylint: disable=line-too-long
+        """Changes the money release date for disbursements.
+
+        Allows the marketplace to control when funds become available
+        to sellers.
 
         Args:
-            advanced_payment_id (str): The Advanced Payment ID
-            release_date (datetime): Advanced Payment to be canceled
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            advanced_payment_id: Identifier of the advanced payment.
+            release_date: New release ``datetime`` for the disbursements.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param release_date must be a DateTime
+            ValueError: If *release_date* is not a ``datetime`` instance.
 
         Returns:
-            dict: Advanced Payment release date modification response
+            dict: Updated disbursement schedule response.
         """
         if not isinstance(release_date, datetime):
             raise ValueError("Param release_date must be a DateTime")
