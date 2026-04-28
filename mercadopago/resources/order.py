@@ -5,7 +5,7 @@ retrieval, search, processing, capture, cancellation, refund, and
 transaction management.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/order/online-payments/>`_
+<https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/create-order/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -25,6 +25,8 @@ class Order(MPBase):
 
         Returns:
             dict: Paginated list of matching orders.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/search-order/get
         """
         return self._get(uri="/v1/orders", filters=filters,
                          request_options=request_options)
@@ -42,6 +44,8 @@ class Order(MPBase):
 
         Returns:
             dict: Created order including its ``id``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/create-order/post
         """
         if not isinstance(order_object, dict):
             raise ValueError("Param order_object must be a Dictionary")
@@ -60,6 +64,8 @@ class Order(MPBase):
 
         Returns:
             dict: Full order object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/get-order/get
         """
 
         if not isinstance(order_id, str):
@@ -82,6 +88,8 @@ class Order(MPBase):
 
         Returns:
             dict: Processed order with updated transaction statuses.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/process-order/post
         """
 
         if not isinstance(order_id, str):
@@ -103,6 +111,8 @@ class Order(MPBase):
 
         Returns:
             dict: Order cancellation response.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cancel-order/post
         """
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
@@ -124,6 +134,8 @@ class Order(MPBase):
 
         Returns:
             dict: Captured order with updated transaction statuses.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/capture-order/post
         """
 
         if not isinstance(order_id, str):
@@ -198,6 +210,8 @@ class Order(MPBase):
 
         Returns:
             dict: Refund confirmation response.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/refund-order/post
         """
         if transaction_object is not None and not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")

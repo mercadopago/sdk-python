@@ -6,7 +6,7 @@ refunds and create full or partial refunds on approved payments.
 Refunds are available within 180 days of payment approval and require
 sufficient account balance.
 
-`API reference <https://www.mercadopago.com/developers/en/reference/chargebacks/>`_
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -28,6 +28,8 @@ class Refund(MPBase):
 
         Returns:
             dict: List of refund objects.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refunds/get
         """
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds",
                          request_options=request_options)
@@ -48,6 +50,8 @@ class Refund(MPBase):
 
         Returns:
             dict: Created refund including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post
         """
         if refund_object is not None and not isinstance(refund_object, dict):
             raise ValueError("Param refund_object must be a Dictionary")

@@ -5,7 +5,7 @@ update subscription plans.  Plans serve as reusable templates that
 define billing frequency, amount, and duration for subscriptions.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/subscriptions/>`_
+<https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval-plan/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -27,6 +27,8 @@ class Plan(MPBase):
 
         Returns:
             dict: Paginated list of matching plans.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/search-preapproval-plan/get
         """
         return self._get(
             uri="/preapproval_plan/search",
@@ -42,6 +44,8 @@ class Plan(MPBase):
 
         Returns:
             dict: Full plan object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval-plan/get
         """
         return self._get(
             uri="/preapproval_plan/" + str(plan_id),
@@ -60,6 +64,8 @@ class Plan(MPBase):
 
         Returns:
             dict: Created plan including its ``id`` and ``init_point``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval-plan/post
         """
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")
@@ -82,6 +88,8 @@ class Plan(MPBase):
 
         Returns:
             dict: Updated plan object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/update-preapproval-plan/put
         """
         if not isinstance(plan_object, dict):
             raise ValueError("Param plan_object must be a Dictionary")

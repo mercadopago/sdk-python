@@ -5,7 +5,7 @@ update merchant orders.  A merchant order groups one or more Checkout
 Pro payments under a single business reference.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/merchant_orders/>`_
+<https://www.mercadopago.com/developers/en/reference>`_
 """
 from mercadopago.core import MPBase
 
@@ -27,6 +27,8 @@ class MerchantOrder(MPBase):
 
         Returns:
             dict: Paginated list of matching merchant orders.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/search-merchant-order/get
         """
         return self._get(uri="/merchant_orders/search", filters=filters,
                          request_options=request_options)
@@ -40,6 +42,8 @@ class MerchantOrder(MPBase):
 
         Returns:
             dict: Full merchant order object including attached payments.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/get-merchant-order/get
         """
         return self._get(uri="/merchant_orders/" + str(merchan_order_id),
                          request_options=request_options)
@@ -57,6 +61,8 @@ class MerchantOrder(MPBase):
 
         Returns:
             dict: Updated merchant order object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/update-merchant-order/put
         """
         if not isinstance(merchant_order_object, dict):
             raise ValueError(
@@ -78,6 +84,8 @@ class MerchantOrder(MPBase):
 
         Returns:
             dict: Created merchant order including its ``id``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference
         """
         if not isinstance(merchant_order_object, dict):
             raise ValueError(

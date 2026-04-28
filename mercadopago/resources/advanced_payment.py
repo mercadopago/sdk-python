@@ -4,7 +4,7 @@ Wraps ``/v1/advanced_payments`` endpoints used in marketplace split-payment
 scenarios where funds are distributed among multiple receivers.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/advanced_payments/>`_
+<https://www.mercadopago.com/developers/en/reference>`_ (advanced_payments section not found in current reference)
 """
 from datetime import datetime
 

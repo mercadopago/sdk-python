@@ -5,7 +5,7 @@ plan-based subscriptions.  A subscription links a payer to a
 :class:`~mercadopago.resources.plan.Plan` template for recurring billing.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/subscriptions/>`_
+<https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -28,6 +28,8 @@ class Subscription(MPBase):
 
         Returns:
             dict: Paginated list of matching subscriptions.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/search-preapproval/get
         """
         return self._get(
             uri="/preapproval/search",
@@ -43,6 +45,8 @@ class Subscription(MPBase):
 
         Returns:
             dict: Full subscription object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval/get
         """
         return self._get(
             uri="/preapproval/" + str(subscription_id),
@@ -61,6 +65,8 @@ class Subscription(MPBase):
 
         Returns:
             dict: Created subscription including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval/post
         """
         if not isinstance(subscription_object, dict):
             raise ValueError("Param subscription_object must be a Dictionary")
@@ -86,6 +92,8 @@ class Subscription(MPBase):
 
         Returns:
             dict: Updated subscription object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/update-preapproval/put
         """
         if not isinstance(subscription_object, dict):
             raise ValueError("Param subscription_object must be a Dictionary")

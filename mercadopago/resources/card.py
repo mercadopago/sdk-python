@@ -3,7 +3,7 @@
 Wraps ``/v1/customers/{customer_id}/cards`` endpoints to list, retrieve,
 create, update, and delete cards stored against a customer profile.
 
-`API reference <https://www.mercadopago.com/developers/en/reference/cards/>`_
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/save-card/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -25,6 +25,8 @@ class Card(MPBase):
 
         Returns:
             dict: List of saved card objects.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/get-customer-cards/get
         """
         return self._get(
             uri=f"/v1/customers/{str(customer_id)}/cards",
@@ -41,6 +43,8 @@ class Card(MPBase):
 
         Returns:
             dict: Full card object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/get-card/get
         """
         return self._get(
             uri=f"/v1/customers/{str(customer_id)}/cards/{str(card_id)}",
@@ -63,6 +67,8 @@ class Card(MPBase):
 
         Returns:
             dict: Created card including its ``id``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/save-card/post
         """
         if not isinstance(card_object, dict):
             raise ValueError("Param card_object must be a Dictionary")
@@ -84,6 +90,8 @@ class Card(MPBase):
 
         Returns:
             dict: Updated card object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/update-card/put
         """
         if not isinstance(card_object, dict):
             raise ValueError("Param card_object must be a Dictionary")
@@ -102,6 +110,8 @@ class Card(MPBase):
 
         Returns:
             dict: Deletion confirmation response.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/delete-card/delete
         """
         return self._delete(uri="/v1/customers/" + str(customer_id)
                             + "/cards/" + str(card_id), request_options=request_options)

@@ -3,7 +3,7 @@
 Wraps ``/v1/payments`` endpoints to search, retrieve, create, and update
 payments.
 
-`API reference <https://www.mercadopago.com/developers/en/reference/payments/>`_
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -28,6 +28,8 @@ class Payment(MPBase):
 
         Returns:
             dict: Paginated list of matching payments.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/search-payments/get
         """
         return self._get(uri="/v1/payments/search", filters=filters,
                          request_options=request_options)
@@ -41,6 +43,8 @@ class Payment(MPBase):
 
         Returns:
             dict: Full payment object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-payment/get
         """
         return self._get(uri="/v1/payments/" + str(payment_id), request_options=request_options)
 
@@ -57,6 +61,8 @@ class Payment(MPBase):
 
         Returns:
             dict: Created payment including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post
         """
         if not isinstance(payment_object, dict):
             raise ValueError("Param payment_object must be a Dictionary")
@@ -79,6 +85,8 @@ class Payment(MPBase):
 
         Returns:
             dict: Updated payment object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/update-payment/put
         """
         if not isinstance(payment_object, dict):
             raise ValueError("Param payment_object must be a Dictionary")

@@ -4,7 +4,7 @@ Wraps ``/preapproval`` endpoints to search, retrieve, create, and update
 preapproval (subscription) records without an associated plan.
 
 `API reference
-<https://www.mercadopago.com/developers/en/reference/subscriptions/>`_
+<https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -28,6 +28,8 @@ class PreApproval(MPBase):
 
         Returns:
             dict: Paginated list of matching preapprovals.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/search-preapproval/get
         """
         return self._get(uri="/preapproval/search", filters=filters,
                          request_options=request_options)
@@ -41,6 +43,8 @@ class PreApproval(MPBase):
 
         Returns:
             dict: Full preapproval object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval/get
         """
         return self._get(uri="/preapproval/" + str(preapproval_id), request_options=request_options)
 
@@ -57,6 +61,8 @@ class PreApproval(MPBase):
 
         Returns:
             dict: Created preapproval including its ``id`` and ``init_point``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval/post
         """
         if not isinstance(preapproval_object, dict):
             raise ValueError("Param preapproval_object must be a Dictionary")
@@ -77,6 +83,8 @@ class PreApproval(MPBase):
 
         Returns:
             dict: Updated preapproval object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/update-preapproval/put
         """
         if not isinstance(preapproval_object, dict):
             raise ValueError("Param preapproval_object must be a Dictionary")

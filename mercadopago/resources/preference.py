@@ -3,7 +3,7 @@
 Wraps ``/checkout/preferences`` endpoints to create, retrieve, update,
 and search payment preferences used by Checkout Pro.
 
-`API reference <https://www.mercadopago.com/developers/en/reference/preferences/>`_
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post>`_
 """
 from mercadopago.core import MPBase
 
@@ -25,6 +25,8 @@ class Preference(MPBase):
 
         Returns:
             dict: Full preference object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/get-preference/get
         """
         return self._get(uri="/checkout/preferences/" + str(preference_id),
                          request_options=request_options)
@@ -42,6 +44,8 @@ class Preference(MPBase):
 
         Returns:
             dict: Updated preference object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/update-preference/put
         """
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
@@ -65,6 +69,8 @@ class Preference(MPBase):
 
         Returns:
             dict: Created preference including ``id`` and ``init_point``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post
         """
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
@@ -81,6 +87,8 @@ class Preference(MPBase):
 
         Returns:
             dict: Paginated list of matching preferences.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/search-preferences/get
         """
 
         return self._get(uri="/checkout/preferences/search", filters=filters,
