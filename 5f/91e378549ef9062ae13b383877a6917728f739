@@ -1,0 +1,23 @@
+pyproject.toml
+  3db28d0d1288e51a 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "5f91e378549ef9062ae13b383877a6917728f739",
+  "prompts": {
+    "3db28d0d1288e51a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1efe60b6-79c1-4907-9782-0020c13d78b6",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Daniel Alfaro",
+      "messages": [],
+      "total_additions": 560,
+      "total_deletions": 1,
+      "accepted_lines": 560,
+      "overriden_lines": 0
+    }
+  }
+}
