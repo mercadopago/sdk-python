@@ -31,11 +31,6 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 
-[project.optional-dependencies]
-testing = [
-   "unittest"
-]
-
 [project.urls]
 Homepage = "https://mercadopago.com"
 Repository = "https://github.com/mercadopago/sdk-python"
