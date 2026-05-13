@@ -1,0 +1,24 @@
+tests/test_webhook_signature_validator.py
+  s_1f89798e886786::t_4b4163a7f0fb9d 1-152
+mercadopago/webhook/validator.py
+  s_1f89798e886786::t_0a98c8e2b786a1 1-221
+mercadopago/webhook/__init__.py
+  s_1f89798e886786::t_eb63e322a59d19 1-2,4,10-11,15
+  s_1f89798e886786::t_6c6362bb7dad1c 3,5-9,12-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "8183af0d4f084cf98be45b915636ff80d55be039",
+  "prompts": {},
+  "sessions": {
+    "s_1f89798e886786": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1a03db55-28c1-4343-a817-4d847f934bfd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
