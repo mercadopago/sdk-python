@@ -1,0 +1,19 @@
+mercadopago/examples/order/create_order_pse.py
+  s_69fabdbcb9c498::t_f7deb3f08a5fa9 1-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "e0b8c938c157e42b6ec1e0fb96057a15696495ee",
+  "prompts": {},
+  "sessions": {
+    "s_69fabdbcb9c498": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6841e5d1-e091-4d60-b9db-cbe4c995446d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
