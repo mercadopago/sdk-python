@@ -5,6 +5,7 @@ import os
 import time
 import unittest
 import random
+from datetime import datetime, timezone, timedelta
 from time import sleep
 
 import mercadopago
@@ -318,7 +319,15 @@ class TestOrder(unittest.TestCase):
         """
         Test Function: Search Orders
         """
-        search_response = self.sdk.order().search(filters={"limit": 5, "offset": 0})
+        now = datetime.now(timezone.utc)
+        begin_date = (now - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        end_date = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        search_response = self.sdk.order().search(filters={
+            "page": 1,
+            "page_size": 10,
+            "begin_date": begin_date,
+            "end_date": end_date,
+        })
         self.assertEqual(search_response["status"], 200)
         self.assertIn("data", search_response["response"])
         self.assertIn("paging", search_response["response"])
