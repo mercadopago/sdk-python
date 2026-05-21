@@ -1,0 +1,34 @@
+setup.cfg
+  s_aa989ad9c50e08::t_646c7b7bff2d4e 6
+mercadopago/resources/order.py
+  s_aa989ad9c50e08::t_49251a02ec6883 98-101
+  s_aa989ad9c50e08::t_318f2cbcb60009 177-179
+  s_aa989ad9c50e08::t_eb64f09cb3c212 123-126
+  s_aa989ad9c50e08::t_5f6f8803c0539f 150-153
+mercadopago/webhook/validator.py
+  s_aa989ad9c50e08::t_2f7e8859efa923 134-135
+  s_aa989ad9c50e08::t_2bcb5dad90ce1c 76
+  s_aa989ad9c50e08::t_76a399d689aaea 219,221-222
+  s_aa989ad9c50e08::t_37464b92294ab9 66
+  s_aa989ad9c50e08::t_3e6ecca555f5f0 88
+  s_aa989ad9c50e08::t_9d8e6517fd1a16 93
+mercadopago/resources/advanced_payment.py
+  s_aa989ad9c50e08::t_0b1f2fdb86d698 6-7
+  s_aa989ad9c50e08::t_3b14f7b21f6245 33-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "d5fc8bf85cdb4b7c84d91622eecd32be37ac2d12",
+  "prompts": {},
+  "sessions": {
+    "s_aa989ad9c50e08": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "84b2554c-9e30-4da2-9cee-0c5be51a59de",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
