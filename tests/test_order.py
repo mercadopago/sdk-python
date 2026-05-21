@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from time import sleep
 
 import mercadopago
+from tests import api_call_with_retry
 
 
 class TestOrder(unittest.TestCase):
@@ -300,10 +301,12 @@ class TestOrder(unittest.TestCase):
         order_created = self.create_order_oneshot_mode_complete(card_token_id)
         order_id = order_created["id"]
         sleep(3)
-        transaction_refunded = self.sdk.order().refund_transaction(order_id)
-        self.assertIn(transaction_refunded["status"], [ 201],
+        transaction_refunded = api_call_with_retry(
+            lambda: self.sdk.order().refund_transaction(order_id), expected_status=201
+        )
+        self.assertIn(transaction_refunded["status"], [201],
                       f"Unexpected status code for refund: {transaction_refunded['status']}."
-                      " Response: {transaction_refunded}")
+                      f" Response: {transaction_refunded}")
 
     def test_delete_transaction(self):
         card_token_id = self.create_master_test_card()
