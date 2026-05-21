@@ -1,0 +1,22 @@
+mercadopago/resources/order.py
+  s_fba8c3a28d0b5c::t_390e1c64a88a27 147-148
+  s_fba8c3a28d0b5c::t_4e50777131429d 170-171
+  s_fba8c3a28d0b5c::t_52bddf4f903138 189-190
+  s_fba8c3a28d0b5c::t_aff653b110d0d1 208-209
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "142996e813a528883f159c176215e0877cc40ce6",
+  "prompts": {},
+  "sessions": {
+    "s_fba8c3a28d0b5c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9404418-b6d1-4e89-a7a6-7522731c133c",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
