@@ -26,7 +26,7 @@ class Config:
 
     def __init__(self):
         """Builds version-dependent values (user_agent, tracking_id)."""
-        self.__version = "3.1.0"
+        self.__version = "3.1.1"
         self.__user_agent = "MercadoPago Python SDK v" + self.__version
         self.__product_id = "bc32bpftrpp001u8nhlg"
         self.__tracking_id = "platform:" + platform.python_version()
