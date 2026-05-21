@@ -1,0 +1,25 @@
+tests/test_webhook_signature_validator.py
+  s_9a04c84c62928d::t_fce7bb427e36d0 40
+  s_9a04c84c62928d::t_17455f437c64e3 31,33-34
+  s_9a04c84c62928d::t_ad87c2296d63b0 73
+  s_9a04c84c62928d::t_efffa30477cee9 138
+  s_9a04c84c62928d::t_b80b4eb716152c 143
+  s_9a04c84c62928d::t_07b969ef27511d 81-83
+  s_9a04c84c62928d::t_f5cb37083d4973 91-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "88fd19dc61bdac76f523a0522b1254c375fa2d4f",
+  "prompts": {},
+  "sessions": {
+    "s_9a04c84c62928d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9a4eae26-a3fc-4ccd-b438-e6c025f8c251",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
