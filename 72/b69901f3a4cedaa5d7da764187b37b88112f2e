@@ -1,0 +1,26 @@
+tests/test_subscription.py
+  s_fba8c3a28d0b5c::t_01201919bac794 9
+  s_fba8c3a28d0b5c::t_928e0b2c600b4a 59-61
+  s_fba8c3a28d0b5c::t_79a5f08527c93e 115-117
+tests/__init__.py
+  s_fba8c3a28d0b5c::t_ee5c3fb92325bf 1-16
+tests/test_order.py
+  s_fba8c3a28d0b5c::t_f0ca6a0a844358 304-307,309
+  s_fba8c3a28d0b5c::t_a5b2229f07c445 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "72b69901f3a4cedaa5d7da764187b37b88112f2e",
+  "prompts": {},
+  "sessions": {
+    "s_fba8c3a28d0b5c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9404418-b6d1-4e89-a7a6-7522731c133c",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
