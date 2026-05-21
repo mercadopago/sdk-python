@@ -1,0 +1,11 @@
+pyproject.toml
+  ai_agent 7
+mercadopago/config/config.py
+  ai_agent 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "586c0fcb8a4fe115122dddcf47330297ea10d3df",
+  "prompts": {}
+}
