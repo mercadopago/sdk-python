@@ -95,7 +95,10 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/process", request_options=request_options) # pylint: disable=line-too-long
+        return self._post(
+            uri=f"/v1/orders/{order_id}/process",
+            request_options=request_options,
+        )
 
     def cancel(self, order_id, request_options=None):
         """Cancels an existing order.
@@ -117,7 +120,10 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/cancel", request_options=request_options) # pylint: disable=line-too-long
+        return self._post(
+            uri=f"/v1/orders/{order_id}/cancel",
+            request_options=request_options,
+        )
 
     def capture(self, order_id, request_options=None):
         """Captures a previously authorised order.
@@ -141,7 +147,10 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._post(uri="/v1/orders/" + str(order_id) + "/capture", request_options=request_options) # pylint: disable=line-too-long
+        return self._post(
+            uri=f"/v1/orders/{order_id}/capture",
+            request_options=request_options,
+        )
 
     def create_transaction(self, order_id, transaction_object, request_options=None):
         """Adds a payment transaction to an existing order.
@@ -165,7 +174,9 @@ class Order(MPBase):
         return self._post(uri=f"/v1/orders/{order_id}/transactions", data=transaction_object,
                           request_options=request_options)
 
-    def update_transaction(self, order_id, transaction_id, transaction_object, request_options=None): # pylint: disable=line-too-long
+    def update_transaction(
+        self, order_id, transaction_id, transaction_object, request_options=None
+    ):
         """Updates a transaction within an order.
 
         Args:

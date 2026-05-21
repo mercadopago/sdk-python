@@ -3,8 +3,8 @@
 Wraps ``/v1/advanced_payments`` endpoints used in marketplace split-payment
 scenarios where funds are distributed among multiple receivers.
 
-`API reference
-<https://www.mercadopago.com/developers/en/reference>`_ (advanced_payments section not found in current reference)
+`API reference <https://www.mercadopago.com/developers/en/reference>`_
+(advanced_payments section not found in current reference)
 """
 from datetime import datetime
 
@@ -30,8 +30,11 @@ class AdvancedPayment(MPBase):
         Returns:
             dict: Paginated list of matching advanced payments.
         """
-        return self._get(uri="/v1/advanced_payments/search", filters=filters,
-                         request_options=request_options)
+        return self._get(
+            uri="/v1/advanced_payments/search",
+            filters=filters,
+            request_options=request_options,
+        )
 
     def get(self, advanced_payment_id, request_options=None):
         """Retrieves an advanced payment by its ID.
