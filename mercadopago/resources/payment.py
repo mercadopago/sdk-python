@@ -1,61 +1,68 @@
-"""
-    Module: payment
+"""Payment resource for the MercadoPago Checkout API.
+
+Wraps ``/v1/payments`` endpoints to search, retrieve, create, and update
+payments.
+
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post>`_
 """
 from mercadopago.core import MPBase
 
 
 class Payment(MPBase):
-    """
-    This class provides the methods to access the API that will allow you to create
-    your own payment experience on your website.
+    """Manages payment lifecycle through the MercadoPago Checkout API.
 
-    From basic to advanced configurations, you control the whole experience.
+    Supports transparent (server-to-server) payments as well as payments
+    originated from Checkout Pro / Checkout Bricks.
 
-    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/)  # pylint: disable=line-too-long
+    `Integration guide
+    <https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/>`_
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_search/get/)  # pylint: disable=line-too-long
+        """Searches payments matching the given filters.
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters such as ``external_reference``,
+                ``status``, ``date_created``, etc.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Payment find response
+            dict: Paginated list of matching payments.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/search-payments/get
         """
         return self._get(uri="/v1/payments/search", filters=filters,
                          request_options=request_options)
 
     def get(self, payment_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments_id/get/)  # pylint: disable=line-too-long
+        """Retrieves a single payment by its ID.
 
         Args:
-            payment_id (str): The Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            payment_id: Numeric or string payment identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Payment find response
+            dict: Full payment object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-payment/get
         """
         return self._get(uri="/v1/payments/" + str(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/payments/_payments/post/)  # pylint: disable=line-too-long
+        """Creates a new payment.
 
         Args:
-            payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            payment_object: Dict describing the payment (amount, payer,
+                payment_method_id, token, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param payment_object must be a Dictionary
+            ValueError: If *payment_object* is not a ``dict``.
 
         Returns:
-            dict: Payment creation response
+            dict: Created payment including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post
         """
         if not isinstance(payment_object, dict):
             raise ValueError("Param payment_object must be a Dictionary")
@@ -63,20 +70,23 @@ class Payment(MPBase):
         return self._post(uri="/v1/payments", data=payment_object, request_options=request_options)
 
     def update(self, payment_id, payment_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/payments/_payments_id/put/)  # pylint: disable=line-too-long
+        """Updates an existing payment.
+
+        Commonly used to change ``status`` (e.g. cancel) or update
+        metadata on a payment that has not yet been captured.
 
         Args:
-            payment_id (str): The Payment ID
-            payment_object (dict): Payment to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            payment_id: Identifier of the payment to update.
+            payment_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param payment_object must be a Dictionary
+            ValueError: If *payment_object* is not a ``dict``.
 
         Returns:
-            dict: Payment modification response
+            dict: Updated payment object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/update-payment/put
         """
         if not isinstance(payment_object, dict):
             raise ValueError("Param payment_object must be a Dictionary")

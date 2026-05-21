@@ -1,5 +1,18 @@
-"""
-Module: sdk
+"""Main entry point for the MercadoPago Python SDK.
+
+Instantiate :class:`SDK` with an access token to obtain factory methods
+for every MercadoPago API resource (payments, orders, customers, etc.).
+
+Example::
+
+    import mercadopago
+
+    sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
+    result = sdk.payment().create({
+        "transaction_amount": 100,
+        "payment_method_id": "pix",
+        "payer": {"email": "buyer@example.com"},
+    })
 """
 from mercadopago.config import RequestOptions
 from mercadopago.http import HttpClient
@@ -25,25 +38,17 @@ from mercadopago.resources import (
 
 
 class SDK:
-    """Generate access to all API' modules, which are:
+    """Central client providing factory methods for every API resource.
 
-        1. Advanced Payment
-        2. Card Token
-        3. Card
-        4. Customer
-        5. Disbursement Refund
-        6. Identification Type
-        7. Merchant Order
-        8. Order
-        9. Payment Methods
-        10. Payment
-        11. Preapproval
-        12. Preference
-        13. Refund
-        14. User
-        15. Chargeback
-        16. Subscription
-        17. Plan
+    Each factory method (e.g. :meth:`payment`, :meth:`order`) returns a
+    fresh resource instance bound to the SDK's credentials and HTTP
+    client.  An optional *request_options* argument lets callers override
+    configuration on a per-resource basis.
+
+    Attributes:
+        request_options: Default :class:`RequestOptions` applied to all
+            resource instances unless overridden.
+        http_client: :class:`HttpClient` used for every outgoing request.
     """
 
     def __init__(
@@ -52,16 +57,23 @@ class SDK:
         http_client=None,
         request_options=None,
     ):
-        """Construct ur SDK Object to have access to all APIs modules.
+        """Initialises the SDK with authentication credentials.
+
         Args:
-            [Click here for more info](https://www.mercadopago.com/mlb/account/credentials)
-            http_client (mercadopago.http.http_client, optional): An implementation of
-            HttpClient can be pass to be used to make the REST calls. Defaults to None.
-            request_options (mercadopago.config.request_options, optional): An instance
-            of RequestOptions can be pass changing or adding custom options to ur REST
-            calls. Defaults to None.
+            access_token: OAuth access token obtained from the
+                `MercadoPago credentials page
+                <https://www.mercadopago.com/mlb/account/credentials>`_.
+            http_client: Custom :class:`HttpClient` implementation.
+                Defaults to the built-in ``requests``-based client.
+            request_options: Default :class:`RequestOptions` (timeout,
+                retries, custom headers).  A new instance is created
+                if not provided.
+
         Raises:
-            ValueError: Param request_options must be a RequestOptions Object
+            ValueError: If *request_options* is not a
+                :class:`RequestOptions` instance.
+            ValueError: If *http_client* is not an :class:`HttpClient`
+                instance.
         """
 
         self.http_client = http_client
@@ -75,129 +87,93 @@ class SDK:
         self.request_options.access_token = access_token
 
     def advanced_payment(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates an :class:`AdvancedPayment` resource for marketplace split payments."""
         return AdvancedPayment(request_options is not None and request_options
                                or self.request_options, self.http_client)
 
     def card_token(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`CardToken` resource for server-side card tokenisation."""
         return CardToken(request_options is not None and request_options
                          or self.request_options, self.http_client)
 
     def card(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Card` resource to manage saved customer cards."""
         return Card(request_options is not None and request_options
                     or self.request_options, self.http_client)
 
     def customer(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Customer` resource to manage buyer profiles."""
         return Customer(request_options is not None and request_options
                         or self.request_options, self.http_client)
 
     def disbursement_refund(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`DisbursementRefund` resource for advanced-payment refunds."""
         return DisbursementRefund(request_options is not None and request_options
                                   or self.request_options, self.http_client)
 
     def identification_type(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates an :class:`IdentificationType` resource to list accepted document types."""
         return IdentificationType(request_options is not None and request_options
                                   or self.request_options, self.http_client)
 
     def merchant_order(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`MerchantOrder` resource for Checkout Pro orders."""
         return MerchantOrder(request_options is not None and request_options
                              or self.request_options, self.http_client)
 
     def order(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates an :class:`Order` resource for the Orders API."""
         return Order(request_options is not None and request_options
                        or self.request_options, self.http_client)
 
     def payment(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Payment` resource for the Checkout API."""
         return Payment(request_options is not None and request_options
                        or self.request_options, self.http_client)
 
     def payment_methods(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`PaymentMethods` resource to list available payment methods."""
         return PaymentMethods(request_options is not None and request_options
                               or self.request_options, self.http_client)
 
     def preapproval(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`PreApproval` resource for ad-hoc subscriptions."""
         return PreApproval(request_options is not None and request_options
                            or self.request_options, self.http_client)
 
     def preference(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Preference` resource for Checkout Pro sessions."""
         return Preference(request_options is not None and request_options
                           or self.request_options, self.http_client)
 
     def refund(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Refund` resource for payment refunds."""
         return Refund(request_options is not None and request_options
                       or self.request_options, self.http_client)
 
     def user(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`User` resource to retrieve the authenticated account."""
         return User(request_options is not None and request_options
                     or self.request_options, self.http_client)
 
     def chargeback(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Chargeback` resource to monitor disputes."""
         return Chargeback(request_options is not None and request_options
                           or self.request_options, self.http_client)
 
     def subscription(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Subscription` resource for plan-based recurring billing."""
         return Subscription(request_options is not None and request_options
                             or self.request_options, self.http_client)
 
     def plan(self, request_options=None):
-        """
-        Returns the attribute value of the function
-        """
+        """Creates a :class:`Plan` resource for subscription plan templates."""
         return Plan(request_options is not None and request_options
                     or self.request_options, self.http_client)
 
     @property
     def request_options(self):
-        """
-        Sets the attribute value and validates request_options
-        """
+        """Default :class:`RequestOptions` applied to all resource instances."""
         return self.__request_options
 
     @request_options.setter
@@ -209,9 +185,7 @@ class SDK:
 
     @property
     def http_client(self):
-        """
-        Sets the attribute value and validates http_client
-        """
+        """HTTP transport used for all outgoing API requests."""
         return self.__http_client
 
     @http_client.setter

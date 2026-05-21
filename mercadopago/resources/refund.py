@@ -1,47 +1,57 @@
-"""
-    Module: refund
+"""Refund resource for the MercadoPago Payments API.
+
+Wraps ``/v1/payments/{payment_id}/refunds`` endpoints to list existing
+refunds and create full or partial refunds on approved payments.
+
+Refunds are available within 180 days of payment approval and require
+sufficient account balance.
+
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post>`_
 """
 from mercadopago.core import MPBase
 
 
 class Refund(MPBase):
-    """
-    This class will allow you to refund payments created through the Payments class.
+    """Creates and lists refunds for payments.
 
-    You can refund a payment within 180 days after it was approved.
-
-    You must have sufficient funds in your account in order to successfully refund
-    the payment amount. Otherwise, you will get a 400 Bad Request error.
-
-    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/manage-account/account/cancellations-and-refunds#bookmark_refunds)  # pylint: disable=line-too-long
+    Supports full refunds (omit *refund_object*) and partial refunds
+    (pass ``{"amount": <float>}``).  Refunds can only be issued for
+    approved payments within 180 days.
     """
 
     def list_all(self, payment_id, request_options=None):
-        """Args:
-            payment_id (str): The Payment ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+        """Lists all refunds issued for a payment.
+
+        Args:
+            payment_id: Identifier of the parent payment.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: List all refunds of a payment
+            dict: List of refund objects.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refunds/get
         """
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds",
                          request_options=request_options)
 
     def create(self, payment_id, refund_object=None, request_options=None):
-        """Args:
-            payment_id (str): The Payment ID
-            refund_object (dict): Refund to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+        """Creates a refund for a payment.
+
+        Omit *refund_object* for a full refund, or pass
+        ``{"amount": <float>}`` for a partial refund.
+
+        Args:
+            payment_id: Identifier of the payment to refund.
+            refund_object: Optional dict with partial refund details.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param refund_object must be a Dictionary
+            ValueError: If *refund_object* is provided but not a ``dict``.
 
         Returns:
-            dict: Refund creation response
+            dict: Created refund including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post
         """
         if refund_object is not None and not isinstance(refund_object, dict):
             raise ValueError("Param refund_object must be a Dictionary")

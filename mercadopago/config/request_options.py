@@ -1,5 +1,7 @@
-"""
-Module: request_options
+"""Per-request configuration for MercadoPago API calls.
+
+Holds authentication credentials, timeout, retry policy, and any custom
+or platform-specific headers that should be sent with a request.
 """
 import uuid
 
@@ -8,9 +10,20 @@ from .config import Config
 
 class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
-    """This object hold all configurations that will be used in ur REST call.
+    """Mutable configuration applied to each REST call made by a resource.
 
-    All here u can customize as well add params in the requisition header (custom_headers)
+    Callers may create a default instance via :class:`~mercadopago.sdk.SDK` and
+    override it per-call by passing a different ``RequestOptions`` to any
+    resource method.
+
+    Attributes:
+        access_token: OAuth access token for the MercadoPago API.
+        connection_timeout: Seconds before a request times out.
+        custom_headers: Extra headers merged into every request.
+        max_retries: Maximum automatic retries on transient failures.
+        corporation_id: Optional corporation identifier header.
+        integrator_id: Optional integrator identifier header.
+        platform_id: Optional platform identifier header.
     """
 
     __access_token = None
@@ -32,27 +45,24 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
         platform_id=None,
         max_retries=3,
     ):
-        """Initialize
+        """Initialises request options with sensible defaults.
+
+        Every parameter is validated through its property setter.  Pass only
+        the values you need to override; the rest keep their defaults.
 
         Args:
-            access_token (str, optional): Your User Access Token. Defaults to None.
-            connection_timeout (float, optional): Time to timeout the REST call. Defaults to 60.0.
-            custom_headers (dict, optional): A Dict with params to be added to the requests params.
-            Defaults to None.
-            corporation_id (str, optional): Your Corporation ID if any. Defaults to None.
-            integrator_id (str, optional): Your Integrator ID if any. Defaults to None.
-            platform_id (str, optional): Your Platform ID if any. Defaults to None.
-            max_retries (int, optional): How many retries must be done in case of fail.
-            Defaults to 3.
+            access_token: OAuth access token. Obtain one from the
+                `MercadoPago credentials page
+                <https://www.mercadopago.com/mlb/account/credentials>`_.
+            connection_timeout: Request timeout in seconds. Defaults to 60.0.
+            custom_headers: Additional headers merged into every request.
+            corporation_id: Corporation identifier sent as ``x-corporation-id``.
+            integrator_id: Integrator identifier sent as ``x-integrator-id``.
+            platform_id: Platform identifier sent as ``x-platform-id``.
+            max_retries: Retry count on transient HTTP errors. Defaults to 3.
 
         Raises:
-            ValueError: Param access_token must be a String
-            ValueError: Param connection_timeout must be a Float
-            ValueError: Param custom_headers must be a Dictionary
-            ValueError: Param corporation_id must be a String
-            ValueError: Param integrator_id must be a String
-            ValueError: Param platform_id must be a String
-            ValueError: Param max_retries must be an Integer
+            ValueError: If any parameter fails its type check.
         """
 
         if access_token is not None:
@@ -73,8 +83,14 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
         self.__config = Config()
 
     def get_headers(self):
-        """
-        Sets the attribute values of headers
+        """Builds the full header dict for an API request.
+
+        Merges authentication, tracking, idempotency, and any optional
+        platform/integrator/corporation headers plus user-supplied
+        ``custom_headers`` into a single dict ready for ``requests``.
+
+        Returns:
+            dict: Header name-value pairs.
         """
         headers = {"Authorization": "Bearer " + self.__access_token,
                    "x-product-id": self.__config.product_id,
@@ -99,9 +115,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def access_token(self):
-        """
-        Sets the attribute value and validates access_token
-        """
+        """OAuth access token used for API authentication."""
         return self.__access_token
 
     @access_token.setter
@@ -112,9 +126,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def connection_timeout(self):
-        """
-        Sets the attribute value and validates connection timeout
-        """
+        """Request timeout in seconds."""
         return self.__connection_timeout
 
     @connection_timeout.setter
@@ -125,9 +137,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def corporation_id(self):
-        """
-        Sets the attribute value and validates corporation id
-        """
+        """Corporation identifier sent as ``x-corporation-id`` header."""
         return self.__corporation_id
 
     @corporation_id.setter
@@ -138,9 +148,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def custom_headers(self):
-        """
-        Sets the attribute value and validates custom headers
-        """
+        """Extra headers merged into every API request."""
         return self.__custom_headers
 
     @custom_headers.setter
@@ -151,9 +159,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def integrator_id(self):
-        """
-        Sets the attribute value and validates integrator id
-        """
+        """Integrator identifier sent as ``x-integrator-id`` header."""
         return self.__integrator_id
 
     @integrator_id.setter
@@ -164,9 +170,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def max_retries(self):
-        """
-        Sets the attribute value and validates max retries
-        """
+        """Maximum automatic retries on transient HTTP errors."""
         return self.__max_retries
 
     @max_retries.setter
@@ -177,9 +181,7 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
 
     @property
     def platform_id(self):
-        """
-        Sets the attribute value and validates platform id
-        """
+        """Platform identifier sent as ``x-platform-id`` header."""
         return self.__platform_id
 
     @platform_id.setter

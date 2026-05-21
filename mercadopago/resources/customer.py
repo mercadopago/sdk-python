@@ -1,62 +1,66 @@
-"""
-    Module: customer
+"""Customer resource for the MercadoPago API.
+
+Wraps ``/v1/customers`` endpoints to search, retrieve, create, update, and
+delete customer records.  Use alongside :class:`~mercadopago.resources.card.Card`
+to enable one-click payments for returning buyers.
+
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/create-customer/post>`_
 """
 from mercadopago.core import MPBase
 
 
 class Customer(MPBase):
-    """
-    This class allows you to store customers data safely to improve the shopping experience.
+    """Stores and manages buyer profiles for faster checkout experiences.
 
-    This will allow your customer to complete their purchases much faster and easily when
-    used in conjunction with the Cards class.
-
-    [Click here for more info](https://mercadopago.com.br/developers/en/guides/online-payments/web-tokenize-checkout/customers-and-cards)  # pylint: disable=line-too-long
+    Customer records hold identification, email, and address data.
+    Attach saved cards via the :class:`Card` resource to let returning
+    buyers pay without re-entering card details.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_search/get/)  # pylint: disable=line-too-long
+        """Searches customers matching the given filters.
 
         Args:
-            filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters (e.g. ``email``).
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Customer find response
+            dict: Paginated list of matching customers.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/search-customer/get
         """
         return self._get(uri="/v1/customers/search", filters=filters,
                          request_options=request_options)
 
     def get(self, customer_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/customers/_customers_id/get/)  # pylint: disable=line-too-long
+        """Retrieves a customer by their ID.
 
         Args:
-            customer_id (str): The Customer ID owner
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            customer_id: Unique customer identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Customer find response
+            dict: Full customer object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/get-customer/get
         """
         return self._get(uri="/v1/customers/" + str(customer_id), request_options=request_options)
 
     def create(self, customer_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/customers/_customers/post/)  # pylint: disable=line-too-long
+        """Creates a new customer record.
 
         Args:
-            customer_object (dict): Customer object to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            customer_object: Dict with customer data (email, first_name,
+                last_name, identification, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param customer_object must be a Dictionary
+            ValueError: If *customer_object* is not a ``dict``.
 
         Returns:
-            dict: Customer creation response
+            dict: Created customer including its ``id``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/create-customer/post
         """
         if not isinstance(customer_object, dict):
             raise ValueError("Param customer_object must be a Dictionary")
@@ -65,20 +69,20 @@ class Customer(MPBase):
                           request_options=request_options)
 
     def update(self, customer_id, customer_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/customers/_customers_id/put/)  # pylint: disable=line-too-long
+        """Updates an existing customer.
 
         Args:
-            customer_id (str): The Customer ID owner
-            customer_object (dict): Customer object to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            customer_id: Identifier of the customer to update.
+            customer_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValeuError: Param customer_object must be a Dictionary
+            ValueError: If *customer_object* is not a ``dict``.
 
         Returns:
-            dict: Customer modification response
+            dict: Updated customer object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/update-customer/put
         """
         if not isinstance(customer_object, dict):
             raise ValueError("Param customer_object must be a Dictionary")
@@ -87,15 +91,16 @@ class Customer(MPBase):
                          request_options=request_options)
 
     def delete(self, customer_id, request_options=None):
-        """
+        """Deletes a customer record.
+
         Args:
-            customer_id (str): The Customer ID owner
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            customer_id: Identifier of the customer to delete.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Customer exclusion response
+            dict: Deletion confirmation response.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/get-customer/get
         """
         return self._delete(uri="/v1/customers/" + str(customer_id),
                             request_options=request_options)

@@ -1,41 +1,44 @@
-"""
-    Module: chargeback
+"""Chargeback resource for the MercadoPago API.
+
+Wraps ``/v1/chargebacks`` endpoints to search and retrieve chargeback
+records initiated by cardholders through their issuing bank.
+
+`API reference
+<https://www.mercadopago.com.br/developers/en/reference/chargebacks/>`_
 """
 from mercadopago.core import MPBase
 
 
 class Chargeback(MPBase):
-    """
-    Access to Chargebacks
+    """Provides read access to chargeback disputes.
 
-    [Click here for more info](https://www.mercadopago.com.br/developers/pt/guides/manage-account/account/chargebacks)  # pylint: disable=line-too-long
+    Chargebacks are created by MercadoPago when a cardholder disputes a
+    payment.  Use :meth:`search` and :meth:`get` to monitor and respond
+    to disputes.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/chargebacks/_chargebacks_search/get)  # pylint: disable=line-too-long
+        """Searches chargebacks matching the given filters.
 
         Args:
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters (e.g. ``payment_id``).
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Chargeback find response
+            dict: Paginated list of matching chargebacks.
         """
         return self._get(uri="/v1/chargebacks/search", filters=filters,
                          request_options=request_options)
 
     def get(self, chargeback_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/pt/reference/chargebacks/_chargebacks_id/get)  # pylint: disable=line-too-long
+        """Retrieves a chargeback by its ID.
 
         Args:
-            chargeback_id (str): The Chargeback ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            chargeback_id: Unique chargeback identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Chargeback find response
+            dict: Full chargeback object including status and amounts.
         """
         return self._get(uri="/v1/chargebacks/" + str(chargeback_id),
                          request_options=request_options)

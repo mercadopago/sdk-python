@@ -1,58 +1,68 @@
-"""
-    Module: merchant_order
+"""Merchant Order resource for the MercadoPago API.
+
+Wraps ``/merchant_orders`` endpoints to search, retrieve, create, and
+update merchant orders.  A merchant order groups one or more Checkout
+Pro payments under a single business reference.
+
+`API reference
+<https://www.mercadopago.com/developers/en/reference>`_
 """
 from mercadopago.core import MPBase
 
 
 class MerchantOrder(MPBase):
-    """
-    This class will allow you to create and manage your orders. You can attach
-    one or more payments in your merchant order.
+    """Groups payments into a single merchant-level order.
+
+    Merchant orders are typically created automatically by Checkout Pro
+    preferences but can also be managed manually to attach additional
+    payments or shipments.
     """
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_search/get/)  # pylint: disable=line-too-long
+        """Searches merchant orders matching the given filters.
 
         Args:
-            filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters (e.g. ``external_reference``).
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Merchant Order find response
+            dict: Paginated list of matching merchant orders.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/search-merchant-order/get
         """
         return self._get(uri="/merchant_orders/search", filters=filters,
                          request_options=request_options)
 
     def get(self, merchan_order_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/cards/_customers_customer_id_cards/get/)  # pylint: disable=line-too-long
+        """Retrieves a merchant order by its ID.
 
         Args:
-            merchan_order_id (str): The Merchant Order ID
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            merchan_order_id: Unique merchant order identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Cards find response
+            dict: Full merchant order object including attached payments.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/get-merchant-order/get
         """
         return self._get(uri="/merchant_orders/" + str(merchan_order_id),
                          request_options=request_options)
 
     def update(self, merchan_order_id, merchant_order_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders_id/put/)  # pylint: disable=line-too-long
+        """Updates an existing merchant order.
 
         Args:
-            merchan_order_id (str): Merchant Order ID
-            merchant_order_object (dict): Merchant Order object to be updated
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            merchan_order_id: Identifier of the merchant order to update.
+            merchant_order_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param merchant_order_object must be a Dictionary
+            ValueError: If *merchant_order_object* is not a ``dict``.
 
         Returns:
-            dict: Cards modification response
+            dict: Updated merchant order object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/update-merchant-order/put
         """
         if not isinstance(merchant_order_object, dict):
             raise ValueError(
@@ -62,18 +72,20 @@ class MerchantOrder(MPBase):
                          data=merchant_order_object, request_options=request_options)
 
     def create(self, merchant_order_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/merchant_orders/_merchant_orders/post/)  # pylint: disable=line-too-long
+        """Creates a new merchant order.
 
         Args:
-            merchant_order_object (dict): Merchant Order object to be created
-            request_options (mercadopago.config.request_options, optional): An instance of RequestOptions can be pass
-                changing or adding custom options to ur REST call. Defaults to None.
+            merchant_order_object: Dict describing the order (items,
+                preference_id, application_id, etc.).
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param merchant_order_object must be a Dictionary
+            ValueError: If *merchant_order_object* is not a ``dict``.
 
         Returns:
-            dict: Cards creation response
+            dict: Created merchant order including its ``id``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference
         """
         if not isinstance(merchant_order_object, dict):
             raise ValueError(

@@ -1,47 +1,51 @@
-"""
-    Module: preference
+"""Checkout Preference resource for the MercadoPago API.
+
+Wraps ``/checkout/preferences`` endpoints to create, retrieve, update,
+and search payment preferences used by Checkout Pro.
+
+`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post>`_
 """
 from mercadopago.core import MPBase
 
 
 class Preference(MPBase):
-    """
-    This class will allow you to charge your customers through our web form
-    from any device in a simple, fast and secure way.
+    """Manages Checkout Pro payment preferences.
 
-    [Click here for more info](https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-pro/introduction)  # pylint: disable=line-too-long
+    A preference defines the items, payer information, payment methods,
+    and redirect URLs for a Checkout Pro session.  The ``init_point``
+    returned by :meth:`create` is the URL you redirect buyers to.
     """
 
     def get(self, preference_id, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/get/)  # pylint: disable=line-too-long
+        """Retrieves a preference by its ID.
 
         Args:
-            preference_id (str): The Preference ID
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            preference_id: Unique preference identifier.
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Preference find response
+            dict: Full preference object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/get-preference/get
         """
         return self._get(uri="/checkout/preferences/" + str(preference_id),
                          request_options=request_options)
 
     def update(self, preference_id, preference_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences_id/put/)  # pylint: disable=line-too-long
+        """Updates an existing preference.
 
         Args:
-            preference_id (str): The Preference ID
-            preference_object (dict): Values to be modified
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            preference_id: Identifier of the preference to update.
+            preference_object: Dict with the fields to modify.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param preference_object must be a Dictionary
+            ValueError: If *preference_object* is not a ``dict``.
 
         Returns:
-            dict: Preference modification response
+            dict: Updated preference object.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/update-preference/put
         """
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
@@ -50,18 +54,23 @@ class Preference(MPBase):
                          request_options=request_options)
 
     def create(self, preference_object, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com/developers/en/reference/preferences/_checkout_preferences/post/) # pylint: disable=line-too-long
+        """Creates a new checkout preference.
+
+        The response includes ``init_point`` and ``sandbox_init_point``
+        URLs to redirect buyers to the Checkout Pro flow.
 
         Args:
-            preference_object (dict): Preference object to be created
-            request_options (mercadopago.config.request_options, optional): An instance of
-                RequestOptions can be pass changing or adding custom options to ur REST call. Defaults to None.
+            preference_object: Dict defining items, payer, back_urls,
+                payment_methods, etc.
+            request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: Param preference_object must be a Dictionary
+            ValueError: If *preference_object* is not a ``dict``.
 
         Returns:
-            dict: Preference creation response
+            dict: Created preference including ``id`` and ``init_point``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post
         """
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
@@ -70,16 +79,16 @@ class Preference(MPBase):
                           request_options=request_options)
 
     def search(self, filters=None, request_options=None):
-        """[Click here for more info](https://www.mercadopago.com.br/developers/en/reference/preferences/_checkout_preferences_search/get)  # pylint: disable=line-too-long
+        """Searches preferences matching the given filters.
 
         Args:
-            filters (dict): The search filters parameters
-            request_options (mercadopago.config.request_options, optional): An instance of
-            RequestOptions can be pass changing or adding custom options to ur REST call.
-            Defaults to None.
+            filters: Query-string parameters (e.g. ``external_reference``).
+            request_options: Per-call configuration overrides.
 
         Returns:
-            dict: Preference find response
+            dict: Paginated list of matching preferences.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/search-preferences/get
         """
 
         return self._get(uri="/checkout/preferences/search", filters=filters,
