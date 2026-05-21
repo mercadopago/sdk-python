@@ -221,7 +221,7 @@ class TestOrder(unittest.TestCase):
     def test_cancel_order(self):
         card_token_id = self.create_master_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
-        time.sleep(4)
+        time.sleep(10)
         order_canceled = self.sdk.order().cancel(order_id)
         self.assertEqual(order_canceled["status"], 200)
         self.assertEqual(order_canceled["response"]["status"], "canceled")
@@ -288,7 +288,7 @@ class TestOrder(unittest.TestCase):
           ]
         }
 
-        sleep(3)
+        sleep(6)
 
         transaction_refunded = self.sdk.order().refund_transaction(order_id, transaction_refund)
         self.assertIn(transaction_refunded["status"], [ 201],
