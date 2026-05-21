@@ -6,6 +6,7 @@ import os
 import unittest
 import random
 import mercadopago
+from tests import api_call_with_retry
 
 
 class TestSubscription(unittest.TestCase):
@@ -55,7 +56,9 @@ class TestSubscription(unittest.TestCase):
             }
         }
 
-        subscription_response = self.sdk.subscription().create(subscription_payload)
+        subscription_response = api_call_with_retry(
+            lambda: self.sdk.subscription().create(subscription_payload), expected_status=201
+        )
         self.assertEqual(subscription_response["status"], 201)
 
         subscription_object = subscription_response['response']
@@ -109,9 +112,9 @@ class TestSubscription(unittest.TestCase):
             "status": "authorized"
         }
 
-        subscription_response = self.sdk.subscription().create(subscription_payload)
-        if subscription_response.get("status") != 201:
-            raise RuntimeError(f"Failed to to create subscription: {subscription_response}")
+        subscription_response = api_call_with_retry(
+            lambda: self.sdk.subscription().create(subscription_payload), expected_status=201
+        )
         self.assertEqual(subscription_response["status"], 201)
 
         subscription_object = subscription_response['response']

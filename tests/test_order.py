@@ -5,9 +5,11 @@ import os
 import time
 import unittest
 import random
+from datetime import datetime, timezone, timedelta
 from time import sleep
 
 import mercadopago
+from tests import api_call_with_retry
 
 
 class TestOrder(unittest.TestCase):
@@ -220,7 +222,7 @@ class TestOrder(unittest.TestCase):
     def test_cancel_order(self):
         card_token_id = self.create_master_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
-        time.sleep(4)
+        time.sleep(10)
         order_canceled = self.sdk.order().cancel(order_id)
         self.assertEqual(order_canceled["status"], 200)
         self.assertEqual(order_canceled["response"]["status"], "canceled")
@@ -287,7 +289,7 @@ class TestOrder(unittest.TestCase):
           ]
         }
 
-        sleep(3)
+        sleep(6)
 
         transaction_refunded = self.sdk.order().refund_transaction(order_id, transaction_refund)
         self.assertIn(transaction_refunded["status"], [ 201],
@@ -299,10 +301,12 @@ class TestOrder(unittest.TestCase):
         order_created = self.create_order_oneshot_mode_complete(card_token_id)
         order_id = order_created["id"]
         sleep(3)
-        transaction_refunded = self.sdk.order().refund_transaction(order_id)
-        self.assertIn(transaction_refunded["status"], [ 201],
+        transaction_refunded = api_call_with_retry(
+            lambda: self.sdk.order().refund_transaction(order_id), expected_status=201
+        )
+        self.assertIn(transaction_refunded["status"], [201],
                       f"Unexpected status code for refund: {transaction_refunded['status']}."
-                      " Response: {transaction_refunded}")
+                      f" Response: {transaction_refunded}")
 
     def test_delete_transaction(self):
         card_token_id = self.create_master_test_card()
@@ -318,7 +322,15 @@ class TestOrder(unittest.TestCase):
         """
         Test Function: Search Orders
         """
-        search_response = self.sdk.order().search(filters={"limit": 5, "offset": 0})
+        now = datetime.now(timezone.utc)
+        begin_date = (now - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        end_date = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        search_response = self.sdk.order().search(filters={
+            "page": 1,
+            "page_size": 10,
+            "begin_date": begin_date,
+            "end_date": end_date,
+        })
         self.assertEqual(search_response["status"], 200)
         self.assertIn("data", search_response["response"])
         self.assertIn("paging", search_response["response"])
