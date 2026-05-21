@@ -162,11 +162,8 @@ class Order(MPBase):
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        response = self._post(uri=f"/v1/orders/{order_id}/transactions", data=transaction_object,
-                              request_options=request_options)
-        if response.get("status") != 201:
-            raise Exception(f"Failed to add transaction: {response}")  # pylint: disable=broad-exception-raised
-        return response
+        return self._post(uri=f"/v1/orders/{order_id}/transactions", data=transaction_object,
+                          request_options=request_options)
 
     def update_transaction(self, order_id, transaction_id, transaction_object, request_options=None): # pylint: disable=line-too-long
         """Updates a transaction within an order.
@@ -187,11 +184,8 @@ class Order(MPBase):
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        response = self._put(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
-                             data=transaction_object, request_options=request_options)
-        if response.get("status") != 200:
-            raise Exception(f"Failed to update transaction: {response}")  # pylint: disable=broad-exception-raised
-        return response
+        return self._put(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
+                         data=transaction_object, request_options=request_options)
 
     def refund_transaction(self, order_id, transaction_object=None, request_options=None):
         """Refunds an order's transactions.
@@ -216,11 +210,8 @@ class Order(MPBase):
         if transaction_object is not None and not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        response = self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
-                              request_options=request_options)
-        if response.get("status") != 201:
-            raise Exception(f"Failed to refund transaction: {response}")  # pylint: disable=broad-exception-raised
-        return response
+        return self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
+                          request_options=request_options)
 
     def delete_transaction(self, order_id, transaction_id, request_options=None):
         """Removes a transaction from an order.
@@ -242,9 +233,5 @@ class Order(MPBase):
         if not isinstance(order_id, str) or not isinstance(transaction_id, str):
             raise ValueError("Params order_id and transaction_id must be strings")
 
-        response = self._delete(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
-                                request_options=request_options)
-
-        if response.get("status") != 204:
-            raise Exception(f"Failed to delete transaction: {response}")  # pylint: disable=broad-exception-raised
-        return response
+        return self._delete(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
+                            request_options=request_options)
