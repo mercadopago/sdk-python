@@ -63,7 +63,7 @@ class InvalidWebhookSignatureError(Exception):
             request_id: ``x-request-id`` value associated with the request.
             timestamp: ``ts`` extracted from the header, if available.
         """
-        super().__init__("Invalid webhook signature: {0}".format(reason.value))
+        super().__init__(f"Invalid webhook signature: {reason.value}")
         self.reason = reason
         self.request_id = request_id
         self.timestamp = timestamp
@@ -73,7 +73,7 @@ _DEFAULT_SUPPORTED_VERSIONS = ("v1",)
 _VERSION_KEY_REGEX = re.compile(r"^v\d+$")
 
 
-class WebhookSignatureValidator:
+class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
     """Stateless utility that validates the signature of a MercadoPago webhook.
 
     On failure :func:`validate` raises :class:`InvalidWebhookSignatureError`;
@@ -85,11 +85,12 @@ class WebhookSignatureValidator:
     """
 
     @staticmethod
-    def validate(
+    def validate(  # pylint: disable=too-many-arguments
         x_signature,
         x_request_id,
         data_id,
         secret,
+        *,
         tolerance_seconds=None,
         supported_versions=None,
         now=None,
@@ -130,7 +131,8 @@ class WebhookSignatureValidator:
         data_id = _normalize(data_id)
         versions = tuple(supported_versions) if supported_versions else _DEFAULT_SUPPORTED_VERSIONS
         if now is None:
-            now = lambda: int(time.time() * 1000)
+            def now():
+                return int(time.time() * 1000)
 
         if x_signature is None:
             raise InvalidWebhookSignatureError(
@@ -214,8 +216,8 @@ def _build_manifest(data_id, request_id, ts):
     """Builds the HMAC manifest, omitting empty pairs per the documented rule."""
     parts = []
     if data_id:
-        parts.append("id:{0}".format(data_id.lower()))
+        parts.append(f"id:{data_id.lower()}")
     if request_id:
-        parts.append("request-id:{0}".format(request_id))
-    parts.append("ts:{0}".format(ts))
+        parts.append(f"request-id:{request_id}")
+    parts.append(f"ts:{ts}")
     return ";".join(parts) + ";"
