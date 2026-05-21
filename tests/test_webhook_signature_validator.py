@@ -28,16 +28,16 @@ TS_NUM = int(TS)
 def compute_hash(data_id, request_id, ts, secret):
     parts = []
     if data_id:
-        parts.append("id:{0}".format(data_id.lower()))
+        parts.append(f"id:{data_id.lower()}")
     if request_id:
-        parts.append("request-id:{0}".format(request_id))
-    parts.append("ts:{0}".format(ts))
+        parts.append(f"request-id:{request_id}")
+    parts.append(f"ts:{ts}")
     manifest = ";".join(parts) + ";"
     return hmac.new(secret.encode("utf-8"), manifest.encode("utf-8"), hashlib.sha256).hexdigest()
 
 
 def build_header(h, ts=TS, version="v1"):
-    return "ts={0},{1}={2}".format(ts, version, h)
+    return f"ts={ts},{version}={h}"
 
 
 VALID_HASH = compute_hash(DATA_ID_LOWER, REQUEST_ID, TS, SECRET)
@@ -70,7 +70,7 @@ class TestWebhookSignatureValidator(unittest.TestCase):
 
     # --- case 5 ---
     def test_missing_ts_raises_missing_timestamp(self):
-        header = "v1={0}".format(VALID_HASH)
+        header = f"v1={VALID_HASH}"
         with self.assertRaises(InvalidWebhookSignatureError) as ctx:
             WebhookSignatureValidator.validate(header, REQUEST_ID, DATA_ID_LOWER, SECRET)
         self.assertEqual(ctx.exception.reason, SignatureFailureReason.MISSING_TIMESTAMP)
@@ -78,7 +78,9 @@ class TestWebhookSignatureValidator(unittest.TestCase):
     # --- case 6 ---
     def test_missing_v1_raises_missing_hash(self):
         with self.assertRaises(InvalidWebhookSignatureError) as ctx:
-            WebhookSignatureValidator.validate("ts={0}".format(TS), REQUEST_ID, DATA_ID_LOWER, SECRET)
+            WebhookSignatureValidator.validate(
+                f"ts={TS}", REQUEST_ID, DATA_ID_LOWER, SECRET
+            )
         self.assertEqual(ctx.exception.reason, SignatureFailureReason.MISSING_HASH)
         self.assertEqual(ctx.exception.timestamp, TS)
 
@@ -86,7 +88,9 @@ class TestWebhookSignatureValidator(unittest.TestCase):
     def test_tampered_hash_raises_signature_mismatch(self):
         tampered = VALID_HASH[:-2] + ("ff" if VALID_HASH.endswith("00") else "00")
         with self.assertRaises(InvalidWebhookSignatureError) as ctx:
-            WebhookSignatureValidator.validate(build_header(tampered), REQUEST_ID, DATA_ID_LOWER, SECRET)
+            WebhookSignatureValidator.validate(
+                build_header(tampered), REQUEST_ID, DATA_ID_LOWER, SECRET
+            )
         self.assertEqual(ctx.exception.reason, SignatureFailureReason.SIGNATURE_MISMATCH)
 
     # --- case 8 ---
@@ -131,12 +135,12 @@ class TestWebhookSignatureValidator(unittest.TestCase):
 
     # --- supportedVersions ---
     def test_supports_v1_when_both_present(self):
-        header = "ts={0},v1={1},v2=aaaa".format(TS, VALID_HASH)
+        header = f"ts={TS},v1={VALID_HASH},v2=aaaa"
         WebhookSignatureValidator.validate(header, REQUEST_ID, DATA_ID_LOWER, SECRET,
                                            supported_versions=["v1"])
 
     def test_only_v2_in_header_only_v1_supported_raises_missing_hash(self):
-        header = "ts={0},v2=somehash".format(TS)
+        header = f"ts={TS},v2=somehash"
         with self.assertRaises(InvalidWebhookSignatureError) as ctx:
             WebhookSignatureValidator.validate(header, REQUEST_ID, DATA_ID_LOWER, SECRET,
                                                supported_versions=["v1"])
