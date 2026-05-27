@@ -1,0 +1,23 @@
+mercadopago/resources/invoice.py
+  s_ca33c7d96b2139::t_30468e5fd4fc8a 1-62
+mercadopago/resources/point.py
+  s_ca33c7d96b2139::t_d8012ed2a09947 1-121
+mercadopago/resources/oauth.py
+  s_ca33c7d96b2139::t_858474c2ef1079 1-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "4d3d568c7bfc74b67e5b02a3700af06c1ba16b28",
+  "prompts": {},
+  "sessions": {
+    "s_ca33c7d96b2139": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "31d8d73a-8320-4e75-89be-a5971fd08efd",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
