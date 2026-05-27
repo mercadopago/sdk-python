@@ -13,11 +13,14 @@ from mercadopago.resources.chargeback import Chargeback
 from mercadopago.resources.customer import Customer
 from mercadopago.resources.disbursement_refund import DisbursementRefund
 from mercadopago.resources.identification_type import IdentificationType
+from mercadopago.resources.invoice import Invoice
 from mercadopago.resources.merchant_order import MerchantOrder
+from mercadopago.resources.oauth import OAuth
 from mercadopago.resources.order import Order
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
 from mercadopago.resources.plan import Plan
+from mercadopago.resources.point import Point
 from mercadopago.resources.preapproval import PreApproval
 from mercadopago.resources.preference import Preference
 from mercadopago.resources.refund import Refund
@@ -34,11 +37,14 @@ __all__ = (
     'DisbursementRefund',
     'HttpClient',
     'IdentificationType',
+    'Invoice',
     'MerchantOrder',
+    'OAuth',
     'Order',
     'Payment',
     'PaymentMethods',
     'Plan',
+    'Point',
     'PreApproval',
     'Preference',
     'Refund',
