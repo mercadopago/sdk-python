@@ -1,0 +1,21 @@
+pyproject.toml
+  s_ca33c7d96b2139::t_541c082911264f 7
+mercadopago/config/config.py
+  s_ca33c7d96b2139::t_c772f53827600e 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "c10dcc96843ee95c61e02c0ee1f79677ae21124e",
+  "prompts": {},
+  "sessions": {
+    "s_ca33c7d96b2139": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "31d8d73a-8320-4e75-89be-a5971fd08efd",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
