@@ -44,3 +44,9 @@ jobs:
         python -m unittest discover tests/
       env:
         ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
+
+    - name: Install pip-audit
+      run: pip install pip-audit
+
+    - name: Dependency audit
+      run: pip-audit
