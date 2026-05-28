@@ -222,8 +222,9 @@ class TestOrder(unittest.TestCase):
     def test_cancel_order(self):
         card_token_id = self.create_master_test_card()
         order_id = self.create_order_canceled_or_captured(card_token_id)
-        time.sleep(10)
-        order_canceled = self.sdk.order().cancel(order_id)
+        order_canceled = api_call_with_retry(
+            lambda: self.sdk.order().cancel(order_id), expected_status=200
+        )
         self.assertEqual(order_canceled["status"], 200)
         self.assertEqual(order_canceled["response"]["status"], "canceled")
 
