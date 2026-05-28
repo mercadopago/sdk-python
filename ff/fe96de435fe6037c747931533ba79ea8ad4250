@@ -1,0 +1,19 @@
+mercadopago/sdk.py
+  s_564af34b220c1c::t_a766a23faed13f 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "fffe96de435fe6037c747931533ba79ea8ad4250",
+  "prompts": {},
+  "sessions": {
+    "s_564af34b220c1c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d4e81361-be8f-41ff-acba-09320e8ec5f8",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
