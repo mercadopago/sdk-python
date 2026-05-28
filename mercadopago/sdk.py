@@ -40,7 +40,7 @@ from mercadopago.resources import (
 )
 
 
-class SDK:
+class SDK:  # pylint: disable=too-many-public-methods
     """Central client providing factory methods for every API resource.
 
     Each factory method (e.g. :meth:`payment`, :meth:`order`) returns a
