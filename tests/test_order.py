@@ -2,7 +2,6 @@
     Module: test_order
 """
 import os
-import time
 import unittest
 import random
 from datetime import datetime, timezone, timedelta
