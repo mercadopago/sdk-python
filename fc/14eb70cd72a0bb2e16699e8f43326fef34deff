@@ -1,0 +1,19 @@
+pyproject.toml
+  s_564af34b220c1c::t_ba43008942bc94 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "fc14eb70cd72a0bb2e16699e8f43326fef34deff",
+  "prompts": {},
+  "sessions": {
+    "s_564af34b220c1c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d4e81361-be8f-41ff-acba-09320e8ec5f8",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
