@@ -24,11 +24,14 @@ from mercadopago.resources import (
     Customer,
     DisbursementRefund,
     IdentificationType,
+    Invoice,
     MerchantOrder,
+    OAuth,
     Order,
     Payment,
     PaymentMethods,
     Plan,
+    Point,
     PreApproval,
     Preference,
     Refund,
@@ -37,7 +40,7 @@ from mercadopago.resources import (
 )
 
 
-class SDK:
+class SDK:  # pylint: disable=too-many-public-methods
     """Central client providing factory methods for every API resource.
 
     Each factory method (e.g. :meth:`payment`, :meth:`order`) returns a
@@ -115,6 +118,21 @@ class SDK:
         """Creates an :class:`IdentificationType` resource to list accepted document types."""
         return IdentificationType(request_options is not None and request_options
                                   or self.request_options, self.http_client)
+
+    def invoice(self, request_options=None):
+        """Creates an :class:`Invoice` resource to retrieve subscription billing invoices."""
+        return Invoice(request_options is not None and request_options
+                       or self.request_options, self.http_client)
+
+    def oauth(self, request_options=None):
+        """Creates an :class:`OAuth` resource for the OAuth 2.0 authorization code flow."""
+        return OAuth(request_options is not None and request_options
+                     or self.request_options, self.http_client)
+
+    def point(self, request_options=None):
+        """Creates a :class:`Point` resource for in-person payments via Point devices."""
+        return Point(request_options is not None and request_options
+                     or self.request_options, self.http_client)
 
     def merchant_order(self, request_options=None):
         """Creates a :class:`MerchantOrder` resource for Checkout Pro orders."""

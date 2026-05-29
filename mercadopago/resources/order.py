@@ -14,6 +14,60 @@ class Order(MPBase):
 
     An order groups one or more payment transactions and supports a
     two-step (authorise then capture) flow as well as direct processing.
+
+    Automatic Payments (AP) — supported keys for ``stored_credential`` dict:
+
+    .. code-block:: python
+
+        "stored_credential": {
+            "payment_initiator": str,      # "cardholder" | "merchant"
+            "reason": str,                 # "recurring" | "installment" | "unscheduled"
+            "store_payment_method": bool,
+            "first_payment": bool,
+            "prev_transaction_ref": str,   # ID of the previous transaction in the series.
+                                           # Required from the second charge onwards.
+        }
+
+    Supported keys for ``automatic_payments`` dict:
+
+    .. code-block:: python
+
+        "automatic_payments": {
+            "payment_profile_id": str,     # Stored payment profile ID.
+            "retries": int,                # Max retry attempts on failure.
+            "schedule_date": str,          # ISO 8601 scheduled charge date.
+            "due_date": str,               # ISO 8601 payment due date.
+        }
+
+    Supported keys for ``subscription_data`` dict:
+
+    .. code-block:: python
+
+        "subscription_data": {
+            "invoice_id": str,             # ID of the invoice being paid.
+            "billing_date": str,           # ISO 8601 billing date.
+            "subscription_sequence": {
+                "number": int,             # Current payment number in the series.
+                "total": int,              # Total payments in the subscription.
+            },
+            "invoice_period": {
+                "type": str,               # "monthly" | "daily" | "yearly".
+                "period": int,             # Number of period units.
+            },
+        }
+
+    Supported keys for ``integration_data`` dict (root of order request):
+
+    .. code-block:: python
+
+        "integration_data": {
+            "integrator_id": str,          # Certified integrator ID.
+            "platform_id": str,            # Platform ID assigned by MercadoPago.
+            "corporation_id": str,         # Corporation ID for multi-account setups.
+            "sponsor": {
+                "id": str,                 # MercadoPago user ID of the sponsor.
+            },
+        }
     """
 
     def search(self, filters=None, request_options=None):

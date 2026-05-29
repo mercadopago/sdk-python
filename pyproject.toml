@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mercadopago"
-version = "3.1.1"
+version = "3.2.0"
 authors = [
     {name = "Mercado Pago", email = "mp_sdk@mercadopago.com"}
 ]
@@ -14,7 +14,7 @@ keywords = ["api", "mercadopago", "checkout", "payment in sdk integration", "lts
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
 dependencies = [
-    "requests>=2.32.4,<3"
+    "requests>=2.33.0,<3"
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",
