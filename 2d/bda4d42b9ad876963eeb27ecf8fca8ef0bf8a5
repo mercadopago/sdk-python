@@ -1,0 +1,19 @@
+tests/test_order.py
+  s_564af34b220c1c::t_02ff1ebeca8018 292-296,298
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "2dbda4d42b9ad876963eeb27ecf8fca8ef0bf8a5",
+  "prompts": {},
+  "sessions": {
+    "s_564af34b220c1c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d4e81361-be8f-41ff-acba-09320e8ec5f8",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
