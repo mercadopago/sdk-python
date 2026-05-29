@@ -1,0 +1,29 @@
+mercadopago/resources/order_stored_credential.py
+  s_9d868b010fbbae::t_dd766c99591af1 1-31
+mercadopago/resources/order_subscription_data.py
+  s_9d868b010fbbae::t_c3d797ebc0d197 1-51
+examples/order/create_order_automatic_payment.py
+  s_9d868b010fbbae::t_843dbd94b3689f 1-137
+mercadopago/resources/order_automatic_payments.py
+  s_9d868b010fbbae::t_d0b02006bff8dc 1-27
+mercadopago/resources/order_integration_data.py
+  s_9d868b010fbbae::t_6718178ee9a2e8 1-36
+mercadopago/resources/order.py
+  s_9d868b010fbbae::t_96d6e8d991c615 17-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.12",
+  "base_commit_sha": "e18f1a4d0ab829a528a3cc8c665c70d296b02e8e",
+  "prompts": {},
+  "sessions": {
+    "s_9d868b010fbbae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cfad13d2-c7f9-4497-aca9-b81634739146",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
