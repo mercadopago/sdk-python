@@ -1,5 +1,5 @@
 """Dataclass for subscription billing data in automatic payment order requests."""
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 

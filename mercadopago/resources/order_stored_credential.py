@@ -1,5 +1,5 @@
 """Dataclass for stored credential (card-on-file) data in automatic payment flows."""
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 
