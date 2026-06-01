@@ -289,12 +289,13 @@ class TestOrder(unittest.TestCase):
           ]
         }
 
-        sleep(6)
-
-        transaction_refunded = self.sdk.order().refund_transaction(order_id, transaction_refund)
-        self.assertIn(transaction_refunded["status"], [ 201],
+        transaction_refunded = api_call_with_retry(
+            lambda: self.sdk.order().refund_transaction(order_id, transaction_refund),
+            expected_status=201
+        )
+        self.assertIn(transaction_refunded["status"], [201],
                       f"Unexpected status code for refund: {transaction_refunded['status']}."
-                      " Response: {transaction_refunded}")
+                      f" Response: {transaction_refunded}")
 
     def test_refund_transaction(self):
         card_token_id = self.create_master_test_card()
