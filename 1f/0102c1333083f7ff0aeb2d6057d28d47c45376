@@ -1,0 +1,20 @@
+mercadopago/webhook/validator.py
+  s_b32531bfe47118::t_e099663daf7add 108
+  s_b32531bfe47118::t_b3b61a3ca45442 219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1f0102c1333083f7ff0aeb2d6057d28d47c45376",
+  "prompts": {},
+  "sessions": {
+    "s_b32531bfe47118": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d9a17f2-528e-498d-8c77-35da94054ad3",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
