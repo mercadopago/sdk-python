@@ -105,7 +105,7 @@ class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
                 the manifest before computing the HMAC.
             data_id: Value of the ``data.id`` query parameter. May be ``None``;
                 in that case the ``id:`` pair is omitted. When present, the
-                value is lowercased before being included in the manifest.
+                value is included in the manifest exactly as received.
             secret: Secret signature configured for the application in Tus
                 Integraciones.
             tolerance_seconds: Optional maximum allowed drift in seconds
@@ -216,7 +216,7 @@ def _build_manifest(data_id, request_id, ts):
     """Builds the HMAC manifest, omitting empty pairs per the documented rule."""
     parts = []
     if data_id:
-        parts.append(f"id:{data_id.lower()}")
+        parts.append(f"id:{data_id}")
     if request_id:
         parts.append(f"request-id:{request_id}")
     parts.append(f"ts:{ts}")
