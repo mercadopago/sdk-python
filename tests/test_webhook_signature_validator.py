@@ -28,7 +28,7 @@ TS_NUM = int(TS)
 def compute_hash(data_id, request_id, ts, secret):
     parts = []
     if data_id:
-        parts.append(f"id:{data_id.lower()}")
+        parts.append(f"id:{data_id}")
     if request_id:
         parts.append(f"request-id:{request_id}")
     parts.append(f"ts:{ts}")
@@ -52,8 +52,10 @@ class TestWebhookSignatureValidator(unittest.TestCase):
         WebhookSignatureValidator.validate(VALID_HEADER, REQUEST_ID, DATA_ID_LOWER, SECRET)
 
     # --- case 2 ---
-    def test_uppercase_dataid_is_lowercased(self):
-        WebhookSignatureValidator.validate(VALID_HEADER, REQUEST_ID, DATA_ID_RAW, SECRET)
+    def test_uppercase_dataid_is_preserved(self):
+        upper_hash = compute_hash(DATA_ID_RAW, REQUEST_ID, TS, SECRET)
+        upper_header = build_header(upper_hash)
+        WebhookSignatureValidator.validate(upper_header, REQUEST_ID, DATA_ID_RAW, SECRET)
 
     # --- case 3 ---
     def test_malformed_header_raises_malformed(self):
