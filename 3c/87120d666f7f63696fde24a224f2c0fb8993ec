@@ -1,0 +1,20 @@
+tests/test_webhook_signature_validator.py
+  s_b32531bfe47118::t_5d92f369ca0d20 31
+  s_b32531bfe47118::t_6db6838137bea3 55-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "3c87120d666f7f63696fde24a224f2c0fb8993ec",
+  "prompts": {},
+  "sessions": {
+    "s_b32531bfe47118": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d9a17f2-528e-498d-8c77-35da94054ad3",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Daniel Alfaro <daniel.alfaro@mercadolibre.com.co>"
+    }
+  }
+}
