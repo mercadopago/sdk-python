@@ -69,7 +69,6 @@ Visit our Dev Site for further information regarding:
  - [APIs](https://www.mercadopago.com/developers/en/reference)
  - [Checkout Pro](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-pro/introduction)
  - [Checkout API](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-api/introduction)
- - [Web Tokenize Checkout](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/introduction)
 
 Check our official code reference to explore all available functionalities.
 
