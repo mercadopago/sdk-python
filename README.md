@@ -63,6 +63,16 @@ result = sdk.payment().create(payment_data, request_options)
 payment = result["response"]
 ```
 
+## 🤖 Automated Code Generation
+
+New features and resources in this SDK are automatically generated from official OpenAPI specifications. This ensures:
+
+- **Up-to-date coverage**: New API endpoints are reflected in the SDK as soon as they're documented in the OpenAPI spec.
+- **Consistency**: All resources follow the same patterns and conventions.
+- **Type safety**: Full type hints and proper validation based on API contracts.
+
+The generated code is then refined to match our [coding guidelines](CODING_GUIDELINES.md) and integrate seamlessly with the existing SDK architecture.
+
 ## 📚 Documentation 
 
 Visit our Dev Site for further information regarding:
