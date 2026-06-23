@@ -1,95 +1,111 @@
-"""Payment resource for the MercadoPago Checkout API.
+# Mercado Pago SDK for Python
 
-Wraps ``/v1/payments`` endpoints to search, retrieve, create, and update
-payments.
+[![PyPI](https://img.shields.io/pypi/v/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
+[![APM](https://img.shields.io/apm/l/vim-mode)](https://github.com/mercadopago/sdk-python)
 
-`API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post>`_
-"""
-from mercadopago.core import MPBase
+This library provides developers with a simple set of bindings to help you integrate Mercado Pago API to a website and start receiving payments.
 
+## 💡 Requirements
 
-class Payment(MPBase):
-    """Manages payment lifecycle through the MercadoPago Checkout API.
+Python 3.9 or higher.
 
-    Supports transparent (server-to-server) payments as well as payments
-    originated from Checkout Pro / Checkout Bricks.
+## 📲 Installation 
 
-    `Integration guide
-    <https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/>`_
-    """
+Run ```pip3 install mercadopago```
 
-    def search(self, filters=None, request_options=None):
-        """Searches payments matching the given filters.
+## 🌟 Getting Started
 
-        Args:
-            filters: Query-string parameters such as ``external_reference``,
-                ``status``, ``date_created``, etc.
-            request_options: Per-call configuration overrides.
+First time using Mercado Pago? Create your [Mercado Pago account](https://www.mercadopago.com).
 
-        Returns:
-            dict: Paginated list of matching payments.
+Copy your `Access Token` in the [credentials panel](https://www.mercadopago.com/developers/panel/credentials) and replace the text `YOUR_ACCESS_TOKEN` with it.
 
-        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/search-payments/get
-        """
-        return self._get(uri="/v1/payments/search", filters=filters,
-                         request_options=request_options)
+### Simple usage
+  
+```python
+import mercadopago
 
-    def get(self, payment_id, request_options=None):
-        """Retrieves a single payment by its ID.
+sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
 
-        Args:
-            payment_id: Numeric or string payment identifier.
-            request_options: Per-call configuration overrides.
+request_options = mercadopago.config.RequestOptions()
+request_options.custom_headers = {
+    'x-idempotency-key': '<SOME_UNIQUE_VALUE>'
+}
 
-        Returns:
-            dict: Full payment object.
+payment_data = {
+    "transaction_amount": 100,
+    "token": "CARD_TOKEN",
+    "description": "Payment description",
+    "payment_method_id": 'visa',
+    "installments": 1,
+    "payer": {
+        "email": 'test_user_123456@testuser.com'
+    }
+}
+result = sdk.payment().create(payment_data, request_options)
+payment = result["response"]
 
-        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-payment/get
-        """
-        return self._get(uri="/v1/payments/" + str(payment_id), request_options=request_options)
+print(payment)
+```
 
-    def create(self, payment_object, request_options=None):
-        """Creates a new payment.
+### Per-request configuration
 
-        Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
-            request_options: Per-call configuration overrides.
+All methods that make API calls accept an optional `RequestOptions` object. This can be used to configure some special options of the request, such as changing credentials or custom headers.
 
-        Raises:
-            ValueError: If *payment_object* is not a ``dict``.
+```python
+import mercadopago
+from mercadopago.config import RequestOptions
 
-        Returns:
-            dict: Created payment including its ``id`` and ``status``.
+request_options = RequestOptions(access_token='YOUR_ACCESS_TOKEN')
+# ...
 
-        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-payment/post
-        """
-        if not isinstance(payment_object, dict):
-            raise ValueError("Param payment_object must be a Dictionary")
+result = sdk.payment().create(payment_data, request_options)
+payment = result["response"]
+```
 
-        return self._post(uri="/v1/payments", data=payment_object, request_options=request_options)
+## 🤖 Code Generation
 
-    def update(self, payment_id, payment_object, request_options=None):
-        """Updates an existing payment.
+New features and API endpoints in this SDK are automatically generated from OpenAPI specifications. This ensures:
 
-        Commonly used to change ``status`` (e.g. cancel) or update
-        metadata on a payment that has not yet been captured.
+- **Consistency**: The SDK stays in sync with the latest Mercado Pago API changes
+- **Type Safety**: All methods include proper type hints and validation
+- **Documentation**: Each endpoint is documented with clear examples and references
+- **Reliability**: Automated generation reduces human errors and maintains code quality
 
-        Args:
-            payment_id: Identifier of the payment to update.
-            payment_object: Dict with the fields to modify.
-            request_options: Per-call configuration overrides.
+When you see new resources or methods in releases, they have been generated from official API specifications and follow the same quality standards as hand-written code.
 
-        Raises:
-            ValueError: If *payment_object* is not a ``dict``.
+## 📚 Documentation 
 
-        Returns:
-            dict: Updated payment object.
+Visit our Dev Site for further information regarding:
+ - [APIs](https://www.mercadopago.com/developers/en/reference)
+ - [Checkout Pro](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-pro/introduction)
+ - [Checkout API](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-api/introduction)
+ - [Web Tokenize Checkout](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/introduction)
 
-        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/update-payment/put
-        """
-        if not isinstance(payment_object, dict):
-            raise ValueError("Param payment_object must be a Dictionary")
+Check our official code reference to explore all available functionalities.
 
-        return self._put(uri="/v1/payments/" + str(payment_id), data=payment_object,
-                         request_options=request_options)
+## 🤝 Contributing
+
+All contributions are welcome, ranging from people wanting to triage issues, others wanting to write documentation, to people wanting to contribute code.
+
+Please read and follow our [contribution guidelines](CONTRIBUTING.md). Contributions not following this guidelines will be disregarded. The guidelines are in place to make all of our lives easier and make contribution a consistent process for everyone.
+
+### Working with Generated Code
+
+Please note that many resources in this SDK are automatically generated from OpenAPI specifications. If you need to modify generated code:
+
+1. Check if the change should be made in the OpenAPI spec instead
+2. If manually editing generated code, document your changes clearly
+3. Be aware that your changes might be overwritten in future generations
+4. Consider contributing to the code generation templates instead
+
+## ❤️ Support
+
+If you require technical support, please contact our support team at [developers.mercadopago.com](https://developers.mercadopago.com).
+
+## 🏻 License
+
+```
+MIT license. Copyright (c) 2021 - Mercado Pago / Mercado Libre
+For more information, see the LICENSE file.
+```
