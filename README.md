@@ -63,6 +63,16 @@ result = sdk.payment().create(payment_data, request_options)
 payment = result["response"]
 ```
 
+## 🤖 OpenAPI-Generated Resources
+
+New functionalities in this SDK are automatically generated from official OpenAPI specifications. This ensures:
+
+- **Up-to-date coverage** of the latest Mercado Pago API features
+- **Type-safe interfaces** with comprehensive docstrings
+- **Consistent patterns** across all resource methods
+
+Generated resources follow the same conventions as hand-written code and are seamlessly integrated into the SDK. You can use them exactly as you would use any other resource.
+
 ## 📚 Documentation 
 
 Visit our Dev Site for further information regarding:
