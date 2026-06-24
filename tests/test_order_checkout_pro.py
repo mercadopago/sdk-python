@@ -165,7 +165,6 @@ class TestOrderCheckoutPro(unittest.TestCase):
         }
 
         order_created = self.sdk.order().create(order_object)
-        print(order_created)
         self.assertEqual(order_created["status"], 201)
         self.assertEqual(order_created["response"]["status"], "created")
         self.assertEqual(order_created["response"]["type"], "online")
