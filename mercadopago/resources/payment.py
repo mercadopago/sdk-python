@@ -8,6 +8,28 @@ payments.
 from mercadopago.core import MPBase
 
 
+class PaymentPayer:
+    """Payer information for a payment request.
+    
+    Attributes:
+        email (str): Payer email address.
+        identification (dict): Document type and number.
+        entity_type (str): Type of payer entity (individual/association).
+    """
+    pass
+
+
+class PaymentAdditionalInfo:
+    """Additional information about a payment.
+    
+    Attributes:
+        items (list): Item details.
+        payer (dict): Extended payer information.
+        shipments (dict): Shipping information.
+    """
+    pass
+
+
 class Payment(MPBase):
     """Manages payment lifecycle through the MercadoPago Checkout API.
 
@@ -52,8 +74,24 @@ class Payment(MPBase):
         """Creates a new payment.
 
         Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
+            payment_object: Dict describing the payment with the following fields:
+                - transaction_amount (float, required): Amount to be paid.
+                - payer (dict, required): Payer information (PaymentPayer).
+                - token (str, optional): Card token for card payments.
+                - payment_method_id (str, optional): Payment method identifier.
+                - installments (int, optional): Number of installments.
+                - issuer_id (str, optional): Issuer identifier.
+                - capture (bool, optional): Whether to capture immediately (default: True).
+                - binary_mode (bool, optional): Binary approval mode (default: False).
+                - external_reference (str, optional): Your internal reference.
+                - statement_descriptor (str, optional): Text on card statement (max 22 chars).
+                - date_of_expiration (datetime, optional): Payment expiration date.
+                - additional_info (dict, optional): Additional payment info (PaymentAdditionalInfo).
+                - application_fee (float, optional): Application fee amount.
+                - notification_url (str, optional): IPN URL (deprecated).
+                - callback_url (str, optional): Callback URL.
+                - coupon_code (str, optional): Discount coupon code.
+                - coupon_amount (float, optional): Coupon discount amount.
             request_options: Per-call configuration overrides.
 
         Raises:
