@@ -278,6 +278,23 @@ class Order(MPBase):
         return self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
                           request_options=request_options)
 
+    def refund(self, order_id, refund_object=None, request_options=None):
+        """Refunds an order.
+
+        Alias for :meth:`refund_transaction` that matches the Orders API
+        endpoint name while keeping the existing method for backwards
+        compatibility.
+
+        Args:
+            order_id: Identifier of the order to refund.
+            refund_object: Optional dict for partial refund details.
+            request_options: Per-call configuration overrides.
+
+        Returns:
+            dict: Refund confirmation response.
+        """
+        return self.refund_transaction(order_id, refund_object, request_options)
+
     def delete_transaction(self, order_id, transaction_id, request_options=None):
         """Removes a transaction from an order.
 

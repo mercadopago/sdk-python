@@ -24,6 +24,7 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
+    as_order_dict,
 )
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
@@ -55,6 +56,7 @@ __all__ = (
     'OrderCheckoutProOnlineConfig',
     'OrderCheckoutProPaymentMethod',
     'OrderCheckoutProTrack',
+    'as_order_dict',
     'Payment',
     'PaymentMethods',
     'Plan',

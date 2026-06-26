@@ -1,11 +1,39 @@
 """Dataclasses for Checkout Pro fields in order requests."""
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any, Dict, List, Optional
+
+
+def as_order_dict(value):
+    """Converts dataclasses to an order payload dict without empty values.
+
+    ``dataclasses.asdict()`` preserves ``None`` values, which can produce
+    invalid API payloads for optional nested fields. This helper recursively
+    removes ``None`` values and empty containers while preserving explicit
+    ``False`` and ``0`` values.
+    """
+    if is_dataclass(value):
+        value = asdict(value)
+
+    if isinstance(value, dict):
+        compact = {}
+        for key, item in value.items():
+            item = as_order_dict(item)
+            if item is not None and item != [] and item != {}:
+                compact[key] = item
+        return compact
+
+    if isinstance(value, list):
+        return [
+            item for item in (as_order_dict(item) for item in value)
+            if item is not None and item != [] and item != {}
+        ]
+
+    return value
 
 
 @dataclass
 class OrderCheckoutProTrack:
-    """Tracking pixel configuration for Checkout Pro.
+    """Tracking pixel configuration for Checkout Pro orders.
 
     Attributes:
         type: Tracking pixel type, for example ``"google_ad"`` or
@@ -23,7 +51,8 @@ class OrderCheckoutProOnlineConfig:
     """Checkout Pro redirect and availability configuration.
 
     Use this dataclass to build the ``config.online`` payload when creating an
-    order with Checkout Pro. Convert to dict with ``dataclasses.asdict()``.
+    order for Checkout Pro. Convert to dict with ``as_order_dict()`` to omit
+    empty values.
 
     Attributes:
         available_from: ISO 8601 date from which the order can be paid.
@@ -50,7 +79,7 @@ class OrderCheckoutProOnlineConfig:
 
 @dataclass
 class OrderCheckoutProInterestFree:
-    """Interest-free installment configuration for Checkout Pro.
+    """Interest-free installment configuration for Checkout Pro orders.
 
     Attributes:
         type: Configuration type, for example ``"range"``, ``"list"``, or
@@ -75,11 +104,11 @@ class OrderCheckoutProInstallments:
 
 @dataclass
 class OrderCheckoutProPaymentMethod:
-    """Payment method constraints for Checkout Pro.
+    """Payment method constraints for Checkout Pro orders.
 
     Use this dataclass to build the ``config.payment_method`` payload when
-    creating an order with Checkout Pro. Convert to dict with
-    ``dataclasses.asdict()``.
+    creating an order for Checkout Pro. Convert to dict with
+    ``as_order_dict()`` to omit empty values.
 
     Attributes:
         max_installments: Maximum installments accepted. Type: int.
@@ -99,8 +128,9 @@ class OrderCheckoutProPaymentMethod:
 class OrderCheckoutProConfig:
     """Checkout Pro order configuration.
 
-    Use this dataclass to build the root ``config`` payload when creating a
-    Checkout Pro order. Convert to dict with ``dataclasses.asdict()``.
+    Use this dataclass to build the root ``config`` payload when creating an
+    order for Checkout Pro. Convert to dict with ``as_order_dict()`` to omit
+    empty values.
 
     Attributes:
         statement_descriptor: Text shown on the buyer's card statement.

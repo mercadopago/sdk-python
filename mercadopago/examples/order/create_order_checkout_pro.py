@@ -4,8 +4,6 @@ Checkout Pro through Orders uses ``type="online"`` and
 ``processing_mode="manual"``. The API returns ``checkout_url`` in the created
 order response; redirect the buyer to that URL to continue the payment flow.
 """
-import dataclasses
-
 from mercadopago import SDK
 from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProConfig,
@@ -14,6 +12,7 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
+    as_order_dict,
 )
 
 
@@ -103,7 +102,7 @@ def main():
                 "city": "Sao Paulo",
             },
         },
-        "config": dataclasses.asdict(checkout_pro_config),
+        "config": as_order_dict(checkout_pro_config),
         "items": [
             {
                 "external_code": "ITEM-001",
@@ -128,6 +127,7 @@ def main():
                 "event_date": "2027-01-15T00:00:00.000-03:00",
             },
         ],
+        # Orders accepts vertical data with dotted keys under additional_info.
         "additional_info": {
             "payer.registration_date": "2020-01-15T00:00:00.000-03:00",
             "payer.authentication_type": "MOBILE",
@@ -158,7 +158,11 @@ def main():
 
     try:
         response = sdk.order().create(order_object)
-        print("Order created successfully:", response["response"])
+        order = response["response"]
+        print("Order created successfully:")
+        print("id:", order.get("id"))
+        print("status:", order.get("status"))
+        print("checkout_url:", order.get("checkout_url"))
     except Exception as e:
         print("Error:", e)
 
