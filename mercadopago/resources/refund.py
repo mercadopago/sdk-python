@@ -38,11 +38,12 @@ class Refund(MPBase):
         """Creates a refund for a payment.
 
         Omit *refund_object* for a full refund, or pass
-        ``{"amount": <float>}`` for a partial refund.
+        ``{"amount": <float>}`` for a partial refund. The amount field
+        is optional; omit it for a full refund.
 
         Args:
             payment_id: Identifier of the payment to refund.
-            refund_object: Optional dict with partial refund details.
+            refund_object: Optional dict with amount only (float, optional).
             request_options: Per-call configuration overrides.
 
         Raises:
