@@ -1,10 +1,16 @@
+# Change type: modify
+# Title: Update RefundRequest — remove metadata and reason fields
+# Detail: Remove metadata and reason properties from RefundRequest. The only remaining field is amount (float, optional — omit for full refund).
+
+```python
 """Refund resource for the MercadoPago Payments API.
 
 Wraps ``/v1/payments/{payment_id}/refunds`` endpoints to list existing
 refunds and create full or partial refunds on approved payments.
 
 Refunds are available within 180 days of payment approval and require
-sufficient account balance.
+sufficient account balance. The refund request accepts only an optional
+``amount`` field for partial refunds.
 
 `API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post>`_
 """
@@ -17,6 +23,9 @@ class Refund(MPBase):
     Supports full refunds (omit *refund_object*) and partial refunds
     (pass ``{"amount": <float>}``).  Refunds can only be issued for
     approved payments within 180 days.
+    
+    The refund request only accepts an ``amount`` field (float, optional).
+    All other fields (metadata, reason, etc.) are not supported.
     """
 
     def list_all(self, payment_id, request_options=None):
@@ -39,10 +48,13 @@ class Refund(MPBase):
 
         Omit *refund_object* for a full refund, or pass
         ``{"amount": <float>}`` for a partial refund.
+        
+        Only the ``amount`` field is supported in the refund request.
+        Fields like ``metadata`` and ``reason`` are no longer accepted.
 
         Args:
             payment_id: Identifier of the payment to refund.
-            refund_object: Optional dict with partial refund details.
+            refund_object: Optional dict with ``amount`` for partial refund.
             request_options: Per-call configuration overrides.
 
         Raises:
@@ -58,3 +70,4 @@ class Refund(MPBase):
 
         return self._post(uri="/v1/payments/" + str(payment_id) + "/refunds",
                           data=refund_object, request_options=request_options)
+```
