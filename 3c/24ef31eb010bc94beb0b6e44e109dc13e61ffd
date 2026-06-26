@@ -1,0 +1,36 @@
+CHANGELOG.md
+  s_62fa54e21404ff::t_df9f1a142acb1e 16-17
+  s_62fa54e21404ff::t_16afb65ae78a1e 12-13
+tests/test_order_checkout_pro.py
+  s_62fa54e21404ff::t_2051c7597d9b2c 150,203,205,305,307
+  s_62fa54e21404ff::t_b2b6390337b316 289,299
+  s_62fa54e21404ff::t_f8109b8f4d5224 264-277
+  s_62fa54e21404ff::t_b10fa5510de9bc 4,10-11,19,23-60,104-105,108,115,204,206-263,278-288,290-298,300-304,306,308-314
+mercadopago/resources/order_checkout_pro.py
+  s_62fa54e21404ff::t_4ba65a290f51fa 131
+  s_62fa54e21404ff::t_4dc85806985fa9 36,54-55,82,107,110-111
+  s_62fa54e21404ff::t_d55b01cc57ab6e 2,6-33
+  s_62fa54e21404ff::t_2970a3bd8241cd 132-133
+mercadopago/resources/order.py
+  s_62fa54e21404ff::t_69c8bed1dc1e57 281-297
+mercadopago/resources/__init__.py
+  s_62fa54e21404ff::t_72ae73d48acb8c 27,59
+mercadopago/examples/order/create_order_checkout_pro.py
+  s_62fa54e21404ff::t_59bf59d1c45080 15,105,130,161-165
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "3c24ef31eb010bc94beb0b6e44e109dc13e61ffd",
+  "prompts": {},
+  "sessions": {
+    "s_62fa54e21404ff": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ef727-557f-7cb0-8b06-f0fedf92cbd5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
