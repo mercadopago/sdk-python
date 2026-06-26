@@ -16,7 +16,7 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
-    as_order_dict,
+    OrderCheckoutProDict,
 )
 
 
@@ -147,7 +147,7 @@ class TestOrderCheckoutPro(unittest.TestCase):
                     "city": "Sao Paulo",
                 },
             },
-            "config": as_order_dict(self.build_checkout_pro_config()),
+            "config": OrderCheckoutProDict(self.build_checkout_pro_config()),
             "items": [
                 {
                     "external_code": "ITEM-001",
@@ -275,7 +275,7 @@ class TestOrderCheckoutPro(unittest.TestCase):
         self.assertEqual(post_call["url"], "https://api.mercadopago.com/v1/orders/ORD123/refund")
         self.assertEqual(request_body["transactions"][0]["amount"], "25.00")
 
-    def test_as_order_dict_omits_empty_values_but_keeps_false_and_zero(self):
+    def test_order_checkout_pro_dict_omits_empty_values_but_keeps_false_and_zero(self):
         """
         Test Function: Compact Order Helper
         """
@@ -289,7 +289,7 @@ class TestOrderCheckoutPro(unittest.TestCase):
             success_url="https://example.com/success",
             tracks=[],
         )
-        config = as_order_dict(OrderCheckoutProConfig(
+        config = OrderCheckoutProDict(OrderCheckoutProConfig(
             online=online_config,
             payment_method=payment_method,
         ))

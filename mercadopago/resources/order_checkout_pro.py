@@ -3,7 +3,7 @@ from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any, Dict, List, Optional
 
 
-def as_order_dict(value):
+def OrderCheckoutProDict(value):  # pylint: disable=invalid-name
     """Converts dataclasses to an order payload dict without empty values.
 
     ``dataclasses.asdict()`` preserves ``None`` values, which can produce
@@ -17,14 +17,14 @@ def as_order_dict(value):
     if isinstance(value, dict):
         compact = {}
         for key, item in value.items():
-            item = as_order_dict(item)
+            item = OrderCheckoutProDict(item)
             if item is not None and item != [] and item != {}:
                 compact[key] = item
         return compact
 
     if isinstance(value, list):
         return [
-            item for item in (as_order_dict(item) for item in value)
+            item for item in (OrderCheckoutProDict(item) for item in value)
             if item is not None and item != [] and item != {}
         ]
 
@@ -51,8 +51,8 @@ class OrderCheckoutProOnlineConfig:
     """Checkout Pro redirect and availability configuration.
 
     Use this dataclass to build the ``config.online`` payload when creating an
-    order for Checkout Pro. Convert to dict with ``as_order_dict()`` to omit
-    empty values.
+    order for Checkout Pro. Convert to dict with ``OrderCheckoutProDict()`` to
+    omit empty values.
 
     Attributes:
         available_from: ISO 8601 date from which the order can be paid.
@@ -108,7 +108,7 @@ class OrderCheckoutProPaymentMethod:
 
     Use this dataclass to build the ``config.payment_method`` payload when
     creating an order for Checkout Pro. Convert to dict with
-    ``as_order_dict()`` to omit empty values.
+    ``OrderCheckoutProDict()`` to omit empty values.
 
     Attributes:
         max_installments: Maximum installments accepted. Type: int.
@@ -129,8 +129,8 @@ class OrderCheckoutProConfig:
     """Checkout Pro order configuration.
 
     Use this dataclass to build the root ``config`` payload when creating an
-    order for Checkout Pro. Convert to dict with ``as_order_dict()`` to omit
-    empty values.
+    order for Checkout Pro. Convert to dict with ``OrderCheckoutProDict()`` to
+    omit empty values.
 
     Attributes:
         statement_descriptor: Text shown on the buyer's card statement.

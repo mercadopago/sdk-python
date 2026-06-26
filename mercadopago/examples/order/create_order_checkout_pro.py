@@ -12,7 +12,7 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
-    as_order_dict,
+    OrderCheckoutProDict,
 )
 
 
@@ -102,7 +102,7 @@ def main():
                 "city": "Sao Paulo",
             },
         },
-        "config": as_order_dict(checkout_pro_config),
+        "config": OrderCheckoutProDict(checkout_pro_config),
         "items": [
             {
                 "external_code": "ITEM-001",
