@@ -52,8 +52,24 @@ class Payment(MPBase):
         """Creates a new payment.
 
         Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
+            payment_object: Dict describing the payment with the following fields:
+                - transaction_amount (float, required): Payment amount.
+                - payer (dict, required): Payer information (PaymentPayer).
+                - token (string, optional): Card token for card payments.
+                - payment_method_id (string, optional): Payment method identifier.
+                - installments (integer, optional): Number of installments.
+                - issuer_id (string, optional): Card issuer identifier.
+                - capture (boolean, optional): Whether to capture immediately (default: true).
+                - binary_mode (boolean, optional): Binary payment mode (default: false).
+                - external_reference (string, optional): External reference ID.
+                - statement_descriptor (string, optional): Statement descriptor (max 22 chars).
+                - date_of_expiration (datetime, optional): Payment expiration date.
+                - additional_info (dict, optional): Additional payment information (PaymentAdditionalInfo).
+                - application_fee (float, optional): Application fee amount.
+                - notification_url (uri, optional, deprecated): IPN notification URL.
+                - callback_url (uri, optional): Callback URL.
+                - coupon_code (string, optional): Coupon code.
+                - coupon_amount (float, optional): Coupon discount amount.
             request_options: Per-call configuration overrides.
 
         Raises:
