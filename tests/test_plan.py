@@ -61,12 +61,16 @@ class TestPlan(unittest.TestCase):
         self.assertEqual(
             plan_mandatory_options["response"]["status"], "active")
 
-        plan_object["reason"] = "MercadoPago API Test"
+        update_payload = {
+            "reason": "MercadoPago API Test",
+            "auto_recurring": plan_object_all_options_payload["auto_recurring"],
+            "back_url": plan_object_all_options_payload["back_url"],
+        }
         update_response = self.sdk.plan().update(
-            plan_object["id"], plan_object)
+            plan_object["id"], update_payload)
         self.assertEqual(update_response["status"], 200)
         update_object = update_response["response"]
-        self.assertEqual(update_object["reason"], plan_object["reason"])
+        self.assertEqual(update_object["reason"], update_payload["reason"])
         self.assertEqual(update_object["status"], "active")
 
         get_response = self.sdk.plan().get(plan_object["id"])

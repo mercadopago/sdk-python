@@ -3,7 +3,7 @@ name: CD - Upload PyPI
 
 on:
   release:
-    types: [ released ]
+    types: [ published ]
 
 jobs:
   upload:
