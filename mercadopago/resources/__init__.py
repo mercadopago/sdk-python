@@ -6,6 +6,7 @@ extend :class:`~mercadopago.core.mp_base.MPBase`.
 """
 from mercadopago.config.request_options import RequestOptions
 from mercadopago.http.http_client import HttpClient
+from mercadopago.resources.address import Address
 from mercadopago.resources.advanced_payment import AdvancedPayment
 from mercadopago.resources.card import Card
 from mercadopago.resources.card_token import CardToken
@@ -29,6 +30,7 @@ from mercadopago.resources.user import User
 
 
 __all__ = (
+    'Address',
     'AdvancedPayment',
     'Card',
     'CardToken',
