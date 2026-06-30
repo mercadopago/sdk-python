@@ -27,14 +27,14 @@ class FakeHttpClient(HttpClient):
         self.post_calls = []
         self.get_calls = []
 
-    def post(self, url, headers, **kwargs):
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
         self.post_calls.append({
             "url": url,
             "headers": headers,
-            "data": kwargs.get("data"),
-            "params": kwargs.get("params"),
-            "timeout": kwargs.get("timeout"),
-            "maxretries": kwargs.get("maxretries"),
+            "data": data,
+            "params": params,
+            "timeout": timeout,
+            "maxretries": maxretries,
         })
         return {
             "status": 201,
@@ -47,13 +47,13 @@ class FakeHttpClient(HttpClient):
             },
         }
 
-    def get(self, url, headers, **kwargs):
+    def get(self, url, headers, params=None, timeout=None, maxretries=None):
         self.get_calls.append({
             "url": url,
             "headers": headers,
-            "params": kwargs.get("params"),
-            "timeout": kwargs.get("timeout"),
-            "maxretries": kwargs.get("maxretries"),
+            "params": params,
+            "timeout": timeout,
+            "maxretries": maxretries,
         })
         return {"status": 200, "response": {"id": "ORD123"}}
 
