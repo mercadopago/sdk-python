@@ -1,0 +1,19 @@
+tests/.pylintrc
+  s_6ef307fa4f1cb3::t_ca503d1eac5901 4-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "67b52878ff2fe31c25567458f9ebd46ce54f9cea",
+  "prompts": {},
+  "sessions": {
+    "s_6ef307fa4f1cb3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ee2bcbe5-eebd-447c-adcc-5f85478c80b1",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
