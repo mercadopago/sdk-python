@@ -1,3 +1,5 @@
+# Modified file: mercadopago/resources/refund.py
+
 """Refund resource for the MercadoPago Payments API.
 
 Wraps ``/v1/payments/{payment_id}/refunds`` endpoints to list existing
@@ -14,7 +16,7 @@ from mercadopago.core import MPBase
 class Refund(MPBase):
     """Creates and lists refunds for payments.
 
-    Supports full refunds (omit *refund_object*) and partial refunds
+    Supports full refunds (omit *amount*) and partial refunds
     (pass ``{"amount": <float>}``).  Refunds can only be issued for
     approved payments within 180 days.
     """
@@ -38,11 +40,12 @@ class Refund(MPBase):
         """Creates a refund for a payment.
 
         Omit *refund_object* for a full refund, or pass
-        ``{"amount": <float>}`` for a partial refund.
+        ``{"amount": <float>}`` for a partial refund. Only the amount
+        field is supported; metadata and reason properties have been removed.
 
         Args:
             payment_id: Identifier of the payment to refund.
-            refund_object: Optional dict with partial refund details.
+            refund_object: Optional dict with amount only (e.g., ``{"amount": 10.50}``).
             request_options: Per-call configuration overrides.
 
         Raises:
