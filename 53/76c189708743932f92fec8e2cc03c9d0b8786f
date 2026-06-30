@@ -1,0 +1,27 @@
+tests/test_plan.py
+  s_6ef307fa4f1cb3::t_da27bddbd60e7c 73
+  s_6ef307fa4f1cb3::t_b0608849d94620 64-68,70
+tests/test_order_checkout_pro.py
+  s_6ef307fa4f1cb3::t_a8b1250a5e62f4 50,54-56
+  s_6ef307fa4f1cb3::t_c14d0c908e74fb 30,34-37
+pyproject.toml
+  s_6ef307fa4f1cb3::t_fe2e4f83d942fb 7
+CHANGELOG.md
+  s_6ef307fa4f1cb3::t_4a01c487cb398b 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "5376c189708743932f92fec8e2cc03c9d0b8786f",
+  "prompts": {},
+  "sessions": {
+    "s_6ef307fa4f1cb3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ee2bcbe5-eebd-447c-adcc-5f85478c80b1",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
