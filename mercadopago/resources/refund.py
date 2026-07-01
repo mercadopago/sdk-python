@@ -17,6 +17,9 @@ class Refund(MPBase):
     Supports full refunds (omit *refund_object*) and partial refunds
     (pass ``{"amount": <float>}``).  Refunds can only be issued for
     approved payments within 180 days.
+    
+    The RefundRequest object only accepts the 'amount' field (float, optional).
+    Omit the amount field for a full refund.
     """
 
     def list_all(self, payment_id, request_options=None):
@@ -39,10 +42,14 @@ class Refund(MPBase):
 
         Omit *refund_object* for a full refund, or pass
         ``{"amount": <float>}`` for a partial refund.
+        
+        Note: The RefundRequest only supports the 'amount' field. 
+        Metadata and reason properties are no longer supported.
 
         Args:
             payment_id: Identifier of the payment to refund.
             refund_object: Optional dict with partial refund details.
+                          Only 'amount' field is supported (float, optional).
             request_options: Per-call configuration overrides.
 
         Raises:
