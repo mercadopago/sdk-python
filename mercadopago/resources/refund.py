@@ -14,9 +14,13 @@ from mercadopago.core import MPBase
 class Refund(MPBase):
     """Creates and lists refunds for payments.
 
-    Supports full refunds (omit *refund_object*) and partial refunds
-    (pass ``{"amount": <float>}``).  Refunds can only be issued for
-    approved payments within 180 days.
+    Supports full refunds (omit *refund_object* or pass ``None``) and 
+    partial refunds (pass ``{"amount": <float>}``). Refunds can only be 
+    issued for approved payments within 180 days.
+    
+    Note: The RefundRequest object only accepts the ``amount`` field. 
+    Previously supported ``metadata`` and ``reason`` properties have been 
+    removed.
     """
 
     def list_all(self, payment_id, request_options=None):
@@ -37,12 +41,16 @@ class Refund(MPBase):
     def create(self, payment_id, refund_object=None, request_options=None):
         """Creates a refund for a payment.
 
-        Omit *refund_object* for a full refund, or pass
+        Omit *refund_object* (or pass ``None``) for a full refund, or pass
         ``{"amount": <float>}`` for a partial refund.
+        
+        Note: Only the ``amount`` field is supported in the refund request.
+        The ``metadata`` and ``reason`` fields are no longer accepted.
 
         Args:
             payment_id: Identifier of the payment to refund.
-            refund_object: Optional dict with partial refund details.
+            refund_object: Optional dict with ``amount`` key for partial 
+                refund. Omit or pass ``None`` for full refund.
             request_options: Per-call configuration overrides.
 
         Raises:
