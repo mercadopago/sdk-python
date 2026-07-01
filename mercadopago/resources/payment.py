@@ -8,6 +8,67 @@ payments.
 from mercadopago.core import MPBase
 
 
+class PaymentPayer:
+    """Payer information for a payment request.
+    
+    Attributes:
+        email (str): Payer's email address.
+        first_name (str, optional): Payer's first name.
+        last_name (str, optional): Payer's last name.
+        identification (dict, optional): Identification document information.
+        phone (dict, optional): Phone number information.
+        address (dict, optional): Address information.
+    """
+    pass
+
+
+class PaymentAdditionalInfo:
+    """Additional information for a payment request.
+    
+    Attributes:
+        items (list, optional): List of items being paid for.
+        payer (dict, optional): Additional payer information.
+        shipments (dict, optional): Shipping information.
+    """
+    pass
+
+
+class PaymentRequest:
+    """Schema for creating a payment.
+    
+    Attributes:
+        transaction_amount (float): Required. Total amount to charge.
+        token (str, optional): Card token obtained from card tokenization.
+        payment_method_id (str, optional): Payment method identifier (e.g. 'visa', 'pix').
+        installments (int, optional): Number of installments.
+        issuer_id (str, optional): Card issuer identifier.
+        payer (PaymentPayer): Required. Payer information.
+        capture (bool, optional): Whether to capture payment immediately. Default: True.
+        binary_mode (bool, optional): Return only status approved or rejected. Default: False.
+        external_reference (str, optional): Your internal reference ID.
+        statement_descriptor (str, optional): Text for cardholder's statement (max 22 chars).
+        date_of_expiration (datetime, optional): Expiration date for the payment.
+        additional_info (PaymentAdditionalInfo, optional): Additional payment information.
+        application_fee (float, optional): Application fee amount.
+        notification_url (str, optional): Deprecated. Webhook URL for notifications (use callback_url).
+        callback_url (str, optional): Webhook URL for payment notifications.
+        coupon_code (str, optional): Discount coupon code.
+        coupon_amount (float, optional): Discount coupon amount.
+    """
+    pass
+
+
+class Pagination:
+    """Pagination information for search results.
+    
+    Attributes:
+        total (int): Total number of results.
+        limit (int): Maximum number of results per page.
+        offset (int): Number of results skipped.
+    """
+    pass
+
+
 class Payment(MPBase):
     """Manages payment lifecycle through the MercadoPago Checkout API.
 
@@ -52,8 +113,8 @@ class Payment(MPBase):
         """Creates a new payment.
 
         Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
+            payment_object: Dict describing the payment (transaction_amount, payer,
+                payment_method_id, token, etc.). Must conform to PaymentRequest schema.
             request_options: Per-call configuration overrides.
 
         Raises:
