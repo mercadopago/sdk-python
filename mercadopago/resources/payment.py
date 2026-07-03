@@ -14,6 +14,16 @@ class Payment(MPBase):
     Supports transparent (server-to-server) payments as well as payments
     originated from Checkout Pro / Checkout Bricks.
 
+    Required fields for creating a payment:
+        - transaction_amount (float): The transaction amount.
+        - payer (dict): Payer information including email and identification.
+
+    Optional fields:
+        - token (string): Card token for tokenized payments.
+        - payment_method_id (string): Payment method identifier.
+        - installments (int): Number of installments.
+        - description (string): Payment description.
+
     `Integration guide
     <https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/>`_
     """
@@ -52,8 +62,16 @@ class Payment(MPBase):
         """Creates a new payment.
 
         Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
+            payment_object: Dict describing the payment with required fields:
+                - transaction_amount (float): The transaction amount.
+                - payer (dict): Payer information (required).
+                
+                Optional fields:
+                - token (string): Card token for tokenized payments.
+                - payment_method_id (string): Payment method identifier.
+                - installments (int): Number of installments.
+                - description (string): Payment description.
+                
             request_options: Per-call configuration overrides.
 
         Raises:
