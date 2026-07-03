@@ -14,7 +14,7 @@ from mercadopago.core import MPBase
 class Refund(MPBase):
     """Creates and lists refunds for payments.
 
-    Supports full refunds (omit *refund_object*) and partial refunds
+    Supports full refunds (omit *amount*) and partial refunds
     (pass ``{"amount": <float>}``).  Refunds can only be issued for
     approved payments within 180 days.
     """
@@ -34,27 +34,30 @@ class Refund(MPBase):
         return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds",
                          request_options=request_options)
 
-    def create(self, payment_id, refund_object=None, request_options=None):
+    def create(self, payment_id, amount=None, request_options=None):
         """Creates a refund for a payment.
 
-        Omit *refund_object* for a full refund, or pass
-        ``{"amount": <float>}`` for a partial refund.
+        Omit *amount* for a full refund, or pass a float value
+        for a partial refund.
 
         Args:
             payment_id: Identifier of the payment to refund.
-            refund_object: Optional dict with partial refund details.
+            amount: Optional float with partial refund amount.
             request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: If *refund_object* is provided but not a ``dict``.
+            ValueError: If *amount* is provided but not a valid number.
 
         Returns:
             dict: Created refund including its ``id`` and ``status``.
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/create-refund/post
         """
-        if refund_object is not None and not isinstance(refund_object, dict):
-            raise ValueError("Param refund_object must be a Dictionary")
+        refund_data = None
+        if amount is not None:
+            if not isinstance(amount, (int, float)):
+                raise ValueError("Param amount must be a number")
+            refund_data = {"amount": float(amount)}
 
         return self._post(uri="/v1/payments/" + str(payment_id) + "/refunds",
-                          data=refund_object, request_options=request_options)
+                          data=refund_data, request_options=request_options)
