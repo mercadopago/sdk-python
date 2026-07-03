@@ -14,6 +14,23 @@ class Payment(MPBase):
     Supports transparent (server-to-server) payments as well as payments
     originated from Checkout Pro / Checkout Bricks.
 
+    The :meth:`create` method accepts a payment request with the following
+    required fields:
+
+    - ``transaction_amount`` (float): The total transaction amount.
+    - ``payer`` (dict): Payer information including email and optional
+      identification details.
+
+    Optional fields include:
+
+    - ``token`` (str): Tokenized card data obtained from the Card Token API
+      or MercadoPago JS SDK.
+    - ``payment_method_id`` (str): Payment method identifier (e.g. "visa",
+      "master", "pix").
+    - ``installments`` (int): Number of installments for card payments.
+    - ``description`` (str): Payment description.
+    - ``external_reference`` (str): Your internal reference for this payment.
+
     `Integration guide
     <https://www.mercadopago.com.br/developers/en/guides/online-payments/checkout-api/introduction/>`_
     """
@@ -51,9 +68,41 @@ class Payment(MPBase):
     def create(self, payment_object, request_options=None):
         """Creates a new payment.
 
+        The payment request must include:
+
+        - ``transaction_amount`` (float, required): Total amount to charge.
+        - ``payer`` (dict, required): Payer details with at minimum an
+          ``email`` field.
+
+        Additional common fields:
+
+        - ``token`` (str): Card token for credit/debit card payments.
+        - ``payment_method_id`` (str): Payment method (e.g. "visa", "pix").
+        - ``installments`` (int): Number of installments.
+        - ``description`` (str): Payment description.
+        - ``external_reference`` (str): Merchant's reference identifier.
+
+        Example::
+
+            payment_object = {
+                "transaction_amount": 100.50,
+                "token": "card_token_id",
+                "payment_method_id": "visa",
+                "installments": 1,
+                "payer": {
+                    "email": "buyer@example.com",
+                    "identification": {
+                        "type": "CPF",
+                        "number": "12345678909"
+                    }
+                },
+                "description": "Product purchase"
+            }
+            result = sdk.payment().create(payment_object)
+
         Args:
-            payment_object: Dict describing the payment (amount, payer,
-                payment_method_id, token, etc.).
+            payment_object: Dict describing the payment. Must contain
+                ``transaction_amount`` (float) and ``payer`` (dict).
             request_options: Per-call configuration overrides.
 
         Raises:
