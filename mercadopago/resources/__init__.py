@@ -6,6 +6,7 @@ extend :class:`~mercadopago.core.mp_base.MPBase`.
 """
 from mercadopago.config.request_options import RequestOptions
 from mercadopago.http.http_client import HttpClient
+from mercadopago.resources.address import Address
 from mercadopago.resources.advanced_payment import AdvancedPayment
 from mercadopago.resources.card import Card
 from mercadopago.resources.card_token import CardToken
@@ -27,7 +28,11 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProDict,
 )
 from mercadopago.resources.payment import Payment
+from mercadopago.resources.payment_additional_info import PaymentAdditionalInfo
+from mercadopago.resources.payment_item import PaymentItem
 from mercadopago.resources.payment_methods import PaymentMethods
+from mercadopago.resources.payment_payer import PaymentPayer
+from mercadopago.resources.phone import Phone
 from mercadopago.resources.plan import Plan
 from mercadopago.resources.point import Point
 from mercadopago.resources.preapproval import PreApproval
@@ -38,6 +43,7 @@ from mercadopago.resources.user import User
 
 
 __all__ = (
+    'Address',
     'AdvancedPayment',
     'Card',
     'CardToken',
@@ -58,7 +64,11 @@ __all__ = (
     'OrderCheckoutProTrack',
     'OrderCheckoutProDict',
     'Payment',
+    'PaymentAdditionalInfo',
+    'PaymentItem',
     'PaymentMethods',
+    'PaymentPayer',
+    'Phone',
     'Plan',
     'Point',
     'PreApproval',
