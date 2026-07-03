@@ -8,6 +8,65 @@ payments.
 from mercadopago.core import MPBase
 
 
+class PaymentPayer:
+    """Payer information for a payment request.
+    
+    Attributes:
+        email (str): Payer's email address.
+        identification (dict): Document type and number.
+        first_name (str): Payer's first name.
+        last_name (str): Payer's last name.
+    """
+    pass
+
+
+class PaymentAdditionalInfo:
+    """Additional information for a payment.
+    
+    Attributes:
+        items (list): List of items being paid for.
+        payer (dict): Additional payer information.
+        shipments (dict): Shipping information.
+    """
+    pass
+
+
+class PaymentRequest:
+    """Schema for creating a payment request.
+    
+    Attributes:
+        transaction_amount (float, required): Total amount to charge.
+        token (str): Card token from tokenization.
+        payment_method_id (str): Payment method identifier.
+        installments (int): Number of installments.
+        issuer_id (str): Card issuer identifier.
+        payer (PaymentPayer, required): Payer information.
+        capture (bool): Whether to capture immediately (default: True).
+        binary_mode (bool): Return only approved/rejected status (default: False).
+        external_reference (str): Your internal reference.
+        statement_descriptor (str): Description on card statement (max 22 chars).
+        date_of_expiration (datetime): Payment expiration date.
+        additional_info (PaymentAdditionalInfo): Additional payment details.
+        application_fee (float): Application fee amount.
+        notification_url (str): IPN notification URL (deprecated).
+        callback_url (str): Callback URL after payment.
+        coupon_code (str): Discount coupon code.
+        coupon_amount (float): Coupon discount amount.
+    """
+    pass
+
+
+class Pagination:
+    """Pagination metadata for search results.
+    
+    Attributes:
+        total (int): Total number of results.
+        limit (int): Maximum results per page.
+        offset (int): Starting position.
+    """
+    pass
+
+
 class Payment(MPBase):
     """Manages payment lifecycle through the MercadoPago Checkout API.
 
@@ -52,7 +111,7 @@ class Payment(MPBase):
         """Creates a new payment.
 
         Args:
-            payment_object: Dict describing the payment (amount, payer,
+            payment_object: Dict describing the payment (transaction_amount, payer,
                 payment_method_id, token, etc.).
             request_options: Per-call configuration overrides.
 
