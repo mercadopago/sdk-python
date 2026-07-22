@@ -45,7 +45,7 @@ class MerchantOrder(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/merchant_orders/get-merchant-order/get
         """
-        return self._get(uri="/merchant_orders/" + str(merchan_order_id),
+        return self._get(uri="/merchant_orders/" + self._path_param(merchan_order_id),
                          request_options=request_options)
 
     def update(self, merchan_order_id, merchant_order_object, request_options=None):
@@ -68,7 +68,7 @@ class MerchantOrder(MPBase):
             raise ValueError(
                 "Param merchant_order_object must be a Dictionary")
 
-        return self._put(uri="/merchant_orders/" + str(merchan_order_id),
+        return self._put(uri="/merchant_orders/" + self._path_param(merchan_order_id),
                          data=merchant_order_object, request_options=request_options)
 
     def create(self, merchant_order_object, request_options=None):

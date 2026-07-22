@@ -46,7 +46,7 @@ class Payment(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-payment/get
         """
-        return self._get(uri="/v1/payments/" + str(payment_id), request_options=request_options)
+        return self._get(uri="/v1/payments/" + self._path_param(payment_id), request_options=request_options)
 
     def create(self, payment_object, request_options=None):
         """Creates a new payment.
@@ -91,5 +91,5 @@ class Payment(MPBase):
         if not isinstance(payment_object, dict):
             raise ValueError("Param payment_object must be a Dictionary")
 
-        return self._put(uri="/v1/payments/" + str(payment_id), data=payment_object,
+        return self._put(uri="/v1/payments/" + self._path_param(payment_id), data=payment_object,
                          request_options=request_options)

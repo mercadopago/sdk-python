@@ -7,7 +7,7 @@ Supported operations: list devices, create payment intent, get payment
 intent, and cancel payment intent.
 
 Note: The ``change_operating_mode`` operation (PATCH
-``/point/integration-api/devices/{device_id}``) is not included because
+``/point/integration-api/devices/{self._path_param(device_id)}``) is not included because
 the Python SDK HTTP client does not currently expose a PATCH method.
 
 `API reference
@@ -70,7 +70,7 @@ class Point(MPBase):
             raise ValueError("Param payment_intent_object must be a Dictionary")
 
         return self._post(
-            uri="/point/integration-api/devices/" + str(device_id) + "/payment-intents",
+            uri="/point/integration-api/devices/" + self._path_param(device_id) + "/payment-intents",
             data=payment_intent_object,
             request_options=request_options,
         )
@@ -92,7 +92,7 @@ class Point(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/in-person-payments/point/orders/get-order/get
         """
         return self._get(
-            uri="/point/integration-api/payment-intents/" + str(payment_intent_id),
+            uri="/point/integration-api/payment-intents/" + self._path_param(payment_intent_id),
             request_options=request_options,
         )
 
@@ -115,7 +115,7 @@ class Point(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/in-person-payments/point/orders/cancel-order/post
         """
         return self._delete(
-            uri="/point/integration-api/devices/" + str(device_id)
-                + "/payment-intents/" + str(payment_intent_id),
+            uri="/point/integration-api/devices/" + self._path_param(device_id)
+                + "/payment-intents/" + self._path_param(payment_intent_id),
             request_options=request_options,
         )

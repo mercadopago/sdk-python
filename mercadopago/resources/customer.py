@@ -44,7 +44,7 @@ class Customer(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/get-customer/get
         """
-        return self._get(uri="/v1/customers/" + str(customer_id), request_options=request_options)
+        return self._get(uri="/v1/customers/" + self._path_param(customer_id), request_options=request_options)
 
     def create(self, customer_object, request_options=None):
         """Creates a new customer record.
@@ -87,7 +87,7 @@ class Customer(MPBase):
         if not isinstance(customer_object, dict):
             raise ValueError("Param customer_object must be a Dictionary")
 
-        return self._put(uri="/v1/customers/" + str(customer_id), data=customer_object,
+        return self._put(uri="/v1/customers/" + self._path_param(customer_id), data=customer_object,
                          request_options=request_options)
 
     def delete(self, customer_id, request_options=None):
@@ -102,5 +102,5 @@ class Customer(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/get-customer/get
         """
-        return self._delete(uri="/v1/customers/" + str(customer_id),
+        return self._delete(uri="/v1/customers/" + self._path_param(customer_id),
                             request_options=request_options)

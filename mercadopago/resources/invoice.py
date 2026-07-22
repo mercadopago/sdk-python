@@ -37,7 +37,7 @@ class Invoice(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-authorized-payment/get
         """
         return self._get(
-            uri="/authorized_payments/" + str(invoice_id),
+            uri="/authorized_payments/" + self._path_param(invoice_id),
             request_options=request_options,
         )
 
