@@ -71,6 +71,14 @@ class TestPayment(unittest.TestCase):
                         "street_number": 3003
                     },
                     "registration_date": "2019-01-01T12:01:01.000-03:00",
+                    "authentication_type": "WEB",
+                    "is_prime_user": False,
+                    "is_first_purchase_online": False,
+                    "last_purchase": "2024-01-01T12:01:01.000-03:00",
+                    "identification": {
+                        "type": "CPF",
+                        "number": "19119119100"
+                    },
                     "phone": {
                         "area_code": "011",
                         "number": "987654321"
