@@ -5,6 +5,7 @@ Customer, etc.) inherits.  Handles request-option merging, header
 construction, JSON encoding, and delegation to the configured HTTP client.
 """
 from json.encoder import JSONEncoder
+from urllib.parse import quote
 
 from mercadopago.config.config import Config
 from mercadopago.config.request_options import RequestOptions
@@ -78,6 +79,10 @@ class MPBase:
             headers.update(extra_headers)
 
         return headers
+
+    def _path_param(self, value):
+        """Encodes a dynamic URL path segment."""
+        return quote(str(value), safe="")
 
     def _get(self, uri, filters=None, request_options=None):
         """Performs an authenticated GET request.

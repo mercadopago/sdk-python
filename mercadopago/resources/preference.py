@@ -28,7 +28,7 @@ class Preference(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/get-preference/get
         """
-        return self._get(uri="/checkout/preferences/" + str(preference_id),
+        return self._get(uri="/checkout/preferences/" + self._path_param(preference_id),
                          request_options=request_options)
 
     def update(self, preference_id, preference_object, request_options=None):
@@ -50,7 +50,7 @@ class Preference(MPBase):
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
 
-        return self._put(uri="/checkout/preferences/" + str(preference_id), data=preference_object,
+        return self._put(uri="/checkout/preferences/" + self._path_param(preference_id), data=preference_object,
                          request_options=request_options)
 
     def create(self, preference_object, request_options=None):

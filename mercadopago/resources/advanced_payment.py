@@ -46,7 +46,7 @@ class AdvancedPayment(MPBase):
         Returns:
             dict: Full advanced payment object.
         """
-        return self._get(uri="/v1/advanced_payments/" + str(advanced_payment_id),
+        return self._get(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id),
                          request_options=request_options)
 
     def create(self, advanced_payment_object, request_options=None):
@@ -83,7 +83,7 @@ class AdvancedPayment(MPBase):
             dict: Captured advanced payment with updated status.
         """
         capture_object = {"capture": True}
-        return self._put(uri="/v1/advanced_payments/" + str(advanced_payment_id),
+        return self._put(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id),
                          data=capture_object, request_options=request_options)
 
     def update(self, advanced_payment_id, advanced_payment_object, request_options=None):
@@ -104,7 +104,7 @@ class AdvancedPayment(MPBase):
             raise ValueError(
                 "Param advanced_payment_object must be a Dictionary")
 
-        return self._put(uri="/v1/advanced_payments/" + str(advanced_payment_id),
+        return self._put(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id),
                          data=advanced_payment_object, request_options=request_options)
 
     def cancel(self, advanced_payment_id, request_options=None):
@@ -121,7 +121,7 @@ class AdvancedPayment(MPBase):
             dict: Cancelled advanced payment with updated status.
         """
         cancel_object = {"status": "cancelled"}
-        return self._put(uri="/v1/advanced_payments/" + str(advanced_payment_id),
+        return self._put(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id),
                          data=cancel_object, request_options=request_options)
 
     def update_release_date(self, advanced_payment_id, release_date, request_options=None):
@@ -147,5 +147,5 @@ class AdvancedPayment(MPBase):
         disbursement_object = {
             "money_release_date": release_date.strftime("%Y-%m-%d %H:%M:%S.%f")}
 
-        return self._post(uri="/v1/advanced_payments/" + str(advanced_payment_id) + "/disburses",
+        return self._post(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id) + "/disburses",
                           data=disbursement_object, request_options=request_options)

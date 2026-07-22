@@ -49,7 +49,7 @@ class Subscription(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval/get
         """
         return self._get(
-            uri="/preapproval/" + str(subscription_id),
+            uri="/preapproval/" + self._path_param(subscription_id),
             request_options=request_options)
 
     def create(self, subscription_object, request_options=None):
@@ -99,6 +99,6 @@ class Subscription(MPBase):
             raise ValueError("Param subscription_object must be a Dictionary")
 
         return self._put(
-            uri="/preapproval/" + str(subscription_id),
+            uri="/preapproval/" + self._path_param(subscription_id),
             data=subscription_object,
             request_options=request_options)

@@ -125,7 +125,7 @@ class Order(MPBase):
         if not isinstance(order_id, str):
             raise ValueError("Param order_id must be a string")
 
-        return self._get(uri="/v1/orders/" + str(order_id), request_options=request_options)
+        return self._get(uri="/v1/orders/" + self._path_param(order_id), request_options=request_options)
 
     def process(self, order_id, request_options=None):
         """Processes (executes payment for) an existing order.
@@ -150,7 +150,7 @@ class Order(MPBase):
             raise ValueError("Param order_id must be a string")
 
         return self._post(
-            uri=f"/v1/orders/{order_id}/process",
+            uri=f"/v1/orders/{self._path_param(order_id)}/process",
             request_options=request_options,
         )
 
@@ -175,7 +175,7 @@ class Order(MPBase):
             raise ValueError("Param order_id must be a string")
 
         return self._post(
-            uri=f"/v1/orders/{order_id}/cancel",
+            uri=f"/v1/orders/{self._path_param(order_id)}/cancel",
             request_options=request_options,
         )
 
@@ -202,7 +202,7 @@ class Order(MPBase):
             raise ValueError("Param order_id must be a string")
 
         return self._post(
-            uri=f"/v1/orders/{order_id}/capture",
+            uri=f"/v1/orders/{self._path_param(order_id)}/capture",
             request_options=request_options,
         )
 
@@ -225,7 +225,7 @@ class Order(MPBase):
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        return self._post(uri=f"/v1/orders/{order_id}/transactions", data=transaction_object,
+        return self._post(uri=f"/v1/orders/{self._path_param(order_id)}/transactions", data=transaction_object,
                           request_options=request_options)
 
     def update_transaction(
@@ -249,7 +249,7 @@ class Order(MPBase):
         if not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        return self._put(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
+        return self._put(uri=f"/v1/orders/{self._path_param(order_id)}/transactions/{self._path_param(transaction_id)}",
                          data=transaction_object, request_options=request_options)
 
     def refund_transaction(self, order_id, transaction_object=None, request_options=None):
@@ -275,7 +275,7 @@ class Order(MPBase):
         if transaction_object is not None and not isinstance(transaction_object, dict):
             raise ValueError("Param transaction_object must be a Dictionary")
 
-        return self._post(uri=f"/v1/orders/{order_id}/refund", data=transaction_object,
+        return self._post(uri=f"/v1/orders/{self._path_param(order_id)}/refund", data=transaction_object,
                           request_options=request_options)
 
     def refund(self, order_id, refund_object=None, request_options=None):
@@ -315,5 +315,5 @@ class Order(MPBase):
         if not isinstance(order_id, str) or not isinstance(transaction_id, str):
             raise ValueError("Params order_id and transaction_id must be strings")
 
-        return self._delete(uri=f"/v1/orders/{order_id}/transactions/{transaction_id}",
+        return self._delete(uri=f"/v1/orders/{self._path_param(order_id)}/transactions/{self._path_param(transaction_id)}",
                             request_options=request_options)
