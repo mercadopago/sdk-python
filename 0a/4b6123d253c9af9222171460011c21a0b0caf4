@@ -1,0 +1,20 @@
+mercadopago/resources/__init__.py
+  s_62fa54e21404ff::t_5fa354dbfa6c6b 20-24,26-47,72-77
+  s_62fa54e21404ff::t_35dfbf05b5f998 25,88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "0a4b6123d253c9af9222171460011c21a0b0caf4",
+  "prompts": {},
+  "sessions": {
+    "s_62fa54e21404ff": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ef727-557f-7cb0-8b06-f0fedf92cbd5",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Luis Sanchez <luismiguel.sanchezgarcia@mercadolibre.com.co>"
+    }
+  }
+}
