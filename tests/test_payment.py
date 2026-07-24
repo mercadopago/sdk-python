@@ -18,10 +18,10 @@ class TestPayment(unittest.TestCase):
         Test Function: Payment
         """
         card_token_object = {
-            "card_number": "4074090000000004",
+            "card_number": "5031433215406351",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
-            "expiration_month": "12",
+            "expiration_year": "2030",
+            "expiration_month": "11",
             "cardholder": {
                 "name": "APRO",
                 "identification": {
@@ -37,7 +37,7 @@ class TestPayment(unittest.TestCase):
             "installments": 1,
             "transaction_amount": 58.80,
             "description": "Point Mini a maquininha que dá o dinheiro de suas vendas na hora",
-            "payment_method_id": "visa",
+            "payment_method_id": "master",
             "payer": {
                 "email": "test_user_123456@testuser.com",
                 "identification": {

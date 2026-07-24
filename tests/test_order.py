@@ -44,7 +44,7 @@ class TestOrder(unittest.TestCase):
         order_object_cc = {
             "type": "online",
             "processing_mode": "automatic",
-            "total_amount": "200.00",
+            "total_amount": "1000.00",
             "external_reference": "ext_ref_1234",
             "payer": {
                 "email": f"test_payer_{random_email_id}@testuser.com"
@@ -53,7 +53,7 @@ class TestOrder(unittest.TestCase):
             "transactions": {
                 "payments": [
                     {
-                        "amount": "200.00",
+                        "amount": "1000.00",
                         "payment_method": {
                             "id": "master",
                             "type": "credit_card",
@@ -74,7 +74,7 @@ class TestOrder(unittest.TestCase):
         order_object_cc = {
             "type": "online",
             "processing_mode": "manual",
-            "total_amount": "200.00",
+            "total_amount": "1000.00",
             "external_reference": "ext_ref_1234",
             "payer": {
                 "email": f"test_payer_{random_email_id}@testuser.com"
@@ -90,12 +90,12 @@ class TestOrder(unittest.TestCase):
         order_mode_oneshot_complete = {
             "type": "online",
             "processing_mode": "automatic",
-            "total_amount": "200.00",
+            "total_amount": "1000.00",
             "external_reference": "ext_ref_1234",
             "transactions": {
                 "payments": [
                     {
-                        "amount": "200.00",
+                        "amount": "1000.00",
                         "payment_method": {
                             "id": "master",
                             "type": "credit_card",
@@ -122,12 +122,12 @@ class TestOrder(unittest.TestCase):
         order_mode_builder_complete = {
             "type": "online",
             "processing_mode": "manual",
-            "total_amount": "200.00",
+            "total_amount": "1000.00",
             "external_reference": "ext_ref_1234",
             "transactions": {
                 "payments": [
                     {
-                        "amount": "200.00",
+                        "amount": "1000.00",
                         "payment_method": {
                             "id": "master",
                             "type": "credit_card",
@@ -157,23 +157,24 @@ class TestOrder(unittest.TestCase):
         random_email_id = random.randint(100000, 999999)
         order_object = {
             "type": "online",
+            "processing_mode": "automatic",
             "total_amount": "1000.00",
             "external_reference": "ext_ref_1234",
             "transactions": {
-            "payments": [
-                {
-                "amount": "1000.00",
-                "payment_method": {
-                    "id": "master",
-                    "type": "credit_card",
-                    "token": card_token_id,
-                    "installments": 12
-                }
-                }
-            ]
+                "payments": [
+                    {
+                        "amount": "1000.00",
+                        "payment_method": {
+                            "id": "master",
+                            "type": "credit_card",
+                            "token": card_token_id,
+                            "installments": 1
+                        }
+                    }
+                ]
             },
             "payer": {
-            "email": f"test_payer_{random_email_id}@testuser.com"
+                "email": f"test_payer_{random_email_id}@testuser.com"
             }
         }
 
@@ -191,11 +192,11 @@ class TestOrder(unittest.TestCase):
             "type": "online",
             "processing_mode": "manual",
             "external_reference": "ext_ref_1234",
-            "total_amount": "200.00",
+            "total_amount": "1000.00",
             "transactions": {
                 "payments": [
                     {
-                        "amount": "200.00",
+                        "amount": "1000.00",
                         "payment_method": {
                             "id": "master",
                             "type": "credit_card",
@@ -240,7 +241,7 @@ class TestOrder(unittest.TestCase):
         transaction_object = {
             "payments": [
                 {
-                    "amount": "200.00",
+                    "amount": "1000.00",
                     "payment_method": {
                         "id": "master",
                         "type": "credit_card",

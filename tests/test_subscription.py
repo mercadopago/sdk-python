@@ -51,8 +51,8 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
-                "currency_id": "ARS"
+                "transaction_amount": 100,
+                "currency_id": "BRL"
             }
         }
 
@@ -106,7 +106,7 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
+                "transaction_amount": 100,
                 "currency_id": "BRL",
             },
             "status": "authorized"
@@ -169,7 +169,7 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
+                "transaction_amount": 100,
                 "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",
