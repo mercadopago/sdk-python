@@ -1,7 +1,6 @@
 """
     Module: test_plan
 """
-from datetime import datetime
 import os
 import unittest
 import random
@@ -126,9 +125,9 @@ class TestSubscription(unittest.TestCase):
     @classmethod
     def create_card_token(cls):
         card_token_object = {
-            "card_number": "5031433215406351",
+            "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
+            "expiration_year": "2030",
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",

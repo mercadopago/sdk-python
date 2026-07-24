@@ -17,27 +17,19 @@ class TestOrder(unittest.TestCase):
     """
     sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
 
-    def create_master_test_card(self, status="APRO"):
+    def create_visa_test_card(self, status="APRO"):
         card_token_object = {
-            "card_number": "5031433215406351",
+            "card_number": "4074090000000004",
             "security_code": "123",
             "expiration_year": "2030",
-            "expiration_month": "11",
+            "expiration_month": "12",
             "cardholder": {"name": status}
         }
         card_token_created = self.sdk.card_token().create(card_token_object)
         return card_token_created["response"]["id"]
 
-    def create_visa_test_card(self, status="APRO"):
-        card_token_object = {
-            "card_number": "4235647728025682",
-            "security_code": "123",
-            "expiration_year": "2030",
-            "expiration_month": "11",
-            "cardholder": {"name": status}
-        }
-        card_token_created = self.sdk.card_token().create(card_token_object)
-        return card_token_created["response"]["id"]
+    def create_master_test_card(self, status="APRO"):
+        return self.create_visa_test_card(status)
 
     def create_order_canceled_or_captured(self, card_token_id):
         random_email_id = random.randint(100000, 999999)
@@ -55,7 +47,7 @@ class TestOrder(unittest.TestCase):
                     {
                         "amount": "1000.00",
                         "payment_method": {
-                            "id": "master",
+                            "id": "visa",
                             "type": "credit_card",
                             "token": card_token_id,
                             "installments": 1
@@ -97,7 +89,7 @@ class TestOrder(unittest.TestCase):
                     {
                         "amount": "1000.00",
                         "payment_method": {
-                            "id": "master",
+                            "id": "visa",
                             "type": "credit_card",
                             "token": card_token_id,
                             "installments": 1
@@ -129,7 +121,7 @@ class TestOrder(unittest.TestCase):
                     {
                         "amount": "1000.00",
                         "payment_method": {
-                            "id": "master",
+                            "id": "visa",
                             "type": "credit_card",
                             "token": card_token_id,
                             "installments": 12
@@ -165,7 +157,7 @@ class TestOrder(unittest.TestCase):
                     {
                         "amount": "1000.00",
                         "payment_method": {
-                            "id": "master",
+                            "id": "visa",
                             "type": "credit_card",
                             "token": card_token_id,
                             "installments": 1
@@ -198,7 +190,7 @@ class TestOrder(unittest.TestCase):
                     {
                         "amount": "1000.00",
                         "payment_method": {
-                            "id": "master",
+                            "id": "visa",
                             "type": "credit_card",
                             "token": card_token_id,
                             "installments": 1
