@@ -317,7 +317,7 @@ class TestOrderCheckoutPro(unittest.TestCase):
         self.assertEqual(order_created["response"]["type"], "online")
         self.assertEqual(order_created["response"]["processing_mode"], "manual")
         self.assertIn("id", order_created["response"])
-        self.assertIn("checkout_url", order_created["response"])
+        self.assertIn("client_token", order_created["response"])
 
 
 if __name__ == "__main__":

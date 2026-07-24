@@ -44,7 +44,10 @@ class Customer(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/get-customer/get
         """
-        return self._get(uri="/v1/customers/" + self._path_param(customer_id), request_options=request_options)
+        return self._get(
+            uri="/v1/customers/" + self._path_param(customer_id),
+            request_options=request_options,
+        )
 
     def create(self, customer_object, request_options=None):
         """Creates a new customer record.

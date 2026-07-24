@@ -1,7 +1,6 @@
 """
     Module: test_payment
 """
-from datetime import datetime
 import os
 import unittest
 import mercadopago
@@ -20,7 +19,7 @@ class TestPayment(unittest.TestCase):
         card_token_object = {
             "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
+            "expiration_year": "2030",
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -75,10 +74,6 @@ class TestPayment(unittest.TestCase):
                     "is_prime_user": False,
                     "is_first_purchase_online": False,
                     "last_purchase": "2024-01-01T12:01:01.000-03:00",
-                    "identification": {
-                        "type": "CPF",
-                        "number": "19119119100"
-                    },
                     "phone": {
                         "area_code": "011",
                         "number": "987654321"

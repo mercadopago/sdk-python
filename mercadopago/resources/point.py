@@ -70,7 +70,9 @@ class Point(MPBase):
             raise ValueError("Param payment_intent_object must be a Dictionary")
 
         return self._post(
-            uri="/point/integration-api/devices/" + self._path_param(device_id) + "/payment-intents",
+            uri="/point/integration-api/devices/"
+            + self._path_param(device_id)
+            + "/payment-intents",
             data=payment_intent_object,
             request_options=request_options,
         )
