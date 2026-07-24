@@ -50,8 +50,11 @@ class Preference(MPBase):
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
 
-        return self._put(uri="/checkout/preferences/" + self._path_param(preference_id), data=preference_object,
-                         request_options=request_options)
+        return self._put(
+            uri="/checkout/preferences/" + self._path_param(preference_id),
+            data=preference_object,
+            request_options=request_options,
+        )
 
     def create(self, preference_object, request_options=None):
         """Creates a new checkout preference.

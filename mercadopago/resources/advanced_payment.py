@@ -147,5 +147,10 @@ class AdvancedPayment(MPBase):
         disbursement_object = {
             "money_release_date": release_date.strftime("%Y-%m-%d %H:%M:%S.%f")}
 
-        return self._post(uri="/v1/advanced_payments/" + self._path_param(advanced_payment_id) + "/disburses",
-                          data=disbursement_object, request_options=request_options)
+        return self._post(
+            uri="/v1/advanced_payments/"
+            + self._path_param(advanced_payment_id)
+            + "/disburses",
+            data=disbursement_object,
+            request_options=request_options,
+        )

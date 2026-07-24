@@ -113,5 +113,10 @@ class Card(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/cards/delete-card/delete
         """
-        return self._delete(uri="/v1/customers/" + self._path_param(customer_id)
-                            + "/cards/" + self._path_param(card_id), request_options=request_options)
+        return self._delete(
+            uri="/v1/customers/"
+            + self._path_param(customer_id)
+            + "/cards/"
+            + self._path_param(card_id),
+            request_options=request_options,
+        )
