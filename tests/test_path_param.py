@@ -10,7 +10,7 @@ class TestPathParam(unittest.TestCase):
 
         self.assertEqual(
             "..%2F..%2Fapplications%2F123",
-            base._path_param("../../applications/123"),
+            base._path_param("../../applications/123"),  # pylint: disable=protected-access
         )
 
 
