@@ -53,6 +53,11 @@ from mercadopago.resources.order_subscription_data import (
     OrderSubscriptionData,
     OrderSubscriptionSequence,
 )
+from mercadopago.resources.order_transaction import (
+    OrderPaymentMethodRequest,
+    OrderPaymentRequest,
+    OrderTransactionRequest,
+)
 from mercadopago.resources.order_transaction_security import OrderTransactionSecurity
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
@@ -101,6 +106,9 @@ __all__ = (
     'OrderStoredCredential',
     'OrderSubscriptionData',
     'OrderSubscriptionSequence',
+    'OrderPaymentMethodRequest',
+    'OrderPaymentRequest',
+    'OrderTransactionRequest',
     'OrderTransactionSecurity',
     'Payment',
     'PaymentMethods',

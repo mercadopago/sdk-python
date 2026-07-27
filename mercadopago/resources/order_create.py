@@ -18,6 +18,7 @@ from dataclasses import (
 from typing import (
     List,
     Optional,
+    Union,
 )
 
 from mercadopago.resources.order_item import OrderItemRequest
@@ -27,6 +28,7 @@ from mercadopago.resources.order_payer import (
     OrderPayerPhone,
 )
 from mercadopago.resources.order_shipment import OrderShipmentRequest
+from mercadopago.resources.order_transaction import OrderTransactionRequest
 
 
 def _filter_none(value):
@@ -121,7 +123,10 @@ class OrderCreateRequest:
         marketplace_fee: Marketplace fee as a decimal string. Type: str.
         expiration_time: Order expiration time (ISO 8601 / duration). Type: str.
         checkout_available_at: When the checkout becomes available. Type: str.
-        transactions: Transactions payload (payments).
+        transactions: Typed transactions payload. Accepts an
+            :class:`~mercadopago.resources.order_transaction.OrderTransactionRequest`
+            for a fully typed AP chain, or a plain ``dict`` for backward
+            compatibility.
         payer: Payer information.
         items: Line items in the order.
         config: Order configuration payload.
@@ -141,7 +146,7 @@ class OrderCreateRequest:
     marketplace_fee: Optional[str] = None
     expiration_time: Optional[str] = None
     checkout_available_at: Optional[str] = None
-    transactions: Optional[dict] = None
+    transactions: Optional[Union[OrderTransactionRequest, dict]] = None
     payer: Optional[OrderPayerRequest] = None
     items: Optional[List[OrderItemRequest]] = field(default=None)
     config: Optional[dict] = None

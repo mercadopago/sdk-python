@@ -39,6 +39,11 @@ from mercadopago.resources.order_subscription_data import (
     OrderSubscriptionData,
     OrderSubscriptionSequence,
 )
+from mercadopago.resources.order_transaction import (
+    OrderPaymentMethodRequest,
+    OrderPaymentRequest,
+    OrderTransactionRequest,
+)
 from mercadopago.resources.order_transaction_security import OrderTransactionSecurity
 
 
@@ -357,6 +362,144 @@ class TestAutomaticPaymentsTypedFlow(unittest.TestCase):
         sc = sent["transactions"]["payments"][0]["stored_credential"]
         # first_payment stays; None fields (reason, prev_transaction_ref) are dropped.
         self.assertEqual(sc, {"payment_initiator": "merchant", "first_payment": True})
+
+
+class TestFullyTypedAPChain(unittest.TestCase):
+    """Verify the typed chain OrderCreateRequest → OrderTransactionRequest →
+    OrderPaymentRequest → AP dataclasses produces the correct JSON body."""
+
+    def test_fully_typed_ap_chain_serializes_correctly(self):
+        sdk, http = _make_sdk()
+        typed = OrderCreateRequest(
+            type="online",
+            total_amount="100.00",
+            external_reference="ap-typed-chain-001",
+            payer=OrderPayerRequest(
+                email="customer@example.com",
+                customer_id="CUSTOMER_ID",
+            ),
+            transactions=OrderTransactionRequest(
+                payments=[
+                    OrderPaymentRequest(
+                        amount="100.00",
+                        payment_method=OrderPaymentMethodRequest(
+                            id="master",
+                            type="credit_card",
+                            token="CARD_TOKEN",
+                            installments=1,
+                        ),
+                        automatic_payments=OrderAutomaticPayments(
+                            payment_profile_id="PROFILE_ID",
+                            retries=3,
+                            schedule_date="2026-08-01T00:00:00.000-04:00",
+                            due_date="2026-08-05T00:00:00.000-04:00",
+                        ),
+                        stored_credential=OrderStoredCredential(
+                            payment_initiator="merchant",
+                            reason="recurring",
+                            store_payment_method=False,
+                            first_payment=False,
+                            prev_transaction_ref="PREV_TX_ID",
+                        ),
+                        subscription_data=OrderSubscriptionData(
+                            invoice_id="INV-002",
+                            billing_date="2026-07-27",
+                            subscription_sequence=OrderSubscriptionSequence(
+                                number=2, total=12
+                            ),
+                            invoice_period=OrderInvoicePeriod(
+                                type="monthly", period=1
+                            ),
+                        ),
+                    )
+                ]
+            ),
+            integration_data=OrderIntegrationData(
+                integrator_id="INTEGRATOR_ID",
+                sponsor=OrderSponsor(id="SPONSOR_ID"),
+            ),
+        )
+        result = sdk.order().create(typed)
+        self.assertEqual(result["status"], 201)
+
+        sent = json.loads(http.last_data)
+        payment = sent["transactions"]["payments"][0]
+
+        # payment_method
+        self.assertEqual(payment["payment_method"]["id"], "master")
+        self.assertEqual(payment["payment_method"]["token"], "CARD_TOKEN")
+
+        # automatic_payments
+        ap = payment["automatic_payments"]
+        self.assertEqual(ap["payment_profile_id"], "PROFILE_ID")
+        self.assertEqual(ap["retries"], 3)
+        self.assertEqual(ap["schedule_date"], "2026-08-01T00:00:00.000-04:00")
+        self.assertEqual(ap["due_date"], "2026-08-05T00:00:00.000-04:00")
+
+        # stored_credential
+        sc = payment["stored_credential"]
+        self.assertEqual(sc["payment_initiator"], "merchant")
+        self.assertEqual(sc["reason"], "recurring")
+        self.assertFalse(sc["store_payment_method"])
+        self.assertFalse(sc["first_payment"])
+        self.assertEqual(sc["prev_transaction_ref"], "PREV_TX_ID")
+
+        # subscription_data
+        sub = payment["subscription_data"]
+        self.assertEqual(sub["invoice_id"], "INV-002")
+        self.assertEqual(sub["billing_date"], "2026-07-27")
+        self.assertEqual(sub["subscription_sequence"], {"number": 2, "total": 12})
+        self.assertEqual(sub["invoice_period"], {"type": "monthly", "period": 1})
+
+        # integration_data
+        integ = sent["integration_data"]
+        self.assertEqual(integ["integrator_id"], "INTEGRATOR_ID")
+        self.assertEqual(integ["sponsor"], {"id": "SPONSOR_ID"})
+
+    def test_typed_transactions_and_dict_transactions_produce_same_json(self):
+        """Typed OrderTransactionRequest and equivalent dict produce identical JSON."""
+        sdk_typed, http_typed = _make_sdk()
+        sdk_dict, http_dict = _make_sdk()
+
+        typed_request = OrderCreateRequest(
+            type="online",
+            total_amount="50.00",
+            transactions=OrderTransactionRequest(
+                payments=[
+                    OrderPaymentRequest(
+                        amount="50.00",
+                        payment_method=OrderPaymentMethodRequest(
+                            id="visa", type="credit_card", installments=1
+                        ),
+                        automatic_payments=OrderAutomaticPayments(
+                            payment_profile_id="PROF-1",
+                        ),
+                    )
+                ]
+            ),
+        )
+
+        dict_request = {
+            "type": "online",
+            "total_amount": "50.00",
+            "transactions": {
+                "payments": [{
+                    "amount": "50.00",
+                    "payment_method": {
+                        "id": "visa", "type": "credit_card", "installments": 1
+                    },
+                    "automatic_payments": {"payment_profile_id": "PROF-1"},
+                }]
+            },
+        }
+
+        sdk_typed.order().create(typed_request)
+        sdk_dict.order().create(dict_request)
+
+        self.assertEqual(
+            json.loads(http_typed.last_data),
+            json.loads(http_dict.last_data),
+        )
 
 
 if __name__ == "__main__":
