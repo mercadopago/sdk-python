@@ -9,6 +9,7 @@ from typing import (
 )
 
 
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API shipment.address contract
 @dataclass
 class OrderShipmentAddress:
     """Delivery address for an order shipment.

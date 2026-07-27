@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API items contract
 @dataclass
 class OrderItemRequest:
     """A single line item within an order request.

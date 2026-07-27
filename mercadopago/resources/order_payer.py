@@ -19,6 +19,7 @@ class OrderPayerPhone:
     number: Optional[str] = None
 
 
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API payer.address contract
 @dataclass
 class OrderPayerAddress:
     """Payer address for an order request.

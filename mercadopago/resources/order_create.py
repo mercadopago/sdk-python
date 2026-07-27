@@ -74,6 +74,7 @@ class OrderIdentification:
     number: Optional[str] = None
 
 
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API payer contract
 @dataclass
 class OrderPayerRequest:
     """Payer information for an order request.
@@ -100,6 +101,7 @@ class OrderPayerRequest:
     address: Optional[OrderPayerAddress] = None
 
 
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API root request contract
 @dataclass
 class OrderCreateRequest:
     """Root request body for creating an order.
