@@ -301,7 +301,7 @@ class TestAutomaticPaymentsTypedFlow(unittest.TestCase):
                                 reason="recurring",
                                 store_payment_method=False,
                                 first_payment=False,
-                                prev_transaction_ref="PREV_TX",
+                                previous_transaction_reference="PREV_TX",
                             )
                         ),
                         "subscription_data": dataclasses.asdict(
@@ -328,7 +328,7 @@ class TestAutomaticPaymentsTypedFlow(unittest.TestCase):
         self.assertEqual(result["status"], 201)
         sent = json.loads(http.last_data)
         payment = sent["transactions"]["payments"][0]
-        self.assertEqual(payment["stored_credential"]["prev_transaction_ref"], "PREV_TX")
+        self.assertEqual(payment["stored_credential"]["previous_transaction_reference"], "PREV_TX")
         self.assertEqual(payment["automatic_payments"]["payment_profile_id"], "PROFILE")
         self.assertEqual(
             payment["subscription_data"]["subscription_sequence"],
@@ -399,7 +399,7 @@ class TestFullyTypedAPChain(unittest.TestCase):
                             reason="recurring",
                             store_payment_method=False,
                             first_payment=False,
-                            prev_transaction_ref="PREV_TX_ID",
+                            previous_transaction_reference="PREV_TX_ID",
                         ),
                         subscription_data=OrderSubscriptionData(
                             invoice_id="INV-002",
@@ -442,7 +442,7 @@ class TestFullyTypedAPChain(unittest.TestCase):
         self.assertEqual(sc["reason"], "recurring")
         self.assertFalse(sc["store_payment_method"])
         self.assertFalse(sc["first_payment"])
-        self.assertEqual(sc["prev_transaction_ref"], "PREV_TX_ID")
+        self.assertEqual(sc["previous_transaction_reference"], "PREV_TX_ID")
 
         # subscription_data
         sub = payment["subscription_data"]

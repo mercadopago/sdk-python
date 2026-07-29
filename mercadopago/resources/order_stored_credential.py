@@ -19,13 +19,13 @@ class OrderStoredCredential:
             Type: bool.
         first_payment: ``True`` for the initial authorization; ``False`` for
             subsequent recurring charges. Type: bool.
-        prev_transaction_ref: Identifier of the previous transaction in the recurring
-            series. Required from the second charge onwards to link this payment to the
-            original card-network authorization. Type: str.
+        previous_transaction_reference: Identifier of the previous transaction in the
+            recurring series. Required from the second charge onwards to link this payment
+            to the original card-network authorization. Type: str.
     """
 
     payment_initiator: Optional[str] = None
     reason: Optional[str] = None
     store_payment_method: Optional[bool] = None
     first_payment: Optional[bool] = None
-    prev_transaction_ref: Optional[str] = None
+    previous_transaction_reference: Optional[str] = None
