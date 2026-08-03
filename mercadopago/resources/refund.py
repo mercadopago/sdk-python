@@ -73,6 +73,7 @@ class Refund(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refund/get
         """
         return self._get(
-            uri="/v1/payments/" + self._path_param(payment_id) + "/refunds/" + self._path_param(refund_id),
+            uri=f"/v1/payments/{self._path_param(payment_id)}"
+                f"/refunds/{self._path_param(refund_id)}",
             request_options=request_options,
         )
