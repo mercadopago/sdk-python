@@ -1,7 +1,6 @@
 """
     Module: test_plan
 """
-from datetime import datetime
 import os
 import unittest
 import random
@@ -51,8 +50,8 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
-                "currency_id": "ARS"
+                "transaction_amount": 100,
+                "currency_id": "BRL"
             }
         }
 
@@ -106,7 +105,7 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
+                "transaction_amount": 100,
                 "currency_id": "BRL",
             },
             "status": "authorized"
@@ -126,9 +125,9 @@ class TestSubscription(unittest.TestCase):
     @classmethod
     def create_card_token(cls):
         card_token_object = {
-            "card_number": "5031433215406351",
+            "card_number": "4074090000000004",
             "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
+            "expiration_year": "2030",
             "expiration_month": "12",
             "cardholder": {
                 "name": "APRO",
@@ -169,7 +168,7 @@ class TestSubscription(unittest.TestCase):
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": 60,
+                "transaction_amount": 100,
                 "currency_id": "BRL",
             },
             "back_url": "https://www.mercadopago.com.co/subscriptions",

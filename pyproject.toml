@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
+requires = ["setuptools >= 83.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "mercadopago"
-version = "3.2.0"
+version = "3.3.1"
 authors = [
     {name = "Mercado Pago", email = "mp_sdk@mercadopago.com"}
 ]

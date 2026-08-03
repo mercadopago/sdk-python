@@ -1,6 +1,6 @@
 """Refund resource for the MercadoPago Payments API.
 
-Wraps ``/v1/payments/{payment_id}/refunds`` endpoints to list existing
+Wraps ``/v1/payments/{self._path_param(payment_id)}/refunds`` endpoints to list existing
 refunds and create full or partial refunds on approved payments.
 
 Refunds are available within 180 days of payment approval and require
@@ -31,7 +31,7 @@ class Refund(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refunds/get
         """
-        return self._get(uri="/v1/payments/" + str(payment_id) + "/refunds",
+        return self._get(uri="/v1/payments/" + self._path_param(payment_id) + "/refunds",
                          request_options=request_options)
 
     def create(self, payment_id, refund_object=None, request_options=None):
@@ -56,5 +56,24 @@ class Refund(MPBase):
         if refund_object is not None and not isinstance(refund_object, dict):
             raise ValueError("Param refund_object must be a Dictionary")
 
-        return self._post(uri="/v1/payments/" + str(payment_id) + "/refunds",
+        return self._post(uri="/v1/payments/" + self._path_param(payment_id) + "/refunds",
                           data=refund_object, request_options=request_options)
+
+    def get(self, payment_id, refund_id, request_options=None):
+        """Retrieves a single refund by its ID.
+
+        Args:
+            payment_id: Identifier of the parent payment.
+            refund_id: Identifier of the refund to retrieve.
+            request_options: Per-call configuration overrides.
+
+        Returns:
+            dict: Refund object including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refund/get
+        """
+        return self._get(
+            uri=f"/v1/payments/{self._path_param(payment_id)}"
+                f"/refunds/{self._path_param(refund_id)}",
+            request_options=request_options,
+        )

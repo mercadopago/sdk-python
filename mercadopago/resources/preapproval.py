@@ -47,7 +47,10 @@ class PreApproval(MPBase):
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval/get
         """
-        return self._get(uri="/preapproval/" + str(preapproval_id), request_options=request_options)
+        return self._get(
+            uri="/preapproval/" + self._path_param(preapproval_id),
+            request_options=request_options,
+        )
 
     def create(self, preapproval_object, request_options=None):
         """Creates a new preapproval (ad-hoc subscription).
@@ -90,7 +93,7 @@ class PreApproval(MPBase):
         if not isinstance(preapproval_object, dict):
             raise ValueError("Param preapproval_object must be a Dictionary")
 
-        return self._put(uri="/preapproval/" + str(preapproval_id),
+        return self._put(uri="/preapproval/" + self._path_param(preapproval_id),
                          data=preapproval_object, request_options=request_options)
 
     def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):

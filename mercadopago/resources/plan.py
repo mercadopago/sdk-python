@@ -49,7 +49,7 @@ class Plan(MPBase):
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/get-preapproval-plan/get
         """
         return self._get(
-            uri="/preapproval_plan/" + str(plan_id),
+            uri="/preapproval_plan/" + self._path_param(plan_id),
             request_options=request_options)
 
     def create(self, plan_object, request_options=None):
@@ -96,7 +96,7 @@ class Plan(MPBase):
             raise ValueError("Param plan_object must be a Dictionary")
 
         return self._put(
-            uri="/preapproval_plan/" + str(plan_id),
+            uri="/preapproval_plan/" + self._path_param(plan_id),
             data=plan_object,
             request_options=request_options)
 

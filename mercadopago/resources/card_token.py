@@ -25,7 +25,7 @@ class CardToken(MPBase):
         Returns:
             dict: Token metadata (last four digits, expiry, etc.).
         """
-        return self._get(uri="/v1/card_tokens/" + str(card_token_id),
+        return self._get(uri="/v1/card_tokens/" + self._path_param(card_token_id),
                          request_options=request_options)
 
     def create(self, card_token_object, request_options=None):

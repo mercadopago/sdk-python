@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-06-30
+
+### Added
+
+- **Orders Checkout Pro**: beta support helpers, example payload, and
+  wire-level tests for creation through `sdk.order().create()`, including
+  `config.online`, `config.payment_method`, redirect URLs, tracking pixels,
+  shipment, items, and vertical `additional_info` fields.
+- **Orders**: added `sdk.order().refund()` as a backwards-compatible alias for
+  the existing order refund endpoint.
+
 ## [3.2.0] - 2026-05-27
 
 ### Added

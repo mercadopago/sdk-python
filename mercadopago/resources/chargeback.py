@@ -40,5 +40,5 @@ class Chargeback(MPBase):
         Returns:
             dict: Full chargeback object including status and amounts.
         """
-        return self._get(uri="/v1/chargebacks/" + str(chargeback_id),
+        return self._get(uri="/v1/chargebacks/" + self._path_param(chargeback_id),
                          request_options=request_options)
