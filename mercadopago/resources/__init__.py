@@ -17,6 +17,7 @@ from mercadopago.resources.invoice import Invoice
 from mercadopago.resources.merchant_order import MerchantOrder
 from mercadopago.resources.oauth import OAuth
 from mercadopago.resources.order import Order
+from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProConfig,
     OrderCheckoutProInstallments,
@@ -26,6 +27,38 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProTrack,
     OrderCheckoutProDict,
 )
+from mercadopago.resources.order_create import (
+    OrderCreateRequest,
+    OrderIdentification,
+    OrderPayerRequest,
+    order_request_to_dict,
+)
+from mercadopago.resources.order_integration_data import (
+    OrderIntegrationData,
+    OrderSponsor,
+)
+from mercadopago.resources.order_item import OrderItemRequest
+from mercadopago.resources.order_payer import (
+    OrderPayerAddress,
+    OrderPayerPhone,
+)
+from mercadopago.resources.order_shipment import (
+    OrderShipmentAddress,
+    OrderShipmentFreeMethod,
+    OrderShipmentRequest,
+)
+from mercadopago.resources.order_stored_credential import OrderStoredCredential
+from mercadopago.resources.order_subscription_data import (
+    OrderInvoicePeriod,
+    OrderSubscriptionData,
+    OrderSubscriptionSequence,
+)
+from mercadopago.resources.order_transaction import (
+    OrderPaymentMethodRequest,
+    OrderPaymentRequest,
+    OrderTransactionRequest,
+)
+from mercadopago.resources.order_transaction_security import OrderTransactionSecurity
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
 from mercadopago.resources.plan import Plan
@@ -50,6 +83,7 @@ __all__ = (
     'MerchantOrder',
     'OAuth',
     'Order',
+    'OrderAutomaticPayments',
     'OrderCheckoutProConfig',
     'OrderCheckoutProInstallments',
     'OrderCheckoutProInterestFree',
@@ -57,6 +91,25 @@ __all__ = (
     'OrderCheckoutProPaymentMethod',
     'OrderCheckoutProTrack',
     'OrderCheckoutProDict',
+    'OrderCreateRequest',
+    'OrderIdentification',
+    'OrderIntegrationData',
+    'OrderInvoicePeriod',
+    'OrderItemRequest',
+    'OrderPayerAddress',
+    'OrderPayerPhone',
+    'OrderPayerRequest',
+    'OrderShipmentAddress',
+    'OrderShipmentFreeMethod',
+    'OrderShipmentRequest',
+    'OrderSponsor',
+    'OrderStoredCredential',
+    'OrderSubscriptionData',
+    'OrderSubscriptionSequence',
+    'OrderPaymentMethodRequest',
+    'OrderPaymentRequest',
+    'OrderTransactionRequest',
+    'OrderTransactionSecurity',
     'Payment',
     'PaymentMethods',
     'Plan',
@@ -67,4 +120,5 @@ __all__ = (
     'RequestOptions',
     'Subscription',
     'User',
+    'order_request_to_dict',
 )

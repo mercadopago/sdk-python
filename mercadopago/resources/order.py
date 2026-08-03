@@ -7,7 +7,10 @@ transaction management.
 `API reference
 <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/create-order/post>`_
 """
+from dataclasses import is_dataclass
+
 from mercadopago.core import MPBase
+from mercadopago.resources.order_create import order_request_to_dict
 
 class Order(MPBase):
     """Manages orders and their associated transactions.
@@ -88,21 +91,30 @@ class Order(MPBase):
     def create(self, order_object, request_options=None):
         """Creates a new order.
 
+        Accepts either a plain ``dict`` (the historical, dynamic route) or an
+        :class:`~mercadopago.resources.order_create.OrderCreateRequest` typed
+        dataclass. When a dataclass is passed it is converted to a ``dict`` with
+        ``None`` fields omitted, producing the same JSON body as the dict route
+        (DD-3). The dict route is unchanged and fully backward compatible.
+
         Args:
             order_object: Dict describing the order (items, transactions,
-                payer, etc.).
+                payer, etc.), or an ``OrderCreateRequest`` dataclass instance.
             request_options: Per-call configuration overrides.
 
         Raises:
-            ValueError: If *order_object* is not a ``dict``.
+            ValueError: If *order_object* is neither a ``dict`` nor a dataclass
+                instance.
 
         Returns:
             dict: Created order including its ``id``.
 
         Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/create-order/post
         """
-        if not isinstance(order_object, dict):
-            raise ValueError("Param order_object must be a Dictionary")
+        if is_dataclass(order_object) and not isinstance(order_object, type):
+            order_object = order_request_to_dict(order_object)
+        elif not isinstance(order_object, dict):
+            raise ValueError("Param order_object must be a Dictionary or an OrderCreateRequest")
 
         return self._post(uri="/v1/orders", data=order_object, request_options=request_options)
 
