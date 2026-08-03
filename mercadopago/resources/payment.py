@@ -96,3 +96,26 @@ class Payment(MPBase):
 
         return self._put(uri="/v1/payments/" + self._path_param(payment_id), data=payment_object,
                          request_options=request_options)
+
+    def capture(self, payment_id, amount=None, request_options=None):
+        """Captures an authorized payment.
+
+        Args:
+            payment_id: Identifier of the authorized payment to capture.
+            amount: Amount to capture. If ``None``, the full authorized amount
+                is captured.
+            request_options: Per-call configuration overrides.
+
+        Returns:
+            dict: Updated payment object reflecting the captured state.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/update-payment/put
+        """
+        payload = {"capture": True}
+        if amount is not None:
+            payload["transaction_amount"] = amount
+        return self._put(
+            uri="/v1/payments/" + self._path_param(payment_id),
+            data=payload,
+            request_options=request_options,
+        )
