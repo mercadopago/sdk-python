@@ -14,6 +14,7 @@ class TestRefundGet(unittest.TestCase):
         return Refund(request_options, http_client)
 
     def test_get_returns_refund_by_id(self):
+        """Verifies get() returns the correct refund and calls the expected URL."""
         http_client = MagicMock()
         http_client.get.return_value = {"status": 200, "response": {"id": 99, "status": "approved"}}
 
@@ -23,10 +24,16 @@ class TestRefundGet(unittest.TestCase):
         self.assertEqual(result["status"], 200)
         self.assertEqual(result["response"]["id"], 99)
         http_client.get.assert_called_once()
-        called_url = http_client.get.call_args.kwargs.get("url") or http_client.get.call_args[1].get("url") or http_client.get.call_args[0][0]
+        call_args = http_client.get.call_args
+        called_url = (
+            call_args.kwargs.get("url")
+            or call_args[1].get("url")
+            or call_args[0][0]
+        )
         self.assertIn("/v1/payments/123/refunds/99", called_url)
 
     def test_get_passes_request_options(self):
+        """Verifies custom request_options are forwarded to the HTTP client."""
         http_client = MagicMock()
         http_client.get.return_value = {"status": 200, "response": {"id": 55}}
 
