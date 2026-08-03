@@ -58,3 +58,21 @@ class Refund(MPBase):
 
         return self._post(uri="/v1/payments/" + self._path_param(payment_id) + "/refunds",
                           data=refund_object, request_options=request_options)
+
+    def get(self, payment_id, refund_id, request_options=None):
+        """Retrieves a single refund by its ID.
+
+        Args:
+            payment_id: Identifier of the parent payment.
+            refund_id: Identifier of the refund to retrieve.
+            request_options: Per-call configuration overrides.
+
+        Returns:
+            dict: Refund object including its ``id`` and ``status``.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api-payments/get-refund/get
+        """
+        return self._get(
+            uri="/v1/payments/" + self._path_param(payment_id) + "/refunds/" + self._path_param(refund_id),
+            request_options=request_options,
+        )
