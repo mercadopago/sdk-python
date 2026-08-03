@@ -8,6 +8,7 @@ from json.encoder import JSONEncoder
 
 from mercadopago.config.config import Config
 from mercadopago.config.request_options import RequestOptions
+from mercadopago.errors.response import MPResponse
 
 
 class MPBase:
@@ -100,13 +101,14 @@ class MPBase:
         headers = self.__check_headers(
             request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.get(
+        return MPResponse(self.__http_client.get(
             url=self.__config.api_base_url + uri,
             params=filters,
             headers=headers,
             timeout=request_options.connection_timeout,
             maxretries=request_options.max_retries,
-        )
+            retry_on=request_options.retry_on,
+        ))
 
     def _post(self, uri, data=None, params=None, request_options=None):
         """Performs an authenticated POST request.
@@ -127,27 +129,18 @@ class MPBase:
         headers = self.__check_headers(
             request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.post(
+        return MPResponse(self.__http_client.post(
             url=self.__config.api_base_url + uri,
             data=data,
             params=params,
             headers=headers,
             timeout=request_options.connection_timeout,
             maxretries=request_options.max_retries,
-        )
+            retry_on=request_options.retry_on,
+        ))
 
     def _put(self, uri, data=None, params=None, request_options=None):
-        """Performs an authenticated PUT request.
-
-        Args:
-            uri: API path relative to the base URL.
-            data: Request body dict; JSON-encoded automatically.
-            params: Optional query-string parameters.
-            request_options: Per-call overrides; falls back to instance defaults.
-
-        Returns:
-            dict: ``{"status": <http_code>, "response": <parsed_json>}``.
-        """
+        """Performs an authenticated PUT request."""
         if data is not None:
             data = JSONEncoder().encode(data)
 
@@ -155,14 +148,15 @@ class MPBase:
         headers = self.__check_headers(
             request_options, {"Content-type": self.__config.mime_json})
 
-        return self.__http_client.put(
+        return MPResponse(self.__http_client.put(
             url=self.__config.api_base_url + uri,
             data=data,
             params=params,
             headers=headers,
             timeout=request_options.connection_timeout,
             maxretries=request_options.max_retries,
-        )
+            retry_on=request_options.retry_on,
+        ))
 
     def _delete(self, uri, params=None, request_options=None):
         """Performs an authenticated DELETE request.
@@ -178,13 +172,14 @@ class MPBase:
         request_options = self.__check_request_options(request_options)
         headers = self.__check_headers(request_options)
 
-        return self.__http_client.delete(
+        return MPResponse(self.__http_client.delete(
             url=self.__config.api_base_url + uri,
             params=params,
             headers=headers,
             timeout=request_options.connection_timeout,
             maxretries=request_options.max_retries,
-        )
+            retry_on=request_options.retry_on,
+        ))
 
     @property
     def request_options(self):

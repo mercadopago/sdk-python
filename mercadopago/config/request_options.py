@@ -6,6 +6,13 @@ or platform-specific headers that should be sent with a request.
 import uuid
 
 from .config import Config
+from .defaults import (
+    DEFAULT_TIMEOUT_SECONDS,
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_RETRY_ON,
+    DEFAULT_MAX_DELAY,
+    DEFAULT_INITIAL_DELAY,
+)
 
 
 class RequestOptions:  # pylint: disable=too-many-instance-attributes
@@ -33,17 +40,27 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
     __corporation_id = None
     __integrator_id = None
     __platform_id = None
+    __initial_delay = None
+    __max_delay = None
+    __jitter = None
+    __retry_on = None
+    __on_retry = None
 
     def __init__(  # pylint: disable=too-many-positional-arguments
     # pylint: disable=too-many-arguments
         self,
         access_token=None,
-        connection_timeout=60.0,
+        connection_timeout=DEFAULT_TIMEOUT_SECONDS,
         custom_headers=None,
         corporation_id=None,
         integrator_id=None,
         platform_id=None,
-        max_retries=3,
+        max_retries=DEFAULT_MAX_RETRIES,
+        initial_delay=DEFAULT_INITIAL_DELAY,
+        max_delay=DEFAULT_MAX_DELAY,
+        jitter=None,
+        retry_on=None,
+        on_retry=None,
     ):
         """Initialises request options with sensible defaults.
 
@@ -79,6 +96,11 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
             self.integrator_id = integrator_id
         if platform_id is not None:
             self.platform_id = platform_id
+        self.__initial_delay = initial_delay
+        self.__max_delay = max_delay
+        self.__jitter = jitter
+        self.__retry_on = retry_on
+        self.__on_retry = on_retry
 
         self.__config = Config()
 
@@ -155,6 +177,14 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
     def custom_headers(self, value):
         if not isinstance(value, dict):
             raise ValueError("Param custom_headers must be a Dictionary")
+        idem_key = value.get("x-idempotency-key")
+        if idem_key is None:
+            idem_key = value.get("X-Idempotency-Key")
+        if idem_key is not None and not (1 <= len(str(idem_key)) <= 64):
+            raise ValueError(
+                "x-idempotency-key must be between 1 and 64 characters "
+                f"(got {len(str(idem_key))})"
+            )
         self.__custom_headers = value
 
     @property
@@ -189,3 +219,62 @@ class RequestOptions:  # pylint: disable=too-many-instance-attributes
         if not isinstance(value, str):
             raise ValueError("Param platform_id must be a String")
         self.__platform_id = value
+
+    @property
+    def initial_delay(self):
+        """Initial backoff delay in ms (None = no extra delay)."""
+        return self.__initial_delay
+
+    @initial_delay.setter
+    def initial_delay(self, value):
+        if value is not None and not isinstance(value, int):
+            raise ValueError("Param initial_delay must be an Integer or None")
+        self.__initial_delay = value
+
+    @property
+    def max_delay(self):
+        """Maximum backoff delay cap in ms."""
+        return self.__max_delay
+
+    @max_delay.setter
+    def max_delay(self, value):
+        if value is not None and not isinstance(value, int):
+            raise ValueError("Param max_delay must be an Integer or None")
+        self.__max_delay = value
+
+    @property
+    def jitter(self):
+        """Whether to add random jitter to retry delay."""
+        return self.__jitter
+
+    @jitter.setter
+    def jitter(self, value):
+        if value is not None and not isinstance(value, bool):
+            raise ValueError("Param jitter must be a Boolean or None")
+        self.__jitter = value
+
+    @property
+    def retry_on(self):
+        """List of HTTP status codes that trigger a retry, or None for defaults."""
+        return self.__retry_on
+
+    @retry_on.setter
+    def retry_on(self, value):
+        if value is not None:
+            if not isinstance(value, list):
+                raise ValueError("Param retry_on must be a List or None")
+            for code in value:
+                if not isinstance(code, int) or code < 100 or code > 599:
+                    raise ValueError(f"retry_on contains invalid HTTP status code: {code}")
+        self.__retry_on = value
+
+    @property
+    def on_retry(self):
+        """Optional callback(attempt, error) invoked before each retry."""
+        return self.__on_retry
+
+    @on_retry.setter
+    def on_retry(self, value):
+        if value is not None and not callable(value):
+            raise ValueError("Param on_retry must be callable or None")
+        self.__on_retry = value

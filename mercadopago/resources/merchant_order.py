@@ -8,6 +8,7 @@ Pro payments under a single business reference.
 <https://www.mercadopago.com/developers/en/reference>`_
 """
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
 
 class MerchantOrder(MPBase):
@@ -93,3 +94,7 @@ class MerchantOrder(MPBase):
 
         return self._post(uri="/merchant_orders", data=merchant_order_object,
                           request_options=request_options)
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)
