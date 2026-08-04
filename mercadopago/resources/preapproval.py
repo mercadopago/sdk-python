@@ -7,6 +7,7 @@ preapproval (subscription) records without an associated plan.
 <https://www.mercadopago.com/developers/en/reference/online-payments/subscriptions/create-preapproval/post>`_
 """
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
 
 class PreApproval(MPBase):
@@ -94,3 +95,7 @@ class PreApproval(MPBase):
 
         return self._put(uri="/preapproval/" + self._path_param(preapproval_id),
                          data=preapproval_object, request_options=request_options)
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)

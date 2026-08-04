@@ -7,6 +7,7 @@ to enable one-click payments for returning buyers.
 `API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/customers/create-customer/post>`_
 """
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
 
 class Customer(MPBase):
@@ -107,3 +108,7 @@ class Customer(MPBase):
         """
         return self._delete(uri="/v1/customers/" + self._path_param(customer_id),
                             request_options=request_options)
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)

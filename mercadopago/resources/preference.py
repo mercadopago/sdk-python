@@ -5,7 +5,9 @@ and search payment preferences used by Checkout Pro.
 
 `API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post>`_
 """
+import warnings
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
 
 class Preference(MPBase):
@@ -77,7 +79,13 @@ class Preference(MPBase):
         """
         if not isinstance(preference_object, dict):
             raise ValueError("Param preference_object must be a Dictionary")
-
+        if "notification_url" in preference_object:
+            warnings.warn(
+                "notification_url is deprecated; use Webhooks instead. "
+                "See https://www.mercadopago.com/developers/en/docs/your-integrations/notifications/webhooks",
+                DeprecationWarning,
+                stacklevel=2,
+            )
         return self._post(uri="/checkout/preferences", data=preference_object,
                           request_options=request_options)
 
@@ -96,3 +104,7 @@ class Preference(MPBase):
 
         return self._get(uri="/checkout/preferences/search", filters=filters,
                          request_options=request_options)
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)

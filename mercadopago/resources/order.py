@@ -8,6 +8,7 @@ transaction management.
 <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/create-order/post>`_
 """
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
 class Order(MPBase):
     """Manages orders and their associated transactions.
@@ -333,3 +334,7 @@ class Order(MPBase):
             f"/transactions/{self._path_param(transaction_id)}",
             request_options=request_options,
         )
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)
