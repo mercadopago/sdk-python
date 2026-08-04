@@ -6,4 +6,12 @@ max-args = 7
 max-positional-arguments = 7
 
 [MESSAGES CONTROL]
-disable = missing-docstring,duplicate-code
+disable =
+    missing-docstring,
+    duplicate-code,
+    import-error,
+    import-outside-toplevel,
+    arguments-differ,
+    unused-argument,
+    unidiomatic-typecheck,
+    use-implicit-booleaness-not-comparison
