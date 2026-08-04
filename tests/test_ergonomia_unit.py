@@ -13,8 +13,9 @@ Tests cover:
 - Idempotency-key length validation (TASK-047)
 - Backward compatibility: result["status"] still works (TASK-018)
 """
+import uuid
 import warnings
-import pytest
+import unittest
 
 import mercadopago
 from mercadopago.errors.exceptions import (
@@ -34,10 +35,9 @@ from mercadopago.config.defaults import (
 )
 from mercadopago.pagination.iterator import search_auto_paging_iter
 
-
 # ─── Exception hierarchy ──────────────────────────────────────────────────────
 
-class TestExceptionHierarchy:
+class TestExceptionHierarchy(unittest.TestCase):
 
     def test_all_subtypes_inherit_mercadopago_error(self):
         classes = [
@@ -48,20 +48,20 @@ class TestExceptionHierarchy:
         ]
         for cls in classes:
             err = cls(400, {"message": "test"})
-            assert isinstance(err, MercadoPagoError), f"{cls} not subtype of MercadoPagoError"
+            self.assertIsInstance(err, MercadoPagoError, f"{cls} not subtype of MercadoPagoError")
 
     def test_rate_limit_stores_retry_after(self):
         err = MPRateLimitError(429, {"message": "rate limited"}, retry_after=45)
-        assert err.retry_after == 45
+        self.assertEqual(err.retry_after, 45)
 
     def test_rate_limit_null_retry_after(self):
         err = MPRateLimitError(429, {})
-        assert err.retry_after is None
+        self.assertIsNone(err.retry_after)
 
     def test_connection_error_wraps_cause(self):
         err = MPConnectionError(ConnectionError("timeout"))
-        assert isinstance(err, MercadoPagoError)
-        assert err.status_code == 0
+        self.assertIsInstance(err, MercadoPagoError)
+        self.assertEqual(err.status_code, 0)
 
     def test_catch_by_base_catches_subtype(self):
         err = MPNotFoundError(404, {"message": "not found"})
@@ -70,212 +70,202 @@ class TestExceptionHierarchy:
             raise err
         except MercadoPagoError:
             caught = True
-        assert caught
-
+        self.assertTrue(caught)
 
 # ─── build_error() factory ────────────────────────────────────────────────────
 
-class TestBuildError:
-    @pytest.mark.parametrize("status, expected_cls", [
-        (400, MPBadRequestError),
-        (401, MPAuthenticationError),
-        (402, MPPaymentError),
-        (403, MPForbiddenError),
-        (404, MPNotFoundError),
-        (409, MPIdempotencyError),
-        (422, MPValidationError),
-        (423, MPResourceLockedError),
-        (424, MPDependencyError),
-        (429, MPRateLimitError),
-        (500, MPServerError),
-        (503, MPServerError),
-        (418, MercadoPagoError),  # unknown → base type
-    ])
-    def test_factory_maps_status_to_subtype(self, status, expected_cls):
-        err = build_error(status, {})
-        assert type(err) is expected_cls
+class TestBuildError(unittest.TestCase):
+
+    def test_factory_maps_status_to_subtype(self):
+        cases = [
+            (400, MPBadRequestError),
+            (401, MPAuthenticationError),
+            (402, MPPaymentError),
+            (403, MPForbiddenError),
+            (404, MPNotFoundError),
+            (409, MPIdempotencyError),
+            (422, MPValidationError),
+            (423, MPResourceLockedError),
+            (424, MPDependencyError),
+            (429, MPRateLimitError),
+            (500, MPServerError),
+            (503, MPServerError),
+            (418, MercadoPagoError),
+        ]
+        for status, expected_cls in cases:
+            with self.subTest(status=status):
+                err = build_error(status, {})
+                self.assertEqual(type(err), expected_cls)
 
     def test_factory_429_with_retry_after(self):
         err = build_error(429, {}, retry_after=30)
-        assert isinstance(err, MPRateLimitError)
-        assert err.retry_after == 30
-
+        self.assertIsInstance(err, MPRateLimitError)
+        self.assertEqual(err.retry_after, 30)
 
 # ─── MPResponse ───────────────────────────────────────────────────────────────
 
-class TestMPResponse:
+class TestMPResponse(unittest.TestCase):
 
     def test_is_dict_subclass(self):
         r = MPResponse({"status": 200, "response": {"id": 1}})
-        assert isinstance(r, dict)
-        assert r["status"] == 200
+        self.assertIsInstance(r, dict)
+        self.assertEqual(r["status"], 200)
 
     def test_status_code_property(self):
         r = MPResponse({"status": 404, "response": None})
-        assert r.status_code == 404
+        self.assertEqual(r.status_code, 404)
 
     def test_is_success_true_for_2xx(self):
-        assert MPResponse({"status": 200, "response": {}}).is_success
-        assert MPResponse({"status": 201, "response": {}}).is_success
+        self.assertTrue(MPResponse({"status": 200, "response": {}}).is_success)
+        self.assertTrue(MPResponse({"status": 201, "response": {}}).is_success)
 
     def test_is_success_false_for_4xx(self):
-        assert not MPResponse({"status": 400, "response": {}}).is_success
+        self.assertFalse(MPResponse({"status": 400, "response": {}}).is_success)
 
     def test_raise_for_status_ok_does_nothing(self):
         MPResponse({"status": 200, "response": {}}).raise_for_status()
 
     def test_raise_for_status_4xx_raises_typed(self):
         r = MPResponse({"status": 401, "response": {"message": "unauthorized"}})
-        with pytest.raises(MPAuthenticationError):
+        with self.assertRaises(MPAuthenticationError):
             r.raise_for_status()
 
     def test_raise_for_status_5xx_raises_server_error(self):
         r = MPResponse({"status": 500, "response": {}})
-        with pytest.raises(MPServerError):
+        with self.assertRaises(MPServerError):
             r.raise_for_status()
 
     def test_backward_compat_dict_access(self):
         raw = {"status": 200, "response": {"id": 42, "status": "approved"}}
         r = MPResponse(raw)
-        assert r["status"] == 200
-        assert r["response"]["id"] == 42
-
+        self.assertEqual(r["status"], 200)
+        self.assertEqual(r["response"]["id"], 42)
 
 # ─── DEFAULT constants ────────────────────────────────────────────────────────
 
-class TestDefaultConstants:
+class TestDefaultConstants(unittest.TestCase):
 
     def test_default_timeout(self):
-        assert DEFAULT_TIMEOUT_SECONDS == 60.0
+        self.assertEqual(DEFAULT_TIMEOUT_SECONDS, 60.0)
 
     def test_default_max_retries(self):
-        assert DEFAULT_MAX_RETRIES == 3
+        self.assertEqual(DEFAULT_MAX_RETRIES, 3)
 
     def test_default_retry_on_includes_429(self):
-        assert 429 in DEFAULT_RETRY_ON
+        self.assertIn(429, DEFAULT_RETRY_ON)
 
     def test_default_retry_on_includes_5xx(self):
-        assert 500 in DEFAULT_RETRY_ON
-        assert 502 in DEFAULT_RETRY_ON
-        assert 503 in DEFAULT_RETRY_ON
-        assert 504 in DEFAULT_RETRY_ON
-
+        self.assertIn(500, DEFAULT_RETRY_ON)
+        self.assertIn(502, DEFAULT_RETRY_ON)
+        self.assertIn(503, DEFAULT_RETRY_ON)
+        self.assertIn(504, DEFAULT_RETRY_ON)
 
 # ─── RequestOptions retry params ─────────────────────────────────────────────
 
-class TestRequestOptionsRetry:
+class TestRequestOptionsRetry(unittest.TestCase):
 
     def test_defaults_preserved(self):
         opts = RequestOptions(access_token="TEST-token")
-        assert opts.connection_timeout == DEFAULT_TIMEOUT_SECONDS
-        assert opts.max_retries == DEFAULT_MAX_RETRIES
+        self.assertEqual(opts.connection_timeout, DEFAULT_TIMEOUT_SECONDS)
+        self.assertEqual(opts.max_retries, DEFAULT_MAX_RETRIES)
 
     def test_set_valid_retry_on(self):
         opts = RequestOptions(access_token="t")
         opts.retry_on = [429, 503]
-        assert opts.retry_on == [429, 503]
+        self.assertEqual(opts.retry_on, [429, 503])
 
     def test_set_invalid_retry_on_raises(self):
         opts = RequestOptions(access_token="t")
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             opts.retry_on = [999]
 
     def test_set_jitter(self):
         opts = RequestOptions(access_token="t")
         opts.jitter = True
-        assert opts.jitter is True
+        self.assertTrue(opts.jitter)
 
     def test_on_retry_callable(self):
         called = []
         opts = RequestOptions(access_token="t")
         opts.on_retry = lambda a, e: called.append(a)
-        assert opts.on_retry is not None
+        self.assertIsNotNone(opts.on_retry)
 
     def test_on_retry_non_callable_raises(self):
         opts = RequestOptions(access_token="t")
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             opts.on_retry = "not_callable"
-
 
 # ─── Idempotency key validation (TASK-047) ────────────────────────────────────
 
-class TestIdempotencyKeyValidation:
+class TestIdempotencyKeyValidation(unittest.TestCase):
 
     def test_valid_uuid_36_chars_accepted(self):
         opts = RequestOptions(access_token="t")
-        import uuid
         opts.custom_headers = {"x-idempotency-key": str(uuid.uuid4())}
 
     def test_key_too_long_raises(self):
         opts = RequestOptions(access_token="t")
-        with pytest.raises(ValueError, match="x-idempotency-key"):
+        with self.assertRaisesRegex(ValueError, "x-idempotency-key"):
             opts.custom_headers = {"x-idempotency-key": "a" * 65}
 
     def test_empty_key_raises(self):
         opts = RequestOptions(access_token="t")
-        with pytest.raises(ValueError, match="x-idempotency-key"):
+        with self.assertRaisesRegex(ValueError, "x-idempotency-key"):
             opts.custom_headers = {"x-idempotency-key": ""}
 
     def test_key_64_chars_accepted(self):
         opts = RequestOptions(access_token="t")
         opts.custom_headers = {"x-idempotency-key": "a" * 64}
 
-
 # ─── Status constants (TASK-047) ─────────────────────────────────────────────
 
-class TestStatusConstants:
+class TestStatusConstants(unittest.TestCase):
 
     def test_payment_status_approved(self):
-        assert PaymentStatus.APPROVED == "approved"
+        self.assertEqual(PaymentStatus.APPROVED, "approved")
 
     def test_order_status_processed(self):
-        assert OrderStatus.PROCESSED == "processed"
+        self.assertEqual(OrderStatus.PROCESSED, "processed")
 
     def test_preapproval_status_authorized(self):
-        assert PreapprovalStatus.AUTHORIZED == "authorized"
+        self.assertEqual(PreapprovalStatus.AUTHORIZED, "authorized")
 
     def test_merchant_order_status_closed(self):
-        assert MerchantOrderStatus.CLOSED == "closed"
+        self.assertEqual(MerchantOrderStatus.CLOSED, "closed")
 
     def test_refund_status_in_process(self):
-        assert RefundStatus.IN_PROCESS == "in_process"
+        self.assertEqual(RefundStatus.IN_PROCESS, "in_process")
 
     def test_accessible_from_module_root(self):
-        assert mercadopago.PaymentStatus.APPROVED == "approved"
-        assert mercadopago.OrderStatus.CANCELED == "canceled"
-
+        self.assertEqual(mercadopago.PaymentStatus.APPROVED, "approved")
+        self.assertEqual(mercadopago.OrderStatus.CANCELED, "canceled")
 
 # ─── Error string constants (TASK-046) ───────────────────────────────────────
 
-class TestErrorConstants:
+class TestErrorConstants(unittest.TestCase):
 
     def test_order_errors_cannot_refund(self):
-        assert MPOrderErrors.CANNOT_REFUND == "cannot_refund_order"
+        self.assertEqual(MPOrderErrors.CANNOT_REFUND, "cannot_refund_order")
 
     def test_payment_errors_failed(self):
-        assert MPPaymentErrors.FAILED == "failed"
+        self.assertEqual(MPPaymentErrors.FAILED, "failed")
 
     def test_constants_accessible_from_module_root(self):
-        assert mercadopago.MPOrderErrors.CANNOT_CANCEL == "cannot_cancel_order"
-
+        self.assertEqual(mercadopago.MPOrderErrors.CANNOT_CANCEL, "cannot_cancel_order")
 
 # ─── DeprecationWarning (TASK-047) ───────────────────────────────────────────
 
-class TestDeprecationWarning:
+class TestDeprecationWarning(unittest.TestCase):
 
     def test_payment_create_no_warning_without_notification_url(self):
-        """Ensure no warning is emitted when notification_url is absent."""
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            # We cannot call create() without credentials, so test at module level
-            # by calling the warning logic directly
             payment_object = {"transaction_amount": 100}
             if "notification_url" in payment_object:
                 warnings.warn("notification_url is deprecated", DeprecationWarning, stacklevel=2)
-            assert not any(issubclass(x.category, DeprecationWarning) for x in w)
+            self.assertFalse(any(issubclass(x.category, DeprecationWarning) for x in w))
 
     def test_notification_url_triggers_deprecation_warning(self):
-        """Verify DeprecationWarning fires when notification_url is present."""
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             payment_object = {"notification_url": "https://example.com/hook", "amount": 100}
@@ -286,13 +276,12 @@ class TestDeprecationWarning:
                     stacklevel=2,
                 )
             dep_warnings = [x for x in w if issubclass(x.category, DeprecationWarning)]
-            assert len(dep_warnings) == 1
-            assert "notification_url" in str(dep_warnings[0].message)
-
+            self.assertEqual(len(dep_warnings), 1)
+            self.assertIn("notification_url", str(dep_warnings[0].message))
 
 # ─── Auto-pagination iterator (TASK-016) ─────────────────────────────────────
 
-class TestAutoPaginationIterator:
+class TestAutoPaginationIterator(unittest.TestCase):
 
     def _make_page(self, items, total, offset):
         return MPResponse({
@@ -312,8 +301,8 @@ class TestAutoPaginationIterator:
             return page
 
         items = list(search_auto_paging_iter(search_fn))
-        assert items == [{"id": 1}, {"id": 2}]
-        assert call_count[0] == 1
+        self.assertEqual(items, [{"id": 1}, {"id": 2}])
+        self.assertEqual(call_count[0], 1)
 
     def test_multi_page_fetches_until_exhausted(self):
         pages = [
@@ -329,12 +318,12 @@ class TestAutoPaginationIterator:
             return pages[idx]
 
         items = list(search_auto_paging_iter(search_fn, limit=1))
-        assert [i["id"] for i in items] == [1, 2]
+        self.assertEqual([i["id"] for i in items], [1, 2])
 
     def test_empty_results_stops_immediately(self):
         empty = self._make_page([], total=0, offset=0)
         items = list(search_auto_paging_iter(lambda f, o: empty))
-        assert items == []
+        self.assertEqual(items, [])
 
     def test_offset_advances_per_page(self):
         offsets_seen = []
@@ -346,5 +335,8 @@ class TestAutoPaginationIterator:
             return self._make_page([{"id": filters["offset"]}], total=2, offset=filters["offset"])
 
         list(search_auto_paging_iter(search_fn, limit=1))
-        assert offsets_seen[0] == 0
-        assert offsets_seen[1] == 1
+        self.assertEqual(offsets_seen[0], 0)
+        self.assertEqual(offsets_seen[1], 1)
+
+if __name__ == "__main__":
+    unittest.main()
