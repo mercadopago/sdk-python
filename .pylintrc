@@ -1,11 +1,9 @@
 [MESSAGES CONTROL]
 disable=
     C0116,
+    C0301,
     C0325,
     C0415,
     R0801,
     R0903,
     R0917
-
-[FORMAT]
-max-line-length=110
