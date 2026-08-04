@@ -30,7 +30,7 @@ from mercadopago.resources.status import (
 )
 from mercadopago.config.request_options import RequestOptions
 from mercadopago.config.defaults import (
-    DEFAULT_TIMEOUT_SECONDS, DEFAULT_MAX_RETRIES, DEFAULT_RETRY_ON, DEFAULT_MAX_DELAY,
+    DEFAULT_TIMEOUT_SECONDS, DEFAULT_MAX_RETRIES, DEFAULT_RETRY_ON,
 )
 from mercadopago.pagination.iterator import search_auto_paging_iter
 
