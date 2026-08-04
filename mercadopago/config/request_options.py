@@ -9,7 +9,6 @@ from .config import Config
 from .defaults import (
     DEFAULT_TIMEOUT_SECONDS,
     DEFAULT_MAX_RETRIES,
-    DEFAULT_RETRY_ON,
     DEFAULT_MAX_DELAY,
     DEFAULT_INITIAL_DELAY,
 )
