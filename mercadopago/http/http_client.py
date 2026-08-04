@@ -10,7 +10,6 @@ from urllib3.util import Retry
 
 from mercadopago.config.defaults import DEFAULT_RETRY_ON
 
-
 class HttpClient:
     """Default HTTP transport for all MercadoPago REST calls.
 
@@ -26,7 +25,7 @@ class HttpClient:
     JSON body (``None`` for 204 No Content or unparseable bodies).
     """
 
-    def request(  # pylint: disable=too-many-positional-arguments
+    def request( # pylint: disable=too-many-positional-arguments
         self,
         method,
         url,
@@ -71,17 +70,17 @@ class HttpClient:
             if api_result.status_code != 204 and api_result.content:
                 try:
                     response["response"] = api_result.json()
-                except ValueError:
+                except ValueError as exc:
                     raise MPServerError(
                         api_result.status_code,
                         {"message": "Invalid JSON in response body",
                          "error": "invalid_response"},
-                    )
+                    ) from exc
 
-            return response
+        return response
 
-    def get(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-arguments
-            retry_on=None, backoff_factor=None):  # pylint: disable=too-many-positional-arguments
+    def get(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+            retry_on=None, backoff_factor=None):
         """Sends a GET request to the MercadoPago API."""
         return self.request(
             "GET", url=url, headers=headers, params=params,
@@ -89,8 +88,8 @@ class HttpClient:
             backoff_factor=backoff_factor,
         )
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-arguments
-             retry_on=None, backoff_factor=None):  # pylint: disable=too-many-positional-arguments
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+             retry_on=None, backoff_factor=None):
         """Sends a POST request to the MercadoPago API."""
         return self.request(
             "POST", url=url, headers=headers, data=data, params=params,
@@ -98,8 +97,8 @@ class HttpClient:
             backoff_factor=backoff_factor,
         )
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-arguments
-            retry_on=None, backoff_factor=None):  # pylint: disable=too-many-positional-arguments
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+            retry_on=None, backoff_factor=None):
         """Sends a PUT request to the MercadoPago API."""
         return self.request(
             "PUT", url=url, headers=headers, data=data, params=params,
@@ -107,8 +106,8 @@ class HttpClient:
             backoff_factor=backoff_factor,
         )
 
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-arguments
-               retry_on=None, backoff_factor=None):  # pylint: disable=too-many-positional-arguments
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+               retry_on=None, backoff_factor=None):
         """Sends a DELETE request to the MercadoPago API."""
         return self.request(
             "DELETE", url=url, headers=headers, params=params,
