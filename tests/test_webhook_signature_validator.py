@@ -97,7 +97,7 @@ class TestWebhookSignatureValidator(unittest.TestCase):
 
     # --- case 8 ---
     def test_timestamp_outside_tolerance_raises(self):
-        stale_ts = str(int(time.time() * 1000) - 30 * 60 * 1000)
+        stale_ts = str(int(time.time()) - 30 * 60)  # 30 minutes ago, in seconds
         h = compute_hash(DATA_ID_LOWER, REQUEST_ID, stale_ts, SECRET)
         with self.assertRaises(InvalidWebhookSignatureError) as ctx:
             WebhookSignatureValidator.validate(
@@ -107,11 +107,20 @@ class TestWebhookSignatureValidator(unittest.TestCase):
         self.assertEqual(ctx.exception.reason, SignatureFailureReason.TIMESTAMP_OUT_OF_TOLERANCE)
 
     def test_timestamp_within_tolerance_passes(self):
-        current_ts = str(int(time.time() * 1000))
+        current_ts = str(int(time.time()))  # current time in seconds
         h = compute_hash(DATA_ID_LOWER, REQUEST_ID, current_ts, SECRET)
         WebhookSignatureValidator.validate(
             build_header(h, current_ts), REQUEST_ID, DATA_ID_LOWER, SECRET,
             tolerance_seconds=300,
+        )
+
+    def test_timestamp_seconds_within_tolerance_passes(self):
+        ts = int(time.time())  # Unix timestamp in seconds
+        ts_str = str(ts)
+        h = compute_hash(DATA_ID_LOWER, REQUEST_ID, ts_str, SECRET)
+        WebhookSignatureValidator.validate(
+            build_header(h, ts_str), REQUEST_ID, DATA_ID_LOWER, SECRET,
+            tolerance_seconds=3600,
         )
 
     # --- case 9 ---

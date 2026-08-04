@@ -178,7 +178,7 @@ class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
             )
 
         if tolerance_seconds is not None:
-            drift_ms = abs(now() - int(ts))
+            drift_ms = abs(now() - int(ts) * 1000)  # ts is in seconds, now() is in ms
             if drift_ms > tolerance_seconds * 1000:
                 raise InvalidWebhookSignatureError(
                     SignatureFailureReason.TIMESTAMP_OUT_OF_TOLERANCE, x_request_id, ts
