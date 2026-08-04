@@ -4,13 +4,12 @@ Creates a lazy generator that fetches pages of results on demand so
 callers can iterate over every matching item without managing offsets.
 
 Example:
-    ::
+::
 
-        for payment in sdk.payment().search_auto_paging_iter({"status": "approved"}):
-            process(payment)
+    for payment in sdk.payment().search_auto_paging_iter({"status": "approved"}):
+        process(payment)
 """
 from .page import Paging
-
 
 def search_auto_paging_iter(search_fn, filters=None, request_options=None, limit=100):
     """Lazy generator that auto-fetches all pages of a search result.
@@ -41,8 +40,8 @@ def search_auto_paging_iter(search_fn, filters=None, request_options=None, limit
         body = result.get("response") or {}
 
         # Support different response key conventions:
-        # - "results"  → payments, customers, preapprovals, preferences, etc.
-        # - "data"     → Orders v2 API
+        # - "results" → payments, customers, preapprovals, preferences, etc.
+        # - "data" → Orders v2 API
         # - "elements" → some Order patterns (Pattern B)
         items = (body.get("results")
                  or body.get("data")
@@ -53,8 +52,7 @@ def search_auto_paging_iter(search_fn, filters=None, request_options=None, limit
         if not items:
             return
 
-        for item in items:
-            yield item
+        yield from items
 
         offset += len(items)
         if paging.total and offset >= paging.total:
