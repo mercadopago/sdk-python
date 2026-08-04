@@ -1,6 +1,5 @@
 [FORMAT]
-max-line-length = 100
-
+max-line-length = 110
 [DESIGN]
 max-args = 7
 max-positional-arguments = 7
