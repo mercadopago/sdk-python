@@ -39,15 +39,23 @@ def search_auto_paging_iter(search_fn, filters=None, request_options=None, limit
         result = search_fn(filters, request_options)
 
         body = result.get("response") or {}
-        results = body.get("results", [])
+
+        # Support different response key conventions:
+        # - "results"  → payments, customers, preapprovals, preferences, etc.
+        # - "data"     → Orders v2 API
+        # - "elements" → some Order patterns (Pattern B)
+        items = (body.get("results")
+                 or body.get("data")
+                 or body.get("elements")
+                 or [])
         paging = Paging.from_dict(body.get("paging"))
 
-        if not results:
+        if not items:
             return
 
-        for item in results:
+        for item in items:
             yield item
 
-        offset += len(results)
-        if offset >= paging.total:
+        offset += len(items)
+        if paging.total and offset >= paging.total:
             return
