@@ -4,7 +4,6 @@ All exceptions inherit from :class:`MercadoPagoError`, preserving
 backward-compatible ``catch`` patterns while enabling specific handling
 per HTTP status code.
 """
-import secrets
 
 
 class MercadoPagoError(Exception):
