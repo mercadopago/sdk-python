@@ -1,5 +1,5 @@
 """
-    Module: test_order_checkout_pro
+Module: test_order_checkout_pro
 """
 import json
 import os
@@ -19,7 +19,6 @@ from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProDict,
 )
 
-
 class FakeHttpClient(HttpClient):
     """Captures requests without sending them to the API."""
 
@@ -27,7 +26,8 @@ class FakeHttpClient(HttpClient):
         self.post_calls = []
         self.get_calls = []
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):
+    def post(self, url, headers, data=None, params=None, timeout=None,  # pylint: disable=too-many-positional-arguments
+             maxretries=None, retry_on=None, backoff_factor=None):
         self.post_calls.append({
             "url": url,
             "headers": headers,
@@ -47,7 +47,8 @@ class FakeHttpClient(HttpClient):
             },
         }
 
-    def get(self, url, headers, params=None, timeout=None, maxretries=None):
+    def get(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+            retry_on=None, backoff_factor=None):
         self.get_calls.append({
             "url": url,
             "headers": headers,
@@ -56,7 +57,6 @@ class FakeHttpClient(HttpClient):
             "maxretries": maxretries,
         })
         return {"status": 200, "response": {"id": "ORD123"}}
-
 
 class TestOrderCheckoutPro(unittest.TestCase):
     """
@@ -318,7 +318,6 @@ class TestOrderCheckoutPro(unittest.TestCase):
         self.assertEqual(order_created["response"]["processing_mode"], "manual")
         self.assertIn("id", order_created["response"])
         self.assertIn("client_token", order_created["response"])
-
 
 if __name__ == "__main__":
     unittest.main()
