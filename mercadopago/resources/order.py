@@ -10,6 +10,7 @@ transaction management.
 from mercadopago.core import MPBase
 from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 
+
 class Order(MPBase):
     """Manages orders and their associated transactions.
 

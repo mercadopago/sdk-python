@@ -1,6 +1,9 @@
 """Unit tests for the OAuth resource using a mock HTTP client."""
 import unittest
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import (
+    parse_qs,
+    urlparse,
+)
 
 from tests.base_client_test import BaseClientTest
 

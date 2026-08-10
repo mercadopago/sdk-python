@@ -11,6 +11,7 @@ Example:
 """
 from .page import Paging
 
+
 def search_auto_paging_iter(search_fn, filters=None, request_options=None, limit=100):
     """Lazy generator that auto-fetches all pages of a search result.
 

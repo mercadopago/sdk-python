@@ -8,11 +8,11 @@ The validator is stateless, performs no outbound HTTP calls, and does not
 depend on any SDK configuration object; the integrator passes the secret
 signature explicitly on every call.
 """
-import hmac
+from enum import Enum
 import hashlib
+import hmac
 import re
 import time
-from enum import Enum
 
 
 class SignatureFailureReason(Enum):

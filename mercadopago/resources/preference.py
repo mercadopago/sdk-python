@@ -6,6 +6,7 @@ and search payment preferences used by Checkout Pro.
 `API reference <https://www.mercadopago.com/developers/en/reference/online-payments/checkout-pro/preferences/create-preference/post>`_
 """
 import warnings
+
 from mercadopago.core import MPBase
 from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 

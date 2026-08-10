@@ -1,5 +1,7 @@
 import os
+
 from mercadopago import SDK
+
 
 def main():
     # Define the authentication token

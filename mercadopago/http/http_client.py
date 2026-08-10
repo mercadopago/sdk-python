@@ -10,6 +10,7 @@ from urllib3.util import Retry
 
 from mercadopago.config.defaults import DEFAULT_RETRY_ON
 
+
 class HttpClient:
     """Default HTTP transport for all MercadoPago REST calls.
 

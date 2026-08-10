@@ -3,6 +3,7 @@ import time
 
 from mercadopago import SDK
 
+
 def main():
     # Define the authentication token
     access_token = "<YOUR_ACCESS_TOKEN>"

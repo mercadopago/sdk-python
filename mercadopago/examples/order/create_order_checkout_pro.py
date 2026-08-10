@@ -7,12 +7,12 @@ order response; redirect the buyer to that URL to continue the payment flow.
 from mercadopago import SDK
 from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProConfig,
+    OrderCheckoutProDict,
     OrderCheckoutProInstallments,
     OrderCheckoutProInterestFree,
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
-    OrderCheckoutProDict,
 )
 
 

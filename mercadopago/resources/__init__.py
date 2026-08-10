@@ -19,12 +19,12 @@ from mercadopago.resources.oauth import OAuth
 from mercadopago.resources.order import Order
 from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProConfig,
+    OrderCheckoutProDict,
     OrderCheckoutProInstallments,
     OrderCheckoutProInterestFree,
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
-    OrderCheckoutProDict,
 )
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods

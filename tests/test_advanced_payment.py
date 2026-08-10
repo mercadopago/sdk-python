@@ -1,6 +1,6 @@
 """Unit tests for the AdvancedPayment resource using a mock HTTP client."""
-import unittest
 from datetime import datetime
+import unittest
 
 from tests.base_client_test import BaseClientTest
 

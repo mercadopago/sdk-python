@@ -13,27 +13,47 @@ Tests cover:
 - Idempotency-key length validation (TASK-047)
 - Backward compatibility: result["status"] still works (TASK-018)
 """
+import unittest
 import uuid
 import warnings
-import unittest
 
 import mercadopago
-from mercadopago.errors.exceptions import (
-    MercadoPagoError, MPBadRequestError, MPAuthenticationError, MPPaymentError,
-    MPForbiddenError, MPNotFoundError, MPIdempotencyError, MPValidationError,
-    MPResourceLockedError, MPDependencyError, MPRateLimitError, MPServerError,
-    MPConnectionError, build_error,
-)
-from mercadopago.errors.response import MPResponse
-from mercadopago.errors.constants import MPOrderErrors, MPPaymentErrors
-from mercadopago.resources.status import (
-    PaymentStatus, OrderStatus, PreapprovalStatus, MerchantOrderStatus, RefundStatus,
+from mercadopago.config.defaults import (
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_RETRY_ON,
+    DEFAULT_TIMEOUT_SECONDS,
 )
 from mercadopago.config.request_options import RequestOptions
-from mercadopago.config.defaults import (
-    DEFAULT_TIMEOUT_SECONDS, DEFAULT_MAX_RETRIES, DEFAULT_RETRY_ON,
+from mercadopago.errors.constants import (
+    MPOrderErrors,
+    MPPaymentErrors,
 )
+from mercadopago.errors.exceptions import (
+    MercadoPagoError,
+    MPAuthenticationError,
+    MPBadRequestError,
+    MPConnectionError,
+    MPDependencyError,
+    MPForbiddenError,
+    MPIdempotencyError,
+    MPNotFoundError,
+    MPPaymentError,
+    MPRateLimitError,
+    MPResourceLockedError,
+    MPServerError,
+    MPValidationError,
+    build_error,
+)
+from mercadopago.errors.response import MPResponse
 from mercadopago.pagination.iterator import search_auto_paging_iter
+from mercadopago.resources.status import (
+    MerchantOrderStatus,
+    OrderStatus,
+    PaymentStatus,
+    PreapprovalStatus,
+    RefundStatus,
+)
+
 
 # ─── Exception hierarchy ──────────────────────────────────────────────────────
 
