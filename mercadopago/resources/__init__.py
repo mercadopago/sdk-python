@@ -29,8 +29,6 @@ from mercadopago.resources.order_checkout_pro import (
 )
 from mercadopago.resources.order_create import (
     OrderCreateRequest,
-    OrderIdentification,
-    OrderPayerRequest,
     order_request_to_dict,
 )
 from mercadopago.resources.order_integration_data import (
@@ -38,9 +36,11 @@ from mercadopago.resources.order_integration_data import (
     OrderSponsor,
 )
 from mercadopago.resources.order_item import OrderItemRequest
-from mercadopago.resources.order_payer import (
-    OrderPayerAddress,
-    OrderPayerPhone,
+from mercadopago.resources.payer import (
+    PayerAddress,
+    PayerIdentification,
+    PayerPhone,
+    PayerRequest,
 )
 from mercadopago.resources.order_shipment import (
     OrderShipmentAddress,
@@ -92,13 +92,13 @@ __all__ = (
     'OrderCheckoutProTrack',
     'OrderCheckoutProDict',
     'OrderCreateRequest',
-    'OrderIdentification',
     'OrderIntegrationData',
     'OrderInvoicePeriod',
     'OrderItemRequest',
-    'OrderPayerAddress',
-    'OrderPayerPhone',
-    'OrderPayerRequest',
+    'PayerAddress',
+    'PayerIdentification',
+    'PayerPhone',
+    'PayerRequest',
     'OrderShipmentAddress',
     'OrderShipmentFreeMethod',
     'OrderShipmentRequest',

@@ -23,12 +23,14 @@ from typing import (
 
 from mercadopago.resources.order_item import OrderItemRequest
 from mercadopago.resources.order_integration_data import OrderIntegrationData
-from mercadopago.resources.order_payer import (
-    OrderPayerAddress,
-    OrderPayerPhone,
-)
 from mercadopago.resources.order_shipment import OrderShipmentRequest
 from mercadopago.resources.order_transaction import OrderTransactionRequest
+from mercadopago.resources.payer import (
+    PayerAddress,
+    PayerIdentification,
+    PayerPhone,
+    PayerRequest,
+)
 
 
 def _filter_none(value):
@@ -61,46 +63,6 @@ def order_request_to_dict(request):
     if not is_dataclass(request) or isinstance(request, type):
         raise TypeError("request must be a dataclass instance")
     return _filter_none(asdict(request))
-
-
-@dataclass
-class OrderIdentification:
-    """Payer identification document for an order request.
-
-    Attributes:
-        type: Identification document type (e.g. ``"CPF"``). Type: str.
-        number: Identification document number. Type: str.
-    """
-
-    type: Optional[str] = None
-    number: Optional[str] = None
-
-
-# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API payer contract
-@dataclass
-class OrderPayerRequest:
-    """Payer information for an order request.
-
-    Attributes:
-        email: Payer email address. Type: str.
-        first_name: Payer first name. Type: str.
-        last_name: Payer last name. Type: str.
-        customer_id: Stored customer identifier. Type: str.
-        entity_type: Payer entity type (``"individual"`` | ``"association"``).
-            Type: str.
-        identification: Payer identification document.
-        phone: Payer phone number.
-        address: Payer address.
-    """
-
-    email: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    customer_id: Optional[str] = None
-    entity_type: Optional[str] = None
-    identification: Optional[OrderIdentification] = None
-    phone: Optional[OrderPayerPhone] = None
-    address: Optional[OrderPayerAddress] = None
 
 
 # pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API root request contract
@@ -147,7 +109,7 @@ class OrderCreateRequest:
     expiration_time: Optional[str] = None
     checkout_available_at: Optional[str] = None
     transactions: Optional[Union[OrderTransactionRequest, dict]] = None
-    payer: Optional[OrderPayerRequest] = None
+    payer: Optional[PayerRequest] = None
     items: Optional[List[OrderItemRequest]] = field(default=None)
     config: Optional[dict] = None
     shipment: Optional[OrderShipmentRequest] = None

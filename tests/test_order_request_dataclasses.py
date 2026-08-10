@@ -15,8 +15,6 @@ from mercadopago.http import HttpClient
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_create import (
     OrderCreateRequest,
-    OrderIdentification,
-    OrderPayerRequest,
     order_request_to_dict,
 )
 from mercadopago.resources.order_integration_data import (
@@ -24,9 +22,11 @@ from mercadopago.resources.order_integration_data import (
     OrderSponsor,
 )
 from mercadopago.resources.order_item import OrderItemRequest
-from mercadopago.resources.order_payer import (
-    OrderPayerAddress,
-    OrderPayerPhone,
+from mercadopago.resources.payer import (
+    PayerAddress,
+    PayerIdentification,
+    PayerPhone,
+    PayerRequest,
 )
 from mercadopago.resources.order_shipment import (
     OrderShipmentAddress,
@@ -134,15 +134,15 @@ class TestOrderShipmentRequest(unittest.TestCase):
 
 class TestOrderPayer(unittest.TestCase):
     def test_payer_phone_and_address(self):
-        payer = OrderPayerRequest(
+        payer = PayerRequest(
             email="buyer@example.com",
             first_name="Jane",
             last_name="Doe",
             customer_id="CUST-1",
             entity_type="individual",
-            identification=OrderIdentification(type="CPF", number="12345678909"),
-            phone=OrderPayerPhone(area_code="11", number="999999999"),
-            address=OrderPayerAddress(
+            identification=PayerIdentification(type="CPF", number="12345678909"),
+            phone=PayerPhone(area_code="11", number="999999999"),
+            address=PayerAddress(
                 zip_code="0000",
                 street_name="Main",
                 street_number="123",
@@ -159,7 +159,7 @@ class TestOrderPayer(unittest.TestCase):
         self.assertEqual(as_dict["identification"], {"type": "CPF", "number": "12345678909"})
 
     def test_payer_email_only_filters_none(self):
-        payer = OrderPayerRequest(email="buyer@example.com")
+        payer = PayerRequest(email="buyer@example.com")
         self.assertEqual(order_request_to_dict(payer), {"email": "buyer@example.com"})
 
 
@@ -245,7 +245,7 @@ class TestOrderCreateDualPath(unittest.TestCase):
             type="online",
             total_amount="200.00",
             external_reference="ext_ref_1234",
-            payer=OrderPayerRequest(email="buyer@example.com"),
+            payer=PayerRequest(email="buyer@example.com"),
             items=[OrderItemRequest(title="A book", unit_price="200.00", quantity=1)],
         )
         sdk.order().create(typed)
@@ -343,7 +343,7 @@ class TestAutomaticPaymentsTypedFlow(unittest.TestCase):
         typed = OrderCreateRequest(
             type="online",
             total_amount="100.00",
-            payer=OrderPayerRequest(email="customer@example.com", customer_id="CUSTOMER_ID"),
+            payer=PayerRequest(email="customer@example.com", customer_id="CUSTOMER_ID"),
             transactions={
                 "payments": [
                     {
@@ -375,7 +375,7 @@ class TestFullyTypedAPChain(unittest.TestCase):
             type="online",
             total_amount="100.00",
             external_reference="ap-typed-chain-001",
-            payer=OrderPayerRequest(
+            payer=PayerRequest(
                 email="customer@example.com",
                 customer_id="CUSTOMER_ID",
             ),
