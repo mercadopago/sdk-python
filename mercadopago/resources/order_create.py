@@ -25,12 +25,7 @@ from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.order_integration_data import OrderIntegrationData
 from mercadopago.resources.shipment import ShipmentRequest
 from mercadopago.resources.order_transaction import OrderTransactionRequest
-from mercadopago.resources.payer import (
-    PayerAddress,
-    PayerIdentification,
-    PayerPhone,
-    PayerRequest,
-)
+from mercadopago.resources.payer import PayerRequest
 
 
 def _filter_none(value):
