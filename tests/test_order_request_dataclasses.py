@@ -54,7 +54,7 @@ class _CapturingHttpClient(HttpClient):
         self.last_url = None
         self.last_data = None
 
-    def post(self, url, headers,  # noqa: D401
+    def post(self, url, headers,  # noqa: D401  # pylint: disable=too-many-arguments,too-many-positional-arguments
              data=None, params=None, timeout=None, maxretries=None,
              retry_on=None, backoff_factor=None):
         self.last_url = url
