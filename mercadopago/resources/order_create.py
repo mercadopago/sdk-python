@@ -21,9 +21,9 @@ from typing import (
     Union,
 )
 
-from mercadopago.resources.order_item import OrderItemRequest
+from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.order_integration_data import OrderIntegrationData
-from mercadopago.resources.order_shipment import OrderShipmentRequest
+from mercadopago.resources.shipment import ShipmentRequest
 from mercadopago.resources.order_transaction import OrderTransactionRequest
 from mercadopago.resources.payer import (
     PayerAddress,
@@ -110,8 +110,8 @@ class OrderCreateRequest:
     checkout_available_at: Optional[str] = None
     transactions: Optional[Union[OrderTransactionRequest, dict]] = None
     payer: Optional[PayerRequest] = None
-    items: Optional[List[OrderItemRequest]] = field(default=None)
+    items: Optional[List[ItemRequest]] = field(default=None)
     config: Optional[dict] = None
-    shipment: Optional[OrderShipmentRequest] = None
+    shipment: Optional[ShipmentRequest] = None
     integration_data: Optional[OrderIntegrationData] = None
     additional_info: Optional[dict] = None

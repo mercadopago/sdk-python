@@ -35,17 +35,17 @@ from mercadopago.resources.order_integration_data import (
     OrderIntegrationData,
     OrderSponsor,
 )
-from mercadopago.resources.order_item import OrderItemRequest
+from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.payer import (
     PayerAddress,
     PayerIdentification,
     PayerPhone,
     PayerRequest,
 )
-from mercadopago.resources.order_shipment import (
-    OrderShipmentAddress,
-    OrderShipmentFreeMethod,
-    OrderShipmentRequest,
+from mercadopago.resources.shipment import (
+    ShipmentAddress,
+    ShipmentFreeMethod,
+    ShipmentRequest,
 )
 from mercadopago.resources.order_stored_credential import OrderStoredCredential
 from mercadopago.resources.order_subscription_data import (
@@ -94,14 +94,14 @@ __all__ = (
     'OrderCreateRequest',
     'OrderIntegrationData',
     'OrderInvoicePeriod',
-    'OrderItemRequest',
+    'ItemRequest',
     'PayerAddress',
     'PayerIdentification',
     'PayerPhone',
     'PayerRequest',
-    'OrderShipmentAddress',
-    'OrderShipmentFreeMethod',
-    'OrderShipmentRequest',
+    'ShipmentAddress',
+    'ShipmentFreeMethod',
+    'ShipmentRequest',
     'OrderSponsor',
     'OrderStoredCredential',
     'OrderSubscriptionData',

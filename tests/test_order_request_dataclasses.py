@@ -21,17 +21,17 @@ from mercadopago.resources.order_integration_data import (
     OrderIntegrationData,
     OrderSponsor,
 )
-from mercadopago.resources.order_item import OrderItemRequest
+from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.payer import (
     PayerAddress,
     PayerIdentification,
     PayerPhone,
     PayerRequest,
 )
-from mercadopago.resources.order_shipment import (
-    OrderShipmentAddress,
-    OrderShipmentFreeMethod,
-    OrderShipmentRequest,
+from mercadopago.resources.shipment import (
+    ShipmentAddress,
+    ShipmentFreeMethod,
+    ShipmentRequest,
 )
 from mercadopago.resources.order_stored_credential import OrderStoredCredential
 from mercadopago.resources.order_subscription_data import (
@@ -68,9 +68,9 @@ def _make_sdk():
     return sdk, http
 
 
-class TestOrderItemRequest(unittest.TestCase):
+class TestItemRequest(unittest.TestCase):
     def test_snake_case_keys(self):
-        item = OrderItemRequest(
+        item = ItemRequest(
             title="A book",
             type="physical",
             warranty=True,
@@ -95,20 +95,20 @@ class TestOrderItemRequest(unittest.TestCase):
         self.assertEqual(as_dict["quantity"], 2)
 
     def test_none_fields_filtered(self):
-        item = OrderItemRequest(title="Only title", quantity=1)
+        item = ItemRequest(title="Only title", quantity=1)
         as_dict = order_request_to_dict(item)
         self.assertEqual(as_dict, {"title": "Only title", "quantity": 1})
 
 
-class TestOrderShipmentRequest(unittest.TestCase):
+class TestShipmentRequest(unittest.TestCase):
     def test_full_shipment_snake_case(self):
-        shipment = OrderShipmentRequest(
+        shipment = ShipmentRequest(
             mode="me2",
             local_pickup=False,
             cost="10.00",
             free_shipping=True,
-            free_methods=[OrderShipmentFreeMethod(id=1), OrderShipmentFreeMethod(id=2)],
-            address=OrderShipmentAddress(
+            free_methods=[ShipmentFreeMethod(id=1), ShipmentFreeMethod(id=2)],
+            address=ShipmentAddress(
                 street_name="Main",
                 street_number="123",
                 zip_code="0000",
@@ -127,7 +127,7 @@ class TestOrderShipmentRequest(unittest.TestCase):
         self.assertIn("local_pickup", as_dict)
 
     def test_partial_shipment_filters_none(self):
-        shipment = OrderShipmentRequest(mode="custom", cost="5.00")
+        shipment = ShipmentRequest(mode="custom", cost="5.00")
         as_dict = order_request_to_dict(shipment)
         self.assertEqual(as_dict, {"mode": "custom", "cost": "5.00"})
 
@@ -246,7 +246,7 @@ class TestOrderCreateDualPath(unittest.TestCase):
             total_amount="200.00",
             external_reference="ext_ref_1234",
             payer=PayerRequest(email="buyer@example.com"),
-            items=[OrderItemRequest(title="A book", unit_price="200.00", quantity=1)],
+            items=[ItemRequest(title="A book", unit_price="200.00", quantity=1)],
         )
         sdk.order().create(typed)
         sent_typed = json.loads(http.last_data)

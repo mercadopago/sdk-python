@@ -1,4 +1,4 @@
-"""Dataclasses for shipment data in order requests."""
+"""Dataclasses for shipment data in API requests."""
 from dataclasses import (
     dataclass,
     field,
@@ -9,10 +9,10 @@ from typing import (
 )
 
 
-# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API shipment.address contract
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the API shipment.address contract
 @dataclass
-class OrderShipmentAddress:
-    """Delivery address for an order shipment.
+class ShipmentAddress:
+    """Delivery address for a shipment.
 
     Attributes:
         street_name: Name of the street. Type: str.
@@ -38,8 +38,8 @@ class OrderShipmentAddress:
 
 
 @dataclass
-class OrderShipmentFreeMethod:
-    """A free-shipping method offered for the order.
+class ShipmentFreeMethod:
+    """A free-shipping method.
 
     Attributes:
         id: Identifier of the free shipping method. Type: int.
@@ -49,8 +49,8 @@ class OrderShipmentFreeMethod:
 
 
 @dataclass
-class OrderShipmentRequest:
-    """Shipment configuration for an order request.
+class ShipmentRequest:
+    """Shipment configuration for an API request.
 
     Use this dataclass to build the ``shipment`` payload when creating an order.
     Convert to dict with ``dataclasses.asdict()`` (``None`` fields are filtered
@@ -61,7 +61,7 @@ class OrderShipmentRequest:
         local_pickup: Whether the buyer picks up the item locally. Type: bool.
         cost: Shipping cost as a decimal string. Type: str.
         free_shipping: Whether shipping is free. Type: bool.
-        free_methods: Free shipping methods available for the order.
+        free_methods: Free shipping methods available.
         address: Delivery address for the shipment.
     """
 
@@ -69,5 +69,5 @@ class OrderShipmentRequest:
     local_pickup: Optional[bool] = None
     cost: Optional[str] = None
     free_shipping: Optional[bool] = None
-    free_methods: Optional[List[OrderShipmentFreeMethod]] = field(default=None)
-    address: Optional[OrderShipmentAddress] = None
+    free_methods: Optional[List[ShipmentFreeMethod]] = field(default=None)
+    address: Optional[ShipmentAddress] = None

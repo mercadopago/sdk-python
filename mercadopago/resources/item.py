@@ -1,12 +1,12 @@
-"""Dataclass for line items in order requests."""
+"""Dataclass for line items in API requests."""
 from dataclasses import dataclass
 from typing import Optional
 
 
-# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the Orders API items contract
+# pylint: disable=too-many-instance-attributes  # DTO: fields mirror the API items contract
 @dataclass
-class OrderItemRequest:
-    """A single line item within an order request.
+class ItemRequest:
+    """A single line item within an API request.
 
     Use this dataclass to build an entry of the ``items`` array when creating
     an order. Convert to dict with ``dataclasses.asdict()`` (``None`` fields are
