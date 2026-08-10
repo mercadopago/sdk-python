@@ -55,7 +55,8 @@ class _CapturingHttpClient(HttpClient):
         self.last_data = None
 
     def post(self, url, headers,  # noqa: D401
-             data=None, params=None, timeout=None, maxretries=None):
+             data=None, params=None, timeout=None, maxretries=None,
+             retry_on=None, backoff_factor=None):
         self.last_url = url
         self.last_data = data
         return {"status": 201, "response": {"id": "ORDER_ID", "status": "processed"}}
