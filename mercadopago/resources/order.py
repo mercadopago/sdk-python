@@ -10,6 +10,7 @@ transaction management.
 from dataclasses import is_dataclass
 
 from mercadopago.core import MPBase
+from mercadopago.pagination.iterator import search_auto_paging_iter as _paging_iter
 from mercadopago.resources.order_create import order_request_to_dict
 
 class Order(MPBase):
@@ -345,3 +346,7 @@ class Order(MPBase):
             f"/transactions/{self._path_param(transaction_id)}",
             request_options=request_options,
         )
+
+    def search_auto_paging_iter(self, filters=None, request_options=None, limit=100):
+        """Lazily yields all items matching *filters* across all pages."""
+        return _paging_iter(self.search, filters, request_options, limit)

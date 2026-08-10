@@ -122,6 +122,12 @@ class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
             InvalidWebhookSignatureError: When the signature is missing,
                 malformed, or does not match the expected HMAC.
             ValueError: When ``secret`` is ``None``.
+
+        Note:
+            The endpoint receiving webhook notifications must respond with HTTP 200
+            or 201 within 22 seconds. If no response is received in time, MercadoPago
+            retries delivery every 15 minutes. Respond immediately and process the
+            notification asynchronously to avoid timeouts.
         """
         if secret is None:
             raise ValueError("secret must not be None")
@@ -178,7 +184,7 @@ class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
             )
 
         if tolerance_seconds is not None:
-            drift_ms = abs(now() - int(ts))
+            drift_ms = abs(now() - int(ts) * 1000)  # ts is in seconds, now() is in ms
             if drift_ms > tolerance_seconds * 1000:
                 raise InvalidWebhookSignatureError(
                     SignatureFailureReason.TIMESTAMP_OUT_OF_TOLERANCE, x_request_id, ts

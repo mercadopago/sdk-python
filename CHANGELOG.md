@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-08-04
+
+### Added
+
+- **SDK ergonomics**: typed exceptions, configurable retry, and auto-pagination ([#141](https://github.com/mercadopago/sdk-python/pull/141))
+  - `MPApiException` now has 12 specific subtypes per HTTP status code
+  - Request options gain optional `max_retries`, `retry_on`, `initial_delay_ms`, `max_delay_ms` and `on_retry` callback
+  - New auto-pagination support on search endpoints
+- **Missing API methods** — `disbursement_refund.list()`, `advanced_payment.update()`, `customer_card.update()`, `payment.update()` ([#140](https://github.com/mercadopago/sdk-python/pull/140))
+- **CREDENTIAL_ON_FILE messaging fields** on Payment types ([#139](https://github.com/mercadopago/sdk-python/pull/139)): `first_transaction`, `storage`, `transaction_initiator`, `reference`
+
+### Fixed
+
+- Webhook `tolerance_seconds` unit mismatch — `ts` header value compared in seconds against a millisecond clock ([#142](https://github.com/mercadopago/sdk-python/pull/142))
+- `constant_time_equals` error on multibyte v1 hash ([#142](https://github.com/mercadopago/sdk-python/pull/142))
+
+### Dependencies
+
+- Bump `actions/checkout` to `v7.0.1` ([#138](https://github.com/mercadopago/sdk-python/pull/138))
+
 ## [3.3.0] - 2026-06-30
 
 ### Added

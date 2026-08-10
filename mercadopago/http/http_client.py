@@ -8,6 +8,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+from mercadopago.config.defaults import DEFAULT_RETRY_ON
 
 class HttpClient:
     """Default HTTP transport for all MercadoPago REST calls.
@@ -24,7 +25,15 @@ class HttpClient:
     JSON body (``None`` for 204 No Content or unparseable bodies).
     """
 
-    def request(self, method, url, maxretries=None, **kwargs):
+    def request( # pylint: disable=too-many-positional-arguments
+        self,
+        method,
+        url,
+        maxretries=None,
+        retry_on=None,
+        backoff_factor=None,
+        **kwargs,
+    ):
         """Executes an HTTP request with automatic retry.
 
         A new session with an HTTPS retry adapter is created per call so
@@ -34,15 +43,23 @@ class HttpClient:
             method: HTTP verb (``GET``, ``POST``, ``PUT``, ``DELETE``).
             url: Fully-qualified URL to call.
             maxretries: Maximum number of retries on transient errors.
+            retry_on: HTTP status codes to retry. Defaults to DEFAULT_RETRY_ON.
+            backoff_factor: urllib3 backoff_factor in seconds (None = no extra delay).
             **kwargs: Forwarded to ``requests.Session.request`` (headers,
                 data, params, timeout, etc.).
 
         Returns:
             dict: ``{"status": <http_code>, "response": <parsed_json_or_None>}``.
+
+        Raises:
+            MPServerError: When the response body cannot be parsed as JSON
+                (previously a silent failure).
         """
+        from mercadopago.errors.exceptions import MPServerError  # avoid circular import
         retry_strategy = Retry(
             total=maxretries,
-            status_forcelist=[429, 500, 502, 503, 504]
+            status_forcelist=retry_on if retry_on is not None else DEFAULT_RETRY_ON,
+            backoff_factor=backoff_factor if backoff_factor is not None else 0,
         )
         http = requests.Session()
         http.mount("https://", HTTPAdapter(max_retries=retry_strategy))
@@ -53,104 +70,47 @@ class HttpClient:
             if api_result.status_code != 204 and api_result.content:
                 try:
                     response["response"] = api_result.json()
-                except ValueError as e:
-                    print(f"Failed to parse JSON: {str(e)}")
-                    response["response"] = None
+                except ValueError as exc:
+                    raise MPServerError(
+                        api_result.status_code,
+                        {"message": "Invalid JSON in response body",
+                         "error": "invalid_response"},
+                    ) from exc
 
-            return response
+        return response
 
-    def get(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-positional-arguments
-        """Sends a GET request to the MercadoPago API.
-
-        Args:
-            url: Fully-qualified endpoint URL.
-            headers: Request headers including authorisation.
-            params: Query-string parameters.
-            timeout: Connection/read timeout in seconds.
-            maxretries: Retry limit for transient failures.
-
-        Returns:
-            dict: Normalised response with *status* and *response* keys.
-        """
+    def get(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+            retry_on=None, backoff_factor=None):
+        """Sends a GET request to the MercadoPago API."""
         return self.request(
-            "GET",
-            url=url,
-            headers=headers,
-            params=params,
-            timeout=timeout,
-            maxretries=maxretries,
+            "GET", url=url, headers=headers, params=params,
+            timeout=timeout, maxretries=maxretries, retry_on=retry_on,
+            backoff_factor=backoff_factor,
         )
 
-    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-positional-arguments
-        """Sends a POST request to the MercadoPago API.
-
-        Args:
-            url: Fully-qualified endpoint URL.
-            headers: Request headers including authorisation.
-            data: JSON-encoded request body.
-            params: Query-string parameters.
-            timeout: Connection/read timeout in seconds.
-            maxretries: Retry limit for transient failures.
-
-        Returns:
-            dict: Normalised response with *status* and *response* keys.
-        """
+    def post(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+             retry_on=None, backoff_factor=None):
+        """Sends a POST request to the MercadoPago API."""
         return self.request(
-            "POST",
-            url=url,
-            headers=headers,
-            data=data,
-            params=params,
-            timeout=timeout,
-            maxretries=maxretries,
+            "POST", url=url, headers=headers, data=data, params=params,
+            timeout=timeout, maxretries=maxretries, retry_on=retry_on,
+            backoff_factor=backoff_factor,
         )
 
-    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-positional-arguments
-        """Sends a PUT request to the MercadoPago API.
-
-        Args:
-            url: Fully-qualified endpoint URL.
-            headers: Request headers including authorisation.
-            data: JSON-encoded request body.
-            params: Query-string parameters.
-            timeout: Connection/read timeout in seconds.
-            maxretries: Retry limit for transient failures.
-
-        Returns:
-            dict: Normalised response with *status* and *response* keys.
-        """
+    def put(self, url, headers, data=None, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+            retry_on=None, backoff_factor=None):
+        """Sends a PUT request to the MercadoPago API."""
         return self.request(
-            "PUT",
-            url=url,
-            headers=headers,
-            data=data,
-            params=params,
-            timeout=timeout,
-            maxretries=maxretries,
+            "PUT", url=url, headers=headers, data=data, params=params,
+            timeout=timeout, maxretries=maxretries, retry_on=retry_on,
+            backoff_factor=backoff_factor,
         )
 
-    def delete(self, url, headers, params=None, timeout=None, maxretries=None):  # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-positional-arguments
-        """Sends a DELETE request to the MercadoPago API.
-
-        Args:
-            url: Fully-qualified endpoint URL.
-            headers: Request headers including authorisation.
-            params: Query-string parameters.
-            timeout: Connection/read timeout in seconds.
-            maxretries: Retry limit for transient failures.
-
-        Returns:
-            dict: Normalised response with *status* and *response* keys.
-        """
+    def delete(self, url, headers, params=None, timeout=None, maxretries=None,  # pylint: disable=too-many-positional-arguments
+               retry_on=None, backoff_factor=None):
+        """Sends a DELETE request to the MercadoPago API."""
         return self.request(
-            "DELETE",
-            url=url,
-            headers=headers,
-            params=params,
-            timeout=timeout,
-            maxretries=maxretries,
+            "DELETE", url=url, headers=headers, params=params,
+            timeout=timeout, maxretries=maxretries, retry_on=retry_on,
+            backoff_factor=backoff_factor,
         )
