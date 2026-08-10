@@ -1,180 +1,78 @@
-"""
-    Module: test_plan
-"""
-import os
+"""Unit tests for the Subscription resource using a mock HTTP client."""
 import unittest
-import random
-import mercadopago
-from tests import api_call_with_retry
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestSubscription(unittest.TestCase):
-    """
-    Test Module: Preference
-    """
-    _customer_id = None
-    _customer_email = None
-    _plan_id = None
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+class TestSubscription(BaseClientTest):
+    """Test Module: Subscription"""
 
-    @classmethod
-    def setUpClass(cls):
-        customer_data = cls.create_customer()
-        cls._customer_id = customer_data["response"]["id"]
-        cls._customer_email = customer_data["response"]["email"]
-        plan_data = cls.create_plan()
-        if plan_data.get("status") != 201 or "id" not in plan_data.get("response", {}):
-            raise RuntimeError(f"Failed to create plan: {plan_data}")
-        cls._plan_id = plan_data["response"]["id"]
+    def test_get(self):
+        fixture = self.load_fixture("subscription_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.subscription().get("2c938084726fca480172750000000003")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000003", resp["id"])
+        self.assertEqual("authorized", resp["status"])
+        self.assertEqual("2c938084726fca480172750000000002", resp["preapproval_plan_id"])
+        self.assertEqual("test_user@testuser.com", resp["payer_email"])
+        self.assertEqual(123456789, resp["payer_id"])
+        self.assertIn("auto_recurring", resp)
+        self.assertEqual(29.90, resp["auto_recurring"]["transaction_amount"])
+        self.assertEqual("BRL", resp["auto_recurring"]["currency_id"])
+        self.assertIn("next_payment_date", resp)
+        self.assertIn("date_created", resp)
+        self.mock_http.get.assert_called_once()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.delete_customer()
-
-    def test_all(self):
-        """
-        Test Module: Subscription
-        """
-        card_token = self.create_card_token()
-        card_token_id = card_token['response']['id']
-
-        random_reason_number = random.randint(100000, 999999)
-        subscription_payload = {
-            "back_url": "https://www.mercadopago.com.co/subscriptions",
-            "reason": f"MercadoPago API Subscription #{random_reason_number}",
-            "external_reference": "CustomIdentifier",
-            "payer_email": self._customer_email,
-            "preapproval_plan_id": self._plan_id,
-            "card_token_id": card_token_id,
-            "status": "authorized",
-            "auto_recurring": {
-                "frequency": 1,
-                "frequency_type": "months",
-                "transaction_amount": 100,
-                "currency_id": "BRL"
-            }
+    def test_create(self):
+        fixture = self.load_fixture("subscription_create.json")
+        self.mock_post(fixture, status=201)
+        subscription_object = {
+            "preapproval_plan_id": "2c938084726fca480172750000000002",
+            "payer_email": "test_user@testuser.com",
+            "card_token_id": "a78sd6f1a9s8d7f1a",
         }
+        result = self.sdk.subscription().create(subscription_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000003", resp["id"])
+        self.assertEqual("pending", resp["status"])
+        self.assertEqual("2c938084726fca480172750000000002", resp["preapproval_plan_id"])
+        self.assertIn("auto_recurring", resp)
+        self.assertIn("date_created", resp)
+        self.mock_http.post.assert_called_once()
 
-        subscription_response = api_call_with_retry(
-            lambda: self.sdk.subscription().create(subscription_payload), expected_status=201
-        )
-        self.assertEqual(subscription_response["status"], 201)
+    def test_update(self):
+        fixture = self.load_fixture("subscription_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.subscription().update("2c938084726fca480172750000000003", {"status": "cancelled"})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000003", resp["id"])
+        self.assertEqual("cancelled", resp["status"])
+        self.assertIn("last_modified", resp)
+        self.mock_http.put.assert_called_once()
 
-        subscription_object = subscription_response['response']
-        self.assertIn('init_point', subscription_object)
-        self.assertEqual(
-            subscription_object["external_reference"], subscription_payload["external_reference"])
-        self.assertEqual(subscription_object["status"], "authorized")
+    def test_search(self):
+        fixture = self.load_fixture("subscription_search.json")
+        self.mock_get(fixture)
+        result = self.sdk.subscription().search({"status": "authorized"})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertIn("results", resp)
+        self.assertEqual("2c938084726fca480172750000000003", resp["results"][0]["id"])
+        self.assertEqual("authorized", resp["results"][0]["status"])
+        self.assertEqual("test_user@testuser.com", resp["results"][0]["payer_email"])
+        self.mock_http.get.assert_called_once()
 
-        update_payload = {
-            "reason": f"MercadoPago API Subscription A #{random_reason_number}",
-        }
-        update_response = self.sdk.subscription().update(
-            subscription_object["id"], update_payload)
-        self.assertEqual(update_response["status"], 200)
-        update_object = update_response["response"]
-        self.assertEqual(update_object["reason"], update_payload["reason"])
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.subscription().create("not-a-dict")
 
-        get_response = self.sdk.subscription().get(subscription_object["id"])
-        self.assertEqual(get_response["status"], 200)
-        get_object = get_response["response"]
-        self.assertEqual(get_object["id"], subscription_object["id"])
-
-        search_response = self.sdk.subscription().search()
-        self.assertEqual(search_response["status"], 200)
-        search_object = search_response["response"]
-        self.assertTrue("results" in search_object)
-        self.assertTrue(isinstance(search_object["results"], list))
-
-    def test_create_subscriptions_without_a_plan(self):
-        """
-        Test Module: Subscription
-
-        Test subscription creation without a plan
-        """
-        card_token = self.create_card_token()
-        card_token_id = card_token['response']['id']
-
-        random_reason_number = random.randint(100000, 999999)
-        subscription_payload = {
-            "back_url": "https://www.mercadopago.com.co/subscriptions",
-            "reason": f"MercadoPago API Subscription B #{random_reason_number}",
-            "external_reference": "CustomIdentifier",
-            "payer_email": self._customer_email,
-            "card_token_id": card_token_id,
-            "auto_recurring": {
-                "frequency": 1,
-                "frequency_type": "months",
-                "transaction_amount": 100,
-                "currency_id": "BRL",
-            },
-            "status": "authorized"
-        }
-
-        subscription_response = api_call_with_retry(
-            lambda: self.sdk.subscription().create(subscription_payload), expected_status=201
-        )
-        self.assertEqual(subscription_response["status"], 201)
-
-        subscription_object = subscription_response['response']
-        self.assertIn('init_point', subscription_object)
-        self.assertEqual(
-            subscription_object["external_reference"], subscription_payload["external_reference"])
-        self.assertEqual(subscription_object["status"], "authorized")
-
-    @classmethod
-    def create_card_token(cls):
-        card_token_object = {
-            "card_number": "4074090000000004",
-            "security_code": "123",
-            "expiration_year": "2030",
-            "expiration_month": "12",
-            "cardholder": {
-                "name": "APRO",
-                "identification": {
-                    "CPF": "19119119100"
-                }
-            }
-        }
-        return cls.sdk.card_token().create(card_token_object)
-
-    @classmethod
-    def create_customer(cls):
-        random_email_id = random.randint(100000, 999999)
-        customer_object = {
-            "email": f"test_payer_{random_email_id}@testuser.com",
-            "first_name": "Python",
-            "last_name": "Mercado",
-            "phone": {
-                "area_code": "03492",
-                "number": "432334"
-            },
-            "identification": {
-                "type": "DNI",
-                "number": "29804555"
-            },
-            "description": "customer description"
-        }
-
-        return cls.sdk.customer().create(customer_object)
-
-    @classmethod
-    def delete_customer(cls):
-        cls.sdk.customer().delete(cls._customer_id)
-
-    @classmethod
-    def create_plan(cls):
-        plan_object = {
-            "auto_recurring": {
-                "frequency": 1,
-                "frequency_type": "months",
-                "transaction_amount": 100,
-                "currency_id": "BRL",
-            },
-            "back_url": "https://www.mercadopago.com.co/subscriptions",
-            "reason": f"Test Plan #{random.randint(100000, 999999)}",
-        }
-        return cls.sdk.plan().create(plan_object)
+    def test_update_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.subscription().update("2c938084726fca480172750000000003", "not-a-dict")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,7 @@
+{
+  "id": "2c938084726fca480172750000000000",
+  "status": "cancelled",
+  "reason": "Monthly subscription",
+  "last_modified": "2024-01-15T11:00:00.000-03:00",
+  "payer_email": "test_user@testuser.com"
+}

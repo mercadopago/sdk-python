@@ -1,0 +1,14 @@
+{
+  "id": "1562188766852",
+  "customer_id": "1068193981-pXRewrKqlP6pnn",
+  "first_six_digits": "503143",
+  "last_four_digits": "6351",
+  "expiration_month": 11,
+  "expiration_year": 2030,
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T11:00:00.000-03:00",
+  "cardholder": {"name": "APRO"},
+  "payment_method": {"id": "master", "name": "Mastercard", "payment_type_id": "credit_card"},
+  "issuer": {"id": "24", "name": "Mastercard"},
+  "security_code": {"length": 3, "card_location": "back"}
+}

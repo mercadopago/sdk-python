@@ -1,0 +1,7 @@
+{
+  "id": 1,
+  "advanced_payment_id": 999,
+  "status": "approved",
+  "amount": 100.0,
+  "date_created": "2024-01-16T09:00:00.000-03:00"
+}

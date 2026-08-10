@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "id": 999,
+      "status": "approved",
+      "status_detail": "accredited",
+      "date_created": "2024-01-15T10:30:00.000-03:00",
+      "payer": {"email": "test_user@testuser.com"}
+    }
+  ],
+  "paging": {"total": 1, "limit": 10, "offset": 0}
+}

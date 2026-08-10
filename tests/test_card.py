@@ -1,85 +1,88 @@
-"""
-    Module: test_card
-"""
-from datetime import datetime
-import os
-import random
+"""Unit tests for the Card resource using a mock HTTP client."""
 import unittest
-import mercadopago
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestCard(unittest.TestCase):
-    """
-    Test Module: Card
-    """
+class TestCard(BaseClientTest):
+    """Test Module: Card"""
 
-    _customer_id = None
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+    def test_list_all(self):
+        fixture = self.load_fixture("card_list_all.json")
+        self.mock_get(fixture)
+        result = self.sdk.card().list_all("1068193981-pXRewrKqlP6pnn")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertIsInstance(resp, list)
+        self.assertEqual("1562188766852", resp[0]["id"])
+        self.assertEqual("503143", resp[0]["first_six_digits"])
+        self.assertEqual("6351", resp[0]["last_four_digits"])
+        self.assertIn("payment_method", resp[0])
+        self.mock_http.get.assert_called_once()
 
-    @classmethod
-    def setUpClass(cls):
-        customer_data = cls.create_customer()
-        cls._customer_id = customer_data["response"]["id"]
+    def test_get(self):
+        fixture = self.load_fixture("card_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.card().get("1068193981-pXRewrKqlP6pnn", "1562188766852")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("1562188766852", resp["id"])
+        self.assertEqual("1068193981-pXRewrKqlP6pnn", resp["customer_id"])
+        self.assertEqual("503143", resp["first_six_digits"])
+        self.assertEqual("6351", resp["last_four_digits"])
+        self.assertEqual(11, resp["expiration_month"])
+        self.assertEqual(2030, resp["expiration_year"])
+        self.assertIn("cardholder", resp)
+        self.assertEqual("APRO", resp["cardholder"]["name"])
+        self.assertIn("payment_method", resp)
+        self.assertEqual("master", resp["payment_method"]["id"])
+        self.assertEqual("credit_card", resp["payment_method"]["payment_type_id"])
+        self.assertIn("issuer", resp)
+        self.assertIn("security_code", resp)
+        self.assertIn("date_created", resp)
+        self.assertIn("date_last_updated", resp)
+        self.mock_http.get.assert_called_once()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.delete_customer()
+    def test_create(self):
+        fixture = self.load_fixture("card_create.json")
+        self.mock_post(fixture, status=201)
+        card_object = {"token": "token-001"}
+        result = self.sdk.card().create("1068193981-pXRewrKqlP6pnn", card_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("1562188766852", resp["id"])
+        self.assertEqual("503143", resp["first_six_digits"])
+        self.assertEqual("6351", resp["last_four_digits"])
+        self.assertEqual(2030, resp["expiration_year"])
+        self.assertIn("cardholder", resp)
+        self.assertIn("payment_method", resp)
+        self.assertIn("issuer", resp)
+        self.mock_http.post.assert_called_once()
 
-    def test_all(self):
-        """
-        Test Function: Card
-        """
+    def test_update(self):
+        fixture = self.load_fixture("card_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.card().update("1068193981-pXRewrKqlP6pnn", "1562188766852", {"expiration_year": 2030})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("1562188766852", resp["id"])
+        self.assertEqual(2030, resp["expiration_year"])
+        self.assertIn("date_last_updated", resp)
+        self.mock_http.put.assert_called_once()
 
-        card_token_object = {
-            "card_number": "4074090000000004",
-            "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
-            "expiration_month": "12",
-            "cardholder": {
-                "name": "APRO",
-                "identification": {
-                    "CPF": "19119119100"
-                }
-            }
-        }
+    def test_delete(self):
+        self.mock_delete({"id": "1562188766852"}, status=200)
+        result = self.sdk.card().delete("1068193981-pXRewrKqlP6pnn", "1562188766852")
+        self.assertEqual(200, result["status"])
+        self.mock_http.delete.assert_called_once()
 
-        card_token_created = self.sdk.card_token().create(card_token_object)
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.card().create("1068193981-pXRewrKqlP6pnn", "not-a-dict")
 
-        card_object = {
-            "customer_id": self._customer_id,
-            "token": card_token_created["response"]["id"]
-        }
-
-        card_created = self.sdk.card().create(self._customer_id, card_object)
-        self.assertIn(card_created["status"], [200, 201])
-        self.assertEqual(self.sdk.card().get(
-            self._customer_id, card_created["response"]["id"])["status"], 200)
-
-        self.sdk.card().delete(self._customer_id, card_created["response"]["id"])
-
-    @classmethod
-    def create_customer(cls):
-        random_email_id = random.randint(100000, 999999)
-        customer_object = {
-            "email": f"test_payer_{random_email_id}@testuser.com",
-            "first_name": "Rafa",
-            "last_name": "Williner",
-            "phone": {
-                "area_code": "03492",
-                "number": "432334"
-            },
-            "identification": {
-                "type": "DNI",
-                "number": "29804555"
-            },
-            "description": "customer description"
-        }
-
-        return cls.sdk.customer().create(customer_object)
-
-    @classmethod
-    def delete_customer(cls):
-        cls.sdk.customer().delete(cls._customer_id)
+    def test_update_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.card().update("1068193981-pXRewrKqlP6pnn", "1562188766852", "not-a-dict")
 
 
 if __name__ == "__main__":

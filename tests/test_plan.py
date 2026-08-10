@@ -1,88 +1,82 @@
-"""
-    Module: test_plan
-"""
-import os
+"""Unit tests for the Plan resource using a mock HTTP client."""
 import unittest
-import random
-import mercadopago
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestPlan(unittest.TestCase):
-    """
-    Test Module: Preference
-    """
+class TestPlan(BaseClientTest):
+    """Test Module: Plan"""
 
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+    def test_get(self):
+        fixture = self.load_fixture("plan_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.plan().get("2c938084726fca480172750000000002")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000002", resp["id"])
+        self.assertEqual("active", resp["status"])
+        self.assertEqual("Monthly Plan - Basic", resp["reason"])
+        self.assertIn("auto_recurring", resp)
+        self.assertEqual(1, resp["auto_recurring"]["frequency"])
+        self.assertEqual("months", resp["auto_recurring"]["frequency_type"])
+        self.assertEqual(29.90, resp["auto_recurring"]["transaction_amount"])
+        self.assertEqual("BRL", resp["auto_recurring"]["currency_id"])
+        self.assertIn("init_point", resp)
+        self.assertIn("date_created", resp)
+        self.assertIn("last_modified", resp)
+        self.mock_http.get.assert_called_once()
 
-    def test_all(self):
-        """
-        Test Module: Plan
-        """
-        random_reason_number = random.randint(100000, 999999)
-        plan_object_all_options_payload = {
+    def test_create(self):
+        fixture = self.load_fixture("plan_create.json")
+        self.mock_post(fixture, status=201)
+        plan_object = {
+            "reason": "Monthly Plan - Basic",
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "repetitions": 12,
-                "billing_day": 5,
-                "free_trial": {
-                    "frequency": 2,
-                    "frequency_type": "days"
-                },
-                "transaction_amount": 60,
+                "transaction_amount": 29.90,
                 "currency_id": "BRL",
             },
-            "back_url": "https://www.mercadopago.com.co/subscriptions",
-            "reason": f"Test Plan #{random_reason_number}",
+            "back_url": "https://example.com/back",
         }
-        plan_object_mandatory_options_payload = {
-            "auto_recurring": {
-                "frequency": 1,
-                "frequency_type": "months",
-                "transaction_amount": 60,
-                "currency_id": "BRL",
-            },
-            "back_url": "https://www.mercadopago.com.co/subscriptions",
-            "reason": f"Test Plan (mandatory) #{random_reason_number}",
-        }
+        result = self.sdk.plan().create(plan_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000002", resp["id"])
+        self.assertEqual("active", resp["status"])
+        self.assertIn("auto_recurring", resp)
+        self.assertIn("init_point", resp)
+        self.mock_http.post.assert_called_once()
 
-        plan_response = self.sdk.plan().create(plan_object_all_options_payload)
-        if plan_response.get("status") != 201:
-            print(f"Plan creation failed: {plan_response}")
-        self.assertEqual(plan_response["status"], 201)
+    def test_update(self):
+        fixture = self.load_fixture("plan_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.plan().update("2c938084726fca480172750000000002", {"status": "inactive"})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("2c938084726fca480172750000000002", resp["id"])
+        self.assertEqual("inactive", resp["status"])
+        self.assertIn("last_modified", resp)
+        self.mock_http.put.assert_called_once()
 
-        plan_object = plan_response["response"]
-        self.assertEqual(plan_object["status"], "active")
+    def test_search(self):
+        fixture = self.load_fixture("plan_search.json")
+        self.mock_get(fixture)
+        result = self.sdk.plan().search()
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertIn("results", resp)
+        self.assertEqual("2c938084726fca480172750000000002", resp["results"][0]["id"])
+        self.assertEqual("active", resp["results"][0]["status"])
+        self.mock_http.get.assert_called_once()
 
-        # Validate it works with minimal required options
-        plan_mandatory_options = self.sdk.plan().create(
-            plan_object_mandatory_options_payload)
-        self.assertEqual(plan_mandatory_options["status"], 201)
-        self.assertEqual(
-            plan_mandatory_options["response"]["status"], "active")
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.plan().create("not-a-dict")
 
-        update_payload = {
-            "reason": "MercadoPago API Test",
-            "auto_recurring": plan_object_all_options_payload["auto_recurring"],
-            "back_url": plan_object_all_options_payload["back_url"],
-        }
-        update_response = self.sdk.plan().update(
-            plan_object["id"], update_payload)
-        self.assertEqual(update_response["status"], 200)
-        update_object = update_response["response"]
-        self.assertEqual(update_object["reason"], update_payload["reason"])
-        self.assertEqual(update_object["status"], "active")
-
-        get_response = self.sdk.plan().get(plan_object["id"])
-        self.assertEqual(get_response["status"], 200)
-        get_object = get_response["response"]
-        self.assertEqual(get_object["id"], plan_object["id"])
-
-        search_response = self.sdk.plan().search()
-        self.assertEqual(search_response["status"], 200)
-        search_object = search_response["response"]
-        self.assertTrue("results" in search_object)
-        self.assertTrue(isinstance(search_object["results"], list))
+    def test_update_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.plan().update("2c938084726fca480172750000000002", "not-a-dict")
 
 
 if __name__ == "__main__":

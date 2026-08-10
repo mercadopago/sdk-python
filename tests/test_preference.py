@@ -1,96 +1,89 @@
-"""
-    Module: test_preference
-"""
-import os
+"""Unit tests for the Preference resource using a mock HTTP client."""
 import unittest
-import time
-import mercadopago
+import warnings
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestPreference(unittest.TestCase):
-    """
-    Test Module: Preference
-    """
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+class TestPreference(BaseClientTest):
+    """Test Module: Preference"""
 
-    def test_all(self):
-        """
-        Test Module: Preference
-        """
+    def test_create(self):
+        fixture = self.load_fixture("preference_create.json")
+        self.mock_post(fixture, status=201)
         preference_object = {
-            "items": [
-                {
-                    "description": "Test Update Success",
-                    "id": "456",
-                    "picture_url": "http://product1.image.png",
-                    "quantity": 1,
-                    "title": "Item 1",
-                    "currency_id": "BRL",
-                    "unit_price": 20.5,
-                    "warranty": False,
-                    "type": "default",
-                    "event_date": "2027-01-15T00:00:00.000-03:00",
-                    "category_descriptor": {
-                        "passenger": {
-                            "first_name": "Nome",
-                            "last_name": "Sobrenome",
-                            "identification": {
-                                "type": "CPF",
-                                "number": "19119119100"
-                            }
-                        },
-                        "route": {
-                            "departure": "SAO",
-                            "destination": "RIO",
-                            "departure_date_time": "2027-01-15T08:00:00.000-03:00",
-                            "arrival_date_time": "2027-01-15T09:00:00.000-03:00",
-                            "company": "TAM"
-                        }
-                    }
-                }
-            ],
-            "payer": {
-                "email": "test_user_123456@testuser.com",
-                "date_created": "2020-01-15T00:00:00.000-03:00",
-                "authentication_type": "WEB",
-                "is_prime_user": False,
-                "is_first_purchase_online": False,
-                "last_purchase": "2024-01-01T00:00:00.000-03:00",
-                "registration_date": "2020-01-15T00:00:00.000-03:00"
-            },
-            "shipments": {
-                "receiver_address": {
-                    "street_name": "Av das Nacoes Unidas",
-                    "street_number": 3003,
-                    "zip_code": "06233200",
-                    "state_name": "Rio de Janeiro",
-                    "city_name": "Buzios",
-                    "floor": "2",
-                    "apartment": "A"
-                },
-                "express_shipment": False,
-                "local_pickup": False
-            }
+            "items": [{"title": "Point Mini", "quantity": 1, "unit_price": 58.80}]
         }
-        preference_saved = self.sdk.preference().create(preference_object)
-        self.assertEqual(preference_saved["status"], 201)
-        time.sleep(3)
+        result = self.sdk.preference().create(preference_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("843382748-18d90a57-a4ce-4718-bc17-1234567890", resp["id"])
+        self.assertIn("init_point", resp)
+        self.assertIsInstance(resp["items"], list)
+        self.assertEqual("Point Mini", resp["items"][0]["title"])
+        self.assertEqual(843382748, resp["collector_id"])
+        self.assertIn("back_urls", resp)
+        self.assertIn("payment_methods", resp)
+        self.assertEqual(12, resp["payment_methods"]["installments"])
+        self.mock_http.post.assert_called_once()
 
-        preference_object["items"][0]["title"] = "Testando 1 2 3"
+    def test_create_with_notification_url_warns(self):
+        fixture = self.load_fixture("preference_create.json")
+        self.mock_post(fixture, status=201)
+        preference_object = {
+            "items": [{"title": "Point Mini", "quantity": 1, "unit_price": 58.80}],
+            "notification_url": "https://example.com/notify",
+        }
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            self.sdk.preference().create(preference_object)
+        self.assertTrue(any(issubclass(w.category, DeprecationWarning) for w in caught))
 
-        preference_id = preference_saved["response"]["id"]
-        preference_update = self.sdk.preference().update(preference_id, preference_object)
-        self.assertEqual(preference_update["status"], 200)
+    def test_get(self):
+        fixture = self.load_fixture("preference_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.preference().get("843382748-18d90a57-a4ce-4718-bc17-1234567890")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("843382748-18d90a57-a4ce-4718-bc17-1234567890", resp["id"])
+        self.assertIn("init_point", resp)
+        self.assertIsInstance(resp["items"], list)
+        self.assertEqual("Point Mini", resp["items"][0]["title"])
+        self.assertEqual(58.80, resp["items"][0]["unit_price"])
+        self.assertEqual(843382748, resp["collector_id"])
+        self.assertIn("back_urls", resp)
+        self.assertEqual("https://example.com/success", resp["back_urls"]["success"])
+        self.assertEqual("MP-PREF-001", resp["external_reference"])
+        self.assertIn("date_created", resp)
+        self.mock_http.get.assert_called_once()
 
-        time.sleep(3)
-        preference_saved = self.sdk.preference().get(preference_id)
-        self.assertEqual(preference_saved["status"], 200)
-        self.assertEqual(preference_saved["response"]["items"][0]["title"],
-                         preference_object["items"][0]["title"])
+    def test_update(self):
+        fixture = self.load_fixture("preference_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.preference().update(
+            "843382748-18d90a57-a4ce-4718-bc17-1234567890",
+            {"items": [{"title": "Updated Item"}]},
+        )
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("843382748-18d90a57-a4ce-4718-bc17-1234567890", resp["id"])
+        self.assertIn("items", resp)
+        self.mock_http.put.assert_called_once()
 
-        time.sleep(3)
-        preference_search = self.sdk.preference().search()
-        self.assertEqual(preference_search["status"], 200)
+    def test_search(self):
+        fixture = self.load_fixture("preference_search.json")
+        self.mock_get(fixture)
+        result = self.sdk.preference().search()
+        self.assertEqual(200, result["status"])
+        self.mock_http.get.assert_called_once()
+
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.preference().create("not-a-dict")
+
+    def test_update_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.preference().update("843382748-18d90a57-a4ce-4718-bc17-1234567890", "not-a-dict")
 
 
 if __name__ == "__main__":

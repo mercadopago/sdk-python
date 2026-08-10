@@ -1,0 +1,9 @@
+{
+  "id": "inv-001",
+  "status": "processed",
+  "transaction_amount": 29.90,
+  "currency_id": "BRL",
+  "preapproval_id": "2c938084726fca480172750000000000",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "last_modified": "2024-01-15T10:30:01.000-03:00"
+}

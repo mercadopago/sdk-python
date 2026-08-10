@@ -1,0 +1,10 @@
+{
+  "devices": [
+    {
+      "id": "device-001",
+      "operating_mode": "PDV",
+      "store_id": "store-001",
+      "pos_id": "pos-001"
+    }
+  ]
+}

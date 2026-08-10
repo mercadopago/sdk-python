@@ -1,0 +1,23 @@
+{
+  "id": 4049696864,
+  "status": "opened",
+  "external_reference": "ext-ref-001",
+  "preference_id": "843382748-18d90a57-a4ce-4718",
+  "payments": [],
+  "items": [
+    {
+      "id": "item-001",
+      "title": "Point Mini",
+      "description": "Maquininha",
+      "quantity": 1,
+      "unit_price": 58.80,
+      "currency_id": "BRL"
+    }
+  ],
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "last_updated": "2024-01-15T10:30:00.000-03:00",
+  "total_amount": 58.80,
+  "paid_amount": 0.0,
+  "refunded_amount": 0.0,
+  "notification_url": "https://example.com/notifications"
+}

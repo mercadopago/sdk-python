@@ -1,0 +1,29 @@
+{
+  "id": "01JKXTQ2AZVE0RANCPYA6WBNPW",
+  "type": "online",
+  "processing_mode": "automatic",
+  "capture_mode": "automatic_async",
+  "status": "processed",
+  "status_detail": "fully_processed",
+  "external_reference": "ext-ref-001",
+  "total_amount": "1000.00",
+  "total_paid_amount": "1000.00",
+  "description": "Order description",
+  "country_code": "BR",
+  "created_date": "2024-01-15T10:30:00.000Z",
+  "last_updated_date": "2024-01-15T10:30:01.000Z",
+  "payer": {"email": "test_user@testuser.com", "entity_type": "individual"},
+  "items": [{"id": "item-001", "title": "Point Mini", "quantity": 1, "unit_price": "1000.00"}],
+  "transactions": {
+    "payments": [
+      {
+        "id": "pay-001",
+        "amount": "1000.00",
+        "status": "processed",
+        "reference_id": "ref-001",
+        "status_detail": "accredited"
+      }
+    ]
+  },
+  "integration_data": {"application_id": "12345"}
+}

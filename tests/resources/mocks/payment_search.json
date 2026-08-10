@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "id": 17014025134,
+      "status": "approved",
+      "status_detail": "accredited",
+      "transaction_amount": 58.80,
+      "payment_method_id": "visa",
+      "payment_type_id": "credit_card",
+      "currency_id": "BRL",
+      "date_created": "2024-01-15T10:30:00.000-03:00",
+      "date_approved": "2024-01-15T10:30:01.000-03:00",
+      "payer": {"email": "test_user@testuser.com"},
+      "installments": 1,
+      "captured": true
+    }
+  ],
+  "paging": {"total": 1, "limit": 30, "offset": 0}
+}

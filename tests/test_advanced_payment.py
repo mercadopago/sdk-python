@@ -1,116 +1,110 @@
-"""
-    Module: test_advanced_payment
-"""
-from datetime import (
-    datetime,
-    timedelta,
-)
-import os
+"""Unit tests for the AdvancedPayment resource using a mock HTTP client."""
 import unittest
-import uuid
-import mercadopago
+from datetime import datetime
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestAdvancedPayment(unittest.TestCase):
-    """
-    Test Module: Advanced Payment
-    """
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+class TestAdvancedPayment(BaseClientTest):
+    """Test Module: AdvancedPayment"""
 
-    @unittest.skip(reason="Outdated API usage")
-    def test_all(self):
-        """
-        Test Function: Advanced Payment
-        """
-        card_token_object = {
-            "card_number": "4074090000000004",
-            "security_code": "123",
-            "expiration_year": datetime.now().strftime("%Y"),
-            "expiration_month": "12",
-            "cardholder": {
-                "name": "APRO",
-                "identification": {
-                    "CPF": "19119119100"
-                }
-            }
-        }
+    def test_get(self):
+        fixture = self.load_fixture("advanced_payment_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.advanced_payment().get(999)
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertEqual("approved", resp["status"])
+        self.assertEqual("accredited", resp["status_detail"])
+        self.assertEqual("test_user@testuser.com", resp["payer"]["email"])
+        self.assertIsInstance(resp["payments"], list)
+        self.assertEqual(1001, resp["payments"][0]["id"])
+        self.assertEqual("approved", resp["payments"][0]["status"])
+        self.assertIsInstance(resp["disbursements"], list)
+        self.assertIn("date_created", resp)
+        self.mock_http.get.assert_called_once()
 
-        card_token_created = self.sdk.card_token().create(card_token_object)
-
+    def test_create(self):
+        fixture = self.load_fixture("advanced_payment_create.json")
+        self.mock_post(fixture, status=201)
         advanced_payment_object = {
-            "application_id": "59441713004005",
-            "payments": [{
-                "payment_method_id": "master",
-                "payment_type_id": "credit_card",
-                "token": card_token_created["response"]["id"],
-                "date_of_expiration": (datetime.now() + timedelta(days=10))
-                .strftime("%Y-%m-%d %H:%M:%S.%f"),
-                "transaction_amount": 100.0,
-                "installments": 1,
-                "processing_mode": "aggregator",
-                "description": "description",
-                "external_reference": str(uuid.uuid4().int),
-                "statement_descriptor": "ADVPAY"
-            }],
-            "disbursements": [{
-                "collector_id": "488656838",
-                "amount": 60.0,
-                "external_reference": "Seller2" + str(uuid.uuid4().int),
-                "application_fee": 0.5
-            }],
-            "payer": {
-                "id": "649457098-FybpOkG6zH8QRm",
-                "type": "customer",
-                "email": "test_payer_9999988@testuser.com",
-                "first_name": "Test",
-                "last_name": "User",
-                "address": {
-                    "zip_code": "06233200",
-                    "street_name": "Street",
-                    "street_number": 123
-                },
-                "identification": {
-                    "type": "CPF",
-                    "number": "19119119100"
-                }
-            },
-            "external_reference": "Adv" + str(uuid.uuid4().int),
-            "description": "description",
-            "binary_mode": False,
-            "capture": False,
-            "additional_info": {
-                "ip_address": "127.0.0.1",
-                "payer": {
-                    "first_name": "Test",
-                    "last_name": "User",
-                    "registration_date": (datetime.now() - timedelta(days=10))
-                    .strftime("%Y-%m-%d %H:%M:%S.%f")
-                },
-                "items": [{
-                    "id": "123",
-                    "title": "title",
-                    "picture_url": "https://www.mercadopago.com/logomp3.gif",
-                    "description": "description",
-                    "category_id": "category",
-                    "quantity": 1,
-                    "unit_price": 100.0
-                }],
-                "shipments": {
-                    "receiver_address": {
-                        "zip_code": "06233200",
-                        "street_name": "Street",
-                        "street_number": 123
-                    }
-                }
-            }
+            "application_id": "app-001",
+            "payments": [{"payment_method_id": "visa", "token": "token-001", "transaction_amount": 100.0, "installments": 1}],
+            "disbursements": [{"collector_id": 843382748, "amount": 100.0, "external_reference": "ref-001"}],
+            "payer": {"email": "test_user@testuser.com"},
         }
+        result = self.sdk.advanced_payment().create(advanced_payment_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertEqual("pending", resp["status"])
+        self.assertIsInstance(resp["payments"], list)
+        self.assertIsInstance(resp["disbursements"], list)
+        self.mock_http.post.assert_called_once()
 
-        advanced_payment_created = self.sdk.advanced_payment().create(advanced_payment_object)
-        self.assertEqual(advanced_payment_created["status"], 201)
+    def test_search(self):
+        fixture = self.load_fixture("advanced_payment_search.json")
+        self.mock_get(fixture)
+        result = self.sdk.advanced_payment().search({"status": "approved"})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertIn("results", resp)
+        self.assertIn("paging", resp)
+        self.assertEqual(999, resp["results"][0]["id"])
+        self.assertEqual("approved", resp["results"][0]["status"])
+        self.mock_http.get.assert_called_once()
 
-        advanced_payment_found = self.sdk.advanced_payment().get(
-            advanced_payment_created["response"]["id"])
-        self.assertEqual(advanced_payment_found["status"], 200)
+    def test_update(self):
+        fixture = self.load_fixture("advanced_payment_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.advanced_payment().update(999, {"status": "approved"})
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertEqual("approved", resp["status"])
+        self.mock_http.put.assert_called_once()
+
+    def test_capture(self):
+        fixture = self.load_fixture("advanced_payment_update.json")
+        self.mock_put(fixture)
+        result = self.sdk.advanced_payment().capture(999)
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertEqual("approved", resp["status"])
+        self.mock_http.put.assert_called_once()
+
+    def test_cancel(self):
+        self.mock_put({"id": 999, "status": "cancelled"})
+        result = self.sdk.advanced_payment().cancel(999)
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertEqual("cancelled", resp["status"])
+        self.mock_http.put.assert_called_once()
+
+    def test_update_release_date(self):
+        self.mock_post({"id": 999, "money_release_date": "2026-09-01 00:00:00.000000"}, status=201)
+        release_date = datetime(2026, 9, 1)
+        result = self.sdk.advanced_payment().update_release_date(999, release_date)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual(999, resp["id"])
+        self.assertIn("money_release_date", resp)
+        self.mock_http.post.assert_called_once()
+
+    def test_update_release_date_raises_for_non_datetime(self):
+        with self.assertRaises(ValueError):
+            self.sdk.advanced_payment().update_release_date(999, "2026-09-01")
+
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.advanced_payment().create("not-a-dict")
+
+    def test_update_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.advanced_payment().update(999, "not-a-dict")
 
 
 if __name__ == "__main__":

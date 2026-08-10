@@ -1,0 +1,9 @@
+{
+  "access_token": "APP_USR-001",
+  "token_type": "bearer",
+  "expires_in": 15552000,
+  "scope": "offline_access payments read write",
+  "user_id": 123456789,
+  "refresh_token": "TG-001-test-refresh-token",
+  "live_mode": true
+}

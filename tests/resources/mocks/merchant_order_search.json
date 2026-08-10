@@ -1,0 +1,14 @@
+{
+  "elements": [
+    {
+      "id": 4049696864,
+      "status": "opened",
+      "external_reference": "ext-ref-001",
+      "preference_id": "843382748-18d90a57-a4ce-4718",
+      "total_amount": 58.80,
+      "date_created": "2024-01-15T10:30:00.000-03:00"
+    }
+  ],
+  "total": 1,
+  "next_offset": 0
+}

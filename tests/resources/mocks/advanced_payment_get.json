@@ -1,0 +1,32 @@
+{
+  "id": 999,
+  "status": "approved",
+  "status_detail": "accredited",
+  "application_id": "app-001",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T10:30:01.000-03:00",
+  "payer": {
+    "id": "123456789",
+    "email": "test_user@testuser.com",
+    "identification": {"type": "CPF", "number": "19119119100"}
+  },
+  "payments": [
+    {
+      "id": 1001,
+      "status": "approved",
+      "payment_method_id": "visa",
+      "transaction_amount": 100.0,
+      "installments": 1,
+      "token": "token-001"
+    }
+  ],
+  "disbursements": [
+    {
+      "id": 2001,
+      "collector_id": 843382748,
+      "amount": 100.0,
+      "external_reference": "ref-001",
+      "status": "approved"
+    }
+  ]
+}

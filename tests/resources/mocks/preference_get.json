@@ -1,0 +1,39 @@
+{
+  "id": "843382748-18d90a57-a4ce-4718-bc17-1234567890",
+  "init_point": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=843382748-18d90a57-a4ce-4718-bc17-1234567890",
+  "items": [
+    {
+      "id": "item-001",
+      "title": "Point Mini",
+      "description": "Maquininha BT",
+      "quantity": 1,
+      "unit_price": 58.80,
+      "currency_id": "BRL"
+    }
+  ],
+  "payer": {
+    "name": "Test",
+    "surname": "User",
+    "email": "test_user@testuser.com"
+  },
+  "payment_methods": {
+    "installments": 12,
+    "excluded_payment_types": []
+  },
+  "back_urls": {
+    "success": "https://example.com/success",
+    "failure": "https://example.com/failure",
+    "pending": "https://example.com/pending"
+  },
+  "external_reference": "MP-PREF-001",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "last_updated": "2024-01-15T10:30:00.000-03:00",
+  "total_amount": 58.80,
+  "expires": false,
+  "expiration_date_from": null,
+  "expiration_date_to": null,
+  "collector_id": 843382748,
+  "client_id": "12345",
+  "marketplace": "NONE",
+  "marketplace_fee": 0.0
+}

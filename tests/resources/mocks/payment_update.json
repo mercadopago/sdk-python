@@ -1,0 +1,9 @@
+{
+  "id": 17014025134,
+  "status": "cancelled",
+  "status_detail": "by_collector",
+  "date_last_updated": "2024-01-15T11:00:00.000-03:00",
+  "transaction_amount": 58.80,
+  "payment_method_id": "visa",
+  "currency_id": "BRL"
+}
