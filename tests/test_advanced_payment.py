@@ -30,7 +30,8 @@ class TestAdvancedPayment(BaseClientTest):
         self.mock_post(fixture, status=201)
         advanced_payment_object = {
             "application_id": "app-001",
-            "payments": [{"payment_method_id": "visa", "token": "token-001", "transaction_amount": 100.0, "installments": 1}],
+            "payments": [{"payment_method_id": "visa", "token": "token-001",
+                          "transaction_amount": 100.0, "installments": 1}],
             "disbursements": [{"collector_id": 843382748, "amount": 100.0, "external_reference": "ref-001"}],
             "payer": {"email": "test_user@testuser.com"},
         }

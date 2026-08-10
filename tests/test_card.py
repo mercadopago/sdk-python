@@ -62,7 +62,8 @@ class TestCard(BaseClientTest):
     def test_update(self):
         fixture = self.load_fixture("card_update.json")
         self.mock_put(fixture)
-        result = self.sdk.card().update("1068193981-pXRewrKqlP6pnn", "1562188766852", {"expiration_year": 2030})
+        result = self.sdk.card().update(
+            "1068193981-pXRewrKqlP6pnn", "1562188766852", {"expiration_year": 2030})
         self.assertEqual(200, result["status"])
         resp = result["response"]
         self.assertEqual("1562188766852", resp["id"])

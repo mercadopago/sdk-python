@@ -33,7 +33,8 @@ class TestPreApproval(BaseClientTest):
         self.mock_post(fixture, status=201)
         preapproval_object = {
             "reason": "Monthly subscription",
-            "auto_recurring": {"frequency": 1, "frequency_type": "months", "transaction_amount": 29.90, "currency_id": "BRL"},
+            "auto_recurring": {"frequency": 1, "frequency_type": "months",
+                               "transaction_amount": 29.90, "currency_id": "BRL"},
             "payer_email": "test_user@testuser.com",
             "back_url": "https://example.com/back",
         }
