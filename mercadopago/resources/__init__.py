@@ -14,6 +14,7 @@ from mercadopago.resources.customer import Customer
 from mercadopago.resources.disbursement_refund import DisbursementRefund
 from mercadopago.resources.identification_type import IdentificationType
 from mercadopago.resources.invoice import Invoice
+from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.merchant_order import MerchantOrder
 from mercadopago.resources.oauth import OAuth
 from mercadopago.resources.order import Order
@@ -35,18 +36,6 @@ from mercadopago.resources.order_integration_data import (
     OrderIntegrationData,
     OrderSponsor,
 )
-from mercadopago.resources.item import ItemRequest
-from mercadopago.resources.payer import (
-    PayerAddress,
-    PayerIdentification,
-    PayerPhone,
-    PayerRequest,
-)
-from mercadopago.resources.shipment import (
-    ShipmentAddress,
-    ShipmentFreeMethod,
-    ShipmentRequest,
-)
 from mercadopago.resources.order_stored_credential import OrderStoredCredential
 from mercadopago.resources.order_subscription_data import (
     OrderInvoicePeriod,
@@ -59,6 +48,12 @@ from mercadopago.resources.order_transaction import (
     OrderTransactionRequest,
 )
 from mercadopago.resources.order_transaction_security import OrderTransactionSecurity
+from mercadopago.resources.payer import (
+    PayerAddress,
+    PayerIdentification,
+    PayerPhone,
+    PayerRequest,
+)
 from mercadopago.resources.payment import Payment
 from mercadopago.resources.payment_methods import PaymentMethods
 from mercadopago.resources.plan import Plan
@@ -66,6 +61,11 @@ from mercadopago.resources.point import Point
 from mercadopago.resources.preapproval import PreApproval
 from mercadopago.resources.preference import Preference
 from mercadopago.resources.refund import Refund
+from mercadopago.resources.shipment import (
+    ShipmentAddress,
+    ShipmentFreeMethod,
+    ShipmentRequest,
+)
 from mercadopago.resources.subscription import Subscription
 from mercadopago.resources.user import User
 

@@ -9,7 +9,10 @@ The plain dict path continues to work unchanged; these dataclasses are
 purely additive.
 """
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import (
+    List,
+    Optional,
+)
 
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_stored_credential import OrderStoredCredential

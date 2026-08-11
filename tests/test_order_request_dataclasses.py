@@ -12,6 +12,7 @@ import unittest
 
 import mercadopago
 from mercadopago.http import HttpClient
+from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_create import (
     OrderCreateRequest,
@@ -20,18 +21,6 @@ from mercadopago.resources.order_create import (
 from mercadopago.resources.order_integration_data import (
     OrderIntegrationData,
     OrderSponsor,
-)
-from mercadopago.resources.item import ItemRequest
-from mercadopago.resources.payer import (
-    PayerAddress,
-    PayerIdentification,
-    PayerPhone,
-    PayerRequest,
-)
-from mercadopago.resources.shipment import (
-    ShipmentAddress,
-    ShipmentFreeMethod,
-    ShipmentRequest,
 )
 from mercadopago.resources.order_stored_credential import OrderStoredCredential
 from mercadopago.resources.order_subscription_data import (
@@ -45,6 +34,17 @@ from mercadopago.resources.order_transaction import (
     OrderTransactionRequest,
 )
 from mercadopago.resources.order_transaction_security import OrderTransactionSecurity
+from mercadopago.resources.payer import (
+    PayerAddress,
+    PayerIdentification,
+    PayerPhone,
+    PayerRequest,
+)
+from mercadopago.resources.shipment import (
+    ShipmentAddress,
+    ShipmentFreeMethod,
+    ShipmentRequest,
+)
 
 
 class _CapturingHttpClient(HttpClient):
