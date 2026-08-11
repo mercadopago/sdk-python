@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2026-08-11
+
+### Changed
+- **Item and shipment classes**: renamed to generic classes without `Order` prefix ([#145](https://github.com/mercadopago/sdk-python/pull/145))
+- **Payer classes**: consolidated into a single generic `payer.py` ([#145](https://github.com/mercadopago/sdk-python/pull/145))
+
+### CI
+- Add Python 3.13 and 3.14 to CI matrix ([#145](https://github.com/mercadopago/sdk-python/pull/145))
+- Drop Python 3.9 from CI matrix — not supported by this SDK ([#145](https://github.com/mercadopago/sdk-python/pull/145))
+- Standardize CI/CD workflows ([#145](https://github.com/mercadopago/sdk-python/pull/145))
+
 ## [3.4.0] - 2026-08-04
 
 ### Added
