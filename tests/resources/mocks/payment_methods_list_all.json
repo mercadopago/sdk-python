@@ -1,0 +1,1 @@
+[{"id": "visa", "name": "Visa", "payment_type_id": "credit_card", "status": "active"}, {"id": "master", "name": "Mastercard", "payment_type_id": "credit_card", "status": "active"}]

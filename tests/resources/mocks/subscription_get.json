@@ -1,0 +1,19 @@
+{
+  "id": "2c938084726fca480172750000000003",
+  "payer_id": 123456789,
+  "payer_email": "test_user@testuser.com",
+  "preapproval_plan_id": "2c938084726fca480172750000000002",
+  "reason": "Monthly subscription",
+  "external_reference": "sub-ext-001",
+  "status": "authorized",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "last_modified": "2024-01-15T10:30:00.000-03:00",
+  "auto_recurring": {
+    "frequency": 1,
+    "frequency_type": "months",
+    "transaction_amount": 29.90,
+    "currency_id": "BRL"
+  },
+  "next_payment_date": "2024-02-15T10:30:00.000-03:00",
+  "payment_method_id": "master"
+}

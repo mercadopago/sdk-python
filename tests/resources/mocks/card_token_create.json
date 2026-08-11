@@ -1,0 +1,13 @@
+{
+  "id": "a78sd6f1a9s8d7f1a",
+  "first_six_digits": "503143",
+  "last_four_digits": "6351",
+  "expiration_month": 11,
+  "expiration_year": 2030,
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_due": "2024-01-15T12:30:00.000-03:00",
+  "luhn_validation": true,
+  "status": "active",
+  "card_id": null,
+  "cardholder": {"name": "APRO", "identification": {"type": "CPF", "number": "19119119100"}}
+}

@@ -1,0 +1,47 @@
+{
+  "id": 17014025134,
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_approved": "2024-01-15T10:30:01.000-03:00",
+  "date_last_updated": "2024-01-15T10:30:01.000-03:00",
+  "date_of_expiration": null,
+  "money_release_date": "2024-01-29T10:30:01.000-03:00",
+  "operation_type": "regular_payment",
+  "issuer_id": "24",
+  "payment_method_id": "visa",
+  "payment_type_id": "credit_card",
+  "status": "approved",
+  "status_detail": "accredited",
+  "currency_id": "BRL",
+  "description": "Point Mini",
+  "transaction_amount": 58.80,
+  "transaction_amount_refunded": 0.0,
+  "coupon_amount": 0.0,
+  "captured": true,
+  "binary_mode": false,
+  "installments": 1,
+  "statement_descriptor": "MercadoPago",
+  "processing_mode": "aggregator",
+  "external_reference": "MP0001",
+  "notification_url": null,
+  "payer": {
+    "id": "123456789",
+    "email": "test_user@testuser.com",
+    "identification": {"type": "CPF", "number": "19119119100"},
+    "type": "customer"
+  },
+  "metadata": {},
+  "additional_info": {},
+  "transaction_details": {
+    "net_received_amount": 56.86,
+    "total_paid_amount": 58.80,
+    "overpaid_amount": 0.0,
+    "installment_amount": 58.80
+  },
+  "card": {
+    "first_six_digits": "503143",
+    "last_four_digits": "6351",
+    "expiration_month": 11,
+    "expiration_year": 2030,
+    "cardholder": {"name": "APRO"}
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": 17014025134,
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_approved": null,
+  "date_last_updated": "2024-01-15T10:30:00.000-03:00",
+  "operation_type": "regular_payment",
+  "issuer_id": "24",
+  "payment_method_id": "visa",
+  "payment_type_id": "credit_card",
+  "status": "pending",
+  "status_detail": "pending_waiting_payment",
+  "currency_id": "BRL",
+  "description": "Point Mini",
+  "transaction_amount": 58.80,
+  "transaction_amount_refunded": 0.0,
+  "coupon_amount": 0.0,
+  "captured": false,
+  "binary_mode": false,
+  "installments": 1,
+  "processing_mode": "aggregator",
+  "external_reference": "MP0001",
+  "payer": {
+    "email": "test_user@testuser.com",
+    "identification": {"type": "CPF", "number": "19119119100"}
+  },
+  "transaction_details": {
+    "net_received_amount": 0.0,
+    "total_paid_amount": 58.80,
+    "overpaid_amount": 0.0,
+    "installment_amount": 58.80
+  }
+}

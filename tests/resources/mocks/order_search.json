@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": "01JKXTQ2AZVE0RANCPYA6WBNPW",
+      "status": "processed",
+      "total_amount": "1000.00",
+      "created_date": "2024-01-15T10:30:00.000Z",
+      "payer": {"email": "test_user@testuser.com"}
+    }
+  ],
+  "paging": {"total": 1, "limit": 10, "offset": 0}
+}

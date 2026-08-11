@@ -1,0 +1,17 @@
+{
+  "id": "843382748-18d90a57-a4ce-4718-bc17-1234567890",
+  "init_point": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=843382748-18d90a57-a4ce-4718-bc17-1234567890",
+  "items": [
+    {
+      "id": "item-002",
+      "title": "Updated Item",
+      "quantity": 1,
+      "unit_price": 30.0,
+      "currency_id": "BRL"
+    }
+  ],
+  "external_reference": "MP-PREF-001",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "last_updated": "2024-01-15T11:00:00.000-03:00",
+  "collector_id": 843382748
+}

@@ -21,6 +21,7 @@ Demonstrates three scenarios that use the ``transaction_data`` block with
 """
 import mercadopago
 
+
 sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
 
 

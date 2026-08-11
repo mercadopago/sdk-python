@@ -1,16 +1,20 @@
-"""
-    Module: test_user
-"""
-import os
+"""Unit tests for the User resource using a mock HTTP client."""
 import unittest
-import mercadopago
+
+from tests.base_client_test import BaseClientTest
 
 
-class TestUser(unittest.TestCase):
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+class TestUser(BaseClientTest):
+    """Test Module: User"""
 
-    def test_find_user(self):
-        self.assertEqual(self.sdk.user().get()["status"], 200)
+    def test_get(self):
+        fixture = self.load_fixture("user_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.user().get()
+        self.assertEqual(200, result["status"])
+        self.assertEqual(12345, result["response"]["id"])
+        self.assertEqual("test@example.com", result["response"]["email"])
+        self.mock_http.get.assert_called_once()
 
 
 if __name__ == "__main__":

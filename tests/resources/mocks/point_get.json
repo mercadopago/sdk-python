@@ -1,0 +1,9 @@
+{
+  "id": "intent-001",
+  "state": "FINISHED",
+  "device_id": "device-001",
+  "amount": 58.80,
+  "description": "Test payment",
+  "payment": {"installments": 1, "type": "credit_card"},
+  "additional_info": {"external_reference": "ref-001"}
+}

@@ -4,6 +4,7 @@ Demonstrates both the first payment (storing the card credential) and a
 subsequent recurring charge (referencing the previous transaction).
 """
 import dataclasses
+
 import mercadopago
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_stored_credential import OrderStoredCredential
@@ -12,6 +13,7 @@ from mercadopago.resources.order_subscription_data import (
     OrderSubscriptionData,
     OrderSubscriptionSequence,
 )
+
 
 sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
 

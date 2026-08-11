@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "id": "1068193981-pXRewrKqlP6pnn",
+      "email": "test_user@testuser.com",
+      "first_name": "Test",
+      "last_name": "User",
+      "date_created": "2024-01-15T10:30:00.000-03:00"
+    }
+  ],
+  "paging": {"total": 1, "limit": 30, "offset": 0}
+}

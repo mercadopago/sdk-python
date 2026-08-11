@@ -20,12 +20,12 @@ from mercadopago.resources.order import Order
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from mercadopago.resources.order_checkout_pro import (
     OrderCheckoutProConfig,
+    OrderCheckoutProDict,
     OrderCheckoutProInstallments,
     OrderCheckoutProInterestFree,
     OrderCheckoutProOnlineConfig,
     OrderCheckoutProPaymentMethod,
     OrderCheckoutProTrack,
-    OrderCheckoutProDict,
 )
 from mercadopago.resources.order_create import (
     OrderCreateRequest,

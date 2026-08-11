@@ -1,333 +1,150 @@
-"""
-    Module: test_order
-"""
-import os
+"""Unit tests for the Order resource using a mock HTTP client."""
 import unittest
-import random
-from datetime import datetime, timezone, timedelta
-from time import sleep
 
-import mercadopago
-from tests import api_call_with_retry
+from tests.base_client_test import BaseClientTest
 
 
-class TestOrder(unittest.TestCase):
-    """
-    Test Module: Order
-    """
-    sdk = mercadopago.SDK(os.environ['ACCESS_TOKEN'])
+class TestOrder(BaseClientTest):
+    """Test Module: Order"""
 
-    def create_visa_test_card(self, status="APRO"):
-        card_token_object = {
-            "card_number": "4074090000000004",
-            "security_code": "123",
-            "expiration_year": "2030",
-            "expiration_month": "12",
-            "cardholder": {"name": status}
-        }
-        card_token_created = self.sdk.card_token().create(card_token_object)
-        return card_token_created["response"]["id"]
-
-    def create_master_test_card(self, status="APRO"):
-        return self.create_visa_test_card(status)
-
-    def create_order_canceled_or_captured(self, card_token_id):
-        random_email_id = random.randint(100000, 999999)
-        order_object_cc = {
-            "type": "online",
-            "processing_mode": "automatic",
-            "total_amount": "1000.00",
-            "external_reference": "ext_ref_1234",
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            },
-            "capture_mode": "manual",
-            "transactions": {
-                "payments": [
-                    {
-                        "amount": "1000.00",
-                        "payment_method": {
-                            "id": "visa",
-                            "type": "credit_card",
-                            "token": card_token_id,
-                            "installments": 1
-                        }
-                    }
-                ]
-            }
-        }
-        order_created = self.sdk.order().create(order_object_cc)
-        if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Failed to create order: {order_created}")
-        return order_created["response"]["id"]
-
-    def create_order_builder_mode(self):
-        random_email_id = random.randint(100000, 999999)
-        order_object_cc = {
-            "type": "online",
-            "processing_mode": "manual",
-            "total_amount": "1000.00",
-            "external_reference": "ext_ref_1234",
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            },
-        }
-        order_created = self.sdk.order().create(order_object_cc)
-        if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Failed to create order: {order_created}")
-        return order_created["response"]["id"]
-
-    def create_order_oneshot_mode_complete(self, card_token_id):
-        random_email_id = random.randint(100000, 999999)
-        order_mode_oneshot_complete = {
-            "type": "online",
-            "processing_mode": "automatic",
-            "total_amount": "1000.00",
-            "external_reference": "ext_ref_1234",
-            "transactions": {
-                "payments": [
-                    {
-                        "amount": "1000.00",
-                        "payment_method": {
-                            "id": "visa",
-                            "type": "credit_card",
-                            "token": card_token_id,
-                            "installments": 1
-                        }
-                    }
-                ]
-            },
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            }
-        }
-
-        order_created = self.sdk.order().create(order_mode_oneshot_complete)
-
-
-        if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Failed to create order: {order_created}")
-        return order_created["response"]
-
-    def create_order_builder_mode_complete(self, card_token_id):
-        random_email_id = random.randint(100000, 999999)
-        order_mode_builder_complete = {
-            "type": "online",
-            "processing_mode": "manual",
-            "total_amount": "1000.00",
-            "external_reference": "ext_ref_1234",
-            "transactions": {
-                "payments": [
-                    {
-                        "amount": "1000.00",
-                        "payment_method": {
-                            "id": "visa",
-                            "type": "credit_card",
-                            "token": card_token_id,
-                            "installments": 12
-                        }
-                    }
-                ]
-            },
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            }
-        }
-
-        order_created = self.sdk.order().create(order_mode_builder_complete)
-
-
-        if order_created.get("status") != 201 or not order_created.get("response"):
-            self.fail(f"Failed to create order: {order_created}")
-        return order_created["response"]
-
-    def test_create_order_and_get_by_id(self):
-        """
-        Test Function: Create an Order and Get an Order by ID
-        """
-        card_token_id = self.create_master_test_card()
-        random_email_id = random.randint(100000, 999999)
+    def test_create(self):
+        fixture = self.load_fixture("order_create.json")
+        self.mock_post(fixture, status=201)
         order_object = {
             "type": "online",
             "processing_mode": "automatic",
             "total_amount": "1000.00",
-            "external_reference": "ext_ref_1234",
-            "transactions": {
-                "payments": [
-                    {
-                        "amount": "1000.00",
-                        "payment_method": {
-                            "id": "visa",
-                            "type": "credit_card",
-                            "token": card_token_id,
-                            "installments": 1
-                        }
-                    }
-                ]
-            },
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            }
+            "payer": {"email": "test_user@testuser.com"},
         }
+        result = self.sdk.order().create(order_object)
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["id"])
+        self.assertEqual("online", resp["type"])
+        self.assertEqual("automatic", resp["processing_mode"])
+        self.assertEqual("processed", resp["status"])
+        self.assertEqual("1000.00", resp["total_amount"])
+        self.assertIsInstance(resp["items"], list)
+        self.assertEqual("Point Mini", resp["items"][0]["title"])
+        self.assertIn("transactions", resp)
+        self.assertIn("payments", resp["transactions"])
+        self.assertEqual("BR", resp["country_code"])
+        self.mock_http.post.assert_called_once()
 
-        order_created = self.sdk.order().create(order_object)
-        self.assertEqual(order_created["status"], 201)
-        self.assertEqual(order_created["response"]["status"], "processed")
+    def test_get(self):
+        fixture = self.load_fixture("order_get.json")
+        self.mock_get(fixture)
+        result = self.sdk.order().get("01JKXTQ2AZVE0RANCPYA6WBNPW")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["id"])
+        self.assertEqual("processed", resp["status"])
+        self.assertEqual("fully_processed", resp["status_detail"])
+        self.assertEqual("1000.00", resp["total_amount"])
+        self.assertEqual("1000.00", resp["total_paid_amount"])
+        self.assertIn("payer", resp)
+        self.assertEqual("test_user@testuser.com", resp["payer"]["email"])
+        self.assertIsInstance(resp["items"], list)
+        self.assertIn("transactions", resp)
+        self.assertIn("payments", resp["transactions"])
+        self.assertEqual("pay-001", resp["transactions"]["payments"][0]["id"])
+        self.assertIn("created_date", resp)
+        self.assertIn("last_updated_date", resp)
+        self.mock_http.get.assert_called_once()
 
-        order_get =  self.sdk.order().get(order_created["response"]["id"])
-        self.assertEqual(order_get["status"], 200)
+    def test_get_raises_for_non_string(self):
+        with self.assertRaises(ValueError):
+            self.sdk.order().get(123)
 
-    def test_process_order(self):
-        card_token_id = self.create_master_test_card()
-        random_email_id = random.randint(100000, 999999)
-        order_object = {
-            "type": "online",
-            "processing_mode": "manual",
-            "external_reference": "ext_ref_1234",
-            "total_amount": "1000.00",
-            "transactions": {
-                "payments": [
-                    {
-                        "amount": "1000.00",
-                        "payment_method": {
-                            "id": "visa",
-                            "type": "credit_card",
-                            "token": card_token_id,
-                            "installments": 1
-                        }
-                    }
-                ]
-            },
-            "payer": {
-                "email": f"test_payer_{random_email_id}@testuser.com"
-            }
-        }
+    def test_process(self):
+        fixture = self.load_fixture("order_process.json")
+        self.mock_post(fixture, status=200)
+        result = self.sdk.order().process("01JKXTQ2AZVE0RANCPYA6WBNPW")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["id"])
+        self.assertEqual("processed", resp["status"])
+        self.mock_http.post.assert_called_once()
 
-        order_created = self.sdk.order().create(order_object)
-        order_id = order_created["response"]["id"]
-        process_response = self.sdk.order().process(order_id)
-        if process_response.get("status") != 200 or not process_response.get("response"):
-            self.fail(f"Failed to create an order: {process_response}")
-        self.assertEqual(process_response["status"], 200,
-        "Invalid HTTP status when processing the order")
+    def test_process_raises_for_non_string(self):
+        with self.assertRaises(ValueError):
+            self.sdk.order().process(123)
 
-    def test_cancel_order(self):
-        card_token_id = self.create_master_test_card()
-        order_id = self.create_order_canceled_or_captured(card_token_id)
-        order_canceled = api_call_with_retry(
-            lambda: self.sdk.order().cancel(order_id), expected_status=200
-        )
-        self.assertEqual(order_canceled["status"], 200)
-        self.assertEqual(order_canceled["response"]["status"], "canceled")
+    def test_cancel(self):
+        fixture = self.load_fixture("order_cancel.json")
+        self.mock_post(fixture, status=200)
+        result = self.sdk.order().cancel("01JKXTQ2AZVE0RANCPYA6WBNPW")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["id"])
+        self.assertEqual("canceled", resp["status"])
+        self.mock_http.post.assert_called_once()
 
-    def test_capture_order(self):
-        card_token_id = self.create_master_test_card()
-        order_id = self.create_order_canceled_or_captured(card_token_id)
-        order_captured = self.sdk.order().capture(order_id)
-        self.assertEqual(order_captured["status"], 200)
-        self.assertEqual(order_captured["response"]["status"], "processed")
+    def test_capture(self):
+        fixture = self.load_fixture("order_capture.json")
+        self.mock_post(fixture, status=200)
+        result = self.sdk.order().capture("01JKXTQ2AZVE0RANCPYA6WBNPW")
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["id"])
+        self.assertEqual("processed", resp["status"])
+        self.mock_http.post.assert_called_once()
+
+    def test_refund(self):
+        fixture = self.load_fixture("order_refund.json")
+        self.mock_post(fixture, status=201)
+        result = self.sdk.order().refund("01JKXTQ2AZVE0RANCPYA6WBNPW")
+        self.assertEqual(201, result["status"])
+        resp = result["response"]
+        self.assertEqual("approved", resp["status"])
+        self.assertIn("date_created", resp)
+        self.mock_http.post.assert_called_once()
+
+    def test_refund_with_object(self):
+        fixture = self.load_fixture("order_refund.json")
+        self.mock_post(fixture, status=201)
+        refund_object = {"transactions": [{"id": "tx-001", "amount": "25.00"}]}
+        result = self.sdk.order().refund("01JKXTQ2AZVE0RANCPYA6WBNPW", refund_object)
+        self.assertEqual(201, result["status"])
+        self.mock_http.post.assert_called_once()
+
+    def test_search(self):
+        fixture = self.load_fixture("order_search.json")
+        self.mock_get(fixture)
+        result = self.sdk.order().search()
+        self.assertEqual(200, result["status"])
+        resp = result["response"]
+        self.assertIn("data", resp)
+        self.assertIsInstance(resp["data"], list)
+        self.assertEqual("01JKXTQ2AZVE0RANCPYA6WBNPW", resp["data"][0]["id"])
+        self.mock_http.get.assert_called_once()
 
     def test_create_transaction(self):
-        card_token_id = self.create_master_test_card()
-        order_id = self.create_order_builder_mode()
+        self.mock_post({"id": "tx-001"}, status=201)
         transaction_object = {
-            "payments": [
-                {
-                    "amount": "1000.00",
-                    "payment_method": {
-                        "id": "master",
-                        "type": "credit_card",
-                        "token": card_token_id,
-                        "installments": 12
-                    }
-                }
-            ]
+            "payments": [{"amount": "1000.00", "payment_method": {"id": "visa"}}]
         }
-
-        transaction_created = self.sdk.order().create_transaction(order_id, transaction_object)
-        self.assertEqual(transaction_created["status"], 201)
+        result = self.sdk.order().create_transaction("01JKXTQ2AZVE0RANCPYA6WBNPW", transaction_object)
+        self.assertEqual(201, result["status"])
+        self.mock_http.post.assert_called_once()
 
     def test_update_transaction(self):
-        card_token_id = self.create_master_test_card()
-        order_created = self.create_order_builder_mode_complete(card_token_id)
-        order_id = order_created["id"]
-        transaction_id = order_created["transactions"]["payments"][0]["id"]
-        new_card_token_id = self.create_visa_test_card()
-
-        transaction_update = {
-            "payment_method": {
-                "id": "visa",
-                "type": "credit_card",
-                "token": new_card_token_id,
-                "installments": 5
-            }
-        }
-
-        transaction_updated = self.sdk.order().update_transaction(order_id, transaction_id,
-         transaction_update)
-        self.assertEqual(transaction_updated["status"], 200)
-
-    def test_partial_refund_transaction(self):
-        card_token_id = self.create_master_test_card()
-        order_created = self.create_order_oneshot_mode_complete(card_token_id)
-        order_id = order_created["id"]
-        transaction_id = order_created["transactions"]["payments"][0]["id"]
-
-        transaction_refund = {
-          "transactions": [
-            {
-              "id": transaction_id,
-              "amount": "25.00"
-            }
-          ]
-        }
-
-        transaction_refunded = api_call_with_retry(
-            lambda: self.sdk.order().refund_transaction(order_id, transaction_refund),
-            expected_status=201
+        self.mock_put({"id": "tx-001"})
+        result = self.sdk.order().update_transaction(
+            "01JKXTQ2AZVE0RANCPYA6WBNPW", "tx-001", {"payment_method": {"id": "master"}}
         )
-        self.assertIn(transaction_refunded["status"], [201],
-                      f"Unexpected status code for refund: {transaction_refunded['status']}."
-                      f" Response: {transaction_refunded}")
-
-    def test_refund_transaction(self):
-        card_token_id = self.create_master_test_card()
-        order_created = self.create_order_oneshot_mode_complete(card_token_id)
-        order_id = order_created["id"]
-        sleep(3)
-        transaction_refunded = api_call_with_retry(
-            lambda: self.sdk.order().refund_transaction(order_id), expected_status=201
-        )
-        self.assertIn(transaction_refunded["status"], [201],
-                      f"Unexpected status code for refund: {transaction_refunded['status']}."
-                      f" Response: {transaction_refunded}")
+        self.assertEqual(200, result["status"])
+        self.mock_http.put.assert_called_once()
 
     def test_delete_transaction(self):
-        card_token_id = self.create_master_test_card()
-        order_created = self.create_order_builder_mode_complete(card_token_id)
-        order_id = order_created["id"]
-        transaction_id = order_created["transactions"]["payments"][0]["id"]
-        sleep(3)
+        self.mock_delete(None, status=204)
+        result = self.sdk.order().delete_transaction("01JKXTQ2AZVE0RANCPYA6WBNPW", "tx-001")
+        self.assertEqual(204, result["status"])
+        self.mock_http.delete.assert_called_once()
 
-        transaction_deleted = self.sdk.order().delete_transaction(order_id, transaction_id)
-        self.assertEqual(transaction_deleted["status"], 204)
-
-    def test_search_order(self):
-        """
-        Test Function: Search Orders
-        """
-        now = datetime.now(timezone.utc)
-        begin_date = (now - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
-        end_date = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        search_response = self.sdk.order().search(filters={
-            "page": 1,
-            "page_size": 10,
-            "begin_date": begin_date,
-            "end_date": end_date,
-        })
-        self.assertEqual(search_response["status"], 200)
-        self.assertIn("data", search_response["response"])
-        self.assertIn("paging", search_response["response"])
+    def test_create_raises_for_non_dict(self):
+        with self.assertRaises(ValueError):
+            self.sdk.order().create("not-a-dict")
 
 
 if __name__ == "__main__":

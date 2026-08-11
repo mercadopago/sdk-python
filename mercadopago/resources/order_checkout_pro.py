@@ -1,6 +1,16 @@
 """Dataclasses for Checkout Pro fields in order requests."""
-from dataclasses import asdict, dataclass, field, is_dataclass
-from typing import Any, Dict, List, Optional
+from dataclasses import (
+    asdict,
+    dataclass,
+    field,
+    is_dataclass,
+)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+)
 
 
 def OrderCheckoutProDict(value):  # pylint: disable=invalid-name

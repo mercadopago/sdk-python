@@ -1,0 +1,12 @@
+{
+  "id": "2c938084726fca480172750000000002",
+  "reason": "Monthly Plan - Basic",
+  "status": "inactive",
+  "auto_recurring": {
+    "frequency": 1,
+    "frequency_type": "months",
+    "transaction_amount": 29.90,
+    "currency_id": "BRL"
+  },
+  "last_modified": "2024-01-15T11:00:00.000-03:00"
+}

@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "id": "2c938084726fca480172750000000000",
+      "status": "authorized",
+      "reason": "Monthly subscription",
+      "payer_email": "test_user@testuser.com",
+      "date_created": "2024-01-15T10:30:00.000-03:00"
+    }
+  ],
+  "paging": {"total": 1, "limit": 30, "offset": 0}
+}

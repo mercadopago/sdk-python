@@ -1,0 +1,16 @@
+{
+  "id": "1068193981-pXRewrKqlP6pnn",
+  "email": "test_user@testuser.com",
+  "first_name": "Test",
+  "last_name": "User",
+  "phone": {"area_code": "11", "number": "987654321"},
+  "identification": {"type": "CPF", "number": "19119119100"},
+  "address": {"zip_code": "01313000", "street_name": "Av Paulista", "street_number": "1000"},
+  "date_registered": "2024-01-01T00:00:00.000-03:00",
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T10:30:00.000-03:00",
+  "description": "Test customer",
+  "metadata": {},
+  "cards": [],
+  "default_card": null
+}

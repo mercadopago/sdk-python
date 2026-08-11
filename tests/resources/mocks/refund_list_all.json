@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1091618291,
+    "payment_id": 17014025134,
+    "amount": 58.80,
+    "date_created": "2024-01-16T09:00:00.000-03:00",
+    "source": {"id": "123456789", "name": "Test User", "type": "operator"},
+    "refund_mode": "standard",
+    "status": "approved"
+  }
+]
