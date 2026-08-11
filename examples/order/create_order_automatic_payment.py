@@ -116,7 +116,7 @@ recurring_order = {
                         reason="recurring",
                         store_payment_method=False,
                         first_payment=False,
-                        prev_transaction_ref=first_transaction_id,  # required
+                        previous_transaction_reference=first_transaction_id,  # required
                     )
                 ),
                 "subscription_data": dataclasses.asdict(
