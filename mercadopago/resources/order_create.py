@@ -23,9 +23,9 @@ from typing import (
 
 from mercadopago.resources.item import ItemRequest
 from mercadopago.resources.order_integration_data import OrderIntegrationData
-from mercadopago.resources.shipment import ShipmentRequest
 from mercadopago.resources.order_transaction import OrderTransactionRequest
 from mercadopago.resources.payer import PayerRequest
+from mercadopago.resources.shipment import ShipmentRequest
 
 
 def _filter_none(value):
