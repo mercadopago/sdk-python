@@ -8,6 +8,9 @@ on:
 jobs:
   upload:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -24,12 +27,27 @@ jobs:
           python3 -m pip install setuptools build twine
           python3 -m pip install .
 
-      # Build and upload to PyPI
-      - name: "Builds and uploads to PyPI"
+      - name: Build distribution
         run: |
           python3 -m build
           python3 -m twine check dist/*
-          python3 -m twine upload dist/*
+
+      - name: Publish to PyPI
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          PYPI_OIDC_AUDIENCE: pypi
+        run: |
+          set -euo pipefail
+
+          oidc_response=$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${PYPI_OIDC_AUDIENCE}")
+          oidc_token=$(jq --raw-output '.value' <<< "${oidc_response}")
+
+          token_response=$(curl --fail-with-body --silent --show-error \
+            -X POST https://pypi.org/_/oidc/mint-token \
+            -H 'Content-Type: application/json' \
+            --data "$(jq --null-input --arg token "${oidc_token}" '{token: $token}')")
+          api_token=$(jq --raw-output '.token' <<< "${token_response}")
+
+          echo "::add-mask::${api_token}"
+          TWINE_USERNAME=__token__ TWINE_PASSWORD="${api_token}" python3 -m twine upload dist/*

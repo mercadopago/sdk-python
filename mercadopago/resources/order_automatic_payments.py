@@ -25,3 +25,4 @@ class OrderAutomaticPayments:
     retries: Optional[int] = None
     schedule_date: Optional[str] = None
     due_date: Optional[str] = None
+    subscription: Optional[dict] = None
