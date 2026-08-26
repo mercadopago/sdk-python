@@ -3,6 +3,7 @@ from dataclasses import asdict
 import unittest
 
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
+
 from tests.base_client_test import BaseClientTest
 
 
