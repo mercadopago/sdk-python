@@ -1,6 +1,8 @@
 """Unit tests for the Order resource using a mock HTTP client."""
 import unittest
+from dataclasses import asdict
 
+from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from tests.base_client_test import BaseClientTest
 
 
@@ -145,6 +147,25 @@ class TestOrder(BaseClientTest):
     def test_create_raises_for_non_dict(self):
         with self.assertRaises(ValueError):
             self.sdk.order().create("not-a-dict")
+
+    def test_automatic_payments_subscription_payload(self):
+        automatic_payments = OrderAutomaticPayments(
+            subscription={
+                "id": "subscription-1",
+                "sequence": {"number": 1, "total": 12},
+                "invoice": {
+                    "id": "invoice-1",
+                    "billing_date": "2026-08-26",
+                    "period": {"interval": 1, "type": "month"},
+                },
+            }
+        )
+
+        payload = asdict(automatic_payments)
+
+        self.assertEqual("subscription-1", payload["subscription"]["id"])
+        self.assertEqual(12, payload["subscription"]["sequence"]["total"])
+        self.assertEqual("month", payload["subscription"]["invoice"]["period"]["type"])
 
 
 if __name__ == "__main__":
