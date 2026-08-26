@@ -1,6 +1,6 @@
 """Unit tests for the Order resource using a mock HTTP client."""
-import unittest
 from dataclasses import asdict
+import unittest
 
 from mercadopago.resources.order_automatic_payments import OrderAutomaticPayments
 from tests.base_client_test import BaseClientTest
