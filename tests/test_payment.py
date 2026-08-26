@@ -32,6 +32,28 @@ class TestPayment(BaseClientTest):
         self.assertEqual("6351", resp["card"]["last_four_digits"])
         self.mock_http.get.assert_called_once()
 
+    def test_get_preserves_expanded_gateway_network_data(self):
+        self.mock_get(
+            {
+                "expanded": {
+                    "gateway": {
+                        "reference": {
+                            "network_data": {
+                                "transaction_id": "ABC123",
+                                "transaction_link_id": "550e8400",
+                            }
+                        }
+                    }
+                }
+            }
+        )
+
+        result = self.sdk.payment().get(17014025134)
+
+        network_data = result["response"]["expanded"]["gateway"]["reference"]["network_data"]
+        self.assertEqual("ABC123", network_data["transaction_id"])
+        self.assertEqual("550e8400", network_data["transaction_link_id"])
+
     def test_search(self):
         fixture = self.load_fixture("payment_search.json")
         self.mock_get(fixture)
