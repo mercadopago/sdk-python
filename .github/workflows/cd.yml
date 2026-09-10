@@ -32,5 +32,22 @@ jobs:
           python3 -m build
           python3 -m twine check dist/*
 
+      - name: Mint PyPI API token via Trusted Publishing (OIDC)
+        id: mint-token
+        run: |
+          oidc_resp=$(curl -sS -f -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=pypi")
+          oidc_token=$(python3 -c "import json,sys; print(json.load(sys.stdin)['value'])" <<< "$oidc_resp")
+
+          mint_resp=$(curl -sS -f -X POST https://pypi.org/_/oidc/mint-token \
+            -H "Content-Type: application/json" \
+            -d "{\"token\": \"${oidc_token}\"}")
+          token=$(python3 -c "import json,sys; print(json.load(sys.stdin)['token'])" <<< "$mint_resp")
+          echo "::add-mask::$token"
+          echo "token=$token" >> "$GITHUB_OUTPUT"
+
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ steps.mint-token.outputs.token }}
+        run: python3 -m twine upload dist/*
