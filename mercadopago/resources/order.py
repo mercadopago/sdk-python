@@ -276,6 +276,34 @@ class Order(MPBase):
             request_options=request_options,
         )
 
+    def get_order_refunds(self, order_id, request_options=None):
+        """Retrieves all refunds associated with an order.
+
+        Queries the GET endpoint to fetch refund information for the specified
+        order. Accepts optional headers (X-Idempotency-Key, X-Product-ID) via
+        request_options.
+
+        Args:
+            order_id: String identifier of the order.
+            request_options: Per-call configuration overrides (can include
+                custom_headers with X-Idempotency-Key and X-Product-ID).
+
+        Raises:
+            ValueError: If *order_id* is not a ``str``.
+
+        Returns:
+            dict: Refund information response containing list of refunds.
+
+        Reference: https://www.mercadopago.com/developers/en/reference/online-payments/checkout-api/get-order-refunds/get
+        """
+        if not isinstance(order_id, str):
+            raise ValueError("Param order_id must be a string")
+
+        return self._get(
+            uri=f"/v1/orders/{self._path_param(order_id)}/refund",
+            request_options=request_options,
+        )
+
     def refund_transaction(self, order_id, transaction_object=None, request_options=None):
         """Refunds an order's transactions.
 
