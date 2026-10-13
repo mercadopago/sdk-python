@@ -4,8 +4,8 @@
   <p><strong>The official Mercado Pago SDK for Python applications.</strong></p>
   <p>Integrate Mercado Pago APIs into your Python application and start receiving payments.</p>
   <p>
-    <a href="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml"><img src=".github/assets/badges/ci.svg" alt="CI workflow" /></a>
-    <a href="#installation"><img src=".github/assets/badges/package.svg" alt="Python package" /></a>
+    <a href="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml"><img src="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI status" /></a>
+    <a href="#installation"><img src=".github/assets/badges/package.svg" alt="PyPI package version" /></a>
     <img src=".github/assets/badges/runtime.svg" alt="Python 3.10 or later" />
     <a href="LICENSE"><img src=".github/assets/badges/license.svg" alt="MIT license" /></a>
   </p>
