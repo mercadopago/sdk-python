@@ -1,13 +1,13 @@
 <div align="center">
-  <img src="assets/mercado-pago.svg" alt="Mercado Pago" width="120" />
+  <img src=".github/assets/mercado-pago.svg" alt="Mercado Pago" width="120" />
   <h1>Mercado Pago SDK for Python</h1>
   <p><strong>The official Mercado Pago SDK for Python applications.</strong></p>
   <p>Integrate Mercado Pago APIs into your Python application and start receiving payments.</p>
   <p>
-    <a href="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml"><img src="assets/badges/ci.svg" alt="CI workflow" /></a>
-    <a href="#installation"><img src="assets/badges/package.svg" alt="Python package" /></a>
-    <img src="assets/badges/runtime.svg" alt="Python 3.10 or later" />
-    <a href="LICENSE"><img src="assets/badges/license.svg" alt="MIT license" /></a>
+    <a href="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml"><img src=".github/assets/badges/ci.svg" alt="CI workflow" /></a>
+    <a href="#installation"><img src=".github/assets/badges/package.svg" alt="Python package" /></a>
+    <img src=".github/assets/badges/runtime.svg" alt="Python 3.10 or later" />
+    <a href="LICENSE"><img src=".github/assets/badges/license.svg" alt="MIT license" /></a>
   </p>
   <p>
     <a href="#installation">Installation</a> ·

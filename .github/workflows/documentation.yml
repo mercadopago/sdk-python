@@ -5,13 +5,13 @@ on:
     paths:
       - '**/*.md'
       - 'llms.txt'
-      - 'assets/**'
+      - '.github/assets/**'
       - '.github/workflows/documentation.yml'
   push:
     paths:
       - '**/*.md'
       - 'llms.txt'
-      - 'assets/**'
+      - '.github/assets/**'
       - '.github/workflows/documentation.yml'
 
 permissions:
