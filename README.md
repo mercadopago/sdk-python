@@ -1,16 +1,29 @@
-# Mercado Pago SDK for Python
+<div align="center">
+  <img src=".github/assets/mercado-pago.svg" alt="Mercado Pago" width="120" />
+  <h1>Mercado Pago SDK for Python</h1>
+  <p><strong>The official Mercado Pago SDK for Python applications.</strong></p>
+  <p>Integrate Mercado Pago APIs into your Python application and start receiving payments.</p>
+  <p>
+    <a href="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml"><img src="https://github.com/mercadopago/sdk-python/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI status" /></a>
+    <a href="#installation"><img src=".github/assets/badges/package.svg" alt="PyPI package version" /></a>
+    <img src=".github/assets/badges/runtime.svg" alt="Python 3.10 or later" />
+    <a href="LICENSE"><img src=".github/assets/badges/license.svg" alt="MIT license" /></a>
+  </p>
+  <p>
+    <a href="#installation">Installation</a> ·
+    <a href="#getting-started">Getting started</a> ·
+    <a href="#documentation">Documentation</a> ·
+    <a href="#contributing">Contributing</a>
+  </p>
+</div>
 
-[![PyPI](https://img.shields.io/pypi/v/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/mercadopago.svg)](https://pypi.python.org/pypi/mercadopago)
-[![APM](https://img.shields.io/apm/l/vim-mode)](https://github.com/mercadopago/sdk-python)
-
-This library provides developers with a simple set of bindings to help you integrate Mercado Pago API to a website and start receiving payments.
+---
 
 ## 💡 Requirements
 
-Python 3.9 or higher.
+Python 3.10 or higher.
 
-## 📲 Installation 
+## 📲 Installation
 
 Run ```pip3 install mercadopago```
 
@@ -68,8 +81,9 @@ fields are omitted from the JSON body automatically, matching the `dict` route.
 
 ```python
 import mercadopago
-from mercadopago.resources.order_create import OrderCreateRequest, OrderPayerRequest
-from mercadopago.resources.order_item import OrderItemRequest
+from mercadopago.resources.order_create import OrderCreateRequest
+from mercadopago.resources.payer import PayerRequest
+from mercadopago.resources.item import ItemRequest
 
 sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
 
@@ -77,8 +91,8 @@ order = OrderCreateRequest(
     type="online",
     total_amount="100.00",
     external_reference="ext_ref_1234",
-    payer=OrderPayerRequest(email="test_user_123456@testuser.com"),
-    items=[OrderItemRequest(title="A book", unit_price="100.00", quantity=1)],
+    payer=PayerRequest(email="test_user_123456@testuser.com"),
+    items=[ItemRequest(title="A book", unit_price="100.00", quantity=1)],
 )
 
 result = sdk.order().create(order)
@@ -132,15 +146,12 @@ result = sdk.payment().create(payment_data, request_options)
 payment = result["response"]
 ```
 
-## 📚 Documentation 
+## 📚 Documentation
 
-Visit our Dev Site for further information regarding:
- - [APIs](https://www.mercadopago.com/developers/en/reference)
- - [Checkout Pro](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-pro/introduction)
- - [Checkout API](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-api/introduction)
- - [Web Tokenize Checkout](https://www.mercadopago.com/developers/en/guides/online-payments/web-tokenize-checkout/introduction)
-
-Check our official code reference to explore all available functionalities.
+- [SDK guides](docs/README.md): configuration, errors, retries, pagination, and webhooks.
+- [Examples](examples/README.md): runnable integration flows supported by this SDK.
+- [API resources](docs/api-resources.md): SDK clients and their common operations.
+- [API reference](https://www.mercadopago.com/developers/en/reference): request fields and response schemas.
 
 ## 🤝 Contributing
 

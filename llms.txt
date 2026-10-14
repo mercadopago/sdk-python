@@ -1,0 +1,36 @@
+# Mercado Pago SDK for Python
+
+Official server-side Python SDK for Mercado Pago APIs.
+
+## Start here
+- [README](README.md)
+- [Documentation index](docs/README.md)
+- [API resources](docs/api-resources.md)
+- [Examples](examples/README.md)
+
+## Recommended integration path
+- [Orders-first examples](examples/README.md#orders-first)
+- [Retries and idempotency](docs/retries-and-idempotency.md)
+- [Error handling](docs/error-handling.md)
+- [Production checklist](docs/production-checklist.md)
+
+## Operational guides
+- [Configuration](docs/configuration.md)
+- [Error handling](docs/error-handling.md)
+- [Retries and idempotency](docs/retries-and-idempotency.md)
+- [Pagination](docs/pagination.md)
+- [Webhook validation](docs/webhooks.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [Production checklist](docs/production-checklist.md)
+
+## Supported examples
+- [Example catalog](examples/README.md)
+- [Orders](mercadopago/examples/order/)
+- [Checkout Pro preferences](mercadopago/examples/preference/)
+- [OAuth](mercadopago/examples/oauth/)
+- [Automatic payments](examples/order/)
+
+## Canonical sources
+- [Installation](README.md#installation)
+- [Mercado Pago API reference](https://www.mercadopago.com/developers/en/reference)
+- [Source repository](https://github.com/mercadopago/sdk-python)
