@@ -69,14 +69,18 @@ class HttpClient:
             response = {"status": api_result.status_code, "response": None}
 
             if api_result.status_code != 204 and api_result.content:
-                try:
-                    response["response"] = api_result.json()
-                except ValueError as exc:
-                    raise MPServerError(
-                        api_result.status_code,
-                        {"message": "Invalid JSON in response body",
-                         "error": "invalid_response"},
-                    ) from exc
+                media_type = api_result.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+                if 200 <= api_result.status_code < 300 and media_type == "application/octet-stream":
+                    response["response"] = api_result.content
+                else:
+                    try:
+                        response["response"] = api_result.json()
+                    except ValueError as exc:
+                        raise MPServerError(
+                            api_result.status_code,
+                            {"message": "Invalid JSON in response body",
+                             "error": "invalid_response"},
+                        ) from exc
 
         return response
 
