@@ -69,6 +69,11 @@ class HttpClient:
             response = {"status": api_result.status_code, "response": None}
 
             if api_result.status_code != 204 and api_result.content:
+                if (200 <= api_result.status_code < 300
+                        and api_result.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+                        == "application/octet-stream"):
+                    response["response"] = api_result.content
+                    return response
                 try:
                     response["response"] = api_result.json()
                 except ValueError as exc:
