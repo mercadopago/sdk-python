@@ -358,5 +358,71 @@ class TestAutoPaginationIterator(unittest.TestCase):
         self.assertEqual(offsets_seen[0], 0)
         self.assertEqual(offsets_seen[1], 1)
 
+# ─── HTTP response bodies ─────────────────────────────────────────────────────
+
+class TestHttpClientResponseBodies(unittest.TestCase):
+    """Exercise the real request parser with an offline session response."""
+
+    def _make_response(self, status, content, content_type):
+        from requests import Response
+
+        response = Response()
+        response.status_code = status
+        response._content = content  # pylint: disable=protected-access
+        response.headers["Content-Type"] = content_type
+        return response
+
+    def _request(self, response):
+        from unittest.mock import patch
+
+        from mercadopago.http.http_client import HttpClient
+
+        with patch("mercadopago.http.http_client.requests.Session") as session_factory:
+            session = session_factory.return_value.__enter__.return_value
+            session.request.return_value = response
+            result = HttpClient().request("GET", "https://example.invalid/file")
+            session.request.assert_called_once_with("GET", "https://example.invalid/file")
+        return result
+
+    def test_octet_stream_preserves_nul_and_non_utf8_bytes(self):
+        content = b"\x00\xff\x80binary\x00"
+        response = self._make_response(200, content, "application/octet-stream")
+        response.json = lambda: self.fail("binary response must not be decoded as JSON")
+
+        result = self._request(response)
+
+        self.assertEqual(result["status"], 200)
+        self.assertIs(result["response"], content)
+
+    def test_octet_stream_mixed_case_with_spaces_and_parameters(self):
+        content = b"\xfe\x00\xff"
+        response = self._make_response(
+            201, content, "  Application/Octet-Stream  ; charset=UTF-8"
+        )
+        response.json = lambda: self.fail("binary response must not be decoded as JSON")
+
+        result = self._request(response)
+
+        self.assertEqual(result["status"], 201)
+        self.assertIs(result["response"], content)
+
+    def test_json_response_still_parses(self):
+        response = self._make_response(
+            200, b'{"id": 42, "status": "approved"}', "application/json; charset=utf-8"
+        )
+
+        self.assertEqual(
+            self._request(response),
+            {"status": 200, "response": {"id": 42, "status": "approved"}},
+        )
+
+    def test_csv_response_still_uses_json_parser(self):
+        response = self._make_response(200, b"id,name\n1,Alice\n", "text/csv")
+
+        with self.assertRaises(MPServerError) as error:
+            self._request(response)
+        self.assertEqual(error.exception.status_code, 200)
+
+
 if __name__ == "__main__":
     unittest.main()
