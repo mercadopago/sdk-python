@@ -68,7 +68,19 @@ class HttpClient:
             api_result = session.request(method, url, **kwargs)
             response = {"status": api_result.status_code, "response": None}
 
+            if (200 <= api_result.status_code < 300
+                    and api_result.content == b""
+                    and api_result.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+                    == "application/octet-stream"):
+                response["response"] = api_result.content
+                return response
+
             if api_result.status_code != 204 and api_result.content:
+                if (200 <= api_result.status_code < 300
+                        and api_result.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+                        == "application/octet-stream"):
+                    response["response"] = api_result.content
+                    return response
                 try:
                     response["response"] = api_result.json()
                 except ValueError as exc:

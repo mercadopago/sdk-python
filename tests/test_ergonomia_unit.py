@@ -360,3 +360,75 @@ class TestAutoPaginationIterator(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHttpClientResponseBodies(unittest.TestCase):
+    """Exercise the real request parser with simulated HTTP responses."""
+
+    def _response(self, status, content_type, content):
+        from unittest.mock import MagicMock
+
+        api_result = MagicMock()
+        api_result.status_code = status
+        api_result.headers = {"Content-Type": content_type}
+        api_result.content = content
+        return api_result
+
+    def _request(self, api_result):
+        from unittest.mock import patch
+        from mercadopago.http.http_client import HttpClient
+
+        with patch("mercadopago.http.http_client.requests.Session") as session:
+            session.return_value.__enter__.return_value.request.return_value = api_result
+            return HttpClient().request("GET", "https://example.invalid/file")
+
+    def test_octet_stream_keeps_original_bytes_without_json(self):
+        for status, content_type in (
+            (200, "application/octet-stream"),
+            (201, "  ApPlIcAtIoN/OcTeT-StReAm ; charset=UTF-8"),
+        ):
+            with self.subTest(status=status, content_type=content_type):
+                content = b"\x00\xff\xfe\x80binary\x00"
+                api_result = self._response(status, content_type, content)
+                api_result.json.side_effect = ValueError("not JSON")
+
+                result = self._request(api_result)
+
+                self.assertEqual(result, {"status": status, "response": content})
+                self.assertIs(result["response"], content)
+                api_result.json.assert_not_called()
+
+    def test_json_response_still_uses_json(self):
+        api_result = self._response(200, "application/json", b'{"id": 42}')
+        api_result.json.return_value = {"id": 42}
+
+        result = self._request(api_result)
+
+        self.assertEqual(result, {"status": 200, "response": {"id": 42}})
+        api_result.json.assert_called_once_with()
+
+    def test_csv_response_still_uses_json_and_raises_on_invalid_json(self):
+        from mercadopago.errors.exceptions import MPServerError
+
+        api_result = self._response(200, "text/csv", b"id,name\n1,Test\n")
+        api_result.json.side_effect = ValueError("not JSON")
+
+        with self.assertRaises(MPServerError):
+            self._request(api_result)
+        api_result.json.assert_called_once_with()
+
+    def test_empty_octet_stream_keeps_original_bytes_without_json(self):
+        for status, content_type in (
+            (200, "application/octet-stream"),
+            (201, "  ApPlIcAtIoN/OcTeT-StReAm ; charset=UTF-8"),
+        ):
+            with self.subTest(status=status, content_type=content_type):
+                content = b""
+                api_result = self._response(status, content_type, content)
+                api_result.json.side_effect = ValueError("not JSON")
+
+                result = self._request(api_result)
+
+                self.assertEqual(result, {"status": status, "response": content})
+                self.assertIs(result["response"], content)
+                api_result.json.assert_not_called()
