@@ -20,6 +20,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
 
+      - name: Setup Python for dependency audit
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependency auditor
+        run: |
+          python -m venv "$RUNNER_TEMP/pip-audit"
+          "$RUNNER_TEMP/pip-audit/bin/python" -m pip install pip-audit "filelock>=4.2.1"
+
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v5
         with:
@@ -28,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip "setuptools>=83.0.0"
-          python -m pip install requests pylint isort pip-audit
+          python -m pip install requests pylint isort
           python -m pip install -e .
 
       - name: Lint with Pylint
@@ -43,7 +53,9 @@ jobs:
         run: python -m unittest discover tests/
 
       - name: Dependency audit
-        run: pip-audit
+        run: |
+          "$RUNNER_TEMP/pip-audit/bin/pip-audit" --path "$(python -c 'import sysconfig; print(sysconfig.get_path("purelib"))')"
+          "$RUNNER_TEMP/pip-audit/bin/pip-audit"
 
       - name: Dependency review
         if: github.event_name == 'pull_request'
