@@ -28,6 +28,7 @@ jobs:
       - name: Install dependency auditor
         run: |
           python -m venv "$RUNNER_TEMP/pip-audit"
+          "$RUNNER_TEMP/pip-audit/bin/python" -m pip install --upgrade pip "setuptools>=84.1.0"
           "$RUNNER_TEMP/pip-audit/bin/python" -m pip install pip-audit "filelock>=4.2.1"
 
       - name: Setup Python ${{ matrix.python-version }}
