@@ -66,6 +66,7 @@ from mercadopago.resources.shipment import (
     ShipmentFreeMethod,
     ShipmentRequest,
 )
+from mercadopago.resources.store import Store
 from mercadopago.resources.subscription import Subscription
 from mercadopago.resources.user import User
 
@@ -118,6 +119,7 @@ __all__ = (
     'Preference',
     'Refund',
     'RequestOptions',
+    'Store',
     'Subscription',
     'User',
     'order_request_to_dict',

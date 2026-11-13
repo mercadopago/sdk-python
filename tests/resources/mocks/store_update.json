@@ -1,0 +1,21 @@
+{
+  "id": 1234567,
+  "name": "Loja Teste",
+  "user_id": 843382748,
+  "external_id": "store-001",
+  "location": {
+    "address_line": "Av Paulista, 1000",
+    "city_name": "São Paulo",
+    "state_name": "SP",
+    "zip_code": "01313000",
+    "latitude": -23.5613,
+    "longitude": -46.6565,
+    "country_name": "Brasil"
+  },
+  "business_hours": {
+    "monday": {"open": "08:00", "close": "18:00"},
+    "tuesday": {"open": "08:00", "close": "18:00"}
+  },
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T11:00:00.000-03:00"
+}
