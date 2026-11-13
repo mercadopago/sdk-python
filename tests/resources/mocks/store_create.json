@@ -1,0 +1,20 @@
+{
+  "id": 1234567,
+  "name": "Sucursal Instore",
+  "business_hours": {
+    "monday": [{"open": "08:00", "close": "18:00"}],
+    "tuesday": [{"open": "08:00", "close": "18:00"}]
+  },
+  "location": {
+    "address_line": "Av Caseros 3039",
+    "reference": "3er piso",
+    "city": {"id": "TUxBQ0NBUGZlZG1zY3VA", "name": "Belgrano"},
+    "latitude": -34.571148,
+    "longitude": -58.459713,
+    "zip_code": "1425"
+  },
+  "external_id": "STORE-001",
+  "user_id": 843382748,
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T10:30:00.000-03:00"
+}

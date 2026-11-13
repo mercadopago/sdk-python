@@ -35,6 +35,7 @@ from mercadopago.resources import (
     PreApproval,
     Preference,
     Refund,
+    Store,
     Subscription,
     User,
 )
@@ -188,6 +189,11 @@ class SDK:  # pylint: disable=too-many-public-methods
         """Creates a :class:`Plan` resource for subscription plan templates."""
         return Plan(request_options is not None and request_options
                     or self.request_options, self.http_client)
+
+    def store(self, request_options=None):
+        """Creates a :class:`Store` resource for in-person payment stores."""
+        return Store(request_options is not None and request_options
+                     or self.request_options, self.http_client)
 
     @property
     def request_options(self):
