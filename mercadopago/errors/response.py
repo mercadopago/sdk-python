@@ -58,10 +58,14 @@ class MPResponse(dict):
 
     @property
     def error_message(self):
-        """Human-readable error message from the API body, or empty string."""
+        """API message or a useful error fallback for unsuccessful responses."""
         body = self.get("response") or {}
         if isinstance(body, dict):
-            return body.get("message", "")
+            message = body.get("message", "")
+            if isinstance(message, str) and message.strip():
+                return message
+        if not self.is_success:
+            return build_error(self.status_code, body).error
         return ""
 
     @property
