@@ -1,0 +1,16 @@
+{
+  "id": 123456789,
+  "name": "Official Store",
+  "business_hours": {
+    "monday": {"open": "09:00", "close": "18:00"}
+  },
+  "location": {
+    "address_line": "Av Paulista 1000",
+    "city": "São Paulo",
+    "state": "SP",
+    "zip_code": "01310000",
+    "country": "BR"
+  },
+  "external_id": "store-ext-001",
+  "date_created": "2024-01-15T10:30:00.000-03:00"
+}

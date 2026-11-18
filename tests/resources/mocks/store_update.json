@@ -1,0 +1,20 @@
+{
+  "id": 987654321,
+  "name": "Updated Store",
+  "business_hours": {
+    "open": "08:00",
+    "close": "22:00"
+  },
+  "external_id": "store-843382748",
+  "user_id": 12345,
+  "location": {
+    "address_line": "Av das Nações Unidas, 3003",
+    "reference": "Bonavista",
+    "city": "São Paulo",
+    "state": "SP",
+    "zip_code": "04311000",
+    "country": "Brasil"
+  },
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T11:00:00.000-03:00"
+}

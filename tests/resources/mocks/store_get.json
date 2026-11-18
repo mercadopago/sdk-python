@@ -1,0 +1,21 @@
+{
+  "id": 123456789,
+  "name": "Official Store",
+  "user_id": 843382748,
+  "business_hours": {
+    "monday": {"open": "08:00", "close": "18:00"},
+    "tuesday": {"open": "08:00", "close": "18:00"}
+  },
+  "location": {
+    "address_line": "Av Paulista 1000",
+    "city": "São Paulo",
+    "state": "SP",
+    "zip_code": "01313000",
+    "country": "BR",
+    "latitude": -23.561,
+    "longitude": -46.656
+  },
+  "date_created": "2024-01-15T10:30:00.000-03:00",
+  "date_last_updated": "2024-01-15T10:30:00.000-03:00",
+  "external_id": "store-001"
+}
