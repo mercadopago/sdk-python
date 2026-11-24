@@ -5,6 +5,8 @@ backward-compatible ``catch`` patterns while enabling specific handling
 per HTTP status code.
 """
 
+import json
+
 
 class MercadoPagoError(Exception):
     """Base exception for all MercadoPago API errors.
@@ -15,18 +17,29 @@ class MercadoPagoError(Exception):
 
     Attributes:
         status_code: HTTP status code (e.g. 400, 401, 500).
-        message: Human-readable error summary from the API.
-        error: Machine-readable error code (e.g. ``"unauthorized"``).
+        message: API message, or serialized response body if absent.
+        error: API message, or serialized response body if absent.
         causes: List of detailed cause dicts returned by the API.
         request_id: ``x-request-id`` header for support diagnosis.
     """
 
     def __init__(self, status_code, response_body):
         self.status_code = status_code
-        self.response = response_body or {}
-        self.message = self.response.get("message", "")
-        self.error = self.response.get("error", "")
-        self.causes = self.response.get("cause", [])
+        self.response = response_body if response_body is not None else {}
+        body = self.response if isinstance(self.response, dict) else {}
+        message = body.get("message")
+        if isinstance(message, str) and message.strip():
+            error_value = message
+        else:
+            try:
+                serialized_body = json.dumps(self.response, ensure_ascii=False)
+                error_value = serialized_body if serialized_body != "{}" else ""
+            except (TypeError, ValueError, OverflowError, RecursionError):
+                error_value = ""
+            error_value = error_value or f"HTTP {status_code or 0}"
+        self.message = error_value
+        self.error = error_value
+        self.causes = body.get("cause", [])
         self.request_id = None  # set by MPResponse if x-request-id header is available
         super().__init__(f"[{status_code}] {self.message or self.error}")
 
