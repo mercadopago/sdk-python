@@ -33,3 +33,26 @@ Before production use, persist the idempotency key and handle typed exceptions. 
 4. Confirm fields in the [API reference](https://www.mercadopago.com/developers/en/reference).
 
 Never commit credentials or use production card data in examples.
+
+### Point payment intents
+
+The SDK supports listing Point devices and creating, retrieving and cancelling payment intents.
+Use an access token for the account linked to the device:
+
+```python
+import mercadopago
+
+sdk = mercadopago.SDK("YOUR_ACCESS_TOKEN")
+devices = sdk.point().get_devices()
+print(devices["response"])
+
+# Use a device ID from the devices response. Amount is in the currency's smallest unit.
+intent = sdk.point().create("DEVICE_ID", {"amount": 1500, "description": "Purchase"})
+print(intent["response"])
+intent_id = intent["response"]["id"]
+print(sdk.point().get(intent_id)["response"])
+# To cancel a pending intent:
+# sdk.point().cancel("DEVICE_ID", intent_id)
+```
+
+See the [Point API reference](https://www.mercadopago.com/developers/en/reference/in-person-payments/point/devices/list-devices/get) for availability, device setup and request fields.

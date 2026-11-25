@@ -178,13 +178,13 @@ class WebhookSignatureValidator:  # pylint: disable=too-few-public-methods
             secret.encode("utf-8"), manifest.encode("utf-8"), hashlib.sha256
         ).hexdigest()
 
-        if not hmac.compare_digest(computed, received_hash):
+        if not received_hash.isascii() or not hmac.compare_digest(computed, received_hash):
             raise InvalidWebhookSignatureError(
                 SignatureFailureReason.SIGNATURE_MISMATCH, x_request_id, ts
             )
 
         if tolerance_seconds is not None:
-            drift_ms = abs(now() - int(ts) * 1000)  # ts is in seconds, now() is in ms
+            drift_ms = abs(now() - int(ts) * (1 if len(ts) >= 13 else 1000))
             if drift_ms > tolerance_seconds * 1000:
                 raise InvalidWebhookSignatureError(
                     SignatureFailureReason.TIMESTAMP_OUT_OF_TOLERANCE, x_request_id, ts
