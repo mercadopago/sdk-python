@@ -47,6 +47,15 @@ VALID_HEADER = build_header(VALID_HASH)
 class TestWebhookSignatureValidator(unittest.TestCase):
     """Covers the 12 canonical cases plus supportedVersions and arg validation."""
 
+    def test_millisecond_timestamp_within_tolerance(self):
+        WebhookSignatureValidator.validate(VALID_HEADER, REQUEST_ID, DATA_ID_LOWER, SECRET,
+                                           tolerance_seconds=300, now=lambda: TS_NUM + 1000)
+
+    def test_non_ascii_hash_is_signature_mismatch(self):
+        with self.assertRaises(InvalidWebhookSignatureError) as ctx:
+            WebhookSignatureValidator.validate(build_header("é"), REQUEST_ID, DATA_ID_LOWER, SECRET)
+        self.assertEqual(ctx.exception.reason, SignatureFailureReason.SIGNATURE_MISMATCH)
+
     # --- case 1 ---
     def test_happy_path_lowercase(self):
         WebhookSignatureValidator.validate(VALID_HEADER, REQUEST_ID, DATA_ID_LOWER, SECRET)
